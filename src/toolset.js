@@ -1,9 +1,21 @@
 export default [
   {
-    "id": "bubblechart",
+    "id": "bubbles",
     "tool": "BubbleChart",
     "title": "bubbles",
     "image": "/assets/images/chart/bubble-chart.png"
+  },
+  {
+    "id": "mountain",
+    "tool": "MountainChart",
+    "title": "income",
+    "image": "/assets/images/chart/income-chart.png"
+  },
+  {
+    "id": "map",
+    "tool": "BubbleMap",
+    "title": "maps",
+    "image": "/assets/images/chart/maps-chart.png"
   },
   {
     "id": "linechart",
@@ -12,7 +24,7 @@ export default [
     "image": "/assets/images/chart/trends-chart.png"
   },
   {
-    "id": "barrankchart",
+    "id": "barrank",
     "tool": "BarRankChart",
     "title": "ranks",
     "image": "/assets/images/chart/ranks-chart.png"
