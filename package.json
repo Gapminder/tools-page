@@ -22,15 +22,15 @@
   "dependencies": {
     "d3": "^4.11.0",
     "font-awesome": "^4.7.0",
-    "vizabi": "0.29.2-3",
-    "vizabi-barrankchart": "2.0.1-0",
-    "vizabi-bubblechart": "2.0.3-1",
-    "vizabi-bubblemap": "2.0.1-0",
+    "vizabi": "0.30.1-0",
+    "vizabi-barrankchart": "2.1.0",
+    "vizabi-bubblechart": "2.0.3-4",
+    "vizabi-bubblemap": "2.0.1-2",
     "vizabi-config-systema_globalis": "^2.0.0",
     "vizabi-ddfcsv-reader": "^2.0.2",
-    "vizabi-linechart": "2.0.5-1",
-    "vizabi-mountainchart": "2.0.3-1",
-    "vizabi-popbyage": "2.0.2-4",
+    "vizabi-linechart": "2.0.5-7",
+    "vizabi-mountainchart": "2.0.3-3",
+    "vizabi-popbyage": "2.0.2-5",
     "vizabi-ws-reader": "2.2.1"
   },
   "devDependencies": {
