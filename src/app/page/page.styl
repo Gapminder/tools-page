@@ -1,0 +1,167 @@
+@import './../_resources/fonts.styl'
+@import './../_resources/variables.styl'
+@import './../_resources/mixins.styl'
+
+html, body
+  height 100%
+
+body
+  background-color white
+  font-family 'Bariol Regular', Arial, sans-serif
+  min-width $body-min-width
+  padding 0
+  margin 0
+
+
+.wrapper
+  display block
+  position relative
+  height 100%
+  overflow auto
+  -webkit-overflow-scrolling touch
+
+  +for_breakpoint(small)
+    position static
+    min-height auto
+
+.hidden
+  display none !important
+
+.invisible
+  visibility hidden
+
+.social-list
+  list-style none
+  /*margin 0 100px 0 0*/
+  margin 0
+  padding 0
+  float right
+  /*+for_breakpoint(medium)
+    margin-right 100px*/
+
+  &.mobile
+    display none
+    margin 5px
+
+  +for_breakpoint(small)
+    &.desktop
+      display none
+
+    &.mobile
+      float none
+      display inline-block
+
+.heading-2
+  margin 0
+  margin-bottom 10px
+  font-family "Bariol Light","Helvetica Neue",Helvetica,Arial,sans-serif
+  get-font-size(medium)
+  line-height 1.4
+  text-transform uppercase
+  letter-spacing 0.07em
+  text-shadow rgba(0,0,0,.01) 0 0 1px;
+
+.loader-wrapper
+  box-sizing(border-box)
+  position(fixed, $header-height 0 0 0)
+  background-color white
+  padding 10px
+  text-align center
+  z-index 111111
+
+.loader
+  animation-duration(0.75s)
+  animation-iteration-count(infinite)
+  animation-name(rotate-continuous)
+  animation-timing-function(linear)
+  size(25px)
+  border 5px solid #ccc
+  border-right-color transparent
+  border-radius (50%)
+  display none
+  float right
+  margin auto
+  position absolute
+  top 50%
+  left 50%
+
+.loading
+  .loader
+    display block
+
+.vzb-tool
+  font-family 'Bariol Regular', "Lucida Sans Unicode", "Lucida Grande", sans-serif !important
+
+  .vzb-dynamic-background
+    font-family $courier-prime-font-family
+
+.vzb-tool-buttonlist, .vzb-dialog-zoom-buttonlist, .vzb-tool-dialogs, .vzb-sidebar, .vzb-dialog-checkbox label:before
+  background-color white !important
+
+.vzb-tool.vzb-large .vzb-tool-buttonlist
+  border-top 2px solid #f5f9fb !important
+  
+.vzb-dialogs-dialog.vzb-sidebar
+  margin: 5px 0 2px -5px !important
+  
+.vzb-dialog-shadow
+  border-top none !important
+  border-bottom none !important
+  
+.more
+  padding 20px
+  box-sizing(border-box)
+  display flex
+  flex-wrap wrap
+
+  +for_breakpoint(small)
+    padding 20px 0
+
+  +for_breakpoint(not-small)
+    padding-top 0
+
+  ul.social-list
+    //display none
+
+    +for_breakpoint(small)
+      justify-content center
+
+.about
+  display flex
+  flex-direction column
+  align-items center
+  flex 1 35%
+  order 1
+  box-sizing(border-box)
+
+  +for_breakpoint(small)
+    background #f2fafc
+    width 100%
+    .heading-2
+      display none
+
+.related
+  display block
+  flex 1 65%
+
+  +for_breakpoint(small)
+    flex-basis 100%
+    order 2
+
+.connections
+  display flex
+  flex 1 100%
+  order 3
+  flex-direction column
+  align-items flex-end
+
+  +for_breakpoint(small)
+    align-items center
+
+.embedded-view app-header,
+.embedded-view app-see-also,
+.embedded-view app-related-items,
+.embedded-view app-report-problem,
+.embedded-view .more
+.embedded-view app-footer
+  display none

@@ -1,0 +1,126 @@
+//complementary mixins
+@import 'variables.styl'
+
+media_queries = {
+  small : "only screen and (max-width: $small-screen)",
+  small-landscape  : "only screen and (max-width: $small-screen) and (orientation: landscape)",
+  medium : "only screen and (min-width: $small-screen + 1) and (max-width: $large-screen - 1)",
+  large : "only screen and (min-width: $large-screen)",
+  not-large : "only screen and (max-width: $large-screen - 1)",
+  not-small : "only screen and (min-width: $small-screen + 1)",
+  tablet : "only screen and (min-width: 601px) and (max-width: 800px)",
+  desktop : "only screen and (min-width: 801px)"
+}
+
+for_breakpoint(breakpoints)
+  conditions = ()
+  for breakpoint in breakpoints
+    push(conditions, media_queries[breakpoint])
+  conditions = join(", ", conditions)
+  @media conditions
+    {block}
+
+
+
+box-sizing(m)
+  -webkit-box-sizing m
+  -moz-box-sizing m
+  box-sizing m
+
+border-radius(n)
+  -webkit-border-radius n
+  -moz-border-radius n
+  border-radius n
+
+columns(k)
+  -webkit-columns k
+  -moz-columns k
+  columns k
+
+flex-direction(value)
+  -webkit-flex-direction value
+  -ms-flex-direction value
+  flex-direction value
+
+
+//TODO: cleanup - copied from bootstrap
+
+// Creates a wrapper for a series of columns
+make-row($gutter = $grid-gutter-width)
+  margin-left: ceil($gutter / -2)
+  margin-right: floor($gutter / -2)
+  clearfix()
+
+clearfix()
+  &:before,
+  &:after
+    content: " "
+    display: table
+  &:after
+    clear: both
+
+// Generate the medium columns
+make-md-column($columns, $gutter = $grid-gutter-width)
+  position: relative
+  min-height: 1px
+  padding-left: ($gutter / 2)
+  padding-right: ($gutter / 2)
+  margin 0
+  @media (min-width: ($small-screen + 1))
+    float: left
+    width: percentage($columns / $grid-columns)
+
+get-global-margin-left()
+  @media (max-width: $small-screen)
+    margin-left: 10px
+  @media (min-width: $large-screen)
+    margin-left: calc(5px + 0.015 * (100vw - 290px))
+  margin-left: 20px
+  
+get-font-size(size)
+  if size == small
+    @media (max-width: $small-screen)
+      font-size: 10px
+    @media (min-width: $large-screen)
+      font-size: 15px
+    font-size: 12px
+  else if size == large
+    @media (max-width: $small-screen)
+      font-size: 18px
+    @media (min-width: $large-screen)
+      font-size: 24px
+    font-size: 20px
+  else 
+    @media (max-width: $small-screen)
+      font-size: 12px
+    @media (min-width: $large-screen)
+      font-size: 18px
+    font-size: 16px
+
+yellow-box()
+  color #fff
+  background $color-primary
+  border none
+  font-size 15px
+  margin 5px 0
+  border-radius (4px)
+  outline none
+  width 22px
+  height 22px
+  line-height 22px
+  padding 0
+  text-align center
+  path
+    fill white
+
+nav-faq-help-links()
+  a
+    white-space nowrap
+    font-size $font-size-header-regular
+    text-transform none
+    letter-spacing normal
+    margin-right 15px
+    color $color-blue-darker
+    font-family $bariol-light-font-family
+    &:hover
+      color $brand-primary

@@ -1,0 +1,22 @@
+@import './../_resources/variables.styl'
+@import './../_resources/mixins.styl'
+
+.wrap-report-problem
+  width 100%
+  text-align center
+  display inline-block
+
+  .report-problem
+    padding 0 20px
+    float right
+    color #777
+    &.indent
+      margin-right 30px
+
+    +for_breakpoint(small)
+      float none
+      display inline-block
+    &[hidden]
+      display none
+    &.indent
+      margin-right 0

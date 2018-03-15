@@ -1,0 +1,67 @@
+@import './../_resources/variables.styl'
+@import './../_resources/mixins.styl'
+
+.wrapper-error
+  padding 50px
+  text-align center
+  .header-title
+    display block
+    float none
+    margin 0 auto
+
+.footer-container
+  background-color #939598
+  color: $color-grey-light
+  width 100%
+  position: relative
+  display flex
+
+  .footer-container
+    justify-content space-between
+
+  .service-container
+    width 100px
+    padding-top 15px
+
+  .service-content
+    a
+      margin 0 5px
+
+  .menu-holder
+    display block
+    padding 15px 15px 15px 15px
+
+   .logo-gray
+      margin-bottom 7px
+
+   .general-menu
+      get-font-size(small)
+      font-family $bariol-regular-font-family
+
+   .main-menu
+      get-font-size(small)
+      font-family $bariol-light-font-family
+      margin-top 5px
+      line-height: 1.7em
+
+.nav
+  font-weight bold
+  list-style none
+  margin 0
+  padding 0
+
+.nav li
+  display inline
+  padding-right 15px
+  +for_breakpoint(small)
+    padding-right 5px
+
+.nav a
+  display inline-block
+  color #d7d8d9
+  text-decoration none
+  text-transform uppercase
+  letter-spacing 0.07em
+
+  &:hover
+    color $color-primary

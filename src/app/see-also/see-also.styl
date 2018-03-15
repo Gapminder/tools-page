@@ -1,0 +1,62 @@
+@import './../_resources/variables.styl'
+@import './../_resources/mixins.styl'
+
+.see-also-block
+  width 100%
+  background-color #f5f9fb
+
+.see-also-heading
+  display none
+  color #68b4cd
+  text-transform uppercase
+  letter-spacing 0.07em
+  get-font-size(small)
+  padding 5px 0 0 0
+  get-global-margin-left()
+
+.other-tools-container
+  margin 0
+  get-global-margin-left()
+  padding 15px 40px 0 0
+  +for_breakpoint(small)
+    padding 10px 20px 0 0
+  display flex
+  flex-wrap wrap
+  justify-content space-between
+
+  & > .other-tools-item
+    margin 0
+    width 128px
+    text-align center
+    padding-bottom: 15px
+
+    & > a
+      transition(all 0.1s)
+      transition-duration 0.2s
+      border-radius (3px)
+      display block
+      position relative
+      cursor pointer
+      text-decoration none
+      max-width 400px
+      box-shadow 0 1px 11px rgba(0, 0, 0, 0.05), 0 1px 6px rgba(0, 0, 0, 0.18)
+
+      .title
+        color #808285
+        get-font-size(medium)
+        display block
+        text-transform uppercase
+        letter-spacing 0.07em
+
+      .image
+        width 100%
+        height auto
+
+      &:hover
+        transform translateY(-3px) skew(-2deg,0deg)
+
+        & > .title
+          color $color-blue-dark
+
+    & > a[hidden]
+      display none

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <base href="/tools/">
+  <title>Gapminder Tools</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- attempts to disable caching for index.html in all browsers https://stackoverflow.com/questions/1341089/using-meta-tags-to-turn-off-caching-in-all-browsers -->
+  <meta http-equiv="cache-control" content="max-age=0" />
+  <meta http-equiv="cache-control" content="no-cache" />
+  <meta http-equiv="expires" content="0" />
+  <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+  <meta http-equiv="pragma" content="no-cache" />
+
+  <meta property="og:image" content="http://www.gapminder.org/tools/assets/images/social-share.png">
+  <meta property="og:title" content="Gapminder Tools">
+  <meta property="og:description" content="Animated global statistics that everyone can understand">
+  <meta property="og:type" content="article">
+  <meta name="twitter:image" content="http://www.gapminder.org/tools/assets/images/social-share.png">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link href="favicon.ico" rel="shortcut icon">
+
+  <link rel="stylesheet" href="assets/vizabi.css">
+  <link rel="stylesheet" href="assets/barrankchart.css">
+  <link rel="stylesheet" href="assets/bubblechart.css">
+  <link rel="stylesheet" href="assets/mountainchart.css">
+  <link rel="stylesheet" href="assets/linechart.css">
+  <link rel="stylesheet" href="assets/bubblemap.css">
+  <link rel="stylesheet" href="assets/popbyage.css">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="wrapper">
+
+    <div class="header">
+
+      <span class="app-chart-switcher"></span>
+
+      <div class="how-to-use desktop">
+          <div class="flow-container">
+            
+          <ul class="nav navbar-nav navbar-nav-left desktop">
+            <span class="app-menu"></span>
+          </ul>
+        </div>
+      </div>
+
+      <div class="social desktop">
+        <div class="flow-container" style="justify-content: flex-end">
+    
+          <div>
+            <ul class="social-list desktop">
+              <span class="app-social-buttons"></span>
+            </ul>
+          </div>
+    
+          <div>
+            <div class="lang-wrapper desktop">
+              <span class="app-language-switcher"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div (click)="switchMobileMenuVisibility()" class="menu-mobile" [ngClass]="{'open': !(isMobileMenuHidden$ | async)}">
+        <div class="flow-container" style="justify-content: flex-end">
+          <div class="social-share-icon">
+            <i class="fa fa-share-alt icon"></i>
+          </div>
+          <div class="menu-icon">
+            <div class="icon"></div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  
+    <div class="mobile">
+      <ul class="navbar-nav navbar-nav-left mobile" *ngIf="!(isMobileMenuHidden$ | async)">
+    
+        <li class="nav-expandable" [ngClass]="{'hidden': (isMobileMenuHidden$ | async)}">
+          <div class="lang-wrapper mobile">
+            <div class"app-language-switcher"></div>
+          </div>
+        </li>
+    
+        <span class="app-menu"></span>
+      </ul>
+
+    </div>
+  
+    <div class="header-divider"></div>
+
+    <div class="column main">
+      <span class="vizabi-placeholder">
+        <div class="vzb-placeholder"></div>
+      </span>
+    </div>
+    
+    <div>
+      <span class="app-see-also about"></span>
+      <span class="app-related-items related"></span>
+    </div>
+
+    <span class="app-footer"></span>
+  </div>
+
+<script>
+//  if ('serviceWorker' in navigator) {
+//    navigator.serviceWorker.register('service-worker.js')
+//      .then(function () {
+//        console.log('SW has been registered');
+//      })
+//      .catch(function (error) {
+//        console.log('SW registration has failed', error)
+//      });
+//  }
+</script>
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+
+  var gaEnabled = ['dev', 'stage', 'localhost'].every(function (env) {
+    return location.hostname.indexOf(env) === -1;
+  });
+
+  if (gaEnabled) {
+    ga('create', 'UA-67908993-1', 'auto', 'toolsPageTracker');
+    ga('toolsPageTracker.send', 'pageview');
+  }
+
+</script>
+
+<!-- Begin Inspectlet Embed Code -->
+<script type="text/javascript" id="inspectletjs">
+  (function() {
+    if (!gaEnabled) {
+      return;
+    }
+    window.__insp = window.__insp || [];
+    __insp.push(['wid', 2022934490]);
+    var ldinsp = function(){ if(typeof window.__inspld != "undefined") return; window.__inspld = 1; var insp = document.createElement('script'); insp.type = 'text/javascript'; insp.async = true; insp.id = "inspsync"; insp.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://cdn.inspectlet.com/inspectlet.js?wid=2022934490&r=' + Math.floor(new Date().getTime()/3600000); var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(insp, x); };
+    setTimeout(ldinsp, 0);
+  })();
+</script>
+<!-- End Inspectlet Embed Code -->
+
+<script type="text/javascript" src='assets/vendor/js/d3/d3.js'></script>
+<script type="text/javascript" src='assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader.js'></script>
+<script type="text/javascript" src='assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js'></script>
+<script type="text/javascript" src='assets/js/urlon.js'></script>
+<script type="text/javascript" src='assets/js/url.js'></script>
+<script type="text/javascript" src="tools.js"></script>
+
+<script>
+//URLON
+var urlon = urlonMaker();
+var poppedState = null;
+//WS reader integration
+var wsReader = WsReader.WsReader.getReader();
+Vizabi.Reader.extend("waffle", wsReader);
+//DDFCSV reader integration
+var ddfReader = new DDFCsvReader.getDDFCsvReaderObject()
+Vizabi.Reader.extend("ddf", ddfReader);
+var viz = null;
+var VIZABI_MODEL = {};
+
+function setLocale(arg) {
+  if (!arg) arg = appState.language;
+  if (!viz || !viz.model) return;
+  viz.model.locale.id = arg;
+  appState.language = arg;
+}
+
+function setTool(arg) {
+    if (!arg) arg = appState.tool;
+    Vizabi.clearInstances();
+    d3.select(".vzb-placeholder").remove();
+    d3.select("body").select(".column.main").select(".vizabi-placeholder")
+      .append("div")
+      .attr("class", "vzb-placeholder")
+      .attr("style", "width: 100%; height: 100%;");
+    toolConfig = toolsPage.toolset.filter(({id}) => id === arg)[0];
+    loadJS(`assets/js/toolconfigs/${toolConfig.config || toolConfig.tool}.js` , function() {
+        VIZABI_MODEL.locale = {
+            "id": appState.language,
+            "filePath": "assets/translation/"
+        };
+        VIZABI_MODEL.bind = {
+            'ready': function(evt) {
+                updateURL();
+            },
+            'persistentChange': function(evt) {
+                updateURL(evt); // force update
+            }
+        }
+        //VIZABI_MODEL.data = VIZABI_MODEL.data || 
+        const dataSources = toolsPage.datasources.filter(({toolIds}) => toolIds.includes(toolConfig.id))
+        Object.assign(VIZABI_MODEL, dataSources.length > 1 ?
+          dataSources.reduce((result, ds, index) => {
+            result["data_" + (index ? index : "")] = ds.datasource;
+            return result;
+          }, {})
+        : { data: dataSources[0].datasource })
+        VIZABI_PAGE_MODEL = Vizabi.utils.deepExtend({}, VIZABI_MODEL);
+        delete VIZABI_PAGE_MODEL.bind;
+        delete VIZABI_PAGE_MODEL.locale.id;
+        viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, VIZABI_MODEL, URLI.model, true));
+    }, document.body);
+    appState.tool = arg;
+}
+
+var loadJS = function(url, implementationCode, location) {
+    //url is URL of external file, implementationCode is the code
+    //to be called from the file, location is the location to 
+    //insert the <script> element
+    var scriptTag = document.createElement('script');
+    scriptTag.src = url;
+    scriptTag.onload = implementationCode;
+    scriptTag.onreadystatechange = implementationCode;
+    location.appendChild(scriptTag);
+};
+window.addEventListener('popstate', function(e) {
+    console.log(e, Vizabi.utils.diffObject());
+    if (e.state) {
+        console.log("model diff", Vizabi.utils.diffObject(e.state.model, viz.getModel()));
+        poppedState = e.state.model;
+        viz.setModel(e.state.model);
+    } else {
+        poppedState = null;
+    }
+});
+
+var tools = toolsPage.toolset.filter(({tool}) => !!tool).map(({id}) => id);
+parseURL();
+var appState = {
+  tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
+  language: ((URLI.model || {}).locale || {}).id || "en"
+};
+setTool();
+</script>
+
+<script type="text/javascript" src="toolspage.js"></script>
+
+</body>
+</html>

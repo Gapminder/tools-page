@@ -1,0 +1,68 @@
+@import './../../_resources/variables.styl'
+@import './../../_resources/mixins.styl'
+
+.lang-wrapper
+  float: right
+  display inline-block
+  height 18px
+  margin 0 20px 0 8px
+  position: relative
+  font-size $font-size-header-small
+  padding: 1px 6px 1px 10px
+  border: 1px solid #ffca34
+  border-radius: 4px
+  cursor: pointer
+  z-index: 200
+  .lang-current
+    display block
+    padding-right 25px
+    opacity 1
+    &:after
+      content '\25BC'
+      padding 0 0 0 4px
+      border-left 1px solid #ffca34
+      color $brand-primary 
+      position absolute
+      right 4px
+  ul
+    display none
+    position absolute
+    list-style none
+    z-index 10
+    left -1px
+    border 1px solid #ffca34
+    top 18px
+    margin 0
+    border-top none
+    background #fff
+    padding 8px 0 2px 0
+    width 100%
+    li
+      text-align right
+      padding 4px 8px
+      border-bottom 1px dotted #FFCA34
+      margin 0 4px
+      &:last-child
+        border-bottom none
+  ul.selected
+    display block
+  &:after
+    clear both
+  &.mobile
+    display none
+
+  /*+for_breakpoint(medium)
+    margin-left -85px*/
+
+  +for_breakpoint(small)
+    &.desktop
+      display none
+
+    &.mobile
+      float none
+      display inline-block
+      margin 10px 0px 10px 10px
+      .lang-current
+        min-width 100px;
+
+

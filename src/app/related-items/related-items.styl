@@ -1,0 +1,93 @@
+@import './../_resources/variables.styl'
+@import './../_resources/mixins.styl'
+
+.related-block
+  get-global-margin-left()
+
+.related-heading
+  display: none
+  color #68b4cd
+  text-transform uppercase
+  letter-spacing 0.07em
+  get-font-size(small)
+  padding 5px 0 0 0
+
+.related-container
+  margin 0
+  padding 20px 40px 20px 0
+  +for_breakpoint(small)
+    padding 20px 10px 20px 0
+
+.related-items
+  list-style none
+  margin 0
+  padding 0
+  box-sizing(border-box)
+  +for_breakpoint(large)
+    columns(2 20px)
+
+.related-item
+  box-sizing(border-box)
+  display inline-block
+  width 100%
+  padding 10px 10px 10px 0
+  margin-bottom 20px
+
+  +for_breakpoint(small)
+    padding 0px
+    margin-bottom 10px
+
+  a
+    //display(flex)
+    flex-direction(row)
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+    text-decoration none
+    color $color-black
+
+    &:hover .title
+      color $color-blue-dark
+
+.related-item-thumbnail
+  -webkit-flex-shrink 0
+  -moz-flex-shrink 0
+  -ms-flex-negative 0
+  flex-shrink 0
+  width 160px
+  height auto
+
+  +for_breakpoint(medium)
+    width 130px
+    
+  +for_breakpoint(small)
+    width 100px
+
+  img
+    width 100%
+    height auto
+    border 1px solid #f5f9fb
+    border-radius (3px)
+    box-shadow 0 1px 20px rgba(0, 0, 0, 0.03), 0 1px 10px rgba(0, 0, 0, 0.12)
+
+.related-item-info
+  display inline-block
+  flex 1
+  line-height 1.2
+  padding-right 15px
+  position relative
+  margin-left 20px
+
+  .title, .subtitle
+    display block
+
+  .title
+    margin-bottom: 5px
+    font-family $bariol-light-font-family
+    get-font-size(large)
+
+  .subtitle
+    get-font-size(medium)
+    font-style italic
+    color #808080

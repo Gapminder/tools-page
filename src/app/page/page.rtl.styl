@@ -1,0 +1,106 @@
+@import './../_resources/variables.styl'
+@import './../_resources/mixins.styl'
+
+body
+  .page-lang-rtl
+    direction rtl
+
+    .header-title
+      float right
+
+    .navbar-nav
+      left auto
+      right 200px
+
+      .nav-expandable
+        .nav-expanded
+          right 0
+          left auto
+
+          .nav-expanded-columns
+            .nav-expanded-columns-inner
+              .column-item-info
+                .column-item-heading,
+                .column-item-description
+                  margin-left 0
+                  margin-right 80px
+
+                &.no-icon
+                  .column-item-heading,
+                  .column-item-description
+                    margin-right 0
+
+    .lang-wrapper
+      float left
+      margin 7px -280px 0 5px
+
+      +for_breakpoint(not-small)
+        margin-left 10px
+
+      +for_breakpoint(small)
+
+        &.desktop
+          display none
+
+        &.mobile
+          float none
+          margin 10px 0 10px 10px
+
+        &.opened
+          display inline-block
+
+    .social-list
+      float right
+      margin 5px 0 0 100px
+
+      li
+        float right
+
+      +for_breakpoint(small)
+        float none
+        margin 0
+        clear both
+
+      +for_breakpoint(medium)
+        clear none
+
+    .menu-mobile
+      right auto
+      left 0
+
+    .wrap-report-problem
+      .report-problem
+        float left
+
+        +for_breakpoint(small)
+          float none !important
+          display inline-block
+
+    .more
+      direction rtl
+
+    .see-also-heading
+      margin-left 0
+      width 100%
+
+    .social-share-icon
+      +for_breakpoint(small,medium)
+        left 45px
+        right initial
+
+    .nav li
+      padding-right 0
+      padding-left 15px
+      +for_breakpoint(small)
+         padding-right 0
+         padding-left 5px
+
+    .how-to-use-video
+      +for_breakpoint(not-small)
+        span
+          margin-right 0!important
+          margin-left 10px!important
+
+    .chart-switcher-options
+      left auto
+      right 30px
