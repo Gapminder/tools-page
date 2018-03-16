@@ -2,27 +2,27 @@ export default[
 {
   "toolIds": ["bubbles", "mountain", "map", "linechart", "barrank"],
   "datasource": {
-    "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://import-waffle-server-dev.gapminderdev.org/api/ddf/assets/"
+    "reader": "waffle", 
+    "assetsPath": "https://import-waffle-server-stage.gapminder.org/api/ddf/assets/",
+    "path": "https://waffle-server-stage.gapminder.org/api/ddf/ql",
   }
 },
 {
   "toolIds": ["popbyage"],
   "datasource": {
     "reader": "waffle", 
-    "dataset": "open-numbers/ddf--gapminder--population#develop", 
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://import-waffle-server-dev.gapminderdev.org/api/ddf/assets/"
+    "assetsPath": "https://import-waffle-server-stage.gapminder.org/api/ddf/assets/",
+    "path": "https://waffle-server-stage.gapminder.org/api/ddf/ql",
+    "dataset": "open-numbers/ddf--gapminder--population"
   }
 },
 {
   "toolIds": ["bubblechart-sod"],
   "datasource": {
     "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "dataset": "open-numbers/ddf--sodertornsmodellen",
-    "assetsPath": "https://import-waffle-server-dev.gapminderdev.org/api/ddf/assets/"
+    "assetsPath": "https://import-waffle-server-stage.gapminder.org/api/ddf/assets/",
+    "path": "https://waffle-server-stage.gapminder.org/api/ddf/ql",
+    "dataset": "open-numbers/ddf--sodertornsmodellen"
   }
 },
 {
