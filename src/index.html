@@ -37,61 +37,58 @@
 
     <div class="header">
 
-      <span class="app-chart-switcher"></span>
-
-      <div class="how-to-use desktop">
+      <div class="navigation">
+        <div class="flow-container">
+          <a href="//gapminder.org"><img src="assets/images/logo-small.png" height="30"></a>
+          <span class="app-chart-switcher"></span>
+          <div class="menu-mobile">
+            <div class="flow-container" style="justify-content: flex-end">
+              <div class="social-share-icon">
+                <i class="fa fa-share-alt icon"></i>
+              </div>
+              <div class="menu-icon">
+                <div class="icon"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="how-to-use">
           <div class="flow-container">
             
-          <ul class="nav navbar-nav navbar-nav-left desktop">
+          <ul class="nav navbar-nav navbar-nav-left">
             <span class="app-menu"></span>
           </ul>
         </div>
       </div>
 
-      <div class="social desktop">
-        <div class="flow-container" style="justify-content: flex-end">
+      <div class="social">
+        <div class="flow-container">
     
           <div>
-            <ul class="social-list desktop">
+            <ul class="social-list">
               <span class="app-social-buttons"></span>
             </ul>
           </div>
+
+        </div>
+      </div>
     
+      <div class="language">
+        <div class="flow-container">
+        
           <div>
-            <div class="lang-wrapper desktop">
+            <div class="lang-wrapper">
               <span class="app-language-switcher"></span>
             </div>
           </div>
+    
         </div>
       </div>
     
-      <div (click)="switchMobileMenuVisibility()" class="menu-mobile" [ngClass]="{'open': !(isMobileMenuHidden$ | async)}">
-        <div class="flow-container" style="justify-content: flex-end">
-          <div class="social-share-icon">
-            <i class="fa fa-share-alt icon"></i>
-          </div>
-          <div class="menu-icon">
-            <div class="icon"></div>
-          </div>
-        </div>
-      </div>
-      
     </div>
-  
-    <div class="mobile">
-      <ul class="navbar-nav navbar-nav-left mobile" *ngIf="!(isMobileMenuHidden$ | async)">
     
-        <li class="nav-expandable" [ngClass]="{'hidden': (isMobileMenuHidden$ | async)}">
-          <div class="lang-wrapper mobile">
-            <div class"app-language-switcher"></div>
-          </div>
-        </li>
-    
-        <span class="app-menu"></span>
-      </ul>
-
-    </div>
-  
     <div class="header-divider"></div>
 
     <div class="column main">

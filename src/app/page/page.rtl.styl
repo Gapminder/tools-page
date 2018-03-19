@@ -5,6 +5,11 @@ body
   .page-lang-rtl
     direction rtl
 
+    .header
+      .navigation
+        margin-left 0
+        margin-right 10px
+    
     .header-title
       float right
 
@@ -38,14 +43,6 @@ body
         margin-left 10px
 
       +for_breakpoint(small)
-
-        &.desktop
-          display none
-
-        &.mobile
-          float none
-          margin 10px 0 10px 10px
-
         &.opened
           display inline-block
 
@@ -100,6 +97,9 @@ body
         span
           margin-right 0!important
           margin-left 10px!important
+
+    .how-to-close
+      float left
 
     .chart-switcher-options
       left auto

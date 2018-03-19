@@ -12,7 +12,6 @@
   border: 1px solid #ffca34
   border-radius: 4px
   cursor: pointer
-  z-index: 200
   .lang-current
     display block
     padding-right 25px
@@ -48,21 +47,10 @@
     display block
   &:after
     clear both
-  &.mobile
-    display none
 
   /*+for_breakpoint(medium)
     margin-left -85px*/
 
   +for_breakpoint(small)
-    &.desktop
-      display none
-
-    &.mobile
-      float none
-      display inline-block
-      margin 10px 0px 10px 10px
-      .lang-current
-        min-width 100px;
-
-
+    .lang-current
+      min-width 100px;
