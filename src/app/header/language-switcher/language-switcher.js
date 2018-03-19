@@ -28,8 +28,16 @@ const LanguageSwitcher = function (placeHolder, translator, { languages, selecte
     placeHolder.append(function() { return elem;});
   }
 
-  function switchLanguage() {
-    this.isLanguageSwitcherVisible = !this.isLanguageSwitcherVisible;
+  d3.select(window).on("resize.languageSwitcher", () => switchLanguage.call(this, false));
+  d3.select(window).on("click.languageSwitcher", () => {
+    const event = d3.event;
+    if (this.isLanguageSwitcherVisible && event.target && (event.target !== switcher.node())) {
+      switchLanguage.call(this, false);
+    }
+  });
+
+  function switchLanguage(force) {
+    this.isLanguageSwitcherVisible = force || force === false ? force : !this.isLanguageSwitcherVisible;
     placeHolder.select("ul").attr("class", this.isLanguageSwitcherVisible ? "selected" : null);
   }
 

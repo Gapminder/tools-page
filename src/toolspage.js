@@ -2,6 +2,7 @@ import ChartSwitcher from "app/header/chart-switcher/chart-switcher";
 import LanguageSwitcher from "app/header/language-switcher/language-switcher";
 import SocialButtons from "app/header/social-buttons/social-buttons";
 import Menu from "app/header/menu/menu";
+import MenuMobile from "app/header/menu-mobile/menu-mobile";
 import SeeAlso from "app/see-also/see-also";
 
 import menuItems from "app/core/menu-items";
@@ -84,12 +85,13 @@ const menu = new Menu(
     menuItems: menuItems.children
   });
 
-// const mobileMenu = new Menu(
-//   d3.select(".mobile .app-menu"),
-//   text => text,
-//   {
-//     menuItems: menuItems.children
-//   });
+const menuMobile = new MenuMobile(
+  d3.select(".header .menu-mobile"),
+  translator,
+  dispatch,
+  {
+    menu: d3.select(".header")
+  });
 
 const seeAlso = new SeeAlso(
   d3.select(".app-see-also"),
@@ -105,7 +107,7 @@ const seeAlso = new SeeAlso(
   });
 
 const socialButtons = new SocialButtons(
-  d3.select(".social-list.desktop .app-social-buttons"),
+  d3.select(".social-list .app-social-buttons"),
   translator,
   dispatch,
   {

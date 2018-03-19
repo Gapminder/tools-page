@@ -1,6 +1,7 @@
 import * as utils from "../../core/utils";
 
 const Menu = function (placeHolder, translator, dispatch, { menuItems }) {
+  const _this = this;
   const templateHtml = require("./menu.html");
   const path = "./assets";
 
@@ -16,12 +17,21 @@ const Menu = function (placeHolder, translator, dispatch, { menuItems }) {
   }
   itemTemplate.remove();
 
-  this.isHowToVisible = false;
+  this.selectedMenuItem = null;
+
   this.howToContent = template.select(".howToContent");
   this.howToMobileContent = template.select(".howToMobileContent");
-  template.select(".how-to-button").on("click", () => switchHowTo.call(this));
-  template.select(".how-to-modal-close").on("click", () => switchHowTo.call(this));
-
+  template.select(".how-to-button")
+    .datum({ menu_label: "how_to_use" })
+    .on("click", d => {
+      selectMenuItem(d);
+      switchHowTo.call(this);
+    });
+  template.select(".how-to-close").on("click", () => {
+    this.selectedMenuItem = null;
+    selectMenuItem({});
+    switchHowTo.call(this);
+  });
 
   for (const elem of Array.from(template.node().children)) {
     placeHolder.append(function () { return elem; });
@@ -30,6 +40,12 @@ const Menu = function (placeHolder, translator, dispatch, { menuItems }) {
   translate();
   dispatch.on("translate.menu", () => {
     translate();
+  });
+
+  d3.select(window).on("resize.menu", () => {
+    this.selectedMenuItem = null;
+    selectMenuItem({});
+    switchHowTo.call(this);
   });
 
   function translate() {
@@ -51,14 +67,9 @@ const Menu = function (placeHolder, translator, dispatch, { menuItems }) {
   }
 
   function switchHowTo() {
-    this.isHowToVisible = !this.isHowToVisible;
-    placeHolder.select(".how-to-modal.desktop").attr("hidden", this.isHowToVisible ? null : true);
-    placeHolder.select(".how-to-content.mobile").attr("hidden", this.isHowToVisible ? null : true);
-
     const howToContentEmpty = this.howToContent.node().children.length <= 0;
-    const howToMobileContentEmpty = this.howToMobileContent.node().children.length <= 0;
 
-    if (this.isHowToVisible) {
+    if (howToContentEmpty) {
       const content = document.createElement('div');
       const contentMobile = document.createElement('div');
       const vimeoContent = `<iframe src="https://player.vimeo.com/video/231885967"
@@ -69,19 +80,21 @@ const Menu = function (placeHolder, translator, dispatch, { menuItems }) {
 
       content.innerHTML = vimeoContent;
       contentMobile.innerHTML = vimeoContent;
-
-      if (howToContentEmpty) {
-        this.howToContent.node().appendChild(content);
-      }
-
-      if (howToMobileContentEmpty) {
-        this.howToMobileContent.node().appendChild(contentMobile);
-      }
+      this.howToContent.node().appendChild(content);
     }
+
   }
 
+  function selectMenuItem(d) {
+    _this.selectedMenuItem = d.menu_label === _this.selectedMenuItem ? null : d.menu_label;
+    placeHolder.selectAll(".nav-expandable-item a.menu-item")
+      .classed("active", d => _this.selectedMenuItem === d.menu_label);
+  }
+  
   function fillMenuItem(item) {
     const menuItem = item.datum();
+    const a = item.select("a.menu-item");
+    a.on("click", d => selectMenuItem(d));
     const itemTemplate = item.select(".expanded-column-item");
     for (let item of menuItem.children) {
       itemTemplate.clone(true)

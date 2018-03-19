@@ -31,6 +31,14 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, sele
   dispatch.on("toolChanged.chartSwitcher", d => {
     toolChanged(d);
   })
+  
+  d3.select(window).on("resize.chartSwitcher", () => switchTools.call(this, false));
+  d3.select(window).on("click.chartSwitcher", () => {
+    const event = d3.event;
+    if (this.areToolsOpen && event.target && (event.target !== switcher.node())) {
+      switchTools.call(this, false);
+    }
+  });
 
   function translate() {
     const selectedToolConfig = tools.filter(({id}) => id === selectedTool)[0];
@@ -47,8 +55,8 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, sele
     .attr("hidden", _d => _d.id === tool.id ? true : null)
   }
 
-  function switchTools() {
-    this.areToolsOpen = !this.areToolsOpen;
+  function switchTools(force) {
+    this.areToolsOpen = force || force === false ? force : !this.areToolsOpen;
     placeHolder.select(".chart-switcher-options").attr("hidden", this.areToolsOpen ? null : true);
   }
 
