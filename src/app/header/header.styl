@@ -53,10 +53,10 @@ a
     white-space nowrap
     overflow hidden
     get-global-margin-left()
-    flex 1.5 0 0
+    flex 1.5 0 0px
     min-width 160px
     +for_breakpoint(small)
-      flex 1.5 0
+      flex none
       order -2
       padding 3px
 
@@ -81,19 +81,21 @@ a
       top 2px
 
   .how-to-use
-    flex 2 0 0;
+    flex 2 0 0px;
     min-width 320px
     +for_breakpoint(small)
+      flex none
       width: 100%
 
   .social
-    flex 1 0 0;
+    flex 1 0 0px;
     min-width 215px
     
     .flow-container
       justify-content flex-end
     
     +for_breakpoint(small)
+      flex none
       width 100%
       
       .flow-container
@@ -112,7 +114,7 @@ a
 
   .menu-mobile
     align-self: flex-end;
-    flex 1 0 0;
+    flex 1 0 0px;
     min-width 100px
 
     +for_breakpoint(not-small)

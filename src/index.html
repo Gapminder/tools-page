@@ -22,15 +22,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link href="favicon.ico" rel="shortcut icon">
 
-  <link rel="stylesheet" href="assets/vizabi.css">
-  <link rel="stylesheet" href="assets/barrankchart.css">
-  <link rel="stylesheet" href="assets/bubblechart.css">
-  <link rel="stylesheet" href="assets/mountainchart.css">
-  <link rel="stylesheet" href="assets/linechart.css">
-  <link rel="stylesheet" href="assets/bubblemap.css">
-  <link rel="stylesheet" href="assets/popbyage.css">
-
-  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="wrapper">
@@ -44,7 +35,7 @@
           <div class="menu-mobile">
             <div class="flow-container" style="justify-content: flex-end">
               <div class="social-share-icon">
-                <i class="fa fa-share-alt icon"></i>
+                <span class="fa fa-share-alt icon"></span>
               </div>
               <div class="menu-icon">
                 <div class="icon"></div>
@@ -154,103 +145,6 @@
   })();
 </script>
 <!-- End Inspectlet Embed Code -->
-
-<script type="text/javascript" src='assets/vendor/js/d3/d3.js'></script>
-<script type="text/javascript" src='assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader.js'></script>
-<script type="text/javascript" src='assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js'></script>
-<script type="text/javascript" src='assets/js/urlon.js'></script>
-<script type="text/javascript" src='assets/js/url.js'></script>
-<script type="text/javascript" src="tools.js"></script>
-
-<script>
-//URLON
-var urlon = urlonMaker();
-var poppedState = null;
-//WS reader integration
-var wsReader = WsReader.WsReader.getReader();
-Vizabi.Reader.extend("waffle", wsReader);
-//DDFCSV reader integration
-var ddfReader = new DDFCsvReader.getDDFCsvReaderObject()
-Vizabi.Reader.extend("ddf", ddfReader);
-var viz = null;
-var VIZABI_MODEL = {};
-
-function setLocale(arg) {
-  if (!arg) arg = appState.language;
-  if (!viz || !viz.model) return;
-  viz.model.locale.id = arg;
-  appState.language = arg;
-}
-
-function setTool(arg) {
-    if (!arg) arg = appState.tool;
-    Vizabi.clearInstances();
-    d3.select(".vzb-placeholder").remove();
-    d3.select("body").select(".column.main").select(".vizabi-placeholder")
-      .append("div")
-      .attr("class", "vzb-placeholder")
-      .attr("style", "width: 100%; height: 100%;");
-    toolConfig = toolsPage.toolset.filter(({id}) => id === arg)[0];
-    loadJS(`assets/js/toolconfigs/${toolConfig.config || toolConfig.tool}.js` , function() {
-        VIZABI_MODEL.locale = {
-            "id": appState.language,
-            "filePath": "assets/translation/"
-        };
-        VIZABI_MODEL.bind = {
-            'ready': function(evt) {
-                updateURL();
-            },
-            'persistentChange': function(evt) {
-                updateURL(evt); // force update
-            }
-        }
-        //VIZABI_MODEL.data = VIZABI_MODEL.data || 
-        const dataSources = toolsPage.datasources.filter(({toolIds}) => toolIds.includes(toolConfig.id))
-        Object.assign(VIZABI_MODEL, dataSources.length > 1 ?
-          dataSources.reduce((result, ds, index) => {
-            result["data_" + (index ? index : "")] = ds.datasource;
-            return result;
-          }, {})
-        : { data: dataSources[0].datasource })
-        VIZABI_PAGE_MODEL = Vizabi.utils.deepExtend({}, VIZABI_MODEL);
-        delete VIZABI_PAGE_MODEL.bind;
-        delete VIZABI_PAGE_MODEL.locale.id;
-        viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, VIZABI_MODEL, URLI.model, true));
-    }, document.body);
-    appState.tool = arg;
-}
-
-var loadJS = function(url, implementationCode, location) {
-    //url is URL of external file, implementationCode is the code
-    //to be called from the file, location is the location to 
-    //insert the <script> element
-    var scriptTag = document.createElement('script');
-    scriptTag.src = url;
-    scriptTag.onload = implementationCode;
-    scriptTag.onreadystatechange = implementationCode;
-    location.appendChild(scriptTag);
-};
-window.addEventListener('popstate', function(e) {
-    console.log(e, Vizabi.utils.diffObject());
-    if (e.state) {
-        console.log("model diff", Vizabi.utils.diffObject(e.state.model, viz.getModel()));
-        poppedState = e.state.model;
-        viz.setModel(e.state.model);
-    } else {
-        poppedState = null;
-    }
-});
-
-var tools = toolsPage.toolset.filter(({tool}) => !!tool).map(({id}) => id);
-parseURL();
-var appState = {
-  tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
-  language: ((URLI.model || {}).locale || {}).id || "en"
-};
-setTool();
-</script>
-
-<script type="text/javascript" src="toolspage.js"></script>
 
 </body>
 </html>
