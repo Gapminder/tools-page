@@ -5,11 +5,31 @@ const poststylus = require('poststylus');
 const postcssUrl = require('postcss-url');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StylusLoaderPlugin = require('stylus-loader');
 const customLoader = require('custom-loader');
 
 const __PROD__ = process.env.NODE_ENV === 'production';
+
+const htmlAssets = [
+  "assets/vizabi.css",
+  "assets/barrankchart.css",
+  "assets/bubblechart.css",
+  "assets/mountainchart.css",
+  "assets/linechart.css",
+  "assets/bubblemap.css",
+  "assets/popbyage.css" 
+];
+  
+if(!__PROD__) htmlAssets.push(
+  'assets/vendor/js/d3/d3.js',
+  'assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader.js',
+  'assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js',
+  'assets/vendor/js/urlon/urlon.js'
+);
+
 const sep = '\\' + path.sep;
 const stats = {
   colors: true,
@@ -45,20 +65,21 @@ const toolspage = {
   devtool: 'source-map',
 
   entry: {
-    toolspage: path.resolve('src', 'toolspage.js'),
-    tools: path.resolve('src', 'index.js')
+    toolspage: path.resolve('src', 'app', 'app.js'),
+    tools: path.resolve('src', 'index.js'),
   },
-
-  externals: {
-    d3: "d3",
-  },
-
+ 
   output: {
     path: path.resolve(__dirname, 'build', 'tools'),
     filename: '[name].js'
   },
 
   resolve: {
+    alias: {
+      "d3": "d3/build/d3.js",
+      "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
+      "vizabi-ws-reader": "vizabi-ws-reader/dist/vizabi-ws-reader.js",
+    },
     modules: [
       path.resolve(__dirname, 'src'),
       'node_modules',
@@ -66,18 +87,24 @@ const toolspage = {
   },
 
   module: {
+    noParse: /d3|vizabi|urlon/,
+    //common rules
     rules: [
 
       {
-        test: /(d3|web|reader)\.js$/,
+        test: /\.js$/,
         include: [
-          path.resolve(__dirname, 'node_modules'),
+          path.resolve(__dirname, 'src', 'app')
         ],
-        loader: 'file-loader',
-        query: {
-          name: 'assets/vendor/js/[1]/[name].[ext]',
-          regExp: new RegExp(`${sep}node_modules${sep}([^${sep}]+?)${sep}`),
-        }
+        loaders: [
+          {
+            loader: 'babel-loader',
+            query: {
+              cacheDirectory: !__PROD__,
+              presets: ['env']
+            }
+          }
+        ]
       },
 
       {
@@ -109,6 +136,10 @@ const toolspage = {
           use: [
             {
               loader: 'css-loader',
+              options: {
+                minimize: __PROD__,
+                sourceMap: true
+              }
             },
             {
               loader: 'stylus-loader',
@@ -124,7 +155,7 @@ const toolspage = {
                       }
                     }
                   })
-                ])]
+                ], 'autoprefixer')]
               }
             }
           ]
@@ -195,17 +226,6 @@ const toolspage = {
 
       {
         test: /\.html$/,
-        include: [
-          path.resolve(__dirname, 'src', 'index.html')
-        ],
-        loader: 'file-loader',
-        query: {
-          name: '[name].[ext]'
-        }
-      },
-
-      {
-        test: /\.html$/,
         include: [path.resolve(__dirname, 'src', 'app')],
         use: {
           loader: "html-loader",
@@ -220,8 +240,13 @@ const toolspage = {
         include: [
           path.resolve(__dirname, 'node_modules'),
         ],
-        loaders: [
-          'file-loader?name=assets/js/toolconfigs/[name].js',
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: 'assets/js/toolconfigs/[name].js',
+            publicPath: deployUrl
+          }
+        },
           'custom-loader?name=tool-config-loader',
         ],
       },
@@ -253,10 +278,12 @@ const toolspage = {
         to: path.resolve(path.resolve(__dirname, 'build', 'tools', 'data')),
       }
     ]),
-    // new HtmlWebpackPlugin({  // Also generate a test.html
-    //   filename: 'index.html',
-    //   template: 'src/index.html'
-    // })
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'src/index.html',
+    }),
+    new HtmlWebpackIncludeAssetsPlugin({ 
+      assets: htmlAssets, append: false })
   ],
 
   stats,
@@ -274,5 +301,66 @@ const toolspage = {
   },
 
 };
+
+if (__PROD__) {
+  toolspage.entry["vendor"] = ["d3", "urlon"];
+//  toolspage.entry["vizabi"] = ["vizabi"];
+
+  toolspage.module.rules = [
+    {
+      test: /ddfcsv-reader\.js$/,
+      include: [
+        path.resolve(__dirname, 'node_modules'),
+      ],
+    use: 'exports-loader?DDFCsvReader'
+    },
+
+    {
+      test: /ws-reader\.js$/,
+      include: [
+        path.resolve(__dirname, 'node_modules'),
+      ],
+    use: 'exports-loader?WsReader'
+    }
+  ].concat(toolspage.module.rules);
+
+  toolspage.plugins.push(
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "vendor",  
+      minChunks: Infinity,
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      compressor: {
+        screw_ie8: true,
+        warnings: false
+      },
+      mangle: {
+        screw_ie8: true
+      },
+      output: {
+        comments: false,
+        screw_ie8: true
+      }
+    })
+  );
+} else {
+  toolspage.module.rules = [
+    {
+      test: /(d3|web|reader|urlon)\.js$/,
+      include: [
+        path.resolve(__dirname, 'node_modules'),
+      ],
+      use: [{
+        loader: 'file-loader',
+        options: {
+          name: 'assets/vendor/js/[1]/[name].[ext]',
+          regExp: new RegExp(`${sep}node_modules${sep}([^${sep}]+?)${sep}`),
+          publicPath: deployUrl
+        }
+      }]
+    }
+  ].concat(toolspage.module.rules);
+}
 
 module.exports = [toolspage];

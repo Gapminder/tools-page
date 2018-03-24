@@ -1,19 +1,25 @@
 //import 'styles.styl';
 import './favicon.ico';
 
-import 'vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader';
-import 'vizabi-ws-reader/dist/vizabi-ws-reader';
-import 'd3/build/d3';
+window.d3 = window.d3 || require('d3');
+window.URLON = window.URLON || require('urlon');
+window.Vizabi = window.Vizabi || require('vizabi');
+window.WsReader = window.WsReader || require('vizabi-ws-reader');
+window.DDFCsvReader = window.DDFCsvReader || require('vizabi-ddfcsv-reader');
 
-window.d3 = require('d3');
-window.Vizabi = require('vizabi');
+//WS reader integration
+var wsReader = WsReader.WsReader.getReader();
+Vizabi.Reader.extend("waffle", wsReader);
+//DDFCSV reader integration
+var ddfReader = new DDFCsvReader.getDDFCsvReaderObject()
+Vizabi.Reader.extend("ddf", ddfReader);
+
 require('vizabi-bubblechart');
 require('vizabi-mountainchart');
 require('vizabi-bubblemap');
 require('vizabi-linechart');
 require('vizabi-barrankchart');
 require('vizabi-popbyage');
-require('index.html');
 
 var requireNgToolsPageStyles = require.context('app', true, /\.styl$/);
 requireNgToolsPageStyles.keys().forEach(requireNgToolsPageStyles);
@@ -23,4 +29,4 @@ requireChartConfigs.keys().forEach(requireChartConfigs);
 
 import toolset from 'toolset';
 import datasources from 'datasources';
-window.toolsPage = { toolset, datasources};
+window.toolsPage = { toolset, datasources };

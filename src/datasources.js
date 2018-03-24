@@ -1,4 +1,4 @@
-export default[
+export default [
 {
   "toolIds": ["bubbles", "mountain", "map", "linechart", "barrank"],
   "datasource": {
