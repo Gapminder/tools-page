@@ -5,7 +5,7 @@ import {
 } from "./tool";
 import {
   appState
-} from "./global"
+} from "./global";
 
 var poppedState;
 var URLI = {};
@@ -39,7 +39,7 @@ function updateURL(event) {
     url.model = minModel;
   }
   console.log('pushing state', viz.getModel(), event)
-  window.history.pushState({ tool: url["chart-type"], model: viz.getModel() }, 'Title', "#" + URLON.stringify(url));
+  window.history.pushState({ tool: url["chart-type"], model: viz.getModel() }, 'Title', "#" + urlon.stringify(url));
 }
 
 function parseURL() {
@@ -51,7 +51,7 @@ function parseURL() {
     hash = loc.substring(loc.indexOf('#') + 1);
 
     if(hash) {
-      var parsedUrl = URLON.parse(hash);
+      var parsedUrl = urlon.parse(hash);
 
       URLI = parsedUrl || {};
       return;

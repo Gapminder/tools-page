@@ -1,6 +1,8 @@
 import { setTool } from "./core/tool";
 import { URLI, parseURL } from "./core/url";
 import { appState, dispatch } from "./core/global";
+import { upgradeUrl } from "./core/deprecated-url";
+
 import {
   translator,
   setLanguage,
@@ -19,6 +21,12 @@ import relatedItems from "./core/related-items";
 import BitlyService from "./core/bitly.service";
 import RelatedItems from "./related-items/related-items";
 import Footer from "./footer/footer";
+
+const url = location.href;
+const upgradedUrl = upgradeUrl(url);
+if (upgradedUrl !== url) {
+  location.replace(upgradedUrl);
+}
 
 var tools = toolsPage.toolset.filter(function(f) { return !!f.tool; }).map(function(m) { return m.id; });
 parseURL();

@@ -7,7 +7,7 @@
     "start": "npm run dev",
     "build": "npm run prebuild && cross-env NODE_ENV=development webpack --progress --debug",
     "build:prod": "npm run prebuild && cross-env NODE_ENV=production webpack",
-    "dev": "npm run prebuild && webpack-dev-server --progress",
+    "dev": "npm run prebuild && webpack-dev-server --progress --debug",
     "prod": "npm run prebuild && cross-env NODE_ENV=production webpack && ./node_modules/.bin/http-server build -p 4200",
     "serve": "./node_modules/.bin/http-server build -p 4200",
     "prebuild": "./copy_css.sh",
@@ -35,7 +35,7 @@
     "vizabi-mountainchart": "2.0.3-3",
     "vizabi-popbyage": "2.0.2-5",
     "vizabi-ws-reader": "2.2.1",
-    "urlon": "2.0.1"
+    "urlon": "3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^8.1.0",
