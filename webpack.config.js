@@ -27,7 +27,7 @@ if(!__PROD__) htmlAssets.push(
   'assets/vendor/js/d3/d3.js',
   'assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader.js',
   'assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js',
-  'assets/vendor/js/urlon/urlon.js'
+  'assets/vendor/js/urlon/urlon.umd.js'
 );
 
 const sep = '\\' + path.sep;
@@ -77,6 +77,7 @@ const toolspage = {
   resolve: {
     alias: {
       "d3": "d3/build/d3.js",
+      "urlon": "urlon/dist/urlon.umd.js",
       "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
       "vizabi-ws-reader": "vizabi-ws-reader/dist/vizabi-ws-reader.js",
     },
@@ -281,8 +282,10 @@ const toolspage = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/index.html',
+      chunks: ["vendor", "tools", "toolspage"],
+      chunksSortMode: 'manual'
     }),
-    new HtmlWebpackIncludeAssetsPlugin({ 
+    new HtmlWebpackIncludeAssetsPlugin({
       assets: htmlAssets, append: false })
   ],
 
@@ -347,7 +350,7 @@ if (__PROD__) {
 } else {
   toolspage.module.rules = [
     {
-      test: /(d3|web|reader|urlon)\.js$/,
+      test: /(d3|web|reader|urlon\.umd)\.js$/,
       include: [
         path.resolve(__dirname, 'node_modules'),
       ],

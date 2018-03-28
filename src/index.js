@@ -1,8 +1,8 @@
-//import 'styles.styl';
+import './app/app.styl';
 import './favicon.ico';
 
 window.d3 = window.d3 || require('d3');
-window.URLON = window.URLON || require('urlon');
+window.urlon = window.urlon || require('urlon');
 window.Vizabi = window.Vizabi || require('vizabi');
 window.WsReader = window.WsReader || require('vizabi-ws-reader');
 window.DDFCsvReader = window.DDFCsvReader || require('vizabi-ddfcsv-reader');
@@ -20,9 +20,6 @@ require('vizabi-bubblemap');
 require('vizabi-linechart');
 require('vizabi-barrankchart');
 require('vizabi-popbyage');
-
-var requireNgToolsPageStyles = require.context('app', true, /\.styl$/);
-requireNgToolsPageStyles.keys().forEach(requireNgToolsPageStyles);
 
 var requireChartConfigs = require.context('vizabi-config-systema_globalis/dist', false, /\.json$/);
 requireChartConfigs.keys().forEach(requireChartConfigs);
