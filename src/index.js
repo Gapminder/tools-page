@@ -4,7 +4,7 @@ import './favicon.ico';
 window.d3 = window.d3 || require('d3');
 window.urlon = window.urlon || require('urlon');
 window.Vizabi = window.Vizabi || require('vizabi');
-window.WsReader = window.WsReader || require('vizabi-ws-reader');
+window.WsReader = window.WsReader || require('vizabi-ws-reader-web');
 window.DDFCsvReader = window.DDFCsvReader || require('vizabi-ddfcsv-reader');
 
 //WS reader integration

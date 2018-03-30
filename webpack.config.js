@@ -25,7 +25,7 @@ const htmlAssets = [
   
 if(!__PROD__) htmlAssets.push(
   'assets/vendor/js/d3/d3.js',
-  'assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader.js',
+  'assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader-web.js',
   'assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js',
   'assets/vendor/js/urlon/urlon.umd.js'
 );
@@ -79,7 +79,7 @@ const toolspage = {
       "d3": "d3/build/d3.js",
       "urlon": "urlon/dist/urlon.umd.js",
       "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
-      "vizabi-ws-reader": "vizabi-ws-reader/dist/vizabi-ws-reader.js",
+      "vizabi-ws-reader-web": "vizabi-ws-reader/dist/vizabi-ws-reader-web.js",
     },
     modules: [
       path.resolve(__dirname, 'src'),
@@ -319,7 +319,7 @@ if (__PROD__) {
     },
 
     {
-      test: /ws-reader\.js$/,
+      test: /ws-reader-web\.js$/,
       include: [
         path.resolve(__dirname, 'node_modules'),
       ],
