@@ -23,6 +23,24 @@
   <link href="favicon.ico" rel="shortcut icon">
 
 </head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67908993-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  
+  var user_id = Math.round(10000000000*Math.random());
+  var gaEnabled = location.hostname.indexOf("gapminder.org") > -1;
+  if (gaEnabled) gtag('config', 'UA-67908993-1', {
+    'user_id': user_id
+  });
+  gtag('config', 'UA-67908993-5', {
+    'user_id': user_id
+  });
+</script>  
+
 <body>
   <div class="wrapper">
 
@@ -108,31 +126,29 @@
 //  }
 </script>
 <script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-      (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-
-  var gaEnabled = ['dev', 'stage', 'localhost'].every(function (env) {
-    return location.hostname.indexOf(env) === -1;
-  });
-
-  if (gaEnabled) {
-    ga('create', 'UA-67908993-1', 'auto', 'toolsPageTracker');
-    ga('toolsPageTracker.send', 'pageview');
-  }
+//  (function (i, s, o, g, r, a, m) {
+//    i['GoogleAnalyticsObject'] = r;
+//    i[r] = i[r] || function () {
+//      (i[r].q = i[r].q || []).push(arguments)
+//    }, i[r].l = 1 * new Date();
+//    a = s.createElement(o),
+//      m = s.getElementsByTagName(o)[0];
+//    a.async = 1;
+//    a.src = g;
+//    m.parentNode.insertBefore(a, m)
+//  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+//
+//
+//  var gaEnabled = true || location.hostname.indexOf("gapminder.org") > -1;
+//
+//  if (gaEnabled) {
+//    ga('create', 'UA-67908993-5', 'auto', 'toolsPageTracker');
+//    ga('toolsPageTracker.send', 'pageview');
+//  }
 
 </script>
 
-<!-- Begin Inspectlet Embed Code -->
+<!-- Begin Inspectlet Embed Code 
 <script type="text/javascript" id="inspectletjs">
   (function() {
     if (!gaEnabled) {
@@ -144,7 +160,7 @@
     setTimeout(ldinsp, 0);
   })();
 </script>
-<!-- End Inspectlet Embed Code -->
+ End Inspectlet Embed Code -->
 
 </body>
 </html>

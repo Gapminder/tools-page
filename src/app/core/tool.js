@@ -6,6 +6,7 @@ import {
   updateURL
 } from "./url";
 import { loadJS } from "./utils";
+import timeLogger from "./timelogger";
 
 let viz;
 let VIZABI_PAGE_MODEL;
@@ -26,13 +27,60 @@ function setTool(arg) {
       };
       VIZABI_MODEL.bind = {
           'ready': function(evt) {
+              var splashTime = timeLogger.snapOnce("SPLASH");            
+              if (gtag && splashTime) gtag('event', 'timing_complete', {
+                'name' : 'splashload',
+                'value' : splashTime,
+                'event_category' : 'Vizabi timings',
+                'event_label' : 'splashload'
+              });
+
+              var fullTime = timeLogger.snapOnce("FULL");
+              if (gtag && fullTime) gtag('event', 'timing_complete', {
+                'name' : 'allyearsload',
+                'value' : fullTime,
+                'event_category' : 'Vizabi timings',
+                'event_label' : 'allyearsload'
+              });
+            
+              timeLogger.add("FULL");
+              timeLogger.add("DATA");
+              timeLogger.update("DATA");
+            
               updateURL();
           },
           'persistentChange': function(evt) {
               updateURL(evt); // force update
+          },
+          'load_error': function(evt, error) {            
+            if (gtag) gtag('event', 'error', {
+              'event_label': JSON.stringify(error).substring(0, 500), 
+              'event_category': this._name
+            });
+            if (gtag) gtag('event', 'exception', {
+              'description': JSON.stringify(error).substr(0,150), 
+              'fatal': true
+            });
+          },
+          'dataLoaded': function() {
+            var dataTime = timeLogger.snapOnce("DATA");
+            if (gtag && dataTime) gtag('event', 'timing_complete', {
+              'name' : 'gapfill',
+              'value' : dataTime,
+              'event_category' : 'Vizabi timings',
+              'event_label' : 'gapfill'
+            });
+
+            var totalTime = timeLogger.snapOnce("TOTAL");
+            if (gtag && totalTime) gtag('event', 'timing_complete', {
+              'name' : 'loadtotal',
+              'value' : totalTime,
+              'event_category' : 'Vizabi timings',
+              'event_label' : 'loadtotal'
+            });
           }
       }
-      //VIZABI_MODEL.data = VIZABI_MODEL.data || 
+
       const dataSources = toolsPage.datasources.filter(function(f) { return f.toolIds.includes(toolConfig.id); });
       Object.assign(VIZABI_MODEL, dataSources.length > 1 ?
         dataSources.reduce(function(result, ds, index) {
