@@ -1,16 +1,16 @@
-import { $, ElementFinder, browser } from 'protractor';
-import { _$, _$$, ExtendedElementFinder, ExtendedArrayFinder } from '../../helpers/ExtendedElementFinder';
+import { browser } from 'protractor';
+import { _$, ExtendedElementFinder } from '../../helpers/ExtendedElementFinder';
 import { waitForPageLoaded, waitForSpinner, waitForUrlToChange } from '../../helpers/helper';
 import { waitUntil } from '../../helpers/waitHelper';
 
 export class Header {
   private isDesktop: boolean = browser.params.desktop;
-  
+
   rootSelector: ExtendedElementFinder = this.isDesktop ? _$('.header') : _$('[class="mobile"]');
   /**
    * Social buttons
    */
-  
+
   social: ExtendedElementFinder = this.isDesktop ? this.rootSelector._$('.social.desktop') : this.rootSelector._$('.social-list.mobile');
   mailButton: ExtendedElementFinder = this.social._$('.mail.button');
   mailLink: ExtendedElementFinder = this.social._$('app-social-buttons > a');
@@ -36,8 +36,9 @@ export class Header {
 
   async switchToChart(chartUrl: string): Promise<void> {
     await this.chartSwitcherBtn.safeClick();
+    const currentUrl = await browser.getCurrentUrl();
     await _$(`.chart-switcher-options [href='/tools/${chartUrl}']`).safeClick();
-    await waitForUrlToChange();
+    await waitForUrlToChange(currentUrl);
     await waitForPageLoaded();
   }
 
@@ -56,8 +57,9 @@ export class Header {
     await this.openOnMobile();
 
     await this.languageSwitcherBtn.safeClick();
+    const currentUrl = await browser.getCurrentUrl();
     await language.safeClick();
-    await waitForUrlToChange();
+    await waitForUrlToChange(currentUrl);
     await waitForSpinner();
     await this.closeOnMobile();
   }

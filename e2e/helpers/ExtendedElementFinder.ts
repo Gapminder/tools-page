@@ -1,15 +1,10 @@
-import {
-  $, $$, browser, by, By, element, ElementArrayFinder, ElementFinder,
-  ExpectedConditions as EC
-} from 'protractor';
+import { $, $$, browser, by, element, ElementArrayFinder, ElementFinder, ExpectedConditions as EC } from 'protractor';
 import { promise } from 'selenium-webdriver';
-import { waitUntil } from './waitHelper';
-import { WebdriverWebElement } from 'protractor/built/element';
 
 const TIMEOUT = 15000;
 
 export class ExtendedElementFinder extends ElementFinder {
-  private errorMessage = `element ${this.locator().value} not visible`;
+  private errorMessage = `element ${this.locator().value || 'searched by text'} not visible`;
 
   constructor(elementFinder: ElementFinder) {
     super(elementFinder.browser_, elementFinder.elementArrayFinder_);
@@ -35,18 +30,20 @@ export class ExtendedElementFinder extends ElementFinder {
 
   typeText(text: string): promise.Promise<void> {
     return browser.wait(EC.presenceOf(this), TIMEOUT).then(() => {
-      return browser.wait(EC.elementToBeClickable(this), TIMEOUT, this.errorMessage)
-        .then(() => {
-          return this.clear().then(() => {
-            return this.sendKeys(text);
-          });
+      return browser.wait(EC.elementToBeClickable(this), TIMEOUT, this.errorMessage).then(() => {
+        return this.clear().then(() => {
+          return this.sendKeys(text);
         });
+      });
     });
   }
 
   hover(): promise.Promise<void> {
     return browser.wait(EC.visibilityOf(this), TIMEOUT, this.errorMessage).then(() => {
-      return browser.actions().mouseMove(this).perform();
+      return browser
+        .actions()
+        .mouseMove(this)
+        .perform();
     });
   }
 
@@ -79,15 +76,22 @@ export class ExtendedElementFinder extends ElementFinder {
   // TODO think about this, because for now it looks weird
   dragAndDrop(to: any): promise.Promise<void> {
     return browser.wait(EC.visibilityOf($(this.locator().value)), TIMEOUT, this.errorMessage).then(() => {
-      return browser.actions().dragAndDrop(this, to).perform();
+      return browser
+        .actions()
+        .dragAndDrop(this, to)
+        .perform();
     });
   }
 }
 
-
 export class ExtendedArrayFinder extends ElementArrayFinder {
   constructor(elementArrayFinder: ElementArrayFinder) {
-    super(elementArrayFinder.browser_, elementArrayFinder.getWebElements, elementArrayFinder.locator(), elementArrayFinder.actionResults_);
+    super(
+      elementArrayFinder.browser_,
+      elementArrayFinder.getWebElements,
+      elementArrayFinder.locator(),
+      elementArrayFinder.actionResults_
+    );
   }
 
   get(index: number): ExtendedElementFinder {
@@ -103,7 +107,9 @@ export class ExtendedArrayFinder extends ElementArrayFinder {
   }
 
   findElementByText(searchText: string): ExtendedElementFinder {
-    return new ExtendedElementFinder(element.all(by.cssContainingText(this.first().locator().value, searchText)).first());
+    return new ExtendedElementFinder(
+      element.all(by.cssContainingText(this.first().locator().value, searchText)).first()
+    );
   }
 
   safeGetAttribute(attr: string): promise.Promise<string> {
@@ -118,7 +124,6 @@ export class ExtendedArrayFinder extends ElementArrayFinder {
     });
   }
 }
-
 
 export function _$(cssSelector: string): ExtendedElementFinder {
   // only css selector supported

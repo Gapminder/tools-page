@@ -1,4 +1,4 @@
-import { $, $$, browser, ElementArrayFinder, ExpectedConditions as EC } from 'protractor';
+import { $, $$, browser, ElementArrayFinder } from 'protractor';
 
 import { CommonChartPage } from './common-chart.po';
 import { _$, _$$, ExtendedArrayFinder, ExtendedElementFinder } from '../../helpers/ExtendedElementFinder';
@@ -84,7 +84,7 @@ export class RankingsChart extends CommonChartPage {
     return browser.executeScript(function (selector) {
       const bars = document.querySelectorAll(`${selector}`);
       const pattern = /(translate\(0, )|(\))/g;
-      
+
       return [...bars].map(el => [el.getAttribute('transform'), el.getAttribute('id')])
       .sort((a, b) => Number(a[0].replace(pattern, '')) - Number(b[0].replace(pattern, '')))
       .slice(0, 10)

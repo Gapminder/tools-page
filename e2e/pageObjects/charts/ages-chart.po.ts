@@ -1,9 +1,8 @@
-import { $, $$, browser, ElementArrayFinder, ElementFinder, ExpectedConditions as EC } from 'protractor';
+import { $, $$ } from 'protractor';
 
 import { CommonChartPage } from './common-chart.po';
 import { _$, _$$, ExtendedArrayFinder, ExtendedElementFinder } from '../../helpers/ExtendedElementFinder';
-import { ActionSequence, promise } from 'selenium-webdriver';
-import { safeDragAndDrop } from '../../helpers/helper';
+import { promise } from 'selenium-webdriver';
 
 export class AgesChart extends CommonChartPage {
   url = 'chart-type=popbyage';

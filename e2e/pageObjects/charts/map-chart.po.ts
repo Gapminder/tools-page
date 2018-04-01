@@ -1,4 +1,4 @@
-import { $, $$, ElementArrayFinder, ElementFinder, browser, ExpectedConditions as EC } from 'protractor';
+import { $, browser, ElementArrayFinder, ElementFinder, ExpectedConditions as EC } from 'protractor';
 
 import { CommonChartPage } from './common-chart.po';
 import { _$, _$$, ExtendedArrayFinder, ExtendedElementFinder } from '../../helpers/ExtendedElementFinder';
