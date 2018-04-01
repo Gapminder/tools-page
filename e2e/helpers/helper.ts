@@ -1,9 +1,6 @@
-import { browser, by, element, ElementArrayFinder, ElementFinder, ExpectedConditions as EC } from 'protractor';
-import { WebElement } from 'selenium-webdriver';
+import { browser, ElementFinder, ExpectedConditions as EC } from 'protractor';
 
 import { CommonChartPage } from '../pageObjects/charts/common-chart.po';
-import { waitUntil } from './waitHelper';
-import { WebdriverWebElement } from 'protractor/built/element';
 
 const MAX_TIMEOUT = 30000;
 const TIMEOUT = 15000;
@@ -42,17 +39,13 @@ export function safeExpectIsDispayed(element: ElementFinder, interval?: number) 
 }
 
 export function waitForSliderToBeReady() {
-  return browser.wait(EC.visibilityOf(CommonChartPage.sliderReady), MAX_TIMEOUT);
+  return browser.wait(EC.visibilityOf(CommonChartPage.sliderReady), MAX_TIMEOUT, 'slider is not ready');
 }
 
-export async function waitForUrlToChange() {
-  const currentUrl = await browser.getCurrentUrl();
+export async function waitForUrlToChange(currentUrl?: string) {
+  const _currentUrl = currentUrl || await browser.getCurrentUrl();
 
-  return browser.wait(() => {
-    return browser.getCurrentUrl().then(url => {
-      return url !== currentUrl;
-    });
-  }, MAX_TIMEOUT, 'URL not changed');
+  return browser.wait(EC.not(EC.urlIs(_currentUrl)), MAX_TIMEOUT, 'URL not changed');
 }
 
 export function isCountryAddedInUrl(country: string, state = true): Function {
@@ -86,5 +79,5 @@ export function disableAnimations() {
     '-ms-transition: none !important' +
     'transition: none !important' +
     '}';
-  document.getElementsByTagName('head')[0].appendChild(style);`)
+  document.getElementsByTagName('head')[0].appendChild(style);`);
 }

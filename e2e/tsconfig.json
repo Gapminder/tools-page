@@ -2,6 +2,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "declaration": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "module": "commonjs",

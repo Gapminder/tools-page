@@ -2,13 +2,15 @@ import { $, $$, browser, ElementArrayFinder, ElementFinder, ExpectedConditions a
 
 import {
   disableAnimations,
-  safeOpen, waitForPageLoaded, waitForSliderToBeReady, waitForSpinner,
+  safeOpen,
+  waitForPageLoaded,
+  waitForSliderToBeReady,
+  waitForSpinner,
   waitForUrlToChange
 } from '../../helpers/helper';
 import { _$, _$$, ExtendedArrayFinder, ExtendedElementFinder } from '../../helpers/ExtendedElementFinder';
-import { promise } from 'selenium-webdriver';
 import { waitUntil } from '../../helpers/waitHelper';
-import { TreeMenuModal } from '../sidebar/treeMenuModal.e2e-component';
+import { TreeMenuModal } from '../components/sidebarComponents';
 
 export class CommonChartPage {
   static countries = {
@@ -39,13 +41,6 @@ export class CommonChartPage {
   public static spinner: ElementFinder = $('.vzb-loading-data');
   public static sliderReady: ElementFinder = $('.domain.rounded');
   public movingSliderProgress: ElementArrayFinder = $$('.domain.rounded');
-  public mapsChart: ElementFinder = $('a[href*="map"]');
-  public bubblesChart: ElementFinder = $('a[href*="bubbles"]');
-  public linesChart: ElementFinder = $('a[href*="linechart"]');
-  public mountainsChart: ElementFinder = $('a[href*="mountain"]');
-  public rankingsChart: ElementFinder = $('a[href*="barrank"]');
-  public pageHeader: ElementFinder = $('.header');
-  public axisSearchInput: ExtendedElementFinder = _$('.vzb-treemenu-search');
 
   yAxisBtn: ExtendedElementFinder = _$('.vzb-bc-axis-y-title');
   xAxisBtn: ExtendedElementFinder = _$('.vzb-bc-axis-x-title');
@@ -81,7 +76,7 @@ export class CommonChartPage {
     if (!currentUrl.match(this.url)) {
       await this.chartLink.safeClick();
 
-      return await waitForUrlToChange();
+      return await waitForUrlToChange(currentUrl);
     }
   }
 

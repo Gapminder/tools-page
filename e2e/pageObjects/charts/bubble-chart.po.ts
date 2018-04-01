@@ -2,7 +2,7 @@ import { $, $$, browser, ElementArrayFinder, ElementFinder, ExpectedConditions a
 
 import { CommonChartPage } from './common-chart.po';
 import { _$, _$$, ExtendedArrayFinder, ExtendedElementFinder } from '../../helpers/ExtendedElementFinder';
-import { isCountryAddedInUrl, waitForUrlToChange, safeDragAndDrop } from '../../helpers/helper';
+import { isCountryAddedInUrl, safeDragAndDrop } from '../../helpers/helper';
 import { waitUntil } from '../../helpers/waitHelper';
 
 export class BubbleChart extends CommonChartPage {
@@ -191,7 +191,7 @@ export class BubbleChart extends CommonChartPage {
     return safeDragAndDrop(this.selectedCountryLabel, { x: x, y: y });
   }
 
-  async clickXiconOnBubble(country: string): Promise<{}> {
+  async clickXiconOnBubble(country?: string): Promise<{}> {
     await this.selectedBubbleLabel.hover();
     await this.xIconOnBubble.safeClick();
 

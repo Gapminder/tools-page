@@ -1,6 +1,6 @@
 import { $, browser, ElementFinder, ExpectedConditions as EC } from 'protractor';
 
-import { CommonChartPage } from '../charts/common-chart.po';
+import { CommonChartPage } from '../charts';
 import { _$, ExtendedElementFinder } from '../../helpers/ExtendedElementFinder';
 import { safeDragAndDrop } from '../../helpers/helper';
 
@@ -23,11 +23,14 @@ export class Slider {
 
   async dragToMiddle(): Promise<{}> {
     await this.waitForSliderToBeReady();
-    
-    const windowSize = await browser.driver.manage().window().getSize();
+
+    const windowSize = await browser.driver
+      .manage()
+      .window()
+      .getSize();
     let distance: number;
-    windowSize.width > 900 ? distance = -900 : distance = -300;
-    await safeDragAndDrop(this.sliderButton, {x: distance, y: 0});
+    windowSize.width > 900 ? (distance = -900) : (distance = -300);
+    await safeDragAndDrop(this.sliderButton, { x: distance, y: 0 });
 
     return await browser.wait(EC.urlContains('#_state_time_value='), 10000, 'drag slider to middle');
   }
@@ -39,11 +42,9 @@ export class Slider {
     return await browser.wait(EC.urlContains('#_state_time_value='), 10000, 'drag slider to start');
   }
 
-  async dragToRightEdge(): Promise<{}> {
+  async dragToRightEdge(): Promise<void> {
     await this.waitForSliderToBeReady();
     await safeDragAndDrop(this.sliderButton, this.speedStepper);
-
-    return await browser.wait(EC.not(EC.urlContains('#_state_time_value=')), 10000, 'drag slider to right');
   }
 
   async playTimesliderSeconds(seconds: number): Promise<void> {
@@ -57,5 +58,4 @@ export class Slider {
     await this.waitForSliderToBeReady();
     await CommonChartPage.buttonPlay.safeClick();
   }
-
 }

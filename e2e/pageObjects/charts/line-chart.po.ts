@@ -1,7 +1,7 @@
 import { $, $$, browser, ElementArrayFinder, ElementFinder } from 'protractor';
 
 import { CommonChartPage } from './common-chart.po';
-import { isCountryAddedInUrl, waitForSliderToBeReady, waitForSpinner, waitForUrlToChange } from '../../helpers/helper';
+import { isCountryAddedInUrl } from '../../helpers/helper';
 import { Slider } from '../components/slider.e2e-component';
 import { _$, _$$, ExtendedArrayFinder, ExtendedElementFinder } from '../../helpers/ExtendedElementFinder';
 import { waitUntil } from '../../helpers/waitHelper';
@@ -24,12 +24,6 @@ export class LineChart extends CommonChartPage {
   axisValues: ElementArrayFinder = $$('.vzb-lc-axis-x .tick text');
   countriesLines: ElementArrayFinder = $$('.vzb-lc-line');
   linesLabels: ExtendedArrayFinder = _$$('[class="vzb-lc-entity"]');
-
-  public linesChartShowAllButton: ElementFinder = $('.vzb-dialog-button.vzb-show-deselect');
-  public linesChartRightSidePanelCountriesList: ElementArrayFinder = $$('.vzb-show-item.vzb-dialog-checkbox');
-  public linesChartDataDoubtsLabel: ElementArrayFinder = $$('g[class="vzb-data-warning vzb-noexport"]');
-  public linesChartSelectedCountries: ElementArrayFinder = $$('.vzb-lc-label');
-  public advancedControlsRightSidePanelFindButton: ElementFinder = $$('[data-btn="find"]').last();
 
   /**
    * default sidebar elements
