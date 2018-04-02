@@ -31,14 +31,9 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   
-  var user_id = Math.round(10000000000*Math.random());
   var gaEnabled = location.hostname.indexOf("gapminder.org") > -1;
-  if (gaEnabled) gtag('config', 'UA-67908993-1', {
-    'user_id': user_id
-  });
-  gtag('config', 'UA-67908993-5', {
-    'user_id': user_id
-  });
+  if (gaEnabled) gtag('config', 'UA-67908993-1');
+  gtag('config', 'UA-67908993-5');
 </script>  
 
 <body>
