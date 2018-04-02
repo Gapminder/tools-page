@@ -1,4 +1,4 @@
-export default [
+[
   {
     "id": "bubbles",
     "tool": "BubbleChart",
@@ -33,7 +33,7 @@ export default [
     "id": "popbyage",
     "tool": "PopByAge",
     "title": "ages",
-    "image": "/assets/images/chart/ages-chart.png",
+    "image": "/assets/images/chart/ages-chart.png"
   },
   {
     "id": "bubblechart-basic",
@@ -51,6 +51,6 @@ export default [
     "id": "dollar-street",
     "url": "http://www.gapminder.org/dollar-street",
     "image": "/assets/images/chart/dollar-street.png",
-    "title": "dollar_street",
+    "title": "dollar_street"
   }
 ]

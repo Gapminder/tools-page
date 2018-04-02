@@ -5,12 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run dev",
-    "build": "npm run prebuild && cross-env NODE_ENV=development webpack --progress --debug",
-    "build:prod": "npm run prebuild && cross-env NODE_ENV=production webpack",
-    "dev": "npm run prebuild && webpack-dev-server --progress --debug",
-    "prod": "npm run prebuild && cross-env NODE_ENV=production webpack && ./node_modules/.bin/http-server build -p 4200",
+    "build": "cross-env NODE_ENV=development webpack --progress --debug",
+    "build:prod": "cross-env NODE_ENV=production webpack",
+    "dev": "webpack-dev-server --progress --debug",
+    "prod": "cross-env NODE_ENV=production webpack && ./node_modules/.bin/http-server build -p 4200",
     "serve": "./node_modules/.bin/http-server build -p 4200",
-    "prebuild": "./copy_css.sh",
     "e2e:local": "./node_modules/.bin/protractor protractor.conf.js",
     "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
     "ncu-vizabi": "ncu -u vizabi vizabi-barrankchart vizabi-bubblechart vizabi-bubblemap vizabi-config-systema_globalis vizabi-linechart vizabi-mountainchart vizabi-popbyage vizabi-ws-reader && npm i && git add package.json && git commit -m 'chore(package): update vizabis'"

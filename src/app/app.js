@@ -28,7 +28,7 @@ if (upgradedUrl !== url) {
   location.replace(upgradedUrl);
 }
 
-var tools = toolsPage.toolset.filter(function(f) { return !!f.tool; }).map(function(m) { return m.id; });
+var tools = toolsPage_toolset.filter(function(f) { return !!f.tool; }).map(function(m) { return m.id; });
 parseURL();
 Object.assign(appState, {
   tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
@@ -51,7 +51,7 @@ const chartSwitcher = new ChartSwitcher(
   translator,
   dispatch,
   {
-    tools: toolsPage.toolset,
+    tools: toolsPage_toolset,
     selectedTool: appState.tool,
     onClick: d => {
       dispatch.call("toolChanged", null, d)
@@ -80,7 +80,7 @@ const seeAlso = new SeeAlso(
   translator,
   dispatch,
   {
-    tools: toolsPage.toolset,
+    tools: toolsPage_toolset,
     selectedTool: appState.tool,
     onClick: d => {
       dispatch.call("toolChanged", null, d);
