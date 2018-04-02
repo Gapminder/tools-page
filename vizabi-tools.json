@@ -1,0 +1,16 @@
+{
+  "tools": [
+    "bubblechart",
+    "bubblemap",
+    "mountainchart",
+    "linechart",
+    "barrankchart",
+    "popbyage"
+  ],
+  "paths": {
+    "popbyage": {
+      "js": "vizabi-popbyage",
+      "css": "vizabi-popbyage/build/popbyage.css"
+    }
+  }
+}

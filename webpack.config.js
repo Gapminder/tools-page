@@ -13,21 +13,39 @@ const customLoader = require('custom-loader');
 
 const __PROD__ = process.env.NODE_ENV === 'production';
 
-const htmlAssets = [
-  "assets/vizabi.css",
-  "assets/barrankchart.css",
-  "assets/bubblechart.css",
-  "assets/mountainchart.css",
-  "assets/linechart.css",
-  "assets/bubblemap.css",
-  "assets/popbyage.css" 
+const allTools = require(path.resolve(__dirname, "vizabi-tools.json"));
+const toolset = require(path.resolve(__dirname, "src", "toolset.json"));
+const inToolsetTools = Object.keys(toolset.reduce((result, { tool }) => {
+  tool && (result[tool.toLowerCase()] = true);
+  return result;
+}, {}));
+
+function getEntryToolsFilenames() {
+  return (__PROD__ ? inToolsetTools : allTools.tools).reduce((result, tool) => {
+    //js
+    result.push(allTools.paths[tool] && allTools.paths[tool].js || `vizabi-${tool}`);
+    //css
+    result.push(allTools.paths[tool] && allTools.paths[tool].css || `vizabi-${tool}/build/${tool}.css`);
+    return result;
+  }, []);
+}
+
+function getFilterOutToolsRegexp() {
+  const filterOutTools = allTools.tools.filter(tool => !inToolsetTools.includes(tool));
+  return filterOutTools.length ? new RegExp("(" + filterOutTools.join("|") + ")", "i") : null;
+}
+
+const htmlAssets = ["assets/vizabi.css", 
+  ...allTools.tools.map(tool => `assets/${tool}.css`)
 ];
   
 if(!__PROD__) htmlAssets.push(
   'assets/vendor/js/d3/d3.js',
   'assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader-web.js',
   'assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js',
-  'assets/vendor/js/urlon/urlon.umd.js'
+  'assets/vendor/js/urlon/urlon.umd.js',
+  'assets/js/toolset.js',
+  'assets/js/datasources.js'
 );
 
 const sep = '\\' + path.sep;
@@ -52,12 +70,21 @@ const deployUrl = "/tools";
 //const extractSCSS = new ExtractTextPlugin('assets/css/main.css');
 const extractStyl = new ExtractTextPlugin('styles.css');
 
+function varNameWithFileName(prefix) {
+  return function() {
+    const regex = /\b(\w+)\..*$/;
+    return prefix + regex[Symbol.match](this.resourcePath)[1];
+  }
+}
+
 customLoader.loaders = {
   ['tool-config-loader'](source) {
     this.cacheable && this.cacheable();
 
     this.value = [source];
-    return `var VIZABI_MODEL = ${source};`;
+
+    const varName = typeof this.query.varName === "function" ? this.query.varName.apply(this) : this.query.varName;
+    return `var ${varName} = ${source};`;
   }
 };
 
@@ -66,7 +93,9 @@ const toolspage = {
 
   entry: {
     toolspage: path.resolve('src', 'app', 'app.js'),
-    tools: path.resolve('src', 'index.js'),
+    tools: [path.resolve('src', 'index.js'),
+      ...getEntryToolsFilenames()
+    ]
   },
  
   output: {
@@ -215,14 +244,30 @@ const toolspage = {
       },
 
       {
-        test: /\.css$/,
-        include: [
-          path.resolve(__dirname, 'node_modules')
-        ],
-        loader: 'file-loader',
-        query: {
-          name: 'assets/vendor/css/[name].[ext]'
-        }
+        oneOf: [
+          {
+            test: /vizabi.*\.css$/,
+            include: [
+              path.resolve(__dirname, 'node_modules')
+            ],
+            loader: 'file-loader',
+            query: {
+              name: 'assets/[name].[ext]',
+              publicPath: deployUrl
+            }
+          },
+          {
+            test: /\.css$/,
+            include: [
+              path.resolve(__dirname, 'node_modules')
+            ],
+            loader: 'file-loader',
+            query: {
+              name: 'assets/vendor/css/[name].[ext]',
+              publicPath: deployUrl
+            }
+          }
+        ]
       },
 
       {
@@ -248,8 +293,13 @@ const toolspage = {
             publicPath: deployUrl
           }
         },
-          'custom-loader?name=tool-config-loader',
-        ],
+        {
+          loader: 'custom-loader',
+          options: {
+            name: "tool-config-loader",
+            varName: "VIZABI_MODEL"
+          }
+        }],
       },
 
       {
@@ -315,7 +365,7 @@ if (__PROD__) {
       include: [
         path.resolve(__dirname, 'node_modules'),
       ],
-    use: 'exports-loader?DDFCsvReader'
+      use: 'exports-loader?DDFCsvReader'
     },
 
     {
@@ -323,7 +373,7 @@ if (__PROD__) {
       include: [
         path.resolve(__dirname, 'node_modules'),
       ],
-    use: 'exports-loader?WsReader'
+      use: 'exports-loader?WsReader'
     }
   ].concat(toolspage.module.rules);
 
@@ -345,7 +395,8 @@ if (__PROD__) {
         comments: false,
         screw_ie8: true
       }
-    })
+    }),
+    new webpack.IgnorePlugin(getFilterOutToolsRegexp()),
   );
 } else {
   toolspage.module.rules = [
@@ -360,6 +411,27 @@ if (__PROD__) {
           name: 'assets/vendor/js/[1]/[name].[ext]',
           regExp: new RegExp(`${sep}node_modules${sep}([^${sep}]+?)${sep}`),
           publicPath: deployUrl
+        }
+      }]
+    },
+
+    {
+      test: /(toolset|datasources)\.json$/,
+      include: [
+        path.resolve(__dirname, 'src'),
+      ],
+      use: [{
+        loader: 'file-loader',
+        options: {
+          name: 'assets/js/[name].js',
+          publicPath: deployUrl
+        }
+      },
+      {
+        loader: 'custom-loader',
+        options: {
+          name: "tool-config-loader",
+          varName: varNameWithFileName("toolsPage_")
         }
       }]
     }

@@ -19,7 +19,7 @@ function setTool(arg) {
     .append("div")
     .attr("class", "vzb-placeholder")
     .attr("style", "width: 100%; height: 100%;");
-  const toolConfig = toolsPage.toolset.filter(function(f) { return f.id === arg; })[0];
+  const toolConfig = toolsPage_toolset.filter(function(f) { return f.id === arg; })[0];
   loadJS("assets/js/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js" , function() {
       timeLogger.add("TOTAL")
       timeLogger.add("SPLASH");
@@ -80,7 +80,7 @@ function setTool(arg) {
           }
       }
 
-      const dataSources = toolsPage.datasources.filter(function(f) { return f.toolIds.includes(toolConfig.id); });
+      const dataSources = toolsPage_datasources.filter(function(f) { return f.toolIds.includes(toolConfig.id); });
       Object.assign(VIZABI_MODEL, dataSources.length > 1 ?
         dataSources.reduce(function(result, ds, index) {
           result["data_" + (index ? index : "")] = ds.datasource;
