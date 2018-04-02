@@ -21,8 +21,6 @@ function setTool(arg) {
     .attr("style", "width: 100%; height: 100%;");
   const toolConfig = toolsPage.toolset.filter(function(f) { return f.id === arg; })[0];
   loadJS("assets/js/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js" , function() {
-      timeLogger.add("TOTAL")
-      timeLogger.add("SPLASH");
     
       VIZABI_MODEL.locale = {
           "id": appState.language,
@@ -44,7 +42,7 @@ function setTool(arg) {
                 'event_category' : 'Complete data loading time'
               });
             
-              timeLogger.add("FULL");
+              if ((this.ui||{}).splash) timeLogger.add("FULL");
               timeLogger.add("DATA");
               timeLogger.update("DATA");
             
@@ -61,6 +59,13 @@ function setTool(arg) {
             if (gtag) gtag('event', 'exception', {
               'description': JSON.stringify(error).substr(0,150), //150 characters is the limit of GA field
               'fatal': true
+            });
+            
+            var totalTime = timeLogger.snapOnce("TOTAL");
+            if (gtag && totalTime) gtag('event', 'timing_complete', {
+              'name' : 'loadtotal',
+              'value' : totalTime,
+              'event_category' : 'Time to error since vizabi object created'
             });
           },
           'dataLoaded': function() {
@@ -92,6 +97,9 @@ function setTool(arg) {
       delete VIZABI_PAGE_MODEL.locale.id;
       viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, VIZABI_MODEL, URLI.model, true));
   
+      timeLogger.removeAll();
+      timeLogger.add("TOTAL")
+      timeLogger.add((viz.model.ui||{}).splash? "SPLASH" : "FULL");
       if (gaEnabled && gtag) gtag('config', GAPMINDER_TOOLS_GA_ID_PROD, {'page_path': '/' + toolConfig.tool});
       if (gtag) gtag('config', GAPMINDER_TOOLS_GA_ID_DEV, {'page_path': '/' + toolConfig.tool});
     

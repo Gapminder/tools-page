@@ -41,6 +41,10 @@ export default {
   remove: function (key) {
     delete this._values[key];
   },
+  
+  removeAll: function () {
+    this._values = {};
+  },
 
   _now: function () {
     return performance.now();
