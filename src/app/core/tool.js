@@ -34,16 +34,14 @@ function setTool(arg) {
               if (gtag && splashTime) gtag('event', 'timing_complete', {
                 'name' : 'splashload',
                 'value' : splashTime,
-                'event_category' : 'Vizabi timings',
-                'event_label' : 'splashload'
+                'event_category' : 'Splash data loading time'
               });
 
               var fullTime = timeLogger.snapOnce("FULL");
               if (gtag && fullTime) gtag('event', 'timing_complete', {
                 'name' : 'allyearsload',
                 'value' : fullTime,
-                'event_category' : 'Vizabi timings',
-                'event_label' : 'allyearsload'
+                'event_category' : 'Complete data loading time'
               });
             
               timeLogger.add("FULL");
@@ -57,11 +55,11 @@ function setTool(arg) {
           },
           'load_error': function(evt, error) {            
             if (gtag) gtag('event', 'error', {
-              'event_label': JSON.stringify(error).substring(0, 500), 
+              'event_label': JSON.stringify(error).substring(0, 500), //500 characters is the limit of GA field
               'event_category': this._name
             });
             if (gtag) gtag('event', 'exception', {
-              'description': JSON.stringify(error).substr(0,150), 
+              'description': JSON.stringify(error).substr(0,150), //150 characters is the limit of GA field
               'fatal': true
             });
           },
@@ -70,16 +68,14 @@ function setTool(arg) {
             if (gtag && dataTime) gtag('event', 'timing_complete', {
               'name' : 'gapfill',
               'value' : dataTime,
-              'event_category' : 'Vizabi timings',
-              'event_label' : 'gapfill'
+              'event_category' : 'Gap filling time'
             });
 
             var totalTime = timeLogger.snapOnce("TOTAL");
             if (gtag && totalTime) gtag('event', 'timing_complete', {
               'name' : 'loadtotal',
               'value' : totalTime,
-              'event_category' : 'Vizabi timings',
-              'event_label' : 'loadtotal'
+              'event_category' : 'Total loading time since vizabi object created'
             });
           }
       }
@@ -95,6 +91,10 @@ function setTool(arg) {
       delete VIZABI_PAGE_MODEL.bind;
       delete VIZABI_PAGE_MODEL.locale.id;
       viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, VIZABI_MODEL, URLI.model, true));
+  
+      if (gaEnabled && gtag) gtag('config', GAPMINDER_TOOLS_GA_ID_PROD, {'page_path': '/' + toolConfig.tool});
+      if (gtag) gtag('config', GAPMINDER_TOOLS_GA_ID_DEV, {'page_path': '/' + toolConfig.tool});
+    
   }, document.body);
   appState.tool = arg;
 }

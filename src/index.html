@@ -31,9 +31,10 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   
+  var GAPMINDER_TOOLS_GA_ID_DEV = 'UA-67908993-5';
+  var GAPMINDER_TOOLS_GA_ID_PROD = 'UA-67908993-1';
+  
   var gaEnabled = location.hostname.indexOf("gapminder.org") > -1;
-  if (gaEnabled) gtag('config', 'UA-67908993-1');
-  gtag('config', 'UA-67908993-5');
 </script>  
 
 <body>
