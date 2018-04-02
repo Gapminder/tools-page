@@ -21,6 +21,9 @@ function setTool(arg) {
     .attr("style", "width: 100%; height: 100%;");
   const toolConfig = toolsPage.toolset.filter(function(f) { return f.id === arg; })[0];
   loadJS("assets/js/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js" , function() {
+      timeLogger.add("TOTAL")
+      timeLogger.add("SPLASH");
+    
       VIZABI_MODEL.locale = {
           "id": appState.language,
           "filePath": "assets/translation/"
