@@ -401,6 +401,18 @@ if (__PROD__) {
 } else {
   toolspage.module.rules = [
     {
+      test: /\.js$/,
+      include: /node_modules\/webpack-dev-server/,
+      use: [{ 
+        loader: 'babel-loader', 
+        options: { 
+          cacheDirectory: true,
+          presets: ['env']
+        }
+      }]
+    },
+
+    {
       test: /(d3|web|reader|urlon\.umd)\.js$/,
       include: [
         path.resolve(__dirname, 'node_modules'),
