@@ -36,12 +36,6 @@ e2e/*.map
 .DS_Store
 Thumbs.db
 yarn.lock
-src/assets/vizabi.css
-src/assets/barrankchart.css
-src/assets/mountainchart.css
-src/assets/bubblechart.css
-src/assets/linechart.css
-src/assets/bubblemap.css
-src/assets/popbyage.css
+src/assets/*.css
 
 logs

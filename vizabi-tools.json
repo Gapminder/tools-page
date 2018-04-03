@@ -5,7 +5,11 @@
     "mountainchart",
     "linechart",
     "barrankchart",
-    "popbyage"
+    "popbyage",
+    "extapimap",
+    "barchart-ds",
+    "sankey",
+    "spreadsheet"
   ],
   "paths": {
     "popbyage": {
