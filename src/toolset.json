@@ -2,55 +2,43 @@
   {
     "id": "bubbles",
     "tool": "BubbleChart",
+    "config": "BubbleChart-sodertorn",
     "title": "bubbles",
     "image": "/assets/images/chart/bubble-chart.png"
   },
   {
-    "id": "mountain",
-    "tool": "MountainChart",
-    "title": "income",
-    "image": "/assets/images/chart/income-chart.png"
-  },
-  {
-    "id": "map",
-    "tool": "BubbleMap",
-    "title": "maps",
+    "id": "map-kommun",
+    "tool": "ExtApiMap",
+    "config": "ExtApiMap-sodertorn-kommun",
+    "title": "map-kommun",
     "image": "/assets/images/chart/maps-chart.png"
   },
   {
-    "id": "linechart",
-    "tool": "LineChart",
-    "title": "trends",
-    "image": "/assets/images/chart/trends-chart.png"
+    "id": "map-basomrade",
+    "tool": "ExtApiMap",
+    "config": "ExtApiMap-sodertorn",
+    "title": "map-basomrade",
+    "image": "/assets/images/chart/maps-chart.png"
   },
   {
-    "id": "barrank",
-    "tool": "BarRankChart",
-    "title": "ranks",
+    "id": "combo",
+    "tool": "combo",
+    "config": "Combo-map-and-bubbles",
+    "title": "combo",
+    "image": "/assets/images/chart/maps-chart.png"
+  },
+  {
+    "id": "barchart",
+    "tool": "BarChartDS",
+    "config": "BarChartDS-sodertorn",
+    "title": "barchart",
     "image": "/assets/images/chart/ranks-chart.png"
   },
   {
-    "id": "popbyage",
-    "tool": "PopByAge",
-    "title": "ages",
-    "image": "/assets/images/chart/ages-chart.png"
-  },
-  {
-    "id": "bubblechart-basic",
+    "id": "bubbles-filtered",
     "tool": "BubbleChart",
-    "config": "BubbleChart-basic",
+    "config": "BubbleChart-only-sodertorn",
+    "title": "bubbles-filtered",
     "image": "/assets/images/chart/bubble-chart.png"
-  },
-  {
-    "id": "bubblechart-sod",
-    "tool": "BubbleChart",
-    "config": "BubbleChart-sodertorn",
-    "image": "/assets/images/chart/bubble-chart.png"
-  },
-  {
-    "id": "dollar-street",
-    "url": "http://www.gapminder.org/dollar-street",
-    "image": "/assets/images/chart/dollar-street.png",
-    "title": "dollar_street"
   }
 ]

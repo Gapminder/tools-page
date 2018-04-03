@@ -8,39 +8,35 @@ VIZABI_MODEL = {
       "delay": 700
     },
     "entities": {
-      "dim": "basomrade",
-      "filter": {"basomrade": {"size": "big"}},
+      "dim": "municipality",
+      "filter": {},
       "show": {}
     },
     "entities_colorlegend": {
+      "dim": "municipality"
+    },
+    "entities_map_colorlegend": {
       "dim": "municipality"
     },
     "entities_tags": {
       "dim": "tag"
     },
     "marker": {
-      "opacityRegular": 0.6,
       "space": ["entities", "time"],
       "label": {
         "use": "property",
         "which": "name"
       },
-      "axis_y": {
-        "which": "post_secondary_education_min_3_years_aged_25_64",
-        "use": "indicator"
-      },
-      "axis_x": {
-        "which": "mean_income_aged_gt_20",
-        "use": "indicator",
-        "scaleType": "linear"
+      "hook_centroid": {
+        "use": "property",
+        "which": "map_id",
+        "_important": true
       },
       "size": {
-        "which": "population_aged_gt_20",
+        "which": "population_20xx_12_31",
         "use": "indicator",
         "scaleType": "linear",
-        "extent": [0, 1],
-        "domainMin": 150,
-        "domainMax": 900000,
+        "extent": [0, 0.95],
         "allow": {
           "scales": ["linear"]
         }
@@ -50,9 +46,15 @@ VIZABI_MODEL = {
         "which": "municipality",
         "scaleType": "ordinal",
         "syncModels": ["marker_colorlegend"]
+      },
+      "color_map": {
+        "use": "property",
+        "which": "municipality",
+        "scaleType": "ordinal",
+        "syncModels": ["marker_colorlegend"]
       }
     },
-    "marker_colorlegend":{
+    "marker_colorlegend": {
       "space": ["entities_colorlegend"],
       "opacityRegular": 0.8,
       "opacityHighlightDim": 0.3,
@@ -86,20 +88,37 @@ VIZABI_MODEL = {
       doubtDomain: [2000, 2014],
       doubtRange: [0, 0]
     },
-    "chart": {
-      "maxRadiusEm": 0.15, 
-      "labels": {"removeLabelBox": true},
-      "trails": false
-    },
-    "splash": true,
-    "dialogs": {
-      "popup": ["colors", "find", "size", "zoom", "moreoptions"],
-      "dialog": {
-        "find": {
-          enablePicker: true
-        }
+    "map": {
+      "scale": 1,
+      "preserveAspectRatio": true,
+      "mapEngine": "mapbox",
+      "mapStyle": "mapbox://styles/mapbox/streets-v9",
+      "showBubbles": true,
+      "showAreas": true,
+      "showMap": true,
+      "offset": {
+        "top": 0.05,
+        "bottom": -0.12,
+        "left": 0,
+        "right": 0
+      },
+      "path": null,
+      "bounds": {
+        "north": 60.25,
+        "west": 17.4,
+        "south": 58.7,
+        "east": 19.6
+      },
+      "projection": "mercator",
+      "topology": {
+        "path": "assets/sodertorn-kommun.json",
+        "objects": {
+          "geo": "SWE_adm2",
+          "boundaries": "SWE_adm2"
+        },
+        "geoIdProperty": "ID_2"
       }
     },
-    "buttons": ["colors", "find", "trails", "lock", "moreoptions", "fullscreen", "presentation"]
+    "splash": true
   }
 };

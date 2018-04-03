@@ -15,6 +15,10 @@
     "popbyage": {
       "js": "vizabi-popbyage",
       "css": "vizabi-popbyage/build/popbyage.css"
+    },
+    "combo": {
+      "js": "../src/custom_tools/",
+      "css": "../src/custom_tools/"
     }
   }
 }

@@ -10,7 +10,9 @@ VIZABI_MODEL = {
     "entities": {
       "dim": "basomrade",
       "filter": {"basomrade": {"size": "big"}},
-      "show": {}
+      "show": {
+        "municipality": {"$in": ["0192_nynashamn","0127_botkyrka","0136_haninge","0126_huddinge","0128_salem","0138_tyreso"]}
+      }
     },
     "entities_colorlegend": {
       "dim": "municipality"
@@ -96,7 +98,7 @@ VIZABI_MODEL = {
       "popup": ["colors", "find", "size", "zoom", "moreoptions"],
       "dialog": {
         "find": {
-          enablePicker: true
+          enablePicker: false
         }
       }
     },
