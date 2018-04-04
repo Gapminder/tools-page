@@ -9,7 +9,8 @@
     "extapimap",
     "barchart-ds",
     "sankey",
-    "spreadsheet"
+    "spreadsheet",
+    "combo"
   ],
   "paths": {
     "popbyage": {
@@ -17,8 +18,8 @@
       "css": "vizabi-popbyage/build/popbyage.css"
     },
     "combo": {
-      "js": "../src/custom_tools/",
-      "css": "../src/custom_tools/"
+      "js": "custom_tools/combo.js",
+      "css": "custom_tools/combo.css"
     }
   }
 }
