@@ -35,6 +35,18 @@ function getFilterOutToolsRegexp() {
   return filterOutTools.length ? new RegExp("(" + filterOutTools.join("|") + ")", "i") : null;
 }
 
+function getVizabiToolsCssTestRegexp() {
+  const result = [];
+
+  Object.keys(allTools.paths).forEach(tool => {
+    if (allTools.paths[tool].css) {
+      result.push(new RegExp(allTools.paths[tool].css.replace(".", "\\.").replace("/", "\\/")))
+    }
+  });
+
+  return result;
+}
+
 const htmlAssets = ["assets/vizabi.css", 
   ...allTools.tools.map(tool => `assets/${tool}.css`)
 ];
@@ -246,10 +258,7 @@ const toolspage = {
       {
         oneOf: [
           {
-            test: /vizabi.*\.css$/,
-            include: [
-              path.resolve(__dirname, 'node_modules')
-            ],
+            test: [/vizabi.*\.css$/, ...getVizabiToolsCssTestRegexp()],
             loader: 'file-loader',
             query: {
               name: 'assets/[name].[ext]',
