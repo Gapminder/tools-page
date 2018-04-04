@@ -64,13 +64,13 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
   }
 
   function shareLink() {
-    const message = 'Copy this fragment and paste it in your website or blog:\n(more instructions on vizabi.org/tutorials)';
-
-    prompt(message, wrapInIFrame(locationService.getUrlReadyForEmbedding()));
+    bitlyService.shortenUrl(undefined, shortened => prompt('Copy the following link: ', shortened));
   }
 
   function getEmbeddedUrl() {
-    bitlyService.shortenUrl(undefined, shortened => prompt('Copy the following link: ', shortened));
+    const message = 'Copy this fragment and paste it in your website or blog:\n(more instructions on vizabi.org/tutorials)';
+
+    prompt(message, wrapInIFrame(locationService.getUrlReadyForEmbedding()));
   }
 
   function wrapInIFrame(content) {
