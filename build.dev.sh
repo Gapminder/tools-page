@@ -7,6 +7,7 @@ ssh-add /home/root/vizabi_tools_deploy_ssh
 # BUILD: Tools Page --------------------------------------------
 git clone git@github.com:Gapminder/tools-page.git -b development
 cd tools-page || return
+npm cache clean -f
 
 if [ -z "$1" ]; then
   echo && echo 🗂 $PWD && echo "👉 git pull && rm -rf node_modules/ && npm i"
