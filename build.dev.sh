@@ -61,7 +61,7 @@ if [ -z "$1" ]; then
   echo 🗂 $PWD && git pull origin development && rm -rf node_modules && npm i --quiet --depth 1 --unsafe-perm && echo 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸  && echo
   npm i --unsafe-perm ../vizabi ../vizabi-barrankchart ../vizabi-bubblechart ../vizabi-mountainchart ../vizabi-linechart ../vizabi-popbyage ../vizabi-bubblemap 
 else
-  npm i --unsafe-perm ../"$1"
+  npm i --unsafe-perm ../"${$1//vizabi\/}"
 fi
 npm rebuild --quiet --depth 1
   
