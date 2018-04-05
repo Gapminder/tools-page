@@ -36,7 +36,7 @@ function updateURL(event) {
   };
 
   if(minModel && Object.keys(minModel).length > 0) {
-    url.model = minModel;
+    Object.assign(url, minModel);
   }
   console.log('pushing state', viz.getModel(), event)
   window.history.pushState({ tool: url["chart-type"], model: viz.getModel() }, 'Title', "#" + urlon.stringify(url));
@@ -53,7 +53,9 @@ function parseURL() {
     if(hash) {
       var parsedUrl = urlon.parse(hash);
 
-      URLI = parsedUrl || {};
+      URLI.model = parsedUrl || {};
+      URLI["chart-type"] = parsedUrl["chart-type"];
+      delete parsedUrl["chart-type"];
       return;
     }
   }
