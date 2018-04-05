@@ -405,7 +405,7 @@ if (__PROD__) {
         screw_ie8: true
       }
     }),
-    new webpack.IgnorePlugin(getFilterOutToolsRegexp()),
+    new webpack.IgnorePlugin(getFilterOutToolsRegexp())
   );
 } else {
   toolspage.module.rules = [
