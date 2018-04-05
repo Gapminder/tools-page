@@ -48,7 +48,7 @@ function getVizabiToolsCssTestRegexp() {
 }
 
 const htmlAssets = ["assets/vizabi.css", 
-  ...allTools.tools.map(tool => `assets/${tool}.css`)
+  ...(__PROD__? inToolsetTools : allTools.tools).map(tool => `assets/${tool}.css`)
 ];
   
 if(!__PROD__) htmlAssets.push(
