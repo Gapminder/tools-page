@@ -7,14 +7,14 @@
     "barrankchart",
     "popbyage",
     "extapimap",
-    "barchart-ds",
+    "barchartds",
     "sankey",
     "spreadsheet"
   ],
   "paths": {
-    "popbyage": {
-      "js": "vizabi-popbyage",
-      "css": "vizabi-popbyage/build/popbyage.css"
+    "barchartds": {
+      "js": "vizabi-barchart-ds",
+      "css": "vizabi-barchart-ds/build/barchart-ds.css"
     }
   }
 }
