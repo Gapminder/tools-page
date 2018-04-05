@@ -2,7 +2,7 @@ language: generic
 before_install: true
 install: true
 before_deploy:
-  - ssh-keyscan -t $TRAVIS_SSH_KEY_TYPES -H $DEPLOY_HOST_DEV 2>&1 | tee -a $HOME/.ssh/known_hosts
+  - ssh-keyscan -H $DEPLOY_HOST_DEV 2>&1 | tee -a $HOME/.ssh/known_hosts
   - openssl aes-256-cbc -K $encrypted_e422520171bf_key -iv $encrypted_e422520171bf_iv -in deploy_rsa.enc -out /tmp/deploy_rsa -d
   - eval "$(ssh-agent -s)"
   - chmod 600 /tmp/deploy_rsa
