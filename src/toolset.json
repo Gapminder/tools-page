@@ -36,18 +36,6 @@
     "image": "/assets/images/chart/ages-chart.png"
   },
   {
-    "id": "bubblechart-basic",
-    "tool": "BubbleChart",
-    "config": "BubbleChart-basic",
-    "image": "/assets/images/chart/bubble-chart.png"
-  },
-  {
-    "id": "bubblechart-sod",
-    "tool": "BubbleChart",
-    "config": "BubbleChart-sodertorn",
-    "image": "/assets/images/chart/bubble-chart.png"
-  },
-  {
     "id": "dollar-street",
     "url": "http://www.gapminder.org/dollar-street",
     "image": "/assets/images/chart/dollar-street.png",
