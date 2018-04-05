@@ -18,24 +18,24 @@ git clone git@github.com:Gapminder/tools-page.git -b development
 
 # BUILD: Vizabi ------------------------------------------------
 cd vizabi
-echo $PWD && git pull origin develop && rm -rf node_modules && npm i --unsafe-perm && npm run build && cd ..
+yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
 cd vizabi-barrankchart
-echo $PWD && git pull origin develop && rm -rf node_modules && npm i --unsafe-perm && npm run build && cd ..
+yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
 cd vizabi-bubblechart
-echo $PWD && git pull origin develop && rm -rf node_modules && npm i --unsafe-perm && npm run build && cd ..
+yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
 cd vizabi-mountainchart
-echo $PWD && git pull origin develop && rm -rf node_modules && npm i --unsafe-perm && npm run build && cd ..
+yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
 cd vizabi-linechart
-echo $PWD && git pull origin develop && rm -rf node_modules && npm i --unsafe-perm && npm run build && cd ..
+yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
 cd vizabi-popbyage
-echo $PWD && git pull origin develop && rm -rf node_modules && npm i --unsafe-perm && npm run build && cd ..
+yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
 cd vizabi-bubblemap
-echo $PWD && git pull origin develop && rm -rf node_modules && npm i --unsafe-perm && npm run build && cd ..
+yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
 
 # BUILD: Tools Page --------------------------------------------
 cd tools-page
-echo $PWD && git pull origin development && rm -rf node_modules && npm i --unsafe-perm
+yes '' | sed 5q && echo $PWD && git pull origin development && rm -rf node_modules && npm i --quiet --unsafe-perm
 npm i --unsafe-perm ../vizabi ../vizabi-barrankchart ../vizabi-bubblechart ../vizabi-mountainchart ../vizabi-linechart ../vizabi-popbyage ../vizabi-bubblemap 
 npm rebuild
 
-npm run build:dev
+npm run build
