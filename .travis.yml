@@ -3,8 +3,8 @@ node_js:
 - '8'
 addons:
   ssh_known_hosts:
-  - $DEPLOY_HOST_DEV
-  - $DEPLOY_HOST_STAGE
+  - DEPLOY_HOST_DEV
+  - DEPLOY_HOST_STAGE
 before_install: true
 install: true
 before_deploy:
