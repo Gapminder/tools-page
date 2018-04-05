@@ -1,10 +1,8 @@
 language: generic
 addons:
   ssh_known_hosts:
-  - tools-dev.gapminderdev.org
-  - tools-stage.gapminderdev.org
-  - DEPLOY_HOST_DEV
-  - DEPLOY_HOST_STAGE
+  - $DEPLOY_HOST_DEV
+  - $DEPLOY_HOST_STAGE
 before_install: true
 install: true
 before_deploy:
