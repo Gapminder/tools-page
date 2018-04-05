@@ -18,23 +18,23 @@ git clone git@github.com:Gapminder/tools-page.git -b development
 
 # BUILD: Vizabi ------------------------------------------------
 cd vizabi
-yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
+echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 0 --unsafe-perm && npm run build && cd ..
 cd vizabi-barrankchart
-yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
+echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 0 --unsafe-perm && npm run build && cd ..
 cd vizabi-bubblechart
-yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
+echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 0 --unsafe-perm && npm run build && cd ..
 cd vizabi-mountainchart
-yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
+echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 0 --unsafe-perm && npm run build && cd ..
 cd vizabi-linechart
-yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
+echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 0 --unsafe-perm && npm run build && cd ..
 cd vizabi-popbyage
-yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
+echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 0 --unsafe-perm && npm run build && cd ..
 cd vizabi-bubblemap
-yes '' | sed 5q && echo $PWD && git pull origin develop && npm i --quiet --unsafe-perm && npm run build && cd ..
+echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 0 --unsafe-perm && npm run build && cd ..
 
 # BUILD: Tools Page --------------------------------------------
 cd tools-page
-yes '' | sed 5q && echo $PWD && git pull origin development && rm -rf node_modules && npm i --quiet --unsafe-perm
+echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin development && rm -rf node_modules && npm i --quiet --unsafe-perm
 npm i --unsafe-perm ../vizabi ../vizabi-barrankchart ../vizabi-bubblechart ../vizabi-mountainchart ../vizabi-linechart ../vizabi-popbyage ../vizabi-bubblemap 
 npm rebuild
 
