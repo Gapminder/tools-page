@@ -51,6 +51,12 @@ function setTool(arg) {
           'persistentChange': function(evt) {
               updateURL(evt); // force update
           },
+          'change_hook_which': function(evt, arg) {
+            if (gtag) gtag('event', 'indicator selected', {
+              'event_label': arg.which,
+              'event_category': arg.hook
+            });
+          },
           'load_error': function(evt, error) {            
             if (gtag) gtag('event', 'error', {
               'event_label': JSON.stringify(error).substring(0, 500), //500 characters is the limit of GA field
