@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 eval "$(ssh-agent -s)"
-cd /home/root
+cd /home/root || return
 ssh-add /home/root/vizabi_tools_deploy_ssh
 
 # CLONE: Vizabi, Tools Page ------------------------------------
@@ -17,25 +17,52 @@ git clone git@github.com:vizabi/vizabi-bubblemap.git -b develop
 git clone git@github.com:Gapminder/tools-page.git -b development
 
 # BUILD: Vizabi ------------------------------------------------
-cd vizabi
-echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd ..
-cd vizabi-barrankchart
-echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd ..
-cd vizabi-bubblechart
-echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd ..
-cd vizabi-mountainchart
-echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd ..
-cd vizabi-linechart
-echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd ..
-cd vizabi-popbyage
-echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd ..
-cd vizabi-bubblemap
-echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd ..
+npm cache clean -f
+
+if [ "$1" = "vizabi" ] || [ -z "$1" ]; then
+  cd vizabi || return
+  echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd .. && echo 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸  && echo
+fi
+
+if [ "$1" = "vizabi-barrankchart" ] || [ -z "$1" ]; then
+  cd vizabi-barrankchart || return
+  echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd .. && echo 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸  && echo
+fi
+
+if [ "$1" = "vizabi-bubblechart" ] || [ -z "$1" ]; then
+  cd vizabi-bubblechart || return
+  echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd .. && echo 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸  && echo
+fi
+
+if [ "$1" = "vizabi-mountainchart" ] || [ -z "$1" ]; then
+  cd vizabi-mountainchart || return
+  echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd .. && echo 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸  && echo
+fi
+
+if [ "$1" = "vizabi-linechart" ] || [ -z "$1" ]; then
+  cd vizabi-linechart || return
+  echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd .. && echo 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸  && echo
+fi
+
+if [ "$1" = "vizabi-popbyage" ] || [ -z "$1" ]; then
+  cd vizabi-popbyage || return
+  echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd .. && echo 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸  && echo
+fi
+
+if [ "$1" = "vizabi-bubblemap" ] || [ -z "$1" ]; then
+  cd vizabi-bubblemap || return
+  echo 🗂 $PWD && git pull origin develop && npm i --quiet --depth 1 --unsafe-perm && npm run build && cd .. && echo 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸  && echo
+fi
+
 
 # BUILD: Tools Page --------------------------------------------
-cd tools-page
-echo ✨✨✨✨✨✨✨✨✨✨✨ && echo && echo 🗂 $PWD && git pull origin development && rm -rf node_modules && npm i --quiet --depth 1 --unsafe-perm
-npm i --unsafe-perm ../vizabi ../vizabi-barrankchart ../vizabi-bubblechart ../vizabi-mountainchart ../vizabi-linechart ../vizabi-popbyage ../vizabi-bubblemap 
-npm rebuild
-
+cd tools-page || return
+if [ -z "$1" ]; then
+  echo 🗂 $PWD && git pull origin development && rm -rf node_modules && npm i --quiet --depth 1 --unsafe-perm && echo 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸 🌸  && echo
+  npm i --unsafe-perm ../vizabi ../vizabi-barrankchart ../vizabi-bubblechart ../vizabi-mountainchart ../vizabi-linechart ../vizabi-popbyage ../vizabi-bubblemap 
+else
+  npm i --unsafe-perm ../"$1"
+fi
+npm rebuild --quiet --depth 1
+  
 npm run build
