@@ -60,13 +60,18 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, sele
     placeHolder.select(".chart-switcher-options").attr("hidden", this.areToolsOpen ? null : true);
   }
 
+  function getLink(tool) {
+    return `${window.location.pathname}#$chart-type=${tool}`;
+  }
+
   function fillToolItem(item, _this) {
     const tool = item.datum();
     const a = item.select("a");
-    a.on("click", d => {
-      switchTools.call(_this);
-      onClick(d);
-    });
+    a.attr("href", getLink(tool.id))
+      .on("click", d => {
+        switchTools.call(_this);
+        onClick(d);
+      });
   }
 
 }

@@ -40,15 +40,20 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
     .attr("hidden", _d => _d.id === tool.id ? true : null)
   }
 
+  function getLink(tool) {
+    return `${window.location.pathname}#$chart-type=${tool}`;
+  }
+
   function fillToolItem(item) {
     const tool = item.datum();
     const a = item.select("a");
     if (tool.url) {
       a.attr("href", tool.url)
     } else {
-      a.on("click", d => {
-        onClick(d);
-      });
+      a.attr("href", getLink(tool.id))
+        .on("click", d => {
+          onClick(d);
+        });
     }
     a.select(".image").attr("src", "." + tool.image);
   }
