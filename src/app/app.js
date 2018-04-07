@@ -2,6 +2,7 @@ import { setTool } from "./core/tool";
 import { URLI, parseURL } from "./core/url";
 import { appState, dispatch } from "./core/global";
 import { upgradeUrl } from "./core/deprecated-url";
+import { scrollTo } from "./core/utils";
 
 import {
   translator,
@@ -58,8 +59,9 @@ const chartSwitcher = new ChartSwitcher(
     tools: toolsPage_toolset,
     selectedTool: appState.tool,
     onClick: d => {
-      dispatch.call("toolChanged", null, d)
-      setTool(d.id)
+      dispatch.call("toolChanged", null, d);
+      parseURL();
+      setTool(d.id);
     }
   });
 
@@ -87,8 +89,14 @@ const seeAlso = new SeeAlso(
     tools: toolsPage_toolset,
     selectedTool: appState.tool,
     onClick: d => {
-      dispatch.call("toolChanged", null, d);
-      setTool(d.id)
+      scrollTo({
+        element: d3.select(".wrapper").node(),
+        complete: () => {
+          dispatch.call("toolChanged", null, d);
+          parseURL();
+          setTool(d.id);
+        }
+      });
     }
   });
 

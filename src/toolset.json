@@ -2,36 +2,42 @@
   {
     "id": "bubbles",
     "tool": "BubbleChart",
+    "transition": ["select","time"],
     "title": "bubbles",
     "image": "/assets/images/chart/bubble-chart.png"
   },
   {
     "id": "mountain",
     "tool": "MountainChart",
+    "transition": ["select","time"],
     "title": "income",
     "image": "/assets/images/chart/income-chart.png"
   },
   {
     "id": "map",
     "tool": "BubbleMap",
+    "transition": ["select","time"],
     "title": "maps",
     "image": "/assets/images/chart/maps-chart.png"
   },
   {
     "id": "linechart",
     "tool": "LineChart",
+    "transition": ["show","time"],
     "title": "trends",
     "image": "/assets/images/chart/trends-chart.png"
   },
   {
     "id": "barrank",
     "tool": "BarRankChart",
+    "transition": ["select","time"],
     "title": "ranks",
     "image": "/assets/images/chart/ranks-chart.png"
   },
   {
     "id": "popbyage",
     "tool": "PopByAge",
+    "transition": ["none"],
     "title": "ages",
     "image": "/assets/images/chart/ages-chart.png"
   },
