@@ -78,7 +78,7 @@ const stats = {
   publicPath: false
 };
 
-const deployUrl = "/tools";
+const deployDir = "tools";
 //const extractSCSS = new ExtractTextPlugin('assets/css/main.css');
 const extractStyl = new ExtractTextPlugin('styles.css');
 
@@ -111,7 +111,7 @@ const toolspage = {
   },
  
   output: {
-    path: path.resolve(__dirname, 'build', 'tools'),
+    path: path.resolve(__dirname, 'build', deployDir),
     filename: '[name].js'
   },
 
@@ -141,7 +141,7 @@ const toolspage = {
         loaders: [
           {
             loader: 'babel-loader',
-            query: {
+            options: {
               cacheDirectory: !__PROD__,
               presets: ['env']
             }
@@ -168,17 +168,13 @@ const toolspage = {
       // Stylus loader con CSS Modules
       {
         test: /\.styl$/,
-        // exclude: function(modulePath) {
-        //   console.log(modulePath, path.resolve(__dirname, 'src', 'app', '_resources'));
-        //   return /node_modules/.test(modulePath) &&
-        //       !/node_modules\/MY_MODULE/.test(modulePath);
-        // },
         use: extractStyl.extract({
           fallback: 'style-loader',
           use: [
             {
               loader: 'css-loader',
               options: {
+                url: false,
                 minimize: __PROD__,
                 sourceMap: true
               }
@@ -186,18 +182,16 @@ const toolspage = {
             {
               loader: 'stylus-loader',
               options: {
-                use: [poststylus([
-                  postcssUrl({
+                use: [poststylus(
+                  [postcssUrl({
                     // Only convert root relative URLs, which CSS-Loader won't process into require().
-                    filter: ({ url }) => url.startsWith('/') && !url.startsWith(deployUrl),
+                    filter: ({ url }) => url.startsWith('/'),
                     url: ({ url }) => {
-                      if (deployUrl.match(/:\/\//) || deployUrl.startsWith('/')) {
-                          // If deployUrl is absolute or root relative, ignore baseHref & use deployUrl as is.
-                          return `${deployUrl.replace(/\/$/, '')}${url}`;
-                      }
+                      return url.replace(/^\//, '');
                     }
                   })
-                ], 'autoprefixer')]
+                  ],
+                  'autoprefixer')]
               }
             }
           ]
@@ -250,7 +244,7 @@ const toolspage = {
           path.resolve(__dirname, 'node_modules')
         ],
         loader: 'file-loader',
-        query: {
+        options: {
           name: 'assets/vendor/fonts/[name].[ext]'
         }
       },
@@ -260,9 +254,9 @@ const toolspage = {
           {
             test: [/vizabi.*\.css$/, ...getVizabiToolsCssTestRegexp()],
             loader: 'file-loader',
-            query: {
+            options: {
               name: 'assets/[name].[ext]',
-              publicPath: deployUrl
+              publicPath: "./"
             }
           },
           {
@@ -271,9 +265,9 @@ const toolspage = {
               path.resolve(__dirname, 'node_modules')
             ],
             loader: 'file-loader',
-            query: {
+            options: {
               name: 'assets/vendor/css/[name].[ext]',
-              publicPath: deployUrl
+              publicPath: "./"
             }
           }
         ]
@@ -299,7 +293,7 @@ const toolspage = {
           loader: 'file-loader',
           options: {
             name: 'assets/js/toolconfigs/[name].js',
-            publicPath: deployUrl
+            publicPath: "./"
           }
         },
         {
@@ -314,7 +308,7 @@ const toolspage = {
       {
         test: /favicon\.ico$/,
         loader: 'file-loader',
-        query: { 
+        options: { 
           limit: 1,
           name: '[name].[ext]',
         }
@@ -354,11 +348,11 @@ const toolspage = {
     disableHostCheck: true,
     host: "0.0.0.0",
     port: "4200",
-    publicPath: "/tools/",
+    publicPath: "/" + deployDir,
     contentBase: [
       // TODO: remove this when issue below is fixed
       // https://github.com/webpack/webpack-dev-server/issues/641
-      path.resolve(__dirname, 'build', 'tools'),
+      path.resolve(__dirname, 'build', deployDir),
     ],
   },
 
@@ -431,7 +425,7 @@ if (__PROD__) {
         options: {
           name: 'assets/vendor/js/[1]/[name].[ext]',
           regExp: new RegExp(`${sep}node_modules${sep}([^${sep}]+?)${sep}`),
-          publicPath: deployUrl
+          publicPath: "./"
         }
       }]
     },
@@ -445,7 +439,7 @@ if (__PROD__) {
         loader: 'file-loader',
         options: {
           name: 'assets/js/[name].js',
-          publicPath: deployUrl
+          publicPath: "./"
         }
       },
       {
