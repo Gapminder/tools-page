@@ -15,7 +15,7 @@ if [ -z "$1" ]; then
   rm -rf node_modules/
 fi
 
-echo && echo 🗂 $PWD && echo "👉 git pull, ncu all vizabi tools and readers, npm i"
+echo && echo 🗂 $PWD && echo "👉 git pull, set versions of all vizabi tools and readers to 'latest', npm i"
 git pull origin development 
 # npm view vizabi versions | sed "s/'/\"/g" | json -- -1
 json -I -f package.json -e 'this.dependencies["vizabi"]="latest"'
@@ -26,6 +26,9 @@ json -I -f package.json -e 'this.dependencies["vizabi-mountainchart"]="latest"'
 json -I -f package.json -e 'this.dependencies["vizabi-popbyage"]="latest"'
 json -I -f package.json -e 'this.dependencies["vizabi-barrankchart"]="latest"'
 json -I -f package.json -e 'this.dependencies["vizabi-spreadsheet"]="latest"'
+json -I -f package.json -e 'this.dependencies["vizabi-config-systema_globalis"]="latest"'
+json -I -f package.json -e 'this.dependencies["vizabi-ddfcsv-reader"]="latest"'
+json -I -f package.json -e 'this.dependencies["vizabi-ws-reader"]="latest"'
 npm i --quiet --depth 0 --unsafe-perm
   
 echo && echo 🗂 $PWD && echo "👉 npm run build"
