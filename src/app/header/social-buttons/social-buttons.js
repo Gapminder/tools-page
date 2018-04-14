@@ -7,7 +7,7 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
   template.html(templateHtml);
 
   template.select(".share-text-box")
-    .on("click", setMainLink());
+    .on("click", setMainLink);
   template.select(".mail.button")
     .on("click", mail);
   template.select(".twitter.button")

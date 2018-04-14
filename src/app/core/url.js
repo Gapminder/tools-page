@@ -25,19 +25,20 @@ window.addEventListener('popstate', function(e) {
 //grabs width, height, tabs open, and updates the url
 function updateURL(event) {
   if (poppedState && Vizabi.utils.comparePlainObjects(viz.getModel(), poppedState)) return;
+  
+  poppedState = null;
 
   var model;
   if(typeof viz !== 'undefined') {
     minModel = viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL);
   }
 
-  var url = {
-    "chart-type": appState.tool
-  };
-
+  var url = {};
   if(minModel && Object.keys(minModel).length > 0) {
     Object.assign(url, minModel);
   }
+  url["chart-type"] = appState.tool;
+
   console.log('pushing state', viz.getModel(), event)
   window.history.pushState({ tool: url["chart-type"], model: viz.getModel() }, 'Title', "#" + urlon.stringify(url));
 }
