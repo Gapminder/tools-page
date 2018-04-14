@@ -95,7 +95,7 @@ exports.config = {
 
   onPrepare: () => {
     browser.waitForAngularEnabled(false);
-    require('ts-node').register({ project: 'e2e' });
+    require('ts-node').register({ project: 'e2e/tsconfig.json' });
 
     browser.driver.manage().window().setSize(screenSize.width, screenSize.height);
 
