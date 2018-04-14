@@ -39,12 +39,12 @@ export class Show {
     await this.searchAndSelectCountry(country, false);
   }
 
-  async clickOnCountryFromList(country: string): Promise<void> {
+  async clickOnCountryFromList(country: string, preopen = false): Promise<void> {
     if (!this.isDesktop) {
       await this.showButton.safeClick();
     }
 
-    await this.geographicLocation.safeClick();
+    if (!preopen) await this.geographicLocation.safeClick();
     await this.showSearchResult.findElementByText(country).safeClick();
     await this.showApplyBtn.safeClick();
 

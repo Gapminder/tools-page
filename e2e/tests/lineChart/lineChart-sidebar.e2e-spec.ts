@@ -11,7 +11,7 @@ describe('Line chart: Sidebar', () => {
     await lineChart.openChart();
   });
   it('Add country from country list in sidebar', async () => {
-    await sidebar.show.clickOnCountryFromList('Argentina');
+    await sidebar.show.clickOnCountryFromList('Argentina', true);
     expect(await lineChart.getSelectedCountriesNames()).toMatch('Argentina');
 
     expect(await lineChart.countriesLines.count()).toEqual(DEFAULT_COUNTRIES_NUMBER + 1);
@@ -25,7 +25,7 @@ describe('Line chart: Sidebar', () => {
   });
 
   it('Reset button drop settings to default', async () => {
-    await sidebar.show.clickOnCountryFromList('Argentina');
+    await sidebar.show.clickOnCountryFromList('Argentina', true);
     await sidebar.show.clickResetButton();
 
     expect(await lineChart.countriesLines.count()).toEqual(DEFAULT_COUNTRIES_NUMBER, 'number of selected countries');

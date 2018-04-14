@@ -52,7 +52,7 @@ describe('Bubbles chart', () => {
      */
     await bubbleChart.hoverUnitedStates();
     expect(await bubbleChart.bubbleLabelOnMouseHover.getText()).toContain('United States');
-    expect(await bubbleChart.axisXValue.getText()).toEqual('53.4k');
+    expect(await bubbleChart.axisXValue.getText()).toEqual('54.9k');
   });
 
   it('only selected bubble get full opacity', async () => {
@@ -156,12 +156,12 @@ describe('Bubbles chart', () => {
     expect(await slider.getPosition()).toContain('2007');
 
     await slider.dragToRightEdge();
-    expect(await slider.getPosition()).toContain('2015');
+    expect(await slider.getPosition()).toContain('2018');
   });
 
   it('Change Y-axis value, stored in URL', async () => {
     const axisValue = await bubbleChart.changeYaxisValue('Dollar billionaires');
-    const urlSettings = axisValue.toLowerCase().replace(/\W/g, '/_');
+    const urlSettings = axisValue.toLowerCase().replace(/\W/g, '_');
 
     expect((await commonChartPage.yAxisBtn.safeGetText()).replace(' ▼','')).toEqual(axisValue);
     expect(await browser.getCurrentUrl()).toContain(urlSettings);
@@ -169,7 +169,7 @@ describe('Bubbles chart', () => {
 
   it('Change X-axis value, stored in URL', async () => {
     const axisValue = await bubbleChart.changeXaxisValue('Dollar billionaires');
-    const urlSettings = axisValue.toLowerCase().replace(/\W/g, '/_');
+    const urlSettings = axisValue.toLowerCase().replace(/\W/g, '_');
 
     expect((await commonChartPage.xAxisBtn.safeGetText()).replace(' ▼','')).toEqual(axisValue);
     expect(await browser.getCurrentUrl()).toContain(urlSettings);

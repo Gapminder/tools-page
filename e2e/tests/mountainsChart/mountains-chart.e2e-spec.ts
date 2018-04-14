@@ -73,7 +73,7 @@ describe('Mountains chart', () => {
        */
       await mountainChart.hoverMouserOverExtremePovertyTitle();
 
-      expect(await mountainChart.verticalLine.getText()).toEqual('833M');
+      expect(await mountainChart.verticalLine.getText()).toEqual('852M');
 
       await slider.dragToStart();
       await mountainChart.hoverMouserOverExtremePovertyTitle();

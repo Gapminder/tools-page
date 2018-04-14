@@ -51,7 +51,7 @@ describe('Social media buttons', () => {
 
     const actualMailLink = await header.refreshMailLink();
 
-    // await expect(actualMailLink).toEqual(`${mailBasic}#_state_time_value=${sliderValue};;&chart-type=bubbles&locale_id=en`);
+    // await expect(actualMailLink).toEqual(`${mailBasic}#$state$time$value=${sliderValue};;&chart-type=bubbles&locale$id=en`);
     await expect(actualMailLink).toEqual(expectedUrl);
   });
 
@@ -81,7 +81,7 @@ describe('Social media buttons', () => {
    * something will be changed here
    */
   /*  xit('plane icon', async() => {
-      const alertText = 'tools/#_chart-type=bubbles';
+      const alertText = 'tools/#$chart-type=bubbles';
 
       await header.icoplaneSocialDesktop.safeClick();
 
@@ -90,7 +90,7 @@ describe('Social media buttons', () => {
       await expect(alertDialog.getText()).toContain(alertText);
     });
     xit('iframe icon', async() => {
-      const alertText = 'tools/#_chart-type=bubbles';
+      const alertText = 'tools/#$chart-type=bubbles';
 
       await header.icocodeSocialDesktop.safeClick();
 

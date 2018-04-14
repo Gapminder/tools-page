@@ -17,7 +17,7 @@ export class Size {
 
   async moveSizeSlider(): Promise<void> {
     await safeDragAndDrop(this.resizeToddler, { x: 60, y: 0 });
-    await browser.wait(EC.urlContains(`size_extent@`), 3000);
+    await browser.wait(EC.urlContains(`size$extent@`), 3000);
   }
 
   async changeSizeIndicator() {

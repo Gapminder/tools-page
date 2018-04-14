@@ -12,6 +12,7 @@ export class BubbleChart extends CommonChartPage {
   public dataDoubtsLink: ExtendedElementFinder = _$('.vzb-data-warning');
   public dataDoubtsWindow: ElementFinder = $('.vzb-data-warning-body');
   public allBubbles: ExtendedArrayFinder = _$$('circle[class*="vzb-bc-entity"]');
+  public invisibleBubbles: ExtendedArrayFinder = _$$('circle[class*="vzb-invisible"]');
   public bubbleLabelOnMouseHover: ExtendedElementFinder = _$('g[class="vzb-bc-tooltip"]');
   public axisXValue: ElementFinder = $$('g[class="vzb-axis-value"]').first();
   yAxisBtn: ExtendedElementFinder = _$('.vzb-bc-axis-y-title');
