@@ -89,11 +89,11 @@ const seeAlso = new SeeAlso(
     tools: toolsPage_toolset,
     selectedTool: appState.tool,
     onClick: d => {
+      parseURL();
       scrollTo({
         element: d3.select(".wrapper").node(),
         complete: () => {
           dispatch.call("toolChanged", null, d);
-          parseURL();
           setTool(d.id);
         }
       });
@@ -123,3 +123,4 @@ const footer = new Footer(
   dispatch);
 
 setLanguage(appState.language);
+d3.select(".wrapper").classed("loading", false);
