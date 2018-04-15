@@ -15,6 +15,6 @@ deploy:
     branch: development
 - provider: script
   skip_cleanup: true
-  script: ssh $DEPLOY_USER_STAGE@$DEPLOY_HOST_STAGE "/home/root/redeploy.sh"
+  script: ssh $DEPLOY_USER_STAGE@$DEPLOY_HOST_STAGE "/home/redeploy.sh"
   on:
     branch: master
