@@ -16,8 +16,6 @@ describe('Mountains chart: Sidebar', () => {
      */
     expect(await mountainChart.allCountriesOnChart.count()).toEqual(165);
 
-    await sidebar.show.showButton.safeClick();
-
     await sidebar.show.searchAndSelectCountry('Ukraine');
 
     expect(await mountainChart.allCountriesOnChart.count()).toEqual(1);
@@ -39,8 +37,6 @@ describe('Mountains chart: Sidebar', () => {
      * should check that uncheck the countries from "show", when the last one is unchecked,
      * the picture should return to a default view = stacked shapes of all countries(TC22)
      */
-    await sidebar.show.showButton.safeClick();
-
     await sidebar.show.searchAndSelectCountry('Ukraine');
     await safeExpectIsDispayed(mountainChart.allCountriesOnChart.first(), 5000);
     expect(await mountainChart.allCountriesOnChart.count()).toEqual(1);

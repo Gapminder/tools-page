@@ -79,6 +79,7 @@ export class Sidebar {
     await this.optionsButton.safeClick();
     await this.opacityMenu.safeClick();
     await safeDragAndDrop(sliderType, { x: -50, y: 0 });
+    await this.optionsButton.safeClick();  
   }
 
   async moveGroupSlider() {

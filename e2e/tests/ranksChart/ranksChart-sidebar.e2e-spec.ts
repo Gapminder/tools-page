@@ -1,3 +1,6 @@
+import { $, $$, browser, ElementArrayFinder, ElementFinder, ExpectedConditions as EC } from 'protractor';
+import { _$, _$$, ExtendedElementFinder } from '../../helpers/ExtendedElementFinder';
+
 import { waitForSpinner } from '../../helpers/helper';
 import { RankingsChart } from '../../pageObjects/charts';
 import { Sidebar, Slider } from '../../pageObjects/components';
@@ -5,6 +8,8 @@ import { Sidebar, Slider } from '../../pageObjects/components';
 const ranksChart: RankingsChart = new RankingsChart();
 const sidebar: Sidebar = new Sidebar();
 const slider: Slider = new Slider();
+
+const yearAtTop = browser.params.desktop ? sidebar.yearAtTop : _$('.vzb-br-total');
 
 describe('Ranks chart: Sidebar', () => {
   beforeEach(async() => {
@@ -34,8 +39,6 @@ describe('Ranks chart: Sidebar', () => {
   });
 
   it(`"SHOW" button hide all except selected`, async() => {
-    await sidebar.show.showButton.safeClick();
-
     await sidebar.show.searchAndSelectCountry('China');
 
     expect(await ranksChart.allBars.count()).toEqual(1);
@@ -58,6 +61,6 @@ describe('Ranks chart: Sidebar', () => {
     await slider.dragToMiddle();
     const selectedYear = await slider.getPosition();
 
-    expect(await sidebar.yearAtTop.safeGetText()).toEqual(selectedYear);
+    expect(await yearAtTop.safeGetText()).toEqual(selectedYear);
   });
 });

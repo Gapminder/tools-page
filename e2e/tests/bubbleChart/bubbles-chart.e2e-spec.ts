@@ -38,7 +38,7 @@ describe('Bubbles chart', () => {
     expect(await bubbleChart.bubbleLabelOnMouseHover.getText()).toContain('Nigeria');
 
     // hove biggest green
-    await bubbleChart.hoverMouseOverBubble('green', 0, 10, 10); // fine tune coordinates because other bubble overlaps it
+    await bubbleChart.hoverMouseOverBubble('green'); // fine tune coordinates because other bubble overlaps it
     expect(await bubbleChart.bubbleLabelOnMouseHover.getText()).toContain('United States');
 
     // hover second biggest red bubble
@@ -48,7 +48,7 @@ describe('Bubbles chart', () => {
 
   it('United states bubble data', async () => {
     /**
-     * United states have in 2015: GDP: 53354 $/year/person(TC07)
+     * United states have in 2018: GDP: 54.9k $/year/person(TC07)
      */
     await bubbleChart.hoverUnitedStates();
     expect(await bubbleChart.bubbleLabelOnMouseHover.getText()).toContain('United States');
@@ -163,7 +163,7 @@ describe('Bubbles chart', () => {
     const axisValue = await bubbleChart.changeYaxisValue('Dollar billionaires');
     const urlSettings = axisValue.toLowerCase().replace(/\W/g, '_');
 
-    expect((await commonChartPage.yAxisBtn.safeGetText()).replace(' ▼','')).toEqual(axisValue);
+    expect((await commonChartPage.yAxisBtn.safeGetText()).replace(' ▼','')).toContain(axisValue);
     expect(await browser.getCurrentUrl()).toContain(urlSettings);
   });
 
@@ -171,7 +171,7 @@ describe('Bubbles chart', () => {
     const axisValue = await bubbleChart.changeXaxisValue('Dollar billionaires');
     const urlSettings = axisValue.toLowerCase().replace(/\W/g, '_');
 
-    expect((await commonChartPage.xAxisBtn.safeGetText()).replace(' ▼','')).toEqual(axisValue);
+    expect((await commonChartPage.xAxisBtn.safeGetText()).replace(' ▼','')).toContain(axisValue);
     expect(await browser.getCurrentUrl()).toContain(urlSettings);
   });
 });

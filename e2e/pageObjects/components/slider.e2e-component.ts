@@ -29,7 +29,7 @@ export class Slider {
       .window()
       .getSize();
     let distance: number;
-    windowSize.width > 900 ? (distance = -900) : (distance = -300);
+    windowSize.width > 900 ? (distance = -900) : windowSize.width > 400 ? (distance = -300) : (distance = -200);
     await safeDragAndDrop(this.sliderButton, { x: distance, y: 0 });
 
     return await browser.wait(EC.urlContains('#$state$time$value='), 10000, 'drag slider to middle');
