@@ -89,6 +89,7 @@ describe('Bubbles chart: Sidebar', () => {
     const xCoord = await bubbleChart.getCountryBubble('India').getAttribute('cx');
     const yCoord = await bubbleChart.getCountryBubble('India').getAttribute('cy');
 
+    if (browser.params.mobile) await sidebar.optionsButton.safeClick();
     await bubbleChart.lockButton.safeClick();
     await bubbleChart.trailsButton.safeClick();
     await slider.dragToMiddle();
@@ -185,24 +186,26 @@ describe('Bubbles chart: Sidebar', () => {
      */
     await sidebar.optionsButton.safeClick();
 
-    const optionsDialogueTopInitialPosition = await sidebar.optionsModalDialogue.getCssValue('top');
-    const optionsDialogueRightInitialPosition = await sidebar.optionsModalDialogue.getCssValue('right');
+    if (!browser.params.mobile) {
+      const optionsDialogueTopInitialPosition = await sidebar.optionsModalDialogue.getCssValue('top');
+      const optionsDialogueRightInitialPosition = await sidebar.optionsModalDialogue.getCssValue('right');
 
-    await safeDragAndDrop(sidebar.optionsMenuHandIcon, { x: -260, y: -50 });
+      await safeDragAndDrop(sidebar.optionsMenuHandIcon, { x: -260, y: -50 });
 
-    const optionsDialogueTopNewPosition = await sidebar.optionsModalDialogue.getCssValue('top');
-    const optionsDialogueRightNewPosition = await sidebar.optionsModalDialogue.getCssValue('right');
+      const optionsDialogueTopNewPosition = await sidebar.optionsModalDialogue.getCssValue('top');
+      const optionsDialogueRightNewPosition = await sidebar.optionsModalDialogue.getCssValue('right');
 
-    await expect(optionsDialogueTopInitialPosition).not.toEqual(optionsDialogueTopNewPosition);
-    await expect(optionsDialogueRightInitialPosition).not.toEqual(optionsDialogueRightNewPosition);
+      await expect(optionsDialogueTopInitialPosition).not.toEqual(optionsDialogueTopNewPosition);
+      await expect(optionsDialogueRightInitialPosition).not.toEqual(optionsDialogueRightNewPosition);
 
-    await safeDragAndDrop(sidebar.optionsMenuHandIcon, { x: -340, y: 50 });
+      await safeDragAndDrop(sidebar.optionsMenuHandIcon, { x: -340, y: 50 });
 
-    const optionsDialogueTopFinalPosition = await sidebar.optionsModalDialogue.getCssValue('top');
-    const optionsDialogueRightFinalPosition = await sidebar.optionsModalDialogue.getCssValue('right');
+      const optionsDialogueTopFinalPosition = await sidebar.optionsModalDialogue.getCssValue('top');
+      const optionsDialogueRightFinalPosition = await sidebar.optionsModalDialogue.getCssValue('right');
 
-    await expect(optionsDialogueTopNewPosition).not.toEqual(optionsDialogueTopFinalPosition);
-    await expect(optionsDialogueRightNewPosition).not.toEqual(optionsDialogueRightFinalPosition);
+      await expect(optionsDialogueTopNewPosition).not.toEqual(optionsDialogueTopFinalPosition);
+      await expect(optionsDialogueRightNewPosition).not.toEqual(optionsDialogueRightFinalPosition);
+    }
   });
 
   it('Change opacity for non-selected bubbles', async () => {

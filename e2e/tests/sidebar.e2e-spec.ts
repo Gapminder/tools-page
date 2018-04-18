@@ -59,10 +59,12 @@ async function changeRegularOpacity() {
   await sidebar.optionsButton.safeClick();
   await _$('[data-dlg="opacity"]').safeClick();
   await safeDragAndDrop(_$('.vzb-dialog-bubbleopacity-regular .handle--e'), { x: -100, y: 0 });
+  await sidebar.optionsButton.safeClick();
 }
 
 async function changeOpacityForNonSelected() {
   await sidebar.optionsButton.safeClick();
   await _$('[data-dlg="opacity"]').safeClick();
   await safeDragAndDrop(_$('.vzb-dialog-bubbleopacity-selectdim .handle--e'), { x: -20, y: 0 });
+  await sidebar.optionsButton.safeClick();
 }
