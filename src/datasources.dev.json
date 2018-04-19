@@ -2,17 +2,21 @@
   {
     "toolIds": ["bubbles", "mountain", "map", "linechart", "barrank"],
     "datasource": {
-      "reader": "waffle", 
+      "reader": "waffle",
       "assetsPath": "https://import-waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-      "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql"
+      "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
+      "assetsPath": "https://import-waffle-server.gapminder.org/api/ddf/assets/",
+      "path": "https://waffle-server.gapminder.org/api/ddf/ql"
     }
   },
   {
     "toolIds": ["popbyage"],
     "datasource": {
-      "reader": "waffle", 
+      "reader": "waffle",
       "assetsPath": "https://import-waffle-server-dev.gapminderdev.org/api/ddf/assets/",
       "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
+      "assetsPath": "https://import-waffle-server.gapminder.org/api/ddf/assets/",
+      "path": "https://waffle-server.gapminder.org/api/ddf/ql",
       "dataset": "open-numbers/ddf--gapminder--population"
     }
   },

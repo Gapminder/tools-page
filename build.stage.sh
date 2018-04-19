@@ -18,5 +18,5 @@ git pull origin master && echo "✅ git pull done"
 echo && echo 🗂 $PWD && echo "👉 npm install"
 npm i --quiet --depth 0 --unsafe-perm && echo "✅ npm install done"
   
-echo && echo 🗂 $PWD && echo "👉 npm run build:prod"
+echo && echo 🗂 $PWD && echo "👉 npm run build:prod:stage"
 npm run build:prod && echo "✅ Tools page build done"
