@@ -12,6 +12,7 @@ const StylusLoaderPlugin = require('stylus-loader');
 const customLoader = require('custom-loader');
 
 const __PROD__ = process.env.NODE_ENV === 'production';
+const __STAGE__ = process.env.STAGE;
 
 const allTools = require(path.resolve(__dirname, "vizabi-tools.json"));
 const toolset = require(path.resolve(__dirname, "src", "toolset.json"));
@@ -121,6 +122,7 @@ const toolspage = {
       "urlon": "urlon/dist/urlon.umd.js",
       "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
       "vizabi-ws-reader-web": "vizabi-ws-reader/dist/vizabi-ws-reader-web.js",
+      "datasources": `datasources.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`
     },
     modules: [
       path.resolve(__dirname, 'src'),
@@ -431,14 +433,15 @@ if (__PROD__) {
     },
 
     {
-      test: /(toolset|datasources)\.json$/,
+      test: /(toolset|datasources.*)\.json$/,
       include: [
         path.resolve(__dirname, 'src'),
       ],
       use: [{
         loader: 'file-loader',
         options: {
-          name: 'assets/js/[name].js',
+          name: 'assets/js/[1].js',
+          regExp: /(\w+)\.?\w*.json/,
           publicPath: "./"
         }
       },
