@@ -2,9 +2,9 @@
 
 cd /home
 
-if [ ! -d ./$1 ]
+if [ ! -d ./$1 ] || [ -z "$1" ] ;
   then
-    echo "🚧 Version $1 was not found. Doing nothing."
+    echo "🚧 Version $1 was not found or the input parameter is empty. Doing nothing."
   else
     now=$(date +%Y%m%d-%H%M%S)
     tar cvfz "backup-${now}.tar.gz" live/ && echo "✅ The current version is archived in backup-${now}.tar.gz"
