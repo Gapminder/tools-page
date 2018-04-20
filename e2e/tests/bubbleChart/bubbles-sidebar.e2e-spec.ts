@@ -32,8 +32,8 @@ describe('Bubbles chart: Sidebar', () => {
     await sidebar.findSelect.searchAndSelectCountry('India');
     expect(await bubbleChart.selectedCountries.count()).toEqual(2);
 
-    expect(await bubbleChart.selectedCountries.getText()).toMatch('China 2015');
-    expect(await bubbleChart.selectedCountries.getText()).toMatch('India 2015');
+    expect(await bubbleChart.selectedCountries.getText()).toMatch('China 2018');
+    expect(await bubbleChart.selectedCountries.getText()).toMatch('India 2018');
     expect(await browser.getCurrentUrl()).toContain('geo=ind');
     expect(await browser.getCurrentUrl()).toContain('geo=chn');
 
@@ -89,6 +89,7 @@ describe('Bubbles chart: Sidebar', () => {
     const xCoord = await bubbleChart.getCountryBubble('India').getAttribute('cx');
     const yCoord = await bubbleChart.getCountryBubble('India').getAttribute('cy');
 
+    if (browser.params.mobile) await sidebar.optionsButton.safeClick();
     await bubbleChart.lockButton.safeClick();
     await bubbleChart.trailsButton.safeClick();
     await slider.dragToMiddle();
@@ -185,24 +186,26 @@ describe('Bubbles chart: Sidebar', () => {
      */
     await sidebar.optionsButton.safeClick();
 
-    const optionsDialogueTopInitialPosition = await sidebar.optionsModalDialogue.getCssValue('top');
-    const optionsDialogueRightInitialPosition = await sidebar.optionsModalDialogue.getCssValue('right');
+    if (!browser.params.mobile) {
+      const optionsDialogueTopInitialPosition = await sidebar.optionsModalDialogue.getCssValue('top');
+      const optionsDialogueRightInitialPosition = await sidebar.optionsModalDialogue.getCssValue('right');
 
-    await safeDragAndDrop(sidebar.optionsMenuHandIcon, { x: -260, y: -50 });
+      await safeDragAndDrop(sidebar.optionsMenuHandIcon, { x: -260, y: -50 });
 
-    const optionsDialogueTopNewPosition = await sidebar.optionsModalDialogue.getCssValue('top');
-    const optionsDialogueRightNewPosition = await sidebar.optionsModalDialogue.getCssValue('right');
+      const optionsDialogueTopNewPosition = await sidebar.optionsModalDialogue.getCssValue('top');
+      const optionsDialogueRightNewPosition = await sidebar.optionsModalDialogue.getCssValue('right');
 
-    await expect(optionsDialogueTopInitialPosition).not.toEqual(optionsDialogueTopNewPosition);
-    await expect(optionsDialogueRightInitialPosition).not.toEqual(optionsDialogueRightNewPosition);
+      await expect(optionsDialogueTopInitialPosition).not.toEqual(optionsDialogueTopNewPosition);
+      await expect(optionsDialogueRightInitialPosition).not.toEqual(optionsDialogueRightNewPosition);
 
-    await safeDragAndDrop(sidebar.optionsMenuHandIcon, { x: -340, y: 50 });
+      await safeDragAndDrop(sidebar.optionsMenuHandIcon, { x: -340, y: 50 });
 
-    const optionsDialogueTopFinalPosition = await sidebar.optionsModalDialogue.getCssValue('top');
-    const optionsDialogueRightFinalPosition = await sidebar.optionsModalDialogue.getCssValue('right');
+      const optionsDialogueTopFinalPosition = await sidebar.optionsModalDialogue.getCssValue('top');
+      const optionsDialogueRightFinalPosition = await sidebar.optionsModalDialogue.getCssValue('right');
 
-    await expect(optionsDialogueTopNewPosition).not.toEqual(optionsDialogueTopFinalPosition);
-    await expect(optionsDialogueRightNewPosition).not.toEqual(optionsDialogueRightFinalPosition);
+      await expect(optionsDialogueTopNewPosition).not.toEqual(optionsDialogueTopFinalPosition);
+      await expect(optionsDialogueRightNewPosition).not.toEqual(optionsDialogueRightFinalPosition);
+    }
   });
 
   it('Change opacity for non-selected bubbles', async () => {
@@ -228,8 +231,9 @@ describe('Bubbles chart: Sidebar', () => {
 
   it('Click on minimap region - "Remove everything else"', async () => {
     await sidebar.colorSection.removeEverythingElseInMinimap();
+    const visibleBubblecCount = await bubbleChart.allBubbles.count() - await bubbleChart.invisibleBubbles.count();
 
-    await expect(bubbleChart.allBubbles.count()).toEqual(bubbleChart.countBubblesByColor('red'));
+    await expect(visibleBubblecCount).toEqual(bubbleChart.countBubblesByColor('red'));
   });
 
   it('Click on minimap region - "Select all in this group"', async () => {
@@ -249,7 +253,7 @@ describe('Bubbles chart: Sidebar', () => {
     await sidebar.activeOptionsMenu._$$('.vzb-removelabelbox-switch').first().safeClick();
 
     await expect(bubbleChart.selectedBubbleLabel.isDisplayed()).toBeFalsy();
-    await expect(browser.getCurrentUrl()).toContain('ui_chart_labels_removeLabelBox:true');
+    await expect(browser.getCurrentUrl()).toContain('ui$chart$labels$removeLabelBox:true');
   });
 
   it('change labels size by moving slider', async () => {
@@ -260,7 +264,7 @@ describe('Bubbles chart: Sidebar', () => {
     await sidebar.optionsButton.safeClick();
     await sidebar.labelsMenu.safeClick();
     await safeDragAndDrop(sidebar.activeOptionsMenu._$$('.handle--e').first(), { x: 100, y: 0 });
-    await browser.wait(EC.urlContains('size/_label_extent@'), 3000);
+    await browser.wait(EC.urlContains('size_label$extent@'), 3000);
 
     const labelSizeAfter = await _$('.vzb-bc-label-content.stroke').safeGetAttribute('font-size');
 
@@ -282,6 +286,6 @@ describe('Bubbles chart: Sidebar', () => {
     const labelSizeAfter = await _$('.vzb-bc-label-content.stroke').safeGetAttribute('font-size');
 
     await expect(parseInt(labelSizeBefore)).not.toEqual(parseInt(labelSizeAfter));
-    await expect(browser.getCurrentUrl()).toContain('size/_label_which=');
+    await expect(browser.getCurrentUrl()).toContain('size_label$which=');
   });
 });

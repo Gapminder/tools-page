@@ -2,6 +2,7 @@ import { setTool } from "./core/tool";
 import { URLI, parseURL } from "./core/url";
 import { appState, dispatch } from "./core/global";
 import { upgradeUrl } from "./core/deprecated-url";
+import { scrollTo } from "./core/utils";
 
 import {
   translator,
@@ -19,6 +20,7 @@ import SeeAlso from "./see-also/see-also";
 import menuItems from "./core/menu-items";
 import relatedItems from "./core/related-items";
 import BitlyService from "./core/bitly.service";
+import LocationService from "./core/location.service";
 import RelatedItems from "./related-items/related-items";
 import Footer from "./footer/footer";
 
@@ -28,7 +30,10 @@ if (upgradedUrl !== url) {
   location.replace(upgradedUrl);
 }
 
-var tools = toolsPage_toolset.filter(function(f) { return !!f.tool; }).map(function(m) { return m.id; });
+const embeddedMatch = /embedded=(true|false)/.exec(window.location.search);
+d3.select(".wrapper").classed("embedded-view", (embeddedMatch || [])[1] === "true");
+
+const tools = toolsPage_toolset.filter(function(f) { return !!f.tool; }).map(function(m) { return m.id; });
 parseURL();
 Object.assign(appState, {
   tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
@@ -54,8 +59,9 @@ const chartSwitcher = new ChartSwitcher(
     tools: toolsPage_toolset,
     selectedTool: appState.tool,
     onClick: d => {
-      dispatch.call("toolChanged", null, d)
-      setTool(d.id)
+      dispatch.call("toolChanged", null, d);
+      parseURL();
+      setTool(d.id);
     }
   });
 
@@ -83,8 +89,14 @@ const seeAlso = new SeeAlso(
     tools: toolsPage_toolset,
     selectedTool: appState.tool,
     onClick: d => {
-      dispatch.call("toolChanged", null, d);
-      setTool(d.id)
+      parseURL();
+      scrollTo({
+        element: d3.select(".wrapper").node(),
+        complete: () => {
+          dispatch.call("toolChanged", null, d);
+          setTool(d.id);
+        }
+      });
     }
   });
 
@@ -94,7 +106,7 @@ const socialButtons = new SocialButtons(
   dispatch,
   {
     bitlyService: BitlyService(),
-    locationService: () => { },
+    locationService: LocationService(),
   });
 
 const related = new RelatedItems(
@@ -111,3 +123,4 @@ const footer = new Footer(
   dispatch);
 
 setLanguage(appState.language);
+d3.select(".wrapper").classed("loading", false);

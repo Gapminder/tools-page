@@ -6,7 +6,8 @@ import { waitForSpinner, isCountryAddedInUrl } from '../../../helpers/helper';
 export class Find {
   private isDesktop: boolean = browser.params.desktop; // TODO replace isDesktop with isOpen
 
-  findButton: ExtendedElementFinder = this.isDesktop ? _$('.vzb-switch-on') : _$$('[data-btn="find"]').last();
+  findButton: ExtendedElementFinder = _$$('[data-btn="find"]').last();
+  selectSwitchButton: ExtendedElementFinder = _$('.vzb-switch-on');
   countriesInFindModal: ExtendedArrayFinder = _$$('.vzb-find-item.vzb-dialog-checkbox');
   searchInputField: ExtendedElementFinder = _$('.vzb-find-search');
   searchResult: ExtendedArrayFinder = _$$('.vzb-find-item.vzb-dialog-checkbox label');
@@ -20,6 +21,9 @@ export class Find {
      */
     if (!this.isDesktop) {
       await this.findButton.safeClick();
+    }
+    if (await this.selectSwitchButton.isDisplayed()) {
+      await this.selectSwitchButton.safeClick();
     }
 
     await this.searchInputField.typeText(country);
@@ -41,19 +45,30 @@ export class Find {
     if (!this.isDesktop) {
       await this.findButton.safeClick();
     }
+    if (await this.selectSwitchButton.isDisplayed()) {
+      await this.selectSwitchButton.safeClick();
+    }
 
     await this.deselectButton.safeClick();
     await this.closeOnMobile();
   }
 
   async clickOnFindButton(): Promise<void> {
-    await this.findButton.safeClick();
+    if (!this.isDesktop) {
+      await this.findButton.safeClick();
+    }
+    if (await this.selectSwitchButton.isDisplayed()) {
+      await this.selectSwitchButton.safeClick();
+    }
     await browser.wait(EC.visibilityOf(this.countriesInFindModal.first()));
   }
 
   async clickOnCountryFromList(country: string): Promise<void> {
     if (!this.isDesktop) {
       await this.findButton.safeClick();
+    }
+    if (await this.selectSwitchButton.isDisplayed()) {
+      await this.selectSwitchButton.safeClick();
     }
 
     await this.searchResult.findElementByText(country).safeClick();
@@ -66,6 +81,9 @@ export class Find {
   async hoverCountryFromList(country: string): Promise<void> {
     if (!this.isDesktop) {
       await this.findButton.safeClick();
+    }
+    if (await this.selectSwitchButton.isDisplayed()) {
+      await this.selectSwitchButton.safeClick();
     }
 
     await this.searchResult.findElementByText(country).hover();

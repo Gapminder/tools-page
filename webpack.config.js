@@ -12,6 +12,7 @@ const StylusLoaderPlugin = require('stylus-loader');
 const customLoader = require('custom-loader');
 
 const __PROD__ = process.env.NODE_ENV === 'production';
+const __STAGE__ = process.env.STAGE;
 
 const allTools = require(path.resolve(__dirname, "vizabi-tools.json"));
 const toolset = require(path.resolve(__dirname, "src", "toolset.json"));
@@ -48,7 +49,7 @@ function getVizabiToolsCssTestRegexp() {
 }
 
 const htmlAssets = ["assets/vizabi.css", 
-  ...allTools.tools.map(tool => `assets/${tool}.css`)
+  ...(__PROD__? inToolsetTools : allTools.tools).map(tool => "assets/" + /[^\/]+\.css$/.exec((allTools.paths[tool] || {}).css || [tool + ".css"])[0])
 ];
   
 if(!__PROD__) htmlAssets.push(
@@ -78,7 +79,7 @@ const stats = {
   publicPath: false
 };
 
-const deployUrl = "/tools";
+const deployDir = "tools";
 //const extractSCSS = new ExtractTextPlugin('assets/css/main.css');
 const extractStyl = new ExtractTextPlugin('styles.css');
 
@@ -111,7 +112,7 @@ const toolspage = {
   },
  
   output: {
-    path: path.resolve(__dirname, 'build', 'tools'),
+    path: path.resolve(__dirname, 'build', deployDir),
     filename: '[name].js'
   },
 
@@ -121,6 +122,7 @@ const toolspage = {
       "urlon": "urlon/dist/urlon.umd.js",
       "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
       "vizabi-ws-reader-web": "vizabi-ws-reader/dist/vizabi-ws-reader-web.js",
+      "datasources": `datasources.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`
     },
     modules: [
       path.resolve(__dirname, 'src'),
@@ -141,7 +143,7 @@ const toolspage = {
         loaders: [
           {
             loader: 'babel-loader',
-            query: {
+            options: {
               cacheDirectory: !__PROD__,
               presets: ['env']
             }
@@ -168,17 +170,13 @@ const toolspage = {
       // Stylus loader con CSS Modules
       {
         test: /\.styl$/,
-        // exclude: function(modulePath) {
-        //   console.log(modulePath, path.resolve(__dirname, 'src', 'app', '_resources'));
-        //   return /node_modules/.test(modulePath) &&
-        //       !/node_modules\/MY_MODULE/.test(modulePath);
-        // },
         use: extractStyl.extract({
           fallback: 'style-loader',
           use: [
             {
               loader: 'css-loader',
               options: {
+                url: false,
                 minimize: __PROD__,
                 sourceMap: true
               }
@@ -186,18 +184,16 @@ const toolspage = {
             {
               loader: 'stylus-loader',
               options: {
-                use: [poststylus([
-                  postcssUrl({
+                use: [poststylus(
+                  [postcssUrl({
                     // Only convert root relative URLs, which CSS-Loader won't process into require().
-                    filter: ({ url }) => url.startsWith('/') && !url.startsWith(deployUrl),
+                    filter: ({ url }) => url.startsWith('/'),
                     url: ({ url }) => {
-                      if (deployUrl.match(/:\/\//) || deployUrl.startsWith('/')) {
-                          // If deployUrl is absolute or root relative, ignore baseHref & use deployUrl as is.
-                          return `${deployUrl.replace(/\/$/, '')}${url}`;
-                      }
+                      return url.replace(/^\//, '');
                     }
                   })
-                ], 'autoprefixer')]
+                  ],
+                  'autoprefixer')]
               }
             }
           ]
@@ -250,7 +246,7 @@ const toolspage = {
           path.resolve(__dirname, 'node_modules')
         ],
         loader: 'file-loader',
-        query: {
+        options: {
           name: 'assets/vendor/fonts/[name].[ext]'
         }
       },
@@ -260,9 +256,9 @@ const toolspage = {
           {
             test: [/vizabi.*\.css$/, ...getVizabiToolsCssTestRegexp()],
             loader: 'file-loader',
-            query: {
+            options: {
               name: 'assets/[name].[ext]',
-              publicPath: deployUrl
+              publicPath: "./"
             }
           },
           {
@@ -271,9 +267,9 @@ const toolspage = {
               path.resolve(__dirname, 'node_modules')
             ],
             loader: 'file-loader',
-            query: {
+            options: {
               name: 'assets/vendor/css/[name].[ext]',
-              publicPath: deployUrl
+              publicPath: "./"
             }
           }
         ]
@@ -299,7 +295,7 @@ const toolspage = {
           loader: 'file-loader',
           options: {
             name: 'assets/js/toolconfigs/[name].js',
-            publicPath: deployUrl
+            publicPath: "./"
           }
         },
         {
@@ -314,7 +310,7 @@ const toolspage = {
       {
         test: /favicon\.ico$/,
         loader: 'file-loader',
-        query: { 
+        options: { 
           limit: 1,
           name: '[name].[ext]',
         }
@@ -354,11 +350,11 @@ const toolspage = {
     disableHostCheck: true,
     host: "0.0.0.0",
     port: "4200",
-    publicPath: "/tools/",
+    publicPath: "/" + deployDir,
     contentBase: [
       // TODO: remove this when issue below is fixed
       // https://github.com/webpack/webpack-dev-server/issues/641
-      path.resolve(__dirname, 'build', 'tools'),
+      path.resolve(__dirname, 'build', deployDir),
     ],
   },
 
@@ -405,7 +401,7 @@ if (__PROD__) {
         screw_ie8: true
       }
     }),
-    new webpack.IgnorePlugin(getFilterOutToolsRegexp()),
+    new webpack.IgnorePlugin(getFilterOutToolsRegexp())
   );
 } else {
   toolspage.module.rules = [
@@ -431,21 +427,22 @@ if (__PROD__) {
         options: {
           name: 'assets/vendor/js/[1]/[name].[ext]',
           regExp: new RegExp(`${sep}node_modules${sep}([^${sep}]+?)${sep}`),
-          publicPath: deployUrl
+          publicPath: "./"
         }
       }]
     },
 
     {
-      test: /(toolset|datasources)\.json$/,
+      test: /(toolset|datasources.*)\.json$/,
       include: [
         path.resolve(__dirname, 'src'),
       ],
       use: [{
         loader: 'file-loader',
         options: {
-          name: 'assets/js/[name].js',
-          publicPath: deployUrl
+          name: 'assets/js/[1].js',
+          regExp: /(\w+)\.?\w*.json/,
+          publicPath: "./"
         }
       },
       {

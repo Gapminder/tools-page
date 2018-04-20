@@ -1,4 +1,4 @@
-import { $, $$, browser, ElementArrayFinder, ElementFinder } from 'protractor';
+import { $, $$, browser, ElementArrayFinder, ElementFinder, ExpectedConditions as EC } from 'protractor';
 
 import { CommonChartPage } from './common-chart.po';
 import { isCountryAddedInUrl } from '../../helpers/helper';
@@ -46,8 +46,7 @@ export class LineChart extends CommonChartPage {
 
   async openChart(): Promise<void> {
     await super.openChart();
-
-    await new Slider().waitForSliderToBeReady();
+    await waitUntil(this.countriesLines.first());
   }
 
   async refreshPage(): Promise<void> {

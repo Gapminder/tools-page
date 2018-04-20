@@ -6,11 +6,12 @@ import { isCountryAddedInUrl, waitForSliderToBeReady, waitForSpinner } from '../
 export class Show {
   private isDesktop: boolean = browser.params.desktop;
 
+  findButton: ExtendedElementFinder = _$$('[data-btn="find"]').last();
   showSearchInputField: ExtendedElementFinder = _$('.vzb-find-search');
   showSearchResult: ExtendedArrayFinder = _$$('div[class*="vzb-show-item vzb-dialog-checkbox"] label'); // TODO
-  showButton: ExtendedElementFinder = _$('.vzb-switch-off');
+  showSwitchButton: ExtendedElementFinder = _$('.vzb-switch-off');
   deselectButton: ExtendedElementFinder = _$('.vzb-find-deselect');
-  showApplyBtn: ExtendedElementFinder = _$('.vzb-show-apply');
+  showApplyBtn: ExtendedElementFinder = this.isDesktop ? _$('.vzb-show-apply') : _$('div[class*="vzb-dialog-button"][data-dialogtype="find"]');
   showListAccordionBtn: ExtendedElementFinder = _$('.vzb-show-list.vzb-accordion');
   geographicLocation: ExtendedElementFinder = _$$('.vzb-show-category').findElementByText('Geographic location');
   geographicRegions: ExtendedElementFinder = _$$('.vzb-show-category').findElementByText('Geographic regions');
@@ -20,7 +21,10 @@ export class Show {
 
   async searchAndSelectCountry(country: string, select = true): Promise<void> {
     if (!this.isDesktop && !(await this.showSearchInputField.isDisplayed())) {
-      await this.showButton.safeClick();
+      await this.findButton.safeClick();
+    }
+    if (await this.showSwitchButton.isDisplayed()) {
+      await this.showSwitchButton.safeClick();
     }
 
     await this.showSearchInputField.typeText(country);
@@ -32,30 +36,34 @@ export class Show {
     await browser.wait(isCountryAddedInUrl(country, select), 10000, 'coutry in URL');
 
     await waitForSpinner();
-    await this.closeOnMobile();
   }
 
   async deselectCountryInSearch(country: string): Promise<void> {
     await this.searchAndSelectCountry(country, false);
   }
 
-  async clickOnCountryFromList(country: string): Promise<void> {
+  async clickOnCountryFromList(country: string, preopen = false): Promise<void> {
     if (!this.isDesktop) {
-      await this.showButton.safeClick();
+      await this.findButton.safeClick();
+    }
+    if (await this.showSwitchButton.isDisplayed()) {
+      await this.showSwitchButton.safeClick();
     }
 
-    await this.geographicLocation.safeClick();
+    if (!preopen) await this.geographicLocation.safeClick();
     await this.showSearchResult.findElementByText(country).safeClick();
     await this.showApplyBtn.safeClick();
 
     await browser.wait(isCountryAddedInUrl(country));
     await waitForSpinner();
-    await this.closeOnMobile();
   }
 
   async clickResetButton(): Promise<void> {
     if (!this.isDesktop) {
-      await this.showButton.safeClick();
+      await this.findButton.safeClick();
+    }
+    if (await this.showSwitchButton.isDisplayed()) {
+      await this.showSwitchButton.safeClick();
     }
 
     await this.resetBtn.safeClick();
@@ -67,7 +75,7 @@ export class Show {
 
   async closeOnMobile(): Promise<void> {
     if (!this.isDesktop) {
-      await this.showButton.safeClick();
+      await this.findButton.safeClick();
     }
   }
 

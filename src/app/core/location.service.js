@@ -10,12 +10,9 @@ export default function LocationService() {
     },
 
     getUrlReadyForEmbedding: function () {
-      const urlTree = this.router.parseUrl(this.router.url);
-      urlTree.queryParams = urlTree.queryParams || {};
-      urlTree.queryParams.embedded = 'true';
-
-      const protocolAgnosticOrigin = window.location.origin.replace(/http:|https:/, '');
-      const pathWithQueryParamsAndHash = this.location.prepareExternalUrl(this.router.serializeUrl(urlTree));
+      const location = window.location;
+      const protocolAgnosticOrigin = location.origin.replace(/http:|https:/, '');
+      const pathWithQueryParamsAndHash = location.pathname + "?embedded=true" + location.hash;
 
       return protocolAgnosticOrigin + pathWithQueryParamsAndHash;
     }

@@ -12,6 +12,7 @@ export class BubbleChart extends CommonChartPage {
   public dataDoubtsLink: ExtendedElementFinder = _$('.vzb-data-warning');
   public dataDoubtsWindow: ElementFinder = $('.vzb-data-warning-body');
   public allBubbles: ExtendedArrayFinder = _$$('circle[class*="vzb-bc-entity"]');
+  public invisibleBubbles: ExtendedArrayFinder = _$$('circle[class*="vzb-invisible"]');
   public bubbleLabelOnMouseHover: ExtendedElementFinder = _$('g[class="vzb-bc-tooltip"]');
   public axisXValue: ElementFinder = $$('g[class="vzb-axis-value"]').first();
   yAxisBtn: ExtendedElementFinder = _$('.vzb-bc-axis-y-title');
@@ -27,7 +28,7 @@ export class BubbleChart extends CommonChartPage {
   public usaTrails: ElementArrayFinder = $$('.trail-usa [class="vzb-bc-trailsegment"]');
   public selectedCountries: ExtendedArrayFinder = _$$('[class*="vzb-bc-entity label"]');
 
-  public lockButton: ExtendedElementFinder = _$$('[data-btn="lock"]').last();
+  public lockButton: ExtendedElementFinder = _$$('[data-btn="lock"]')[browser.params.mobile ? "first" : "last"]();
   public trailsButton: ExtendedElementFinder = _$$('button[data-btn="trails"]').last();
   public sidebar = {
     bubbleOpacityControl: $('.vzb-dialog-bubbleopacity'),
@@ -157,17 +158,17 @@ export class BubbleChart extends CommonChartPage {
   }
 
   async hoverUnitedStates(): Promise<{}> {
-    return this.hoverMouseOverBubble('green', 0, 10, 10);
+    return this.hoverMouseOverBubble('green');
   }
 
   async clickOnUnitedStates(): Promise<{}> {
-    await this.clickOnBubble('green', 0, 10, 10);
+    await this.clickOnBubble('green');
 
     return await waitUntil(this.getCountryBubble('USA'));
   }
 
   async clickOnChina(): Promise<void> {
-    await this.clickOnBubble('red', 0, 10, 10);
+    await this.clickOnBubble('red');
 
     await waitUntil(this.getCountryBubble('China'));
     await browser.wait(isCountryAddedInUrl('China'), 5000, 'country added in URL');

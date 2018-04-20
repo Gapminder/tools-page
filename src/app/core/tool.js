@@ -5,6 +5,9 @@ import {
   URLI,
   updateURL
 } from "./url";
+import {
+  getTransitionModel
+} from "./chart-transition";
 import { loadJS } from "./utils";
 import timeLogger from "./timelogger";
 
@@ -51,6 +54,12 @@ function setTool(arg) {
           'persistentChange': function(evt) {
               updateURL(evt); // force update
           },
+          'change_hook_which': function(evt, arg) {
+            if (gtag) gtag('event', 'indicator selected', {
+              'event_label': arg.which,
+              'event_category': arg.hook
+            });
+          },
           'load_error': function(evt, error) {            
             if (gtag) gtag('event', 'error', {
               'event_label': JSON.stringify(error).substring(0, 500), //500 characters is the limit of GA field
@@ -95,7 +104,9 @@ function setTool(arg) {
       VIZABI_PAGE_MODEL = Vizabi.utils.deepExtend({}, VIZABI_MODEL);
       delete VIZABI_PAGE_MODEL.bind;
       delete VIZABI_PAGE_MODEL.locale.id;
-      viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, VIZABI_MODEL, URLI.model, true));
+      
+      const transitionModel = viz ? getTransitionModel(toolConfig.transition) : URLI.model;
+      viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, VIZABI_MODEL, transitionModel, true));
   
       timeLogger.removeAll();
       timeLogger.add("TOTAL")

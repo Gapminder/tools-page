@@ -7,7 +7,7 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
   template.html(templateHtml);
 
   template.select(".share-text-box")
-    .on("click", setMainLink());
+    .on("click", setMainLink);
   template.select(".mail.button")
     .on("click", mail);
   template.select(".twitter.button")
@@ -64,13 +64,13 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
   }
 
   function shareLink() {
-    const message = 'Copy this fragment and paste it in your website or blog:\n(more instructions on vizabi.org/tutorials)';
-
-    prompt(message, wrapInIFrame(locationService.getUrlReadyForEmbedding()));
+    bitlyService.shortenUrl(undefined, shortened => prompt('Copy the following link: ', shortened));
   }
 
   function getEmbeddedUrl() {
-    bitlyService.shortenUrl(undefined, shortened => prompt('Copy the following link: ', shortened));
+    const message = 'Copy this fragment and paste it in your website or blog:\n(more instructions on vizabi.org/tutorials)';
+
+    prompt(message, wrapInIFrame(locationService.getUrlReadyForEmbedding()));
   }
 
   function wrapInIFrame(content) {

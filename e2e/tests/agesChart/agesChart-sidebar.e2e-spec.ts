@@ -12,7 +12,7 @@ describe('Ages chart: Sidebar', () => {
   });
 
   it(`add region to chart from sidebar by click`, async () => {
-    await sidebar.show.clickOnCountryFromList('Africa');
+    await sidebar.show.clickOnCountryFromList('Africa', true);
 
     expect(await agesChart.graphTitles.safeGetText()).toMatch('Africa');
     expect(await agesChart.graphsOnChart.count()).toEqual(2);

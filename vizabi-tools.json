@@ -7,19 +7,19 @@
     "barrankchart",
     "popbyage",
     "extapimap",
-    "barchart-ds",
+    "barchartds",
     "sankey",
     "spreadsheet",
     "combo"
   ],
   "paths": {
-    "popbyage": {
-      "js": "vizabi-popbyage",
-      "css": "vizabi-popbyage/build/popbyage.css"
-    },
     "combo": {
       "js": "custom_tools/combo.js",
       "css": "custom_tools/combo.css"
+    },
+    "barchartds": {
+      "js": "vizabi-barchart-ds",
+      "css": "vizabi-barchart-ds/build/barchart-ds.css"
     }
   }
 }

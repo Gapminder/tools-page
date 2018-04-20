@@ -64,7 +64,7 @@ export class CommonChartPage {
   }
 
   async openChart(): Promise<void> {
-    await safeOpen(`#_${this.url}`);
+    await safeOpen(`#$${this.url}`);
     await disableAnimations();
   }
 

@@ -46,12 +46,12 @@ describe('Header: ', () => {
 
     it(`chart links`, async() => {
       const expectedLinks = [
-        `/tools/#_${mapChart.url}`,
-        `/tools/#_${mountainChart.url}`,
-        `/tools/#_${lineChart.url}`,
-        `/tools/#_${rankingsChart.url}`,
-        `/tools/#_${bubbleChart.url}`,
-        `/tools/#_${agesChart.url}`
+        `/tools/#$${mapChart.url}`,
+        `/tools/#$${mountainChart.url}`,
+        `/tools/#$${lineChart.url}`,
+        `/tools/#$${rankingsChart.url}`,
+        `/tools/#$${bubbleChart.url}`,
+        `/tools/#$${agesChart.url}`
       ];
 
       const chartLinks = $$('.chart-switcher-options a');
