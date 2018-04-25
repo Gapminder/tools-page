@@ -74,7 +74,7 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
   }
 
   function wrapInIFrame(content) {
-    return `<iframe src="${content}" style="width: 100%; height: 500px; margin: 0 0 0 0; border: 1px solid grey;"></iframe>`;
+    return `<iframe src="${content}" style="width: 100%; height: 500px; margin: 0 0 0 0; border: 1px solid grey;" allowfullscreen></iframe>`;
   }
   
 }
