@@ -45,6 +45,7 @@ setTool();
 const languageSwitcher = new LanguageSwitcher(
   d3.select(".header .app-language-switcher"),
   translator,
+  dispatch,
   {
     languages: getLanguages(),
     selectedLanguage: appState.language,
@@ -59,7 +60,7 @@ const chartSwitcher = new ChartSwitcher(
     tools: toolsPage_toolset,
     selectedTool: appState.tool,
     onClick: d => {
-      dispatch.call("toolChanged", null, d);
+      dispatch.call("toolChanged", null, d.id);
       parseURL();
       setTool(d.id);
     }
@@ -93,7 +94,7 @@ const seeAlso = new SeeAlso(
       scrollTo({
         element: d3.select(".wrapper").node(),
         complete: () => {
-          dispatch.call("toolChanged", null, d);
+          dispatch.call("toolChanged", null, d.id);
           setTool(d.id);
         }
       });
@@ -123,4 +124,3 @@ const footer = new Footer(
   dispatch);
 
 setLanguage(appState.language);
-d3.select(".wrapper").classed("loading", false);

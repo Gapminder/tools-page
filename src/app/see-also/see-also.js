@@ -26,7 +26,8 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
   });
 
   dispatch.on("toolChanged.seeAlso", d => {
-    toolChanged(d);
+    const tool = tools.filter(({id}) => id === d)[0];
+    toolChanged(tool);
   })
 
   function translate() {

@@ -1,32 +1,47 @@
 //ADAPTED CODE FROM: http://blog.vjeux.com/2011/javascript/urlon-url-object-notation.html
 import {
   viz,
-  VIZABI_PAGE_MODEL
+  setTool
 } from "./tool";
 import {
-  appState
+  setLanguage
+} from "./language";
+import {
+  appState,
+  dispatch
 } from "./global";
 
-var poppedState;
+var poppedModel = {};
 var URLI = {};
 var minModel;
 
 window.addEventListener('popstate', function(e) {
   console.log(e, Vizabi.utils.diffObject());
   if (e.state) {
-      console.log("model diff", Vizabi.utils.diffObject(e.state.model, viz.getModel()));
-      poppedState = e.state.model;
-      viz.setModel(e.state.model);
+    console.log("model diff", Vizabi.utils.diffObject(e.state.model, viz.getModel()));
+    poppedModel = e.state.model;
+    if (e.state.tool !== appState.tool) {
+      VIZABI_PAGE_MODEL = e.state.pageModel;
+      VIZABI_MODEL = poppedModel;
+      setTool(e.state.tool, true);
+      dispatch.call("toolChanged", null, e.state.tool);
+    } else {
+      viz.setModel(poppedModel);
+    }
+    if (e.state.model.locale.id !== appState.language) {
+      setLanguage(poppedModel.locale.id);
+      dispatch.call("languageChanged", null, poppedModel.locale.id);
+    }
   } else {
-      poppedState = null;
+      poppedModel = {};
   }
 });
 
 //grabs width, height, tabs open, and updates the url
 function updateURL(event) {
-  if (poppedState && Vizabi.utils.comparePlainObjects(viz.getModel(), poppedState)) return;
+  if (poppedModel && Vizabi.utils.comparePlainObjects(viz.getModel(), poppedModel)) return;
   
-  poppedState = null;
+  poppedModel = viz.getModel();
 
   var model;
   if(typeof viz !== 'undefined') {
@@ -39,8 +54,8 @@ function updateURL(event) {
   }
   url["chart-type"] = appState.tool;
 
-  console.log('pushing state', viz.getModel(), event)
-  window.history.pushState({ tool: url["chart-type"], model: viz.getModel() }, 'Title', "#" + urlon.stringify(url));
+  console.log('pushing state', poppedModel, event);
+  window.history.pushState({ tool: url["chart-type"], model: poppedModel, pageModel: Vizabi.utils.deepExtend({}, VIZABI_PAGE_MODEL) }, 'Title', "#" + urlon.stringify(url));
 }
 
 function parseURL() {
