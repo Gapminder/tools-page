@@ -97,7 +97,7 @@ function setTool(arg) {
       const dataSources = toolsPage_datasources.filter(function(f) { return f.toolIds.includes(toolConfig.id); });
       Object.assign(VIZABI_MODEL, dataSources.length > 1 ?
         dataSources.reduce(function(result, ds, index) {
-          result["data_" + (index ? index : "")] = ds.datasource;
+          result["data" + (index ? "_" + ds.datasource.reader + index : "")] = ds.datasource;
           return result;
         }, {})
       : { data: dataSources[0].datasource })

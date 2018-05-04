@@ -5,9 +5,10 @@ const poststylus = require('poststylus');
 const postcssUrl = require('postcss-url');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const StylusLoaderPlugin = require('stylus-loader');
 const customLoader = require('custom-loader');
 
@@ -36,6 +37,18 @@ function getFilterOutToolsRegexp() {
   return filterOutTools.length ? new RegExp("(" + filterOutTools.join("|") + ")", "i") : null;
 }
 
+function getCustomToolsJsTestRegexp() {
+  const result = [];
+
+  Object.keys(allTools.paths).forEach(tool => {
+    if (allTools.paths[tool].js && path.extname(allTools.paths[tool].js) !== "") {
+      result.push(new RegExp(allTools.paths[tool].js.replace(".", "\\.").replace("/", "\\/")))
+    }
+  });
+
+  return result;
+}
+
 function getVizabiToolsCssTestRegexp() {
   const result = [];
 
@@ -53,12 +66,17 @@ const htmlAssets = ["assets/vizabi.css",
 ];
   
 if(!__PROD__) htmlAssets.push(
+  'assets/js/toolset.js',
+  'assets/js/datasources.js',
   'assets/vendor/js/d3/d3.js',
+  'assets/vendor/js/urlon/urlon.umd.js',
+  'assets/vendor/js/vizabi/vizabi.js',
   'assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader-web.js',
   'assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js',
-  'assets/vendor/js/urlon/urlon.umd.js',
-  'assets/js/toolset.js',
-  'assets/js/datasources.js'
+  ...allTools.tools.map(tool => {
+    const toolName = allTools.paths[tool] && allTools.paths[tool].js || `vizabi-${tool}`;
+    return path.join("assets/vendor/js", (path.extname(toolName) === "" ? path.join(toolName, path.basename(require.resolve(toolName))) : path.join(path.basename(toolName, ".js"), path.basename(toolName))));
+  })
 );
 
 const sep = '\\' + path.sep;
@@ -81,7 +99,9 @@ const stats = {
 
 const deployDir = "tools";
 //const extractSCSS = new ExtractTextPlugin('assets/css/main.css');
-const extractStyl = new ExtractTextPlugin('styles.css');
+const extractStyl = new MiniCssExtractPlugin({ 
+  filename: "styles.css"
+});
 
 function varNameWithFileName(prefix) {
   return function() {
@@ -102,12 +122,19 @@ customLoader.loaders = {
 };
 
 const toolspage = {
+  mode: process.env.NODE_ENV,
+
+  performance: {
+    hints: false
+  },
+
   devtool: 'source-map',
 
   entry: {
-    toolspage: path.resolve('src', 'app', 'app.js'),
-    tools: [path.resolve('src', 'index.js'),
-      ...getEntryToolsFilenames()
+    toolspage: [
+      path.resolve('src', 'index.js'),
+      ...getEntryToolsFilenames(),
+      path.resolve('src', 'app', 'app.js')
     ]
   },
  
@@ -170,34 +197,31 @@ const toolspage = {
       // Stylus loader con CSS Modules
       {
         test: /\.styl$/,
-        use: extractStyl.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                url: false,
-                minimize: __PROD__,
-                sourceMap: true
-              }
-            },
-            {
-              loader: 'stylus-loader',
-              options: {
-                use: [poststylus(
-                  [postcssUrl({
-                    // Only convert root relative URLs, which CSS-Loader won't process into require().
-                    filter: ({ url }) => url.startsWith('/'),
-                    url: ({ url }) => {
-                      return url.replace(/^\//, '');
-                    }
-                  })
-                  ],
-                  'autoprefixer')]
-              }
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              url: false,
+              minimize: __PROD__,
+              sourceMap: true
             }
-          ]
-        })
+          },
+          {
+            loader: 'stylus-loader',
+            options: {
+              use: [poststylus([
+                postcssUrl({
+                  // Only convert root relative URLs, which CSS-Loader won't process into require().
+                  filter: ({ url }) => url.startsWith('/'),
+                  url: ({ url }) => {
+                    return url.replace(/^\//, '');
+                  }
+                })
+              ], 'autoprefixer')]
+            }
+          }
+        ]
       },
 
       // {
@@ -287,6 +311,7 @@ const toolspage = {
       },
 
       {
+        type: 'javascript/auto',
         test: /\.json$/,
         include: [
           path.resolve(__dirname, 'node_modules'),
@@ -341,7 +366,8 @@ const toolspage = {
       chunksSortMode: 'manual'
     }),
     new HtmlWebpackIncludeAssetsPlugin({
-      assets: htmlAssets, append: false })
+      assets: htmlAssets, 
+      append: false })
   ],
 
   stats,
@@ -361,8 +387,6 @@ const toolspage = {
 };
 
 if (__PROD__) {
-  toolspage.entry["vendor"] = ["d3", "urlon"];
-//  toolspage.entry["vizabi"] = ["vizabi"];
 
   toolspage.module.rules = [
     {
@@ -382,25 +406,42 @@ if (__PROD__) {
     }
   ].concat(toolspage.module.rules);
 
-  toolspage.plugins.push(
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",  
-      minChunks: Infinity,
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compressor: {
-        screw_ie8: true,
-        warnings: false
-      },
-      mangle: {
-        screw_ie8: true
-      },
-      output: {
-        comments: false,
-        screw_ie8: true
+  toolspage.optimization = {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/].*(d3|urlon)/,
+          chunks: 'all',
+          enforce: true
+        },
+        tools: {
+          name: 'tools',
+          test: new RegExp("(vizabi|" + inToolsetTools.join("|") + ")", "i"),
+          chunks: 'all',
+          enforce: true
+        },
       }
-    }),
+    },
+    //minimize: false,
+    minimizer: [
+      new UglifyJsPlugin({
+        sourceMap: true,
+        uglifyOptions: {
+          compress: {
+            warnings: false
+          },
+          mangle: {
+          },
+          output: {
+            comments: false,
+          }
+        }
+      })
+    ]
+  };
+
+  toolspage.plugins.push(
     new webpack.IgnorePlugin(getFilterOutToolsRegexp())
   );
 } else {
@@ -418,21 +459,35 @@ if (__PROD__) {
     },
 
     {
-      test: /(d3|web|reader|urlon\.umd)\.js$/,
-      include: [
-        path.resolve(__dirname, 'node_modules'),
-      ],
-      use: [{
-        loader: 'file-loader',
-        options: {
-          name: 'assets/vendor/js/[1]/[name].[ext]',
-          regExp: new RegExp(`${sep}node_modules${sep}([^${sep}]+?)${sep}`),
-          publicPath: "./"
+      oneOf: [
+        {
+          test: [...getCustomToolsJsTestRegexp()],
+          loader: 'file-loader',
+          options: {
+            name: 'assets/vendor/js/[name]/[name].[ext]',
+            publicPath: "./"
+          }
+        },
+
+        {
+          test: /(d3|urlon\.umd|vizabi.*)\.js$/,
+          include: [
+            path.resolve(__dirname, 'node_modules'),
+          ],
+          use: [{
+            loader: 'file-loader',
+            options: {
+              name: 'assets/vendor/js/[1]/[name].[ext]',
+              regExp: new RegExp(`${sep}node_modules${sep}([^${sep}]+?)${sep}`),
+              publicPath: "./"
+            }
+          }]
         }
-      }]
+      ]
     },
 
     {
+      type: 'javascript/auto',
       test: /(toolset|datasources.*)\.json$/,
       include: [
         path.resolve(__dirname, 'src'),
