@@ -5,8 +5,8 @@ import deprecatedConceptsRule from "./deprecated-url.rules/deprecatedConcepts/de
 const rules = [];
 
 addRule(worldAdapterRule);
-addRule(deprecatedConceptsRule);
 addRule(urlonUpgradeRule);
+addRule(deprecatedConceptsRule);
 
 function upgradeUrl(url) {
   return rules.reduce((resultUrl, {test, use}) => {
