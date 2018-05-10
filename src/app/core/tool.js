@@ -23,7 +23,7 @@ function setTool(arg) {
     .attr("class", "vzb-placeholder")
     .attr("style", "width: 100%; height: 100%;");
   const toolConfig = toolsPage_toolset.filter(function(f) { return f.id === arg; })[0];
-  loadJS("assets/js/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js" , function() {
+  loadJS("config/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js" , function() {
     
       VIZABI_MODEL.locale = {
           "id": appState.language,
@@ -94,13 +94,14 @@ function setTool(arg) {
           }
       }
 
-      const dataSources = toolsPage_datasources.filter(function(f) { return f.toolIds.includes(toolConfig.id); });
+      const dataSourcesId = toolConfig.dataSources || Object.keys(toolsPage_datasources); 
+      const dataSources = dataSourcesId.map(ds => toolsPage_datasources[ds]);
       Object.assign(VIZABI_MODEL, dataSources.length > 1 ?
         dataSources.reduce(function(result, ds, index) {
-          result["data" + (index ? "_" + ds.datasource.reader + index : "")] = ds.datasource;
+          result["data" + (index ? "_" + dataSourcesId[index] : "")] = ds;
           return result;
         }, {})
-      : { data: dataSources[0].datasource })
+      : { data: dataSources[0] })
       VIZABI_PAGE_MODEL = Vizabi.utils.deepExtend({}, VIZABI_MODEL);
       delete VIZABI_PAGE_MODEL.bind;
       delete VIZABI_PAGE_MODEL.locale.id;

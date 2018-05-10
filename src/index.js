@@ -21,3 +21,4 @@ requireChartConfigs.keys().forEach(requireChartConfigs);
 
 window.toolsPage_toolset = window.toolsPage_toolset || require("toolset");
 window.toolsPage_datasources = window.toolsPage_datasources || require("datasources");
+window.toolsPage_conceptMapping = window.toolsPage_conceptMapping || require("conceptMapping");
