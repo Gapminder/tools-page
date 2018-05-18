@@ -43,7 +43,7 @@ export default new Map([
 	 "poverty_percent_people_below_320_a_day"], 
 	// Redundant legacy GW indicator (same data source)
 	["yearly_co2_emissions_tonnes",
-	 "yearly_co2_emissions_1000_tonnes"]
+	 "yearly_co2_emissions_1000_tonnes"],
     // Changed defenition of sanitation in WDI
     ["improved_sanitation_overall_access_percent",
      "at_least_basic_sanitation_overall_access_percent"],
