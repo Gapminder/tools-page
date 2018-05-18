@@ -16,7 +16,7 @@ const __PROD__ = process.env.NODE_ENV === 'production';
 const __STAGE__ = process.env.STAGE;
 
 const allTools = require(path.resolve(__dirname, "webpack.vizabi-tools.json"));
-const toolset = require(path.resolve(__dirname, "src", "config", "toolset.json"));
+const toolset = require(path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`));
 const inToolsetTools = Object.keys(toolset.reduce((result, { tool }) => {
   tool && (result[tool.toLowerCase()] = true);
   return result;
@@ -150,7 +150,7 @@ const toolspage = {
       "urlon": "urlon/dist/urlon.umd.js",
       "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
       "vizabi-ws-reader-web": "vizabi-ws-reader/dist/vizabi-ws-reader-web.js",
-      "toolset": path.resolve(__dirname, "src", "config", "toolset.json"),
+      "toolset": path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
       "datasources": path.resolve(__dirname, "src", "config", `datasources.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
       "conceptMapping": path.resolve(__dirname, "src", "config", "conceptMapping.js")
     },
@@ -505,7 +505,7 @@ if (__PROD__) {
 
     {
       type: 'javascript/auto',
-      test: /(toolset|datasources.*)\.json$/,
+      test: /(toolset.*|datasources.*)\.json$/,
       include: [
         path.resolve(__dirname, "src", "config"),
       ],
