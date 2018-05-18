@@ -38,9 +38,26 @@ export default new Map([
 	// updated poverty limited by World Bank in WDI
 	["poverty_percent_people_below_2_a_day",
 	 "poverty_percent_people_below_320_a_day"], 
+    // updated poverty limited by World Bank in WDI
+	["poverty_percent_people_below_310_a_day",
+	 "poverty_percent_people_below_320_a_day"], 
 	// Redundant legacy GW indicator (same data source)
 	["yearly_co2_emissions_tonnes",
 	 "yearly_co2_emissions_1000_tonnes"]
+    // Changed defenition of sanitation in WDI
+    ["improved_sanitation_overall_access_percent",
+     "at_least_basic_sanitation_overall_access_percent"],
+    ["improved_sanitation_rural_access_percent",
+     "at_least_basic_sanitation_rural_access_percent"],
+    ["improved_sanitation_urban_access_percent",
+     "at_least_basic_sanitation_urban_access_percent"],
+    // Changed defenition of water sources in WDI
+    ["improved_water_source_overall_access_percent",
+     "at_least_basic_water_source_overall_access_percent"],
+    ["improved_water_source_rural_access_percent",
+     "at_least_basic_water_source_rural_access_percent"],
+    ["improved_water_source_urban_access_percent",
+     "at_least_basic_water_source_urban_access_percent"]
 	 /*
 	// Static indicator with latitude of countries, removed
 	// Should be replaced by latitude geo property
@@ -61,3 +78,4 @@ export default new Map([
 	 "under_five_mortality_from_ihme_per_1000_born"],
 	 */
 ]);
+
