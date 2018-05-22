@@ -27,7 +27,7 @@ function setTool(arg, skipModelLoad) {
   if (skipModelLoad) {
     loadTool();
   } else {
-    loadJS("assets/js/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js" , loadTool, document.body);
+    loadJS("config/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js" , loadTool, document.body);
   }
 
   function loadTool() {
