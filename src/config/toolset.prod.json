@@ -1,0 +1,56 @@
+[
+  {
+    "id": "bubbles",
+    "tool": "BubbleChart",
+    "dataSources": ["sg", "wdi"],
+    "transition": ["select","time"],
+    "title": "bubbles",
+    "image": "/assets/images/chart/bubble-chart.png"
+  },
+  {
+    "id": "mountain",
+    "tool": "MountainChart",
+    "dataSources": ["sg"],
+    "transition": ["select","time"],
+    "title": "income",
+    "image": "/assets/images/chart/income-chart.png"
+  },
+  {
+    "id": "map",
+    "tool": "BubbleMap",
+    "dataSources": ["sg"],
+    "transition": ["select","time"],
+    "title": "maps",
+    "image": "/assets/images/chart/maps-chart.png"
+  },
+  {
+    "id": "linechart",
+    "tool": "LineChart",
+    "dataSources": ["sg"],
+    "transition": ["show","time"],
+    "title": "trends",
+    "image": "/assets/images/chart/trends-chart.png"
+  },
+  {
+    "id": "barrank",
+    "tool": "BarRankChart",
+    "dataSources": ["sg"],
+    "transition": ["select","time"],
+    "title": "ranks",
+    "image": "/assets/images/chart/ranks-chart.png"
+  },
+  {
+    "id": "popbyage",
+    "tool": "PopByAge",
+    "dataSources": ["pop"],
+    "transition": ["none"],
+    "title": "ages",
+    "image": "/assets/images/chart/ages-chart.png"
+  },
+  {
+    "id": "dollar-street",
+    "url": "http://www.gapminder.org/dollar-street",
+    "image": "/assets/images/chart/dollar-street.png",
+    "title": "dollar_street"
+  }
+]
