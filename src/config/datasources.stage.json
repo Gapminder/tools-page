@@ -1,0 +1,14 @@
+{
+  "sg": {
+    "reader": "waffle",
+    "assetsPath": "https://import-waffle-server-dev.gapminderdev.org/api/ddf/assets/",
+    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
+    "dataset": "open-numbers/ddf--gapminder--systema_globalis#stage"
+  },
+  "pop": {
+    "reader": "waffle",
+    "assetsPath": "https://import-waffle-server-dev.gapminderdev.org/api/ddf/assets/",
+    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
+    "dataset": "open-numbers/ddf--gapminder--population#stage"
+  }
+}
