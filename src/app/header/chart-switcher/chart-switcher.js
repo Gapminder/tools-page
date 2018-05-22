@@ -29,7 +29,8 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, sele
   });
 
   dispatch.on("toolChanged.chartSwitcher", d => {
-    toolChanged(d);
+    const tool = tools.filter(({id}) => id === d)[0];
+    toolChanged(tool);
   })
   
   d3.select(window).on("resize.chartSwitcher", () => switchTools.call(this, false));
