@@ -1,5 +1,3 @@
-import conceptMapping from "./conceptMapping";
-
 const rule = {
   test: function(url) {
     const hashIndex = url.indexOf("#");
@@ -8,7 +6,7 @@ const rule = {
     const hash = url.substr(hashIndex+1);
     const state = urlon.parse(hash);
 
-    return findInState(state, conceptMapping);
+    return findInState(state, toolsPage_conceptMapping);
   },
 
   use: function(url) {
@@ -17,7 +15,7 @@ const rule = {
     const hash = url.substr(hashIndex+1);
     
     const state = urlon.parse(hash);
-    const newState = replaceInState(state, conceptMapping);
+    const newState = replaceInState(state, toolsPage_conceptMapping);
 
     return hashPrefix + "#" + urlon.stringify(newState);
   }
@@ -43,7 +41,7 @@ function replaceInState(state, conceptMapping) {
 		if (conceptProperties.has(key) && conceptMapping.has(value)) {
 			newState[key] = conceptMapping.get(value);
 			console.log("Replaced " + value + " by " + conceptMapping.get(value));
-		} else if (typeof value == "object" && value != null) {
+		} else if (typeof value == "object" && value != null && !Array.isArray(value)) {
 			newState[key] = replaceInState(value, conceptMapping); 
 		} else {
 			newState[key] = value;
