@@ -28,6 +28,7 @@ const transitions = {
       return values ? values.slice(0) : null;
     },
     to: (values, dim) => {
+      if (values.length == 0) return {};
       return {
         entities: {
           show: {
