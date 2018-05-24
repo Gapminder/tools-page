@@ -17,7 +17,7 @@ function setTool(arg, skipModelLoad) {
   if (!arg) arg = appState.tool;
   const toolConfig = toolsPage_toolset.filter(function(f) { return f.id === arg; })[0];
   const toolConfigPrevious = toolsPage_toolset.filter(function(f) { return f.id === appState.tool; })[0];
-  const toolModelPrevious = viz ? viz.getModel() : {};
+  const toolModelPrevious = viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL) : {};
   
   Vizabi.clearInstances();
   d3.select(".vzb-placeholder").remove();
