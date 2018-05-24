@@ -15,13 +15,16 @@ let viz;
 
 function setTool(arg, skipModelLoad) {
   if (!arg) arg = appState.tool;
+  const toolConfig = toolsPage_toolset.filter(function(f) { return f.id === arg; })[0];
+  const toolConfigPrevious = toolsPage_toolset.filter(function(f) { return f.id === appState.tool; })[0];
+  const toolModelPrevious = viz ? viz.getModel() : {};
+  
   Vizabi.clearInstances();
   d3.select(".vzb-placeholder").remove();
   d3.select("body").select(".column.main").select(".vizabi-placeholder")
     .append("div")
     .attr("class", "vzb-placeholder")
     .attr("style", "width: 100%; height: 100%;");
-  const toolConfig = toolsPage_toolset.filter(function(f) { return f.id === arg; })[0];
 
   appState.tool = arg;
   if (skipModelLoad) {
@@ -119,7 +122,7 @@ function setTool(arg, skipModelLoad) {
       delete VIZABI_PAGE_MODEL.bind;
       delete VIZABI_PAGE_MODEL.locale.id;
     }
-    const transitionModel = viz ? getTransitionModel(toolConfig.transition) : skipModelLoad ? {} : URLI.model;
+    const transitionModel = viz ? getTransitionModel(toolModelPrevious, toolConfigPrevious.transition, toolConfig.transition) : skipModelLoad ? {} : URLI.model;
     viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, VIZABI_MODEL, transitionModel, true));
 
     timeLogger.removeAll();
