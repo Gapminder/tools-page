@@ -2,7 +2,7 @@
   {
     "id": "bubbles",
     "tool": "BubbleChart",
-    "dataSources": ["sg", "wdi"],
+    "dataSources": ["sg"],
     "transition": ["select","time"],
     "title": "bubbles",
     "image": "/assets/images/chart/bubble-chart.png"

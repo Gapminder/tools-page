@@ -3,7 +3,7 @@
     "reader": "waffle",
     "assetsPath": "https://import-waffle-server.gapminder.org/api/ddf/assets/",
     "path": "https://waffle-server.gapminder.org/api/ddf/ql",
-    "dataset": "open-numbers/ddf--gapminder--systema_globalis#add-wdi-tags"
+    "UNUSED_dataset_for_wdi": "open-numbers/ddf--gapminder--systema_globalis#add-wdi-tags"
   },
   "pop": {
     "reader": "waffle",
