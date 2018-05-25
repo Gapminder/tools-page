@@ -4,7 +4,7 @@
     "NOT_USED_path": "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/add-wdi-tags",
     "reader": "waffle",
     "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ml-ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/open-numbers/ddf--gapminder--systema_globalis/develop-3bc7bf0/assets/",
+    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
     "dataset": "open-numbers/ddf--gapminder--systema_globalis#add-wdi-tags"
   },
   "pop": {
@@ -13,7 +13,7 @@
     "NOT_USED_path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
     "reader": "waffle",
     "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ml-ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/open-numbers/ddf--gapminder--systema_globalis/develop-3bc7bf0/assets/",
+    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
     "dataset": "open-numbers/ddf--gapminder--population#stage"
   },
   "wdi": {
@@ -21,7 +21,7 @@
     "NOT_USED_path": "https://raw.githubusercontent.com/open-numbers/ddf--open_numbers--world_development_indicators/one-concepts-file",
     "reader": "waffle",
     "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ml-ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/open-numbers/ddf--gapminder--systema_globalis/develop-3bc7bf0/assets/",
+    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
     "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#one-concepts-file"
   }
 }
