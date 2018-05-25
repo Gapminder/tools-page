@@ -3,25 +3,25 @@
     "NOT_USED_reader": "ddf",
     "NOT_USED_path": "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/add-wdi-tags",
     "reader": "waffle",
-    "path": "http://35.195.175.141/api/ddf/ml-ql",
-    "assetsPath": "http://35.195.175.141/api/ddf/assets/open-numbers/ddf--gapminder--systema_globalis/develop-3bc7bf0/assets/",
+    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ml-ql",
+    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/open-numbers/ddf--gapminder--systema_globalis/develop-3bc7bf0/assets/",
     "dataset": "open-numbers/ddf--gapminder--systema_globalis#add-wdi-tags"
   },
   "pop": {
     "NOT_USED_reader": "waffle",
-    "NOT_USED_assetsPath": "https://import-waffle-server.gapminder.org/api/ddf/assets/",
-    "NOT_USED_path": "https://waffle-server.gapminder.org/api/ddf/ql",
+    "NOT_USED_assetsPath": "https://import-waffle-server-dev.gapminderdev.org/api/ddf/assets/",
+    "NOT_USED_path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
     "reader": "waffle",
-    "path": "http://35.195.175.141/api/ddf/ml-ql",
-    "assetsPath": "http://35.195.175.141/api/ddf/assets/open-numbers/ddf--gapminder--systema_globalis/develop-3bc7bf0/assets/",
+    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ml-ql",
+    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/open-numbers/ddf--gapminder--systema_globalis/develop-3bc7bf0/assets/",
     "dataset": "open-numbers/ddf--gapminder--population"
   },
   "wdi": {
     "NOT_USED_reader": "ddf",
     "NOT_USED_path": "https://raw.githubusercontent.com/open-numbers/ddf--open_numbers--world_development_indicators/one-concepts-file",
     "reader": "waffle",
-    "path": "http://35.195.175.141/api/ddf/ml-ql",
-    "assetsPath": "http://35.195.175.141/api/ddf/assets/open-numbers/ddf--gapminder--systema_globalis/develop-3bc7bf0/assets/",
+    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ml-ql",
+    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/open-numbers/ddf--gapminder--systema_globalis/develop-3bc7bf0/assets/",
     "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#one-concepts-file"
   }
 }
