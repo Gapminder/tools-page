@@ -28,7 +28,7 @@
   "dependencies": {
     "d3": "^4.13.0",
     "font-awesome": "^4.7.0",
-    "vizabi": "0.33.0",
+    "vizabi": "0.33.1-0",
     "vizabi-barchart-ds": "2.1.0",
     "vizabi-barrankchart": "2.2.0",
     "vizabi-bubblechart": "2.1.0",
