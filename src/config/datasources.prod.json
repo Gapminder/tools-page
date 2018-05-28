@@ -2,8 +2,7 @@
   "sg": {
     "reader": "waffle",
     "assetsPath": "https://import-waffle-server.gapminder.org/api/ddf/assets/",
-    "path": "https://waffle-server.gapminder.org/api/ddf/ql",
-    "UNUSED_dataset_for_wdi": "open-numbers/ddf--gapminder--systema_globalis#add-wdi-tags"
+    "path": "https://waffle-server.gapminder.org/api/ddf/ql"
   },
   "pop": {
     "reader": "waffle",
@@ -15,6 +14,6 @@
     "reader": "waffle",
     "assetsPath": "https://import-waffle-server.gapminder.org/api/ddf/assets/",
     "path": "https://waffle-server.gapminder.org/api/ddf/ql",
-    "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#one-concepts-file"
+    "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#merge-concepts"
   }
 }

@@ -5,7 +5,7 @@
     "reader": "waffle",
     "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ml-ql",
     "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--systema_globalis#add-wdi-tags"
+    "dataset": "open-numbers/ddf--gapminder--systema_globalis#stage"
   },
   "pop": {
     "NOT_USED_reader": "waffle",
@@ -18,10 +18,10 @@
   },
   "wdi": {
     "NOT_USED_reader": "ddf",
-    "NOT_USED_path": "https://raw.githubusercontent.com/open-numbers/ddf--open_numbers--world_development_indicators/one-concepts-file",
+    "NOT_USED_path": "https://raw.githubusercontent.com/open-numbers/ddf--open_numbers--world_development_indicators/merge-concepts",
     "reader": "waffle",
     "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ml-ql",
     "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#one-concepts-file"
+    "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#merge-concepts"
   }
 }
