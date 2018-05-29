@@ -16,6 +16,15 @@ const rule = {
   	var gwHash = parseHash(hash);
 	var gtHash = createToolsHash(gwHash);
 
+	// not related to URL, but relevant for people coming from Gapminder World:
+	const tpMessage = document.getElementById('tp-message');
+	tpMessage.style.display = "block";
+	document.getElementById('tp-message-text').innerHTML = `<strong>Welcome to Gapminder Tools!</strong><br>
+        You came to this page using a link to Gapminder World, our old charts. What you see now is its replacement with newer data and better looks.<br> 
+        If you really need to go back to Gapminder World: <a href="//www.gapminder.org/world/?use_gapminder_world${hash}">click here</a>. Also, please let us know why by emailing <a href="mailto:angie@gapminder.org">angie@gapminder.org</a>.`
+
+    // continue url related things
+
     return hashPrefix + "#" + urlon.stringify(gtHash);
   }
 }
