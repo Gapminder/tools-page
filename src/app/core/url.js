@@ -15,31 +15,52 @@ var poppedModel = {};
 var URLI = {};
 var minModel;
 
+var popStateLoopFlag = false;
+var resetPopStateLoopFlag = Vizabi.utils.debounce(() => {
+  popStateLoopFlag = false;
+}, 500);
+
 window.addEventListener('popstate', function(e) {
-  console.log(e, Vizabi.utils.diffObject());
-  if (e.state) {
-    console.log("model diff", Vizabi.utils.diffObject(e.state.model, viz.getModel()));
-    poppedModel = e.state.model;
-    if (e.state.tool !== appState.tool) {
-      VIZABI_PAGE_MODEL = e.state.pageModel;
-      VIZABI_MODEL = poppedModel;
-      setTool(e.state.tool, true);
-      dispatch.call("toolChanged", null, e.state.tool);
-    } else {
-      viz.setModel(poppedModel);
-    }
-    if (e.state.model.locale.id !== appState.language) {
-      setLanguage(poppedModel.locale.id);
-      dispatch.call("languageChanged", null, poppedModel.locale.id);
-    }
+  //console.log(e, Vizabi.utils.diffObject());
+  if (!e.state) {
+    parseURL();
+    window.history.replaceState({ 
+      tool: URLI["chart-type"], 
+      model: Vizabi.utils.deepExtend({}, URLI.model, true) 
+    }, 'Title');
+    poppedModel = {};
+    return;
+  }
+
+  console.log("model diff", Vizabi.utils.diffObject(e.state.model, viz.getModel()));
+  poppedModel = e.state.model;
+  if (e.state.tool !== appState.tool) {
+    parseURL();
+    setTool(e.state.tool, true);
+    dispatch.call("toolChanged", null, e.state.tool);
   } else {
-      poppedModel = {};
+    //FIX ME
+    //We have problem with possible infinite loop of 
+    //updating vizabi model - updating url - updating vizabi model and so on…
+    //because hook.spaceRef is not model prop from init
+    popStateLoopFlag = true;
+    viz.setModel(poppedModel);
+  }
+
+  const localeId = ((poppedModel || {}).locale || {}).id || "en";
+  if (localeId !== appState.language) {
+    setLanguage(localeId);
+    dispatch.call("languageChanged", null, localeId);
   }
 });
 
 //grabs width, height, tabs open, and updates the url
-function updateURL(event) {
-  if (poppedModel && Vizabi.utils.comparePlainObjects(viz.getModel(), poppedModel)) return;
+function updateURL(event, replaceInsteadPush) {
+  resetPopStateLoopFlag();
+  if (popStateLoopFlag || (poppedModel && Vizabi.utils.comparePlainObjects(viz.getModel(), poppedModel))) {
+    //popStateLoopFlag = false;
+    return;
+  }
   
   poppedModel = viz.getModel();
 
@@ -55,7 +76,10 @@ function updateURL(event) {
   url["chart-type"] = appState.tool;
 
   console.log('pushing state', poppedModel, event);
-  window.history.pushState({ tool: url["chart-type"], model: poppedModel, pageModel: Vizabi.utils.deepExtend({}, VIZABI_PAGE_MODEL) }, 'Title', "#" + urlon.stringify(url));
+  window.history[replaceInsteadPush ? "replaceState" : "pushState"]({ 
+    tool: url["chart-type"], 
+    model: poppedModel
+  }, 'Title', "#" + urlon.stringify(url));
 }
 
 function parseURL() {
