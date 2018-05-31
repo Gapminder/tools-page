@@ -46,6 +46,10 @@ Object.assign(appState, {
   tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
   language: ((URLI.model || {}).locale || {}).id || "en"
 });
+window.history.replaceState({ 
+  tool: appState.tool, 
+  model: Vizabi.utils.deepExtend({}, URLI.model, true) 
+}, 'Title');
 setTool();
 
 
@@ -68,7 +72,6 @@ const chartSwitcher = new ChartSwitcher(
     selectedTool: appState.tool,
     onClick: d => {
       dispatch.call("toolChanged", null, d.id);
-      parseURL();
       setTool(d.id);
     }
   });
@@ -97,7 +100,6 @@ const seeAlso = new SeeAlso(
     tools: toolsPage_toolset,
     selectedTool: appState.tool,
     onClick: d => {
-      parseURL();
       scrollTo({
         element: d3.select(".wrapper").node(),
         complete: () => {
