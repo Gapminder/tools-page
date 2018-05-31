@@ -13,9 +13,10 @@ import timeLogger from "./timelogger";
 
 let viz;
 
-function setTool(arg, skipModelLoad) {
-  if (!arg) arg = appState.tool;
-  const toolConfig = toolsPage_toolset.filter(function(f) { return f.id === arg; })[0];
+function setTool(tool, skipTransition) {
+  if (tool === appState.tool) return;
+  if (!tool) tool = appState.tool;
+  const toolConfig = toolsPage_toolset.filter(function(f) { return f.id === tool; })[0];
   const toolConfigPrevious = toolsPage_toolset.filter(function(f) { return f.id === appState.tool; })[0];
   const toolModelPrevious = viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL) : {};
   
@@ -26,17 +27,13 @@ function setTool(arg, skipModelLoad) {
     .attr("class", "vzb-placeholder")
     .attr("style", "width: 100%; height: 100%;");
 
-  appState.tool = arg;
-  if (skipModelLoad) {
-    loadTool();
-  } else {
-    loadJS("config/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js" , loadTool, document.body);
-  }
+  appState.tool = tool;
+  loadJS("config/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js" , loadTool, document.body);
 
   function loadTool() {
 
     let snapOnceDataLoaded = false;
-
+    
     VIZABI_MODEL.bind = {
       'ready': function(evt) {
           var splashTime = timeLogger.snapOnce("SPLASH");            
@@ -57,7 +54,14 @@ function setTool(arg, skipModelLoad) {
           timeLogger.add("DATA");
           timeLogger.update("DATA");
         
-          if (snapOnceDataLoaded) updateURL();
+          if (snapOnceDataLoaded) {
+            updateURL(evt);
+          }
+
+          if (!snapOnceDataLoaded && (!(this.ui||{}).splash || fullTime)) {
+            snapOnceDataLoaded = true;
+            updateURL(evt, true);
+        }
       },
       'persistentChange': function(evt) {
           updateURL(evt); // force update
@@ -86,8 +90,6 @@ function setTool(arg, skipModelLoad) {
         });
       },
       'dataLoaded': function() {        
-        snapOnceDataLoaded = true;
-
         var dataTime = timeLogger.snapOnce("DATA");
         if (gtag && dataTime) gtag('event', 'timing_complete', {
           'name' : 'gapfill',
@@ -104,25 +106,24 @@ function setTool(arg, skipModelLoad) {
       }
     }
 
-    if (!skipModelLoad) {
-      VIZABI_MODEL.locale = {
-        "id": appState.language,
-        "filePath": "assets/translation/"
-      };
+    VIZABI_MODEL.locale = {
+      "id": appState.language,
+      "filePath": "assets/translation/"
+    };
 
-      const dataSourcesId = toolConfig.dataSources || Object.keys(toolsPage_datasources); 
-      const dataSources = dataSourcesId.map(ds => toolsPage_datasources[ds]);
-      Object.assign(VIZABI_MODEL, dataSources.length > 1 ?
-        dataSources.reduce(function(result, ds, index) {
-          result["data" + (index ? "_" + dataSourcesId[index] : "")] = ds;
-          return result;
-        }, {})
-      : { data: dataSources[0] })
-      VIZABI_PAGE_MODEL = Vizabi.utils.deepExtend({}, VIZABI_MODEL);
-      delete VIZABI_PAGE_MODEL.bind;
-      delete VIZABI_PAGE_MODEL.locale.id;
-    }
-    const transitionModel = viz ? getTransitionModel(toolModelPrevious, toolConfigPrevious.transition, toolConfig.transition) : skipModelLoad ? {} : URLI.model;
+    const dataSourcesId = toolConfig.dataSources || Object.keys(toolsPage_datasources); 
+    const dataSources = dataSourcesId.map(ds => toolsPage_datasources[ds]);
+    Object.assign(VIZABI_MODEL, dataSources.length > 1 ?
+      dataSources.reduce(function(result, ds, index) {
+        result["data" + (index ? "_" + dataSourcesId[index] : "")] = ds;
+        return result;
+      }, {})
+    : { data: dataSources[0] })
+    VIZABI_PAGE_MODEL = Vizabi.utils.deepExtend({}, VIZABI_MODEL);
+    delete VIZABI_PAGE_MODEL.bind;
+    delete VIZABI_PAGE_MODEL.locale.id;
+
+    const transitionModel = (!skipTransition && viz) ? getTransitionModel(toolModelPrevious, toolConfigPrevious.transition, toolConfig.transition) : URLI.model;
     viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, VIZABI_MODEL, transitionModel, true));
 
     timeLogger.removeAll();
