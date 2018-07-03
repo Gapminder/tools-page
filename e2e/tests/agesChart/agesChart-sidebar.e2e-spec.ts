@@ -3,14 +3,14 @@ import { Sidebar } from '../../pageObjects/components';
 import { waitForSliderToBeReady, waitForSpinner } from '../../helpers/helper';
 
 const agesChart: AgesChart = new AgesChart();
+const sidebar: Sidebar = new Sidebar();
 
 describe('Ages chart: Sidebar', () => {
-  const sidebar: Sidebar = new Sidebar();
 
   beforeEach(async () => {
     await agesChart.openChart();
   });
-
+  
   it(`add region to chart from sidebar by click`, async () => {
     await sidebar.show.clickOnCountryFromList('Africa', true);
 

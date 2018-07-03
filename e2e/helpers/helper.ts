@@ -2,8 +2,8 @@ import { browser, ElementFinder, ExpectedConditions as EC } from 'protractor';
 
 import { CommonChartPage } from '../pageObjects/charts/common-chart.po';
 
-const MAX_TIMEOUT = 30000;
-const TIMEOUT = 15000;
+const MAX_TIMEOUT = 60000;
+const TIMEOUT = 30000;
 
 export function safeOpen(url: string) {
   return browser.get(browser.baseUrl + url)
@@ -30,6 +30,12 @@ export async function safeDragAndDrop(from: ElementFinder, to: any) {
   await browser.actions().mouseDown().perform();
   await browser.actions().mouseMove(to).perform();
   await browser.actions().mouseUp().perform();
+  // await browser.actions()
+  //   .mouseMove(from)
+  //   .mouseDown(from)
+  //   .mouseMove(to)
+  //   .mouseUp()
+  //   .perform();
 }
 
 export function safeExpectIsDispayed(element: ElementFinder, interval?: number) {

@@ -62,7 +62,7 @@ export class Sidebar {
   }
 
   async waitForVisible(): Promise<void> {
-    await browser.wait(EC.visibilityOf(this.rootElement), 10000, `element ${this.rootElement.locator()} not visible`);
+    await browser.wait(EC.visibilityOf(this.rootElement), 30000, `element ${this.rootElement.locator()} not visible`);
   }
 
   async changeOpacityForNonSelected(): Promise<void> {

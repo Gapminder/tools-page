@@ -4,6 +4,7 @@ import { AgesChart, CommonChartPage } from '../../pageObjects/charts';
 import { safeOpen } from '../../helpers/helper';
 
 const agesChart: AgesChart = new AgesChart();
+const isDesktop: boolean = browser.params.desktop;
 
 describe('Ages chart', () => {
 
@@ -22,9 +23,11 @@ describe('Ages chart', () => {
   });
 
   it(`Data shown by hover on bar`, async() => {
-    await agesChart.bars.first().hover();
-
-    expect(await agesChart.labelOnBar.safeGetText()).toEqual('0-year-olds World: 136M');
+    if (isDesktop) {
+      await agesChart.bars.first().hover();
+      
+      expect(await agesChart.labelOnBar.safeGetText()).toEqual('0-year-olds World: 136M');
+    }
   });
 
   it(`select specific bar on chart (by click on bar)`, async() => {
