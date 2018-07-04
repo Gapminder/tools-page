@@ -106,6 +106,10 @@ export class ExtendedArrayFinder extends ElementArrayFinder {
     return new ExtendedElementFinder(super.last());
   }
 
+  filter(fn): ExtendedArrayFinder {
+    return new ExtendedArrayFinder(super.filter(fn));
+  }
+
   findElementByText(searchText: string): ExtendedElementFinder {
     return new ExtendedElementFinder(
       element.all(by.cssContainingText(this.first().locator().value, searchText)).first()

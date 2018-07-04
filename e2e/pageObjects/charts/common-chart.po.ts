@@ -40,6 +40,7 @@ export class CommonChartPage {
   public static mainChart: ElementFinder = $('.vzb-tool');
   public static spinner: ElementFinder = $('.vzb-loading-data');
   public static sliderReady: ElementFinder = $('.domain.rounded');
+  public static sliderProgress: ElementFinder = $('.domain');
   public movingSliderProgress: ElementArrayFinder = $$('.domain.rounded');
 
   yAxisBtn: ExtendedElementFinder = _$('.vzb-bc-axis-y-title');
@@ -75,7 +76,7 @@ export class CommonChartPage {
      */
     if (!currentUrl.match(this.url)) {
       await this.chartLink.safeClick();
-
+      
       return await waitForUrlToChange(currentUrl);
     }
   }

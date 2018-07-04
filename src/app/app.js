@@ -15,6 +15,7 @@ import LanguageSwitcher from "./header/language-switcher/language-switcher";
 import SocialButtons from "./header/social-buttons/social-buttons";
 import Menu from "./header/menu/menu";
 import MenuMobile from "./header/menu-mobile/menu-mobile";
+import Message from "./header/message/message";
 import SeeAlso from "./see-also/see-also";
 
 import menuItems from "./core/menu-items";
@@ -23,6 +24,12 @@ import BitlyService from "./core/bitly.service";
 import LocationService from "./core/location.service";
 import RelatedItems from "./related-items/related-items";
 import Footer from "./footer/footer";
+
+Message.init(
+  d3.select(".app-message"),
+  translator,
+  dispatch
+);
 
 const url = location.href;
 const upgradedUrl = upgradeUrl(url);
