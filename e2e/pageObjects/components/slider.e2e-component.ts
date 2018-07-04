@@ -7,12 +7,12 @@ import { safeDragAndDrop } from '../../helpers/helper';
 export class Slider {
   public sliderSelectedYear: ExtendedElementFinder = _$('.vzb-ts-slider-value');
   public sliderButton: ElementFinder = $('.vzb-ts-slider-handle');
-  public sliderReady: ElementFinder = $('.domain.rounded'); // TODO remove this because there is static property
+  //public sliderReady: ElementFinder = $('.domain.rounded'); // TODO remove this because there is static property
   public sliderAxis: ElementFinder = $('.vzb-ts-slider');
   public speedStepper: ExtendedElementFinder = _$('.vzb-tool-stepped-speed-slider');
 
   async waitForSliderToBeReady(): Promise<{}> {
-    return await browser.wait(EC.visibilityOf(this.sliderReady), 30000, 'slider not visible');
+    return await browser.wait(EC.visibilityOf(CommonChartPage.sliderProgress), 30000, 'slider not visible');
   }
 
   async getPosition(): Promise<string> {
@@ -28,8 +28,7 @@ export class Slider {
       .manage()
       .window()
       .getSize();
-    let distance: number;
-    windowSize.width > 900 ? (distance = -900) : windowSize.width > 400 ? (distance = -300) : (distance = -200);
+    const distance: number = windowSize.width > 900 ? -900 : (windowSize.width > 450 ? -300 : -200);
     await safeDragAndDrop(this.sliderButton, { x: distance, y: 0 });
 
     return await browser.wait(EC.urlContains('#$state$time$value='), 10000, 'drag slider to middle');

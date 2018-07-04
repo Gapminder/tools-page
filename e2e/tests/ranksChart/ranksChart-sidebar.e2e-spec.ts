@@ -38,7 +38,7 @@ describe('Ranks chart: Sidebar', () => {
     expect(colorFromColorSection).toContain(await ranksChart.getBarForCountry('China').safeGetCssValue('fill'));
   });
 
-  it(`"SHOW" button hide all except selected`, async() => {
+  xit(`"SHOW" button hide all except selected`, async() => {
     await sidebar.show.searchAndSelectCountry('China');
 
     expect(await ranksChart.allBars.count()).toEqual(1);

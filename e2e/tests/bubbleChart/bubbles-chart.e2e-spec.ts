@@ -16,6 +16,7 @@ describe('Bubbles chart', () => {
   it('data warning modal', async () => {
     await bubbleChart.dataDoubtsLink.safeClick();
     await safeExpectIsDispayed(bubbleChart.dataDoubtsWindow);
+    await bubbleChart.dataDoubtsWindowClose.safeClick();
   });
 
   it('hover biggest bubbles: red, yellow, green and blue', async () => {

@@ -31,7 +31,7 @@ describe('Line chart: Sidebar', () => {
     expect(await lineChart.countriesLines.count()).toEqual(DEFAULT_COUNTRIES_NUMBER, 'number of selected countries');
   });
 
-  it('"Find" button in sidebar show only selected countries', async () => {
+  xit('"Find" button in sidebar show only selected countries', async () => {
     const chartCountries = lineChart.selectedCountries;
     await sidebar.findSelect.clickOnFindButton();
     const modalCountries = sidebar.findSelect.countriesInFindModal;
