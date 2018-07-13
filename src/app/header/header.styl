@@ -241,7 +241,7 @@ $menu-bar
     .nav-faq-help-links
       nav-faq-help-links()
 
-.how-to-close
+.button-close
   +for_breakpoint(small)
     display none
 
@@ -251,8 +251,92 @@ $menu-bar
   font-weight bold
   margin-top -15px
 
-.how-to-close:hover,
-.how-to-close:focus
+.button-close:hover,
+.button-close:focus
   color black
   text-decoration none
   cursor pointer
+
+.data-editor
+  display flex
+  max-height 100%
+  flex-direction column
+  justify-content flex-start
+  align-items center
+  margin 50px
+  background-color white
+  padding-top 15px
+  padding-bottom 5px
+  .add
+    margin-right auto
+
+  +for_breakpoint(small)
+    margin 0
+    padding 0
+
+.data-editor-close
+  align-self flex-end
+  margin-right 10px
+
+.data-editor-buttons
+  display flex
+  width 100%
+  justify-content space-between
+  .add-row
+    width 33px
+    text-align center
+    font-size 2em
+    line-height .32em
+  a
+    cursor pointer
+  a:last-child
+    margin-right 15px
+
+.table
+  width 100%
+  overflow auto
+
+  +for_breakpoint(small)
+    overflow hidden
+
+  table
+    width 100%
+    border-collapse collapse
+
+  .no-select
+    -webkit-touch-callout none
+    user-select none
+
+  .row
+    border 5px solid white
+
+  .container
+    position absolute
+    top 0
+    left 250px
+
+  .cell
+    width 100%
+
+    +for_breakpoint(small)
+      display: block;
+      width auto
+      margin-left: 5px;
+
+  td, th
+    border 1px solid black
+    background-color white
+    padding 5px
+    text-align left
+
+  th.header
+    cursor default
+    border none
+
+  th.edit
+    width 15px
+    a
+      font-size 2em
+      line-height .32em
+      cursor pointer
+    

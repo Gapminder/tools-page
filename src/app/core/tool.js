@@ -32,9 +32,26 @@ function setTool(tool, skipTransition) {
 
   function loadTool() {
 
+    const dataSourcesId = toolConfig.dataSources || Object.keys(toolsPage_datasources); 
+    const dataSources = dataSourcesId.map(ds => toolsPage_datasources[ds]);
+
+    const urlDataModel = (URLI.model || {}).data;
+    const skipModel = urlDataModel && !Vizabi.utils.comparePlainObjects(urlDataModel, dataSources[0]);
+
+    const _VIZABI_MODEL =  skipModel ? {} : VIZABI_MODEL;
+
+    if (!skipModel) {
+      Object.assign(_VIZABI_MODEL, dataSources.length > 1 ?
+        dataSources.reduce(function(result, ds, index) {
+          result["data" + (index ? "_" + dataSourcesId[index] : "")] = ds;
+          return result;
+        }, {})
+      : { data: dataSources[0] })
+    }
+  
     let snapOnceDataLoaded = false;
     
-    VIZABI_MODEL.bind = {
+    _VIZABI_MODEL.bind = {
       'ready': function(evt) {
           var splashTime = timeLogger.snapOnce("SPLASH");            
           if (gtag && splashTime) gtag('event', 'timing_complete', {
@@ -106,25 +123,17 @@ function setTool(tool, skipTransition) {
       }
     }
 
-    VIZABI_MODEL.locale = {
+    _VIZABI_MODEL.locale = {
       "id": appState.language,
       "filePath": "assets/translation/"
     };
 
-    const dataSourcesId = toolConfig.dataSources || Object.keys(toolsPage_datasources); 
-    const dataSources = dataSourcesId.map(ds => toolsPage_datasources[ds]);
-    Object.assign(VIZABI_MODEL, dataSources.length > 1 ?
-      dataSources.reduce(function(result, ds, index) {
-        result["data" + (index ? "_" + dataSourcesId[index] : "")] = ds;
-        return result;
-      }, {})
-    : { data: dataSources[0] })
-    VIZABI_PAGE_MODEL = Vizabi.utils.deepExtend({}, VIZABI_MODEL);
+    VIZABI_PAGE_MODEL = Vizabi.utils.deepExtend({}, _VIZABI_MODEL);
     delete VIZABI_PAGE_MODEL.bind;
     delete VIZABI_PAGE_MODEL.locale.id;
 
     const transitionModel = (!skipTransition && viz) ? getTransitionModel(toolModelPrevious, toolConfigPrevious.transition, toolConfig.transition) : URLI.model;
-    viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, VIZABI_MODEL, transitionModel, true));
+    viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, _VIZABI_MODEL, transitionModel, true));
 
     timeLogger.removeAll();
     timeLogger.add("TOTAL")
