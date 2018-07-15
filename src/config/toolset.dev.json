@@ -48,6 +48,15 @@
     "image": "/assets/images/chart/ages-chart.png"
   },
   {
+    "id": "spreadsheet",
+    "tool": "Spreadsheet",
+    "dataSources": ["sg"],
+    "transition": ["none"],
+    "title": "spreadsheet",
+    "image": "/assets/images/chart/spreadsheet.png",
+    "hideThumbnail": true
+  },
+  {
     "id": "dollar-street",
     "url": "http://www.gapminder.org/dollar-street",
     "image": "/assets/images/chart/dollar-street.png",
