@@ -315,16 +315,41 @@ $menu-bar
     top 0
     left 250px
 
+  .row-data
+    +for_breakpoint(small)
+      display block
+
   .cell
     width 100%
 
     +for_breakpoint(small)
-      display: block;
+      display block
       width auto
-      margin-left: 5px;
+      margin-left 5px
+
+  .dropdown
+    div
+      position relative
+      cursor pointer
+      &:after
+        content: '\25BC';
+        padding: 0 0 0 4px;
+        border-left: 1px solid $color-blue-darker
+        color: $color-blue-darker
+        position: absolute;
+        right: 2px;
+    li
+      display block
+      cursor pointer
+      border-top 1px dotted
+    ul
+      padding-left 0
+      padding-top 5px
+      line-height 1.8em
+ 
 
   td, th
-    border 1px solid black
+    border 1px solid $color-blue-darker
     background-color white
     padding 5px
     text-align left
@@ -332,11 +357,14 @@ $menu-bar
   th.header
     cursor default
     border none
+    min-width 70px
 
   th.edit
     width 15px
     a
+      opacity .2
       font-size 2em
       line-height .32em
       cursor pointer
-    
+      &:hover
+        opacity 1

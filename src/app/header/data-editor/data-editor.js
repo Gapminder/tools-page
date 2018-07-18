@@ -7,32 +7,79 @@ import {
   URLI,
   updateURL
 } from "../../core/url";
+import { eachDay } from "date-fns";
+
+const readersSchema = {
+  "waffle": {
+    props: ["path", "dataset", "assetsPath"]
+  },
+  "ddf": {
+    props: ["path"]
+  },
+  "csv": {
+    props: ["path"]
+  },
+  "csv-time_in_columns": {
+    props: ["path"]
+  },
+  "inline": {
+    props: ["data"]
+  }
+}
 
 const DataEditor = function (placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
-  const columnNames = ['reader', 'path', 'dataset', 'assetsPath'];
+  const propNames = ["reader", "path", "dataset", "assetsPath", "data"];
+  const defaultValues = {
+    "reader": "waffle"
+  };
+  const propTypes = {
+    "reader": { 
+      "type": "dropdown",
+      "data": Object.keys(readersSchema)
+    }
+  };
+
   let data;
 
   const table = Table()
-    .on('edit', d => update(d))
+    .on("edit", d => update(d))
     .on("remove", (d, i) => {
       data.splice(i, 1);
-      updateTable([data, ["name"].concat(columnNames)]);
+      updateTable([data, ["name"].concat(propNames), propTypes]);
+    })
+    .on("dropdown_change", () => {
+      filterDataRows();
     })
 
   function updateTable(_data) {
     placeHolder.select(".table")
       .datum(_data)
       .call(table);
+    filterDataRows();
+  }
+
+  function filterDataRows() {
+    placeHolder.select(".table")
+      .selectAll(".row")
+      .selectAll(".row-data")
+      .each(function(d, i) {
+        const el = d3.select(this);
+        const allPropNames = ["name"].concat(propNames);
+        const selectedReader = d.data[allPropNames.indexOf("reader")];
+        const allowProps = ["name", "reader", ...readersSchema[selectedReader].props];
+        el.style("display", allowProps.includes(allPropNames[i]) ? null : "none");
+      })
   }
 
   placeHolder.select(".add-row")
     .on("click", () => {
       const newIndex = data[data.length - 1] ? data[data.length - 1].index + 1 : 0;
-      data.push({
-        data: ["", ...columnNames.map(() => "")],
+      const newData = {
+        data: ["data_", ...propNames.map((name) => defaultValues[name] || "")],
         index: newIndex
-      });
-      updateTable([data, ["name"].concat(columnNames)]);
+      };
+      data.push(newData);
+      updateTable([data, ["name"].concat(propNames), propTypes]);
     });
 
   placeHolder.select(".de-apply")
@@ -41,8 +88,10 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
       if (!haveDataName) data[0].data[0] = "data";
       const dataModel = data.reduce((result, d, i) => {
         const dataObj = {};
-        columnNames.forEach((name, i) => {
-          if (d.data[i + 1]) dataObj[name] = d.data[i + 1];
+        const selectedReader = d.data[propNames.indexOf("reader") + 1];
+        const allowProps = ["reader", ...readersSchema[selectedReader].props];
+        propNames.forEach((name, i) => {
+          if (allowProps.includes(name) && d.data[i + 1]) dataObj[name] = d.data[i + 1];
         });
         result[d.data[0]] = dataObj;
         return result;
@@ -70,13 +119,13 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
     const dataSourcesIds = Object.keys(model).filter(m => /^data/.test(m)); 
     data = dataSourcesIds.reduce((result, id, index) => {
       result.push({
-        data: [id, ...columnNames.map(name => model[id][name] || "")],
+        data: [id, ...propNames.map(name => model[id][name] || "")],
         index
       });
       return result;
     },[]);
-    updateTable([[], ["name"].concat(columnNames)]);  
-    updateTable([data, ["name"].concat(columnNames)]);  
+    updateTable([[], ["name"].concat(propNames), propTypes]);  
+    updateTable([data, ["name"].concat(propNames), propTypes]);  
   }
 
   dispatch.on("menuOpen.dataEditor", d => {
