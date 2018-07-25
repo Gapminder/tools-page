@@ -14,6 +14,7 @@ const LanguageSwitcher = function (placeHolder, translator, dispatch, { language
         switchLanguage.call(this);
         onClick(d);
       })
+      .style("font-family", (d) => d.fontFamily ? d.fontFamily : null)
       .text((d) => d.text);
   }
   itemTemplate.remove();
