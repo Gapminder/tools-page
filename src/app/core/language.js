@@ -16,11 +16,17 @@ const AVAILABLE_LANGUAGES = [
 const TRANSLATION_DICTIONARY = {};
 
 function setLocale(arg) {
-    if (!arg) arg = appState.language;
-    if (!viz || !viz.model) return;
-    viz.model.locale.id = arg;
-    appState.language = arg;
-  }
+  if (!arg) arg = appState.language;
+
+  const langId = /(\w+)-*/.exec(arg)[1];  
+  d3.select("html")
+    .attr("lang", langId)
+    .attr("class", langId);
+
+  if (!viz || !viz.model) return;
+  viz.model.locale.id = arg;
+  appState.language = arg;
+}
 
 function loadTranslation(language, callback) {
   d3.json("assets/i18n/" + language + ".json", (error, translation) => {
