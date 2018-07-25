@@ -9,8 +9,8 @@ const AVAILABLE_LANGUAGES = [
   DEFAULT_LANGUAGE,
   { key: 'ar-SA', text: 'العربية', isRtl: true },
 //  { key: 'he-IL', text: 'עִבְרִית', isRtl: true },
-//  { key: 'es-ES', text: 'Español', isRtl: false },
-  { key: 'ru-RU', text: 'Русский', isRtl: false }
+  { key: 'es-ES', text: 'Español', isRtl: false },
+  { key: 'ru-RU', text: 'Русский', isRtl: false, fontFamily: 'sans serif'}
 ];
 
 const TRANSLATION_DICTIONARY = {};
