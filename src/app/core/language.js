@@ -10,7 +10,7 @@ const AVAILABLE_LANGUAGES = [
   { key: 'ar-SA', text: 'العربية', isRtl: true },
   { key: 'he-IL', text: 'עִבְרִית', isRtl: true },
   { key: 'es-ES', text: 'Español', isRtl: false },
-  { key: 'ru-RU', text: 'Русский', isRtl: false, fontFamily: 'sans serif'}
+  { key: 'ru-RU', text: 'Русский', isRtl: false, fontFamily: 'Helvetica, Arial, Sans-Serif'}
 ];
 
 const TRANSLATION_DICTIONARY = {};
