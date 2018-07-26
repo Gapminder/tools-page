@@ -17,6 +17,7 @@ import Menu from "./header/menu/menu";
 import MenuMobile from "./header/menu-mobile/menu-mobile";
 import Message from "./header/message/message";
 import SeeAlso from "./see-also/see-also";
+import DataEditor from "./header/data-editor/data-editor";
 
 import menuItems from "./core/menu-items";
 import relatedItems from "./core/related-items";
@@ -131,5 +132,11 @@ const footer = new Footer(
   d3.select(".app-footer"),
   translator,
   dispatch);
+
+const dataEditor = new DataEditor(
+  d3.select(".header .data-editor"),
+  translator,
+  dispatch,
+  {});
 
 setLanguage(appState.language);
