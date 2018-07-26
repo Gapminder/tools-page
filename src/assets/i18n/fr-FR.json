@@ -65,6 +65,7 @@
   "bubble_chart_desc": "Ce graphique montre combien de temps les gens vivent et combien d'argent ils gagnent. Cliquez sur le bouton de lecture pour voir comment les pays se sont développés depuis 1800.",
   "maps": "Cartes",
   "ranks": "Rangs",
+  "spreadsheet": "Spreadsheet",
   "bubble_map_desc": "Ce graphique montre la population sur une carte",
   "trends": "Tendances",
   "line_chart_desc": "Ce graphique montre comment une tendance change au fil des ans",
