@@ -33,6 +33,24 @@ const Menu = function (placeHolder, translator, dispatch, { menuItems }) {
     switchHowTo.call(this);
   });
 
+  template.select(".data-editor-button")
+    .datum({ menu_label: "data_editor" })
+    .on("click", d => {
+      selectMenuItem(d);
+      switchHowTo.call(this);
+    });
+  template.select(".data-editor-close").on("click", () => {
+    this.selectedMenuItem = null;
+    selectMenuItem({});
+    switchHowTo.call(this);
+  });
+
+  dispatch.on("menuClose", () => {
+    this.selectedMenuItem = null;
+    selectMenuItem({});
+    switchHowTo.call(this);
+  });
+  
   for (const elem of Array.from(template.node().children)) {
     placeHolder.append(function () { return elem; });
   }
@@ -61,7 +79,9 @@ const Menu = function (placeHolder, translator, dispatch, { menuItems }) {
       })
 
     placeHolder.select(".menu-item.how-to-use-video")
-      .each(utils.translateNode(translator));
+    .each(utils.translateNode(translator));
+    placeHolder.select(".menu-item.data-editor-button")
+    .each(utils.translateNode(translator));
     placeHolder.selectAll("p.nav-faq-help-links a")
       .each(utils.translateNode(translator));
   }
@@ -87,6 +107,7 @@ const Menu = function (placeHolder, translator, dispatch, { menuItems }) {
 
   function selectMenuItem(d) {
     _this.selectedMenuItem = d.menu_label === _this.selectedMenuItem ? null : d.menu_label;
+    if (_this.selectedMenuItem) dispatch.call("menuOpen", null, d);
     placeHolder.selectAll(".nav-expandable-item a.menu-item")
       .classed("active", d => _this.selectedMenuItem === d.menu_label);
   }
