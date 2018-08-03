@@ -170,7 +170,7 @@ describe('All charts - Acceptance', () => {
       await mapChart.openByClick();
       await waitForPageLoaded();
 
-      expect(await mapChart.selectedCountries.count()).toEqual(1);
+      expect(await mapChart.countSelectedCountries()).toEqual(1);
       expect(selectedCountriesOnBubbles).toMatch(await mapChart.selectedCountries.first().getText());
     });
   });

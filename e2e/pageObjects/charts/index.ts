@@ -5,3 +5,4 @@ export { LineChart } from './line-chart.po';
 export { MapChart } from './map-chart.po';
 export { MountainChart } from './mountain-chart.po';
 export { RankingsChart } from './rankings-chart.po';
+export { SpreadSheetChart} from './spreadsheet-chart.po';

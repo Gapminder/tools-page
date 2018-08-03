@@ -2,7 +2,7 @@ import { $, $$, browser } from 'protractor';
 
 import { safeOpen } from '../helpers/helper';
 import { Header } from '../pageObjects/components';
-import { AgesChart, BubbleChart, LineChart, MapChart, MountainChart, RankingsChart } from '../pageObjects/charts';
+import { AgesChart, BubbleChart, LineChart, MapChart, MountainChart, RankingsChart, SpreadSheetChart } from '../pageObjects/charts';
 
 describe('Header: ', () => {
   const header: Header = new Header();
@@ -39,6 +39,7 @@ describe('Header: ', () => {
     const rankingsChart: RankingsChart = new RankingsChart();
     const bubbleChart: BubbleChart = new BubbleChart();
     const agesChart: AgesChart = new AgesChart();
+    const spreadsheetChart: SpreadSheetChart = new SpreadSheetChart();
 
     beforeAll(async() => {
       await safeOpen('');
@@ -51,7 +52,8 @@ describe('Header: ', () => {
         `/tools/#$${lineChart.url}`,
         `/tools/#$${rankingsChart.url}`,
         `/tools/#$${bubbleChart.url}`,
-        `/tools/#$${agesChart.url}`
+        `/tools/#$${agesChart.url}`,
+        `/tools/#$${spreadsheetChart.url}`
       ];
 
       const chartLinks = $$('.chart-switcher-options a');
