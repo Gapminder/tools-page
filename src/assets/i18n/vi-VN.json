@@ -68,9 +68,9 @@
   "spreadsheet": "Spreadsheet",
   "bubble_map_desc": "This graph shows the population on a map",
   "trends": "Xu hướng",
-  "line_chart_desc": "This graph shows how a trend changes across the years",
+  "line_chart_desc": "Biểu đồ này cho thấy xu hướng thay đổi qua các năm",
   "ages": "Tuổi",
-  "pop_by_age_desc": "This graph shows the population by age",
+  "pop_by_age_desc": "Biểu đồ này cho biết cơ cấu dân số theo tuổi",
   "dollar_street": "Phố Dollar",
   "dollar_street_project": "Dự án phố Dollar",
   "share": "Chia sẻ"
