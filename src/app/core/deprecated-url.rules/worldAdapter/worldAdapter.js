@@ -99,8 +99,8 @@ function createToolsHash(gwHash) {
 				gt_hooks[hook].domainMax = null;
 			} else {
 				gt_hooks[hook].scaleType = scaletypes[gwHash[map].scale] || gt_hooks[hook].scaleType || gwHash[map].scale; // if time it's already set
-					gt_hooks[hook].zoomedMin = gwHash[map].dataMin;
-				gt_hooks[hook].zoomedMax = gwHash[map].dataMax;
+				gt_hooks[hook].zoomedMin = gwHash[map].dataMin || null;
+				gt_hooks[hook].zoomedMax = gwHash[map].dataMax || null;
 				gt_hooks[hook].domainMin = null;
 				gt_hooks[hook].domainMax = null;
 			}
