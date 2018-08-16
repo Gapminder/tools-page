@@ -28,21 +28,34 @@ function setLocale(arg) {
   appState.language = arg;
 }
 
-function loadTranslation(language, callback) {
-  d3.json("assets/i18n/" + language + ".json", (error, translation) => {
-    if (error) return;
-    callback(translation);
-  })
+function loadTranslation(language) {
+  return new Promise((resolve, reject) => {
+    d3.json("assets/i18n/" + language + ".json", (error, translation) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(translation);
+      }
+    })
+  });
 }
 
 function changeLanguage(language) {
   if (TRANSLATION_DICTIONARY[language]) {
     translateNow();
   } else {
-    loadTranslation(language, translation => {
+    const promises = [];
+    if (!TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key] && language !== DEFAULT_LANGUAGE.key) {
+      promises.push(loadTranslation(DEFAULT_LANGUAGE.key).then(translation => {
+          TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key] = translation;
+      }));
+    }
+    promises.push(loadTranslation(language).then(translation => {
       TRANSLATION_DICTIONARY[language] = translation;
+    }));
+    Promise.all(promises).then(() => {
       translateNow();
-    });
+    })
   }
 }
 
@@ -54,7 +67,10 @@ function translateNow() {
 
 function translator(key) {
   return TRANSLATION_DICTIONARY[appState.language]
-    && TRANSLATION_DICTIONARY[appState.language][key] ? TRANSLATION_DICTIONARY[appState.language][key] : key;
+    && TRANSLATION_DICTIONARY[appState.language][key] ? TRANSLATION_DICTIONARY[appState.language][key]
+    :
+    TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key]
+    && TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key][key] ? TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key][key] : key;
 }
 
 function setLanguage(language) {
