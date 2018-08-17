@@ -35,7 +35,7 @@
     "font-awesome": "^4.7.0",
     "vizabi": "0.33.10",
     "vizabi-barchart-ds": "2.1.1",
-    "vizabi-barrankchart": "2.2.1",
+    "vizabi-barrankchart": "2.2.2",
     "vizabi-bubblechart": "2.1.3",
     "vizabi-bubblemap": "2.1.1",
     "vizabi-config-systema_globalis": "2.5.0",
@@ -45,7 +45,7 @@
     "vizabi-mountainchart": "2.1.1",
     "vizabi-popbyage": "2.1.1",
     "vizabi-sankey": "2.0.1",
-    "vizabi-spreadsheet": "2.1.0",
+    "vizabi-spreadsheet": "2.1.1",
     "vizabi-ws-reader": "2.5.0",
     "urlon": "3.0.1"
   },
