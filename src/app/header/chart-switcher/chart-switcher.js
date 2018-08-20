@@ -1,4 +1,4 @@
-const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, selectedTool, onClick }) {
+const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, appState, onClick }) {
   const templateHtml = require("./chart-switcher.html");
 
   const template = d3.create("div")
@@ -9,7 +9,7 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, sele
   for (let tool of onlyChartTools) {
     itemTemplate.clone(true)
       .datum(tool)
-      .attr("hidden", tool.id === selectedTool ? true : null)
+      .attr("hidden", tool.id === appState.tool ? true : null)
       .raise()
       .call(fillToolItem, this);
   }
@@ -42,7 +42,7 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, sele
   });
 
   function translate() {
-    const selectedToolConfig = tools.filter(({id}) => id === selectedTool)[0];
+    const selectedToolConfig = tools.filter(({id}) => id === appState.tool)[0];
     placeHolder.select(".chart-switcher-button")
       .text(translator(selectedToolConfig.title || selectedToolConfig.id));
     placeHolder.selectAll(".chart-switcher-options div")

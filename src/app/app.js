@@ -70,7 +70,7 @@ const chartSwitcher = new ChartSwitcher(
   dispatch,
   {
     tools: toolsPage_toolset,
-    selectedTool: appState.tool,
+    appState,
     onClick: d => {
       dispatch.call("toolChanged", null, d.id);
       setTool(d.id);
