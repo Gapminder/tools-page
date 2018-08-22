@@ -4,10 +4,8 @@ import {
   setTool
 } from "../../core/tool";
 import {
-  URLI,
-  updateURL
+  URLI
 } from "../../core/url";
-import { eachDay } from "date-fns";
 
 const readersSchema = {
   "waffle": {
