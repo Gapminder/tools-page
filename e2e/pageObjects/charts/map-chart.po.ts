@@ -8,7 +8,7 @@ export class MapChart extends CommonChartPage {
   url = 'chart-type=map';
   chartLink: ExtendedElementFinder = _$('.about a[href*="map"]');
 
-  selectedCountries: ExtendedArrayFinder = _$$('[class*="vzb-bmc-entity label"]');
+  selectedCountries: ExtendedArrayFinder = _$$('[class*="vzb-find-item vzb-dialog-checkbox vzb-checked vzb-separator"]');
   selectedBubbles: ExtendedArrayFinder = _$$('.vzb-bmc-bubble.vzb-selected');
   allBubbles: ExtendedArrayFinder = _$$('circle[class="vzb-bmc-bubble"]');
   bubbleLabelOnMouseHover: ExtendedElementFinder = _$('.vzb-bmc-tooltip');
@@ -26,6 +26,10 @@ export class MapChart extends CommonChartPage {
 
   getSidebarElements() {
     return this.sidebar;
+  }
+
+  countSelectedCountries() {
+    return this.selectedCountries.count();
   }
 
   getSelectedCountries(): ElementArrayFinder {

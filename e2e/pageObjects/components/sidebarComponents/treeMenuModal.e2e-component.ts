@@ -4,7 +4,7 @@ import { _$, _$$, ExtendedArrayFinder, ExtendedElementFinder } from '../../../he
 
 export class TreeMenuModal {
   treeMenuModal: ExtendedElementFinder = _$('.vzb-treemenu-wrap-outer');
-  searchInput: ExtendedElementFinder = _$('.vzb-treemenu-search');
+  searchInput: ExtendedElementFinder = _$('#vzb-treemenu-search');
   listItems: ExtendedArrayFinder = _$$('span[class="vzb-treemenu-list-item-label"]');
 
   async searchForItem(item: string): Promise<ExtendedElementFinder> {

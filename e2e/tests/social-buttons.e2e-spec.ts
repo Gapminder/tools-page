@@ -13,7 +13,7 @@ const header: Header = new Header();
 describe('Social media buttons', () => {
   const mailBasic = `mailto:?subject=Gapminder&body=`;
 
-  const tweetStatus: ExtendedElementFinder = _$('#status');
+  const tweetStatus: ExtendedElementFinder = _$('.field');
   const twitterUrl = 'https://twitter.com/intent/tweet?original_referer=';
 
   const faceBookForm: ExtendedElementFinder = _$('#login_form');
@@ -55,7 +55,7 @@ describe('Social media buttons', () => {
     await expect(actualMailLink).toEqual(expectedUrl);
   });
 
-  it('twitter', async () => {
+  xit('twitter', async () => {
     await header.clickOnTwitterIcon();
     const handles = await browser.getAllWindowHandles();
     await browser.switchTo().window(handles[1]);
