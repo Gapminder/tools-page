@@ -40,7 +40,74 @@ var toolsPage_conceptMapping = new Map([
 	 "poverty_percent_people_below_320_a_day"], 
 	// Redundant legacy GW indicator (same data source)
 	["yearly_co2_emissions_tonnes",
-	 "yearly_co2_emissions_1000_tonnes"]
+	 "yearly_co2_emissions_1000_tonnes"],
+  
+    // Updated indicators from ILO.org with slightly different definitions that got reflected in concpet names
+    ["aged_55plus_unemployment_rate_percent",
+     "aged_65plus_unemployment_rate_percent"],
+  
+    ["agriculture_workers_percent_of_labour_force",
+     "agriculture_workers_percent_of_employment"],
+  
+    ["family_workers_percent_of_labour_force",
+     "family_workers_percent_of_employment"],
+  
+    ["female_agriculture_workers_percent_of_female_labour_force",
+     "female_agriculture_workers_percent_of_female_employment"],
+  
+    ["female_family_workers_percent_of_female_labour_force",
+     "female_family_workers_percent_of_female_employment"],
+  
+    ["female_industry_workers_percent_of_female_labour_force",
+     "female_industry_workers_percent_of_female_employment"],
+  
+    ["female_salaried_workers_percent_of_female_labour_force",
+     "female_salaried_workers_percent_of_non_agricultural_female_employment"],
+  
+    ["female_self_employed_percent_of_female_labour_force",
+     "female_self_employed_percent_of_female_employment"],
+  
+    ["female_service_workers_percent_of_female_labour_force",
+     "female_service_workers_percent_of_female_employment"],
+  
+    ["females_aged_55plus_unemployment_rate_percent",
+     "females_aged_65plus_unemployment_rate_percent"],
+  
+    ["hourly_compensation_us",
+     "hourly_labour_cost_constant_2011_usd"],
+  
+    ["industry_workers_percent_of_labour_force",
+     "industry_workers_percent_of_employment"],
+  
+    ["male_agriculture_workers_percent_of_male_labour_force",
+     "male_agriculture_workers_percent_of_male_employment"],
+  
+    ["male_family_workers_percent_of_male_labour_force",
+     "male_family_workers_percent_of_male_employment"],
+  
+    ["male_industry_workers_percent_of_male_labour_force",
+     "male_industry_workers_percent_of_male_employment"],
+  
+    ["male_salaried_workers_percent_of_male_labour_force",
+     "male_salaried_workers_percent_of_non_agricultural_male_employment"],
+  
+    ["male_self_employed_percent_of_male_labour_force",
+     "male_self_employed_percent_of_male_employment"],
+  
+    ["male_service_workers_percent_of_male_labour_force",
+     "male_service_workers_percent_of_male_employment"],
+  
+    ["males_aged_55plus_unemployment_rate_percent",
+     "males_aged_65plus_unemployment_rate_percent"],
+  
+    ["salaried_workers_percent_of_labour_force",
+     "salaried_workers_percent_of_non_agricultural_employment"],
+  
+    ["self_employed_percent_of_labour_force",
+     "self_employed_percent_of_employment"],
+  
+    ["service_workers_percent_of_labour_force",
+     "service_workers_percent_of_employment"]
 	 /*
 	// Static indicator with latitude of countries, removed
 	// Should be replaced by latitude geo property
