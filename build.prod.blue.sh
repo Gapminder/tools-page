@@ -25,4 +25,4 @@ npm run build:prod && echo "✅ Tools page build done. Blue prod is served from 
 echo && echo 🗂 $PWD && echo "👉 copy build output into a special folder for this version"
 VERSION="$(json -f package.json dependencies.vizabi)"
 cd /home 
-rm -rf "v${VERSION}" && mkdir "v${VERSION}" && cp -r tools-page/build/tools/* "v${VERSION}" && echo "✅ Build output copied to folder v${VERSION}"
+rm -rf "v${VERSION}" && mkdir "v${VERSION}" && cp -r tools-page/build/tools/* "v${VERSION}" && echo "✅ Build output copied to folder v${VERSION}. Served at http://tools-blue.gapminder.org:8080/tools/"
