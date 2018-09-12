@@ -79,7 +79,8 @@ function updateURL(event, replaceInsteadPush) {
   window.history[replaceInsteadPush ? "replaceState" : "pushState"]({ 
     tool: url["chart-type"], 
     model: poppedModel
-  }, 'Title', "#" + urlon.stringify(url));
+  //need to encode symbols like # in color codes because urlon can't handle them properly                                                                     
+  }, 'Title', "#" + urlon.stringify(url).replace(/=#/g, "=%23"))
 }
 
 function parseURL() {
@@ -91,7 +92,8 @@ function parseURL() {
     hash = loc.substring(loc.indexOf('#') + 1);
 
     if(hash) {
-      var parsedUrl = urlon.parse(hash);
+      //need to decode symbols like # in color codes because urlon can't handle them properly
+      var parsedUrl = urlon.parse(hash.replace(/=%2523/g, "=%23").replace(/=%23/g, "=#"));
 
       URLI.model = parsedUrl || {};
       URLI["chart-type"] = parsedUrl["chart-type"];
