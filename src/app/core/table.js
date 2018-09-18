@@ -89,7 +89,21 @@ var Table = function module() {
                       //         newData[pI].push(text)
                       //     });
                       //dispatch.call("edit", null, newData);
-                  });    
+                  })
+                  .on("paste", () => {
+                    d3.event.preventDefault();
+                    d3.event.stopPropagation();
+
+                    const selection = window.getSelection();
+                    if (!selection.rangeCount) return false;
+
+                    const paste = (d3.event.clipboardData || window.clipboardData).getData("text").trim();
+                    const range = selection.getRangeAt(0);
+                    range.deleteContents();
+                    range.insertNode(document.createTextNode(paste));
+                    selection.collapseToEnd();
+                    selection.focusNode.normalize();
+                  });
                 }
               })
                     
