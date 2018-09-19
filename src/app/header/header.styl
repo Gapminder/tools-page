@@ -327,6 +327,24 @@ $menu-bar
       width auto
       margin-left 5px
 
+  .checkbox
+    div
+      width 20px
+      height 20px
+      border 1px solid $color-blue-darker
+      border-radius 2px
+      cursor pointer
+      &:after
+        content: "\2713"
+        margin-left: 4px;
+        opacity 0
+      &:hover
+        &:after
+          opacity .2
+      &[data-checked=true]
+        &:after
+          opacity 1
+
   .dropdown
     div
       position relative
