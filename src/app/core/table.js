@@ -46,6 +46,17 @@ var Table = function module() {
               .each(function(_d, i) {
                 const el = d3.select(this);
                 if (columnTypes[columnNames[i]]) {
+                  if (columnTypes[columnNames[i]].type === "checkbox") {
+                    const checkboxEl = el.append("td")
+                      .attr("class", "cell checkbox");
+                    checkboxEl.append("div")
+                      .attr("data-checked", d => d.value)
+                      .on("click", (d) => {
+                        d.data[i] = d.value = !d.value;
+                        checkboxEl.select("div")
+                          .attr("data-checked", d.value);
+                      })
+                }
                   if (columnTypes[columnNames[i]].type === "dropdown") {
                     const dropDownEl = el.append("td")
                       .attr("class", "cell dropdown")

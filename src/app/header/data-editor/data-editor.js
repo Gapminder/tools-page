@@ -15,10 +15,10 @@ const readersSchema = {
     props: ["path"]
   },
   "csv": {
-    props: ["path"]
+    props: ["path", "hasNameColumn"]
   },
   "csv-time_in_columns": {
-    props: ["path"]
+    props: ["path", "hasNameColumn"]
   },
   "inline": {
     props: ["data"]
@@ -26,7 +26,7 @@ const readersSchema = {
 }
 
 const DataEditor = function (placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
-  const propNames = ["reader", "path", "dataset", "assetsPath", "data"];
+  const propNames = ["reader", "path", "dataset", "assetsPath", "data", "hasNameColumn"];
   const defaultValues = {
     "reader": "waffle"
   };
@@ -34,6 +34,9 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
     "reader": { 
       "type": "dropdown",
       "data": Object.keys(readersSchema)
+    },
+    "hasNameColumn": {
+      "type": "checkbox"
     }
   };
 
