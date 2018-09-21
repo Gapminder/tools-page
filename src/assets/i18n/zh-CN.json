@@ -67,11 +67,11 @@
   "ranks": "Ranks",
   "spreadsheet": "Spreadsheet",
   "bubble_map_desc": "This graph shows the population on a map",
-  "trends": "Trends",
+  "trends": "趋势",
   "line_chart_desc": "This graph shows how a trend changes across the years",
-  "ages": "Ages",
+  "ages": "年龄",
   "pop_by_age_desc": "This graph shows the population by age",
   "dollar_street": "Dollar Street",
   "dollar_street_project": "Dollar Street project",
-  "share": "Share"
+  "share": "分享"
 }
