@@ -46,6 +46,17 @@ var Table = function module() {
               .each(function(_d, i) {
                 const el = d3.select(this);
                 if (columnTypes[columnNames[i]]) {
+                  if (columnTypes[columnNames[i]].type === "checkbox") {
+                    const checkboxEl = el.append("td")
+                      .attr("class", "cell checkbox");
+                    checkboxEl.append("div")
+                      .attr("data-checked", d => d.value)
+                      .on("click", (d) => {
+                        d.data[i] = d.value = !d.value;
+                        checkboxEl.select("div")
+                          .attr("data-checked", d.value);
+                      })
+                }
                   if (columnTypes[columnNames[i]].type === "dropdown") {
                     const dropDownEl = el.append("td")
                       .attr("class", "cell dropdown")
@@ -89,7 +100,21 @@ var Table = function module() {
                       //         newData[pI].push(text)
                       //     });
                       //dispatch.call("edit", null, newData);
-                  });    
+                  })
+                  .on("paste", () => {
+                    d3.event.preventDefault();
+                    d3.event.stopPropagation();
+
+                    const selection = window.getSelection();
+                    if (!selection.rangeCount) return false;
+
+                    const paste = (d3.event.clipboardData || window.clipboardData).getData("text").trim();
+                    const range = selection.getRangeAt(0);
+                    range.deleteContents();
+                    range.insertNode(document.createTextNode(paste));
+                    selection.collapseToEnd();
+                    selection.focusNode.normalize();
+                  });
                 }
               })
                     
