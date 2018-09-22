@@ -13,7 +13,7 @@ describe('Ages chart', () => {
   });
 
   it(`Open chart by click on link`, async() => {
-    await safeOpen('');
+    //await safeOpen('');
     await agesChart.openByClick();
 
     const URL = await browser.getCurrentUrl();

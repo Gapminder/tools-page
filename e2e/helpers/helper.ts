@@ -7,15 +7,22 @@ const TIMEOUT = 30000;
 
 export function safeOpen(url: string) {
   return browser.get(browser.baseUrl + url)
-    .then(() => browser.refresh()) // TODO remove this after fixing https://github.com/Gapminder/ng2-tools-page/issues/175
+    //.then(() => browser.refresh()) // TODO remove this after fixing https://github.com/Gapminder/ng2-tools-page/issues/175
     .then(() => waitForPageLoaded());
 }
 
 export function waitForPageLoaded() {
-  return browser.wait(EC.visibilityOf(CommonChartPage.sideBar), MAX_TIMEOUT)
-    .then(() => browser.wait(EC.visibilityOf(CommonChartPage.mainChart), MAX_TIMEOUT))
-    .then(() => browser.wait(EC.visibilityOf(CommonChartPage.buttonPlay), MAX_TIMEOUT))
-    .then(() => browser.wait(EC.visibilityOf(CommonChartPage.sliderReady), MAX_TIMEOUT));
+    /*const closeHomePageAlert = (CommonChartPage.closeHomePageAlert).last();
+    closeHomePageAlert.isPresent().then((present) => {
+        if (present) {
+          closeHomePageAlert.click();
+        }
+    })*/
+
+    return browser.wait(EC.visibilityOf(CommonChartPage.sideBar), MAX_TIMEOUT, 'sideBar not visible')
+    .then(() => browser.wait(EC.visibilityOf(CommonChartPage.mainChart), MAX_TIMEOUT, 'mainChart not visible'))
+    .then(() => browser.wait(EC.visibilityOf(CommonChartPage.buttonPlay), MAX_TIMEOUT, 'buttonPlay not visible'))
+    .then(() => browser.wait(EC.visibilityOf(CommonChartPage.sliderReady), MAX_TIMEOUT, 'sliderReady not visible'));
 }
 
 export function waitForSpinner() {

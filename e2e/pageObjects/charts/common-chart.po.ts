@@ -41,6 +41,7 @@ export class CommonChartPage {
   public static spinner: ElementFinder = $('.vzb-loading-data');
   public static sliderReady: ElementFinder = $('.domain.rounded');
   public static sliderProgress: ElementFinder = $('.domain');
+  public static closeHomePageAlert: ElementArrayFinder = $$('.domain.rounded');
   public movingSliderProgress: ElementArrayFinder = $$('.domain.rounded');
 
   yAxisBtn: ExtendedElementFinder = _$('.vzb-bc-axis-y-title');
