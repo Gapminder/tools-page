@@ -11,7 +11,7 @@ describe('Ages chart: Sidebar', () => {
     await agesChart.openChart();
   });
   
-  it(`add region to chart from sidebar by click`, async () => {
+  xit(`add region to chart from sidebar by click`, async () => { //https://github.com/vizabi/vizabi/issues/2884
     await sidebar.show.clickOnCountryFromList('Africa', true);
 
     expect(await agesChart.graphTitles.safeGetText()).toMatch('Africa');
