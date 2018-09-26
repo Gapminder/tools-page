@@ -2,7 +2,7 @@ import message from "./../../header/message/message";
 
 const rule = {
   test: function(url) {
-    return document.referrer.indexOf("gapminder.org/world") !== -1 || /#\$majorMode/.test(url);
+    return document.referrer.indexOf("gapminder.org/world") !== -1 || /from=world/.test(url) || /#\$majorMode/.test(url);
   },
 
   use: function(url) {
