@@ -10,8 +10,8 @@ const rule = {
     const hash = (hashIndex !== -1) ? url.substr(hashIndex) : '';
 
 	message.showMessage(`<strong>Welcome to Gapminder Tools!</strong><br>
-        You came to this page using a link to Gapminder World, our old charts. What you see now is its replacement with newer data and better looks.<br> 
-        We aren't planning to keep the old Gapminder World around for much longer: it's a pain in the neck to maintain and adds infrastructure costs. If you really-really need it, please <a href="mailto:angie@gapminder.org">write us why</a>, let's see how many you are, hopefully not that many. The new Gapminder Tools (this page you are looking at) will be developled and maintained further`
+        You came to this page using a link to Gapminder World, our old charts. What you see now is its replacement with newer data and better looks.<br>
+        If you really need to go back to Gapminder World: <a href="//www.gapminder.org/world-classic/?use_gapminder_world${hash}">click here</a>. Also, please let us know why by emailing <a href="mailto:angie@gapminder.org">angie@gapminder.org</a>.`
     );
     return url;
   }
