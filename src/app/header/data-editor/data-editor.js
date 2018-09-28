@@ -23,19 +23,20 @@ const readersSchema = {
 }
 
 const DataEditor = function (placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
-  const propNames = ["reader", "path", "dataset", "assetsPath", "data", "hasNameColumn", "timeInColumns", "nameColumnIndex"];
+  const propNames = ["reader", "path", "dataset", "assetsPath", "data", "timeInColumns", "hasNameColumn", "nameColumnIndex"];
   const defaultValues = {
-    "reader": "waffle"
+    "reader": "waffle",
+    "nameColumnIndex": 1
   };
   const propTypes = {
     "reader": { 
       "type": "dropdown",
       "data": Object.keys(readersSchema)
     },
-    "hasNameColumn": {
+    "timeInColumns": {
       "type": "checkbox"
     },
-    "timeInColumns": {
+    "hasNameColumn": {
       "type": "checkbox"
     }
   };
