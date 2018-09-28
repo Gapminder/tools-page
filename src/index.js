@@ -6,6 +6,7 @@ window.urlon = window.urlon || require('urlon');
 window.Vizabi = window.Vizabi || require('vizabi');
 window.WsReader = window.WsReader || require('vizabi-ws-reader-web');
 window.DDFCsvReader = window.DDFCsvReader || require('vizabi-ddfcsv-reader');
+window.CsvReader = window.CsvReader || require('vizabi-csv-reader');
 
 //WS reader integration
 var wsReader = WsReader.WsReader.getReader();
@@ -13,6 +14,8 @@ Vizabi.Reader.extend("waffle", wsReader);
 //DDFCSV reader integration
 var ddfReader = new DDFCsvReader.getDDFCsvReaderObject()
 Vizabi.Reader.extend("ddf", ddfReader);
+//CSV reader integration
+Vizabi.Reader.extend("csv", CsvReader.csvReaderObject);
 
 require('vizabi/build/vizabi.css');
 
