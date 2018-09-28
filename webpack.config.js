@@ -401,7 +401,7 @@ if (__PROD__) {
 
   toolspage.module.rules = [
     {
-      test: /csv-reader\.js$/,
+      test: /-csv-reader\.js$/,
       include: [
         path.resolve(__dirname, 'node_modules'),
       ],
@@ -409,7 +409,7 @@ if (__PROD__) {
     },
 
     {
-      test: /ddfcsv-reader\.js$/,
+      test: /-ddfcsv-reader\.js$/,
       include: [
         path.resolve(__dirname, 'node_modules'),
       ],
@@ -417,7 +417,7 @@ if (__PROD__) {
     },
 
     {
-      test: /ws-reader-web\.js$/,
+      test: /-ws-reader-web\.js$/,
       include: [
         path.resolve(__dirname, 'node_modules'),
       ],
