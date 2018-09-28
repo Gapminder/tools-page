@@ -70,6 +70,7 @@ if(!__PROD__) htmlAssets.push(
   'assets/vendor/js/urlon/urlon.umd.js',
   'assets/vendor/js/vizabi/vizabi.js',
   'assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader-web.js',
+  'assets/vendor/js/vizabi-csv-reader/vizabi-csv-reader.js',
   'assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js',
   ...allTools.tools.map(tool => {
     const toolName = allTools.paths[tool] && allTools.paths[tool].js || `vizabi-${tool}`;
@@ -148,6 +149,7 @@ const toolspage = {
     alias: {
       "d3": "d3/build/d3.js",
       "urlon": "urlon/dist/urlon.umd.js",
+      "vizabi-csv-reader": "vizabi-csv-reader/dist/vizabi-csv-reader.js",
       "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
       "vizabi-ws-reader-web": "vizabi-ws-reader/dist/vizabi-ws-reader-web.js",
       "toolset": path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
@@ -398,6 +400,14 @@ const toolspage = {
 if (__PROD__) {
 
   toolspage.module.rules = [
+    {
+      test: /csv-reader\.js$/,
+      include: [
+        path.resolve(__dirname, 'node_modules'),
+      ],
+      use: 'exports-loader?CsvReader'
+    },
+
     {
       test: /ddfcsv-reader\.js$/,
       include: [

@@ -21,7 +21,7 @@
     "e2e:blue": "URL='http://178.62.135.203:3001/tools/' ./node_modules/.bin/protractor protractor.conf.js",
     "e2e:green": "URL='https://www.gapminder.org/tools/' ./node_modules/.bin/protractor protractor.conf.js",
     "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
-    "ncu-vizabi": "ncu -u vizabi vizabi vizabi-barchart-ds vizabi-barrankchart vizabi-bubblechart vizabi-bubblemap vizabi-config-systema_globalis vizabi-ddfcsv-reader vizabi-extapimap vizabi-linechart vizabi-mountainchart vizabi-popbyage vizabi-sankey vizabi-spreadsheet vizabi-ws-reader"
+    "ncu-vizabi": "ncu -u vizabi vizabi vizabi-barchart-ds vizabi-barrankchart vizabi-bubblechart vizabi-bubblemap vizabi-config-systema_globalis vizabi-csv-reader vizabi-ddfcsv-reader vizabi-extapimap vizabi-linechart vizabi-mountainchart vizabi-popbyage vizabi-sankey vizabi-spreadsheet vizabi-ws-reader"
   },
   "repository": {
     "type": "git",
@@ -33,12 +33,13 @@
   "dependencies": {
     "d3": "^4.13.0",
     "font-awesome": "^4.7.0",
-    "vizabi": "0.34.1",
+    "vizabi": "0.35.0",
     "vizabi-barchart-ds": "2.1.1",
     "vizabi-barrankchart": "2.2.2",
     "vizabi-bubblechart": "2.1.3",
     "vizabi-bubblemap": "2.1.1",
     "vizabi-config-systema_globalis": "2.5.0",
+    "vizabi-csv-reader": "0.3.0",
     "vizabi-ddfcsv-reader": "2.3.6",
     "vizabi-extapimap": "2.2.1",
     "vizabi-linechart": "2.1.1",
