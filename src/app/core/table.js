@@ -1,5 +1,5 @@
 var Table = function module() {
-    var dispatch = d3.dispatch("edit", "remove", "dropdown_change");
+    var dispatch = d3.dispatch("edit", "remove", "prop_change");
 
     function exports(_selection) {
         _selection.each(function (_dataset) {
@@ -55,6 +55,7 @@ var Table = function module() {
                         d.data[i] = d.value = !d.value;
                         checkboxEl.select("div")
                           .attr("data-checked", d.value);
+                        dispatch.call("prop_change");
                       })
                 }
                   if (columnTypes[columnNames[i]].type === "dropdown") {
@@ -82,7 +83,7 @@ var Table = function module() {
                             .style("display", (d) => d === _d.value ? "none" : null);
                           dropDownEl.select("ul")
                             .style("display", "none");
-                          dispatch.call("dropdown_change");
+                          dispatch.call("prop_change");
                         })
                   }
                 } else {
