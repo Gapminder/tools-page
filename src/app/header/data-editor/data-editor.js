@@ -28,6 +28,11 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
     "reader": "waffle",
     "nameColumnIndex": 1
   };
+  const propDependency = {
+    "nameColumnIndex": {
+      "hasNameColumn": true
+    }
+  }
   const propTypes = {
     "reader": { 
       "type": "dropdown",
@@ -43,13 +48,19 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
 
   let data;
 
+  const propIndexInData = ["name"].concat(propNames)
+    .reduce((prev, v, i) => {
+      prev[v] = i;
+      return prev;  
+    }, {})
+
   const table = Table()
     .on("edit", d => update(d))
     .on("remove", (d, i) => {
       data.splice(i, 1);
       updateTable([data, ["name"].concat(propNames), propTypes]);
     })
-    .on("dropdown_change", () => {
+    .on("prop_change", () => {
       filterDataRows();
     })
 
@@ -67,10 +78,19 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
       .each(function(d, i) {
         const el = d3.select(this);
         const allPropNames = ["name"].concat(propNames);
-        const selectedReader = d.data[allPropNames.indexOf("reader")];
-        const allowProps = ["name", "reader", ...readersSchema[selectedReader].props];
+        const selectedReader = d.data[propIndexInData["reader"]];
+        const allowProps = getCurrentAllowProp(["name", "reader", ...readersSchema[selectedReader].props], d.data);
         el.style("display", allowProps.includes(allPropNames[i]) ? null : "none");
       })
+  }
+
+  function getCurrentAllowProp(props, data) {
+    return props.filter(prop => 
+      !propDependency[prop] ? true :
+        Object.keys(propDependency[prop]).every(
+          depProp => propDependency[prop][depProp] === data[propIndexInData[depProp]]
+        )
+    )
   }
 
   placeHolder.select(".add-row")
@@ -90,8 +110,8 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
       if (!haveDataName) data[0].data[0] = "data";
       const dataModel = data.reduce((result, d, i) => {
         const dataObj = {};
-        const selectedReader = d.data[propNames.indexOf("reader") + 1];
-        const allowProps = ["reader", ...readersSchema[selectedReader].props];
+        const selectedReader = d.data[propIndexInData["reader"]];
+        const allowProps = getCurrentAllowProp(["reader", ...readersSchema[selectedReader].props], d.data);
         propNames.forEach((name, i) => {
           if (allowProps.includes(name) && d.data[i + 1]) dataObj[name] = d.data[i + 1];
         });
