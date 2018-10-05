@@ -3,25 +3,25 @@
     "NOT_USED_reader": "ddf",
     "NOT_USED_path": "https://raw.githubusercontent.com/open-numbers/ddf--gapminder--systema_globalis/add-wdi-tags",
     "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
+    "path": "https://waffle-server-stage.gapminderdev.org/api/ddf/ql",
+    "assetsPath": "https://waffle-server-stage.gapminderdev.org/api/ddf/assets/",
     "dataset": "open-numbers/ddf--gapminder--systema_globalis#stage"
   },
   "pop": {
     "NOT_USED_reader": "waffle",
-    "NOT_USED_assetsPath": "https://import-waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "NOT_USED_path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
+    "NOT_USED_assetsPath": "https://import-waffle-server-stage.gapminderdev.org/api/ddf/assets/",
+    "NOT_USED_path": "https://waffle-server-stage.gapminderdev.org/api/ddf/ql",
     "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
+    "path": "https://waffle-server-stage.gapminderdev.org/api/ddf/ql",
+    "assetsPath": "https://waffle-server-stage.gapminderdev.org/api/ddf/assets/",
     "dataset": "open-numbers/ddf--gapminder--population#stage"
   },
   "wdi": {
     "NOT_USED_reader": "ddf",
     "NOT_USED_path": "https://raw.githubusercontent.com/open-numbers/ddf--open_numbers--world_development_indicators/merge-concepts",
     "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
+    "path": "https://waffle-server-stage.gapminderdev.org/api/ddf/ql",
+    "assetsPath": "https://waffle-server-stage.gapminderdev.org/api/ddf/assets/",
     "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#merge-concepts"
   }
 }
