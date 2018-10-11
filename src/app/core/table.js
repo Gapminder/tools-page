@@ -102,7 +102,7 @@ var Table = function module() {
                       //     });
                       //dispatch.call("edit", null, newData);
                   })
-                  .on("paste", () => {
+                  .on("paste", function(d) {
                     d3.event.preventDefault();
                     d3.event.stopPropagation();
 
@@ -115,6 +115,8 @@ var Table = function module() {
                     range.insertNode(document.createTextNode(paste));
                     selection.collapseToEnd();
                     selection.focusNode.normalize();
+                    
+                    d.data[i] = d.value = d3.select(this).text();                    
                   });
                 }
               })
