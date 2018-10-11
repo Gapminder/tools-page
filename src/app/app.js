@@ -15,7 +15,9 @@ import LanguageSwitcher from "./header/language-switcher/language-switcher";
 import SocialButtons from "./header/social-buttons/social-buttons";
 import Menu from "./header/menu/menu";
 import MenuMobile from "./header/menu-mobile/menu-mobile";
+import Message from "./header/message/message";
 import SeeAlso from "./see-also/see-also";
+import DataEditor from "./header/data-editor/data-editor";
 
 import menuItems from "./core/menu-items";
 import relatedItems from "./core/related-items";
@@ -23,6 +25,12 @@ import BitlyService from "./core/bitly.service";
 import LocationService from "./core/location.service";
 import RelatedItems from "./related-items/related-items";
 import Footer from "./footer/footer";
+
+Message.init(
+  d3.select(".app-message"),
+  translator,
+  dispatch
+);
 
 const url = location.href;
 const upgradedUrl = upgradeUrl(url);
@@ -39,12 +47,17 @@ Object.assign(appState, {
   tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
   language: ((URLI.model || {}).locale || {}).id || "en"
 });
+window.history.replaceState({ 
+  tool: appState.tool, 
+  model: Vizabi.utils.deepExtend({}, URLI.model, true) 
+}, 'Title');
 setTool();
 
 
 const languageSwitcher = new LanguageSwitcher(
   d3.select(".header .app-language-switcher"),
   translator,
+  dispatch,
   {
     languages: getLanguages(),
     selectedLanguage: appState.language,
@@ -57,10 +70,9 @@ const chartSwitcher = new ChartSwitcher(
   dispatch,
   {
     tools: toolsPage_toolset,
-    selectedTool: appState.tool,
+    appState,
     onClick: d => {
-      dispatch.call("toolChanged", null, d);
-      parseURL();
+      dispatch.call("toolChanged", null, d.id);
       setTool(d.id);
     }
   });
@@ -89,11 +101,10 @@ const seeAlso = new SeeAlso(
     tools: toolsPage_toolset,
     selectedTool: appState.tool,
     onClick: d => {
-      parseURL();
       scrollTo({
         element: d3.select(".wrapper").node(),
         complete: () => {
-          dispatch.call("toolChanged", null, d);
+          dispatch.call("toolChanged", null, d.id);
           setTool(d.id);
         }
       });
@@ -122,5 +133,10 @@ const footer = new Footer(
   translator,
   dispatch);
 
+const dataEditor = new DataEditor(
+  d3.select(".header .data-editor"),
+  translator,
+  dispatch,
+  {});
+
 setLanguage(appState.language);
-d3.select(".wrapper").classed("loading", false);

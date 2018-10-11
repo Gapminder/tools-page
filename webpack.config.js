@@ -15,8 +15,8 @@ const customLoader = require('custom-loader');
 const __PROD__ = process.env.NODE_ENV === 'production';
 const __STAGE__ = process.env.STAGE;
 
-const allTools = require(path.resolve(__dirname, "vizabi-tools.json"));
-const toolset = require(path.resolve(__dirname, "src", "toolset.json"));
+const allTools = require(path.resolve(__dirname, "webpack.vizabi-tools.json"));
+const toolset = require(path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`));
 const inToolsetTools = Object.keys(toolset.reduce((result, { tool }) => {
   tool && (result[tool.toLowerCase()] = true);
   return result;
@@ -66,17 +66,19 @@ const htmlAssets = ["assets/vizabi.css",
 ];
   
 if(!__PROD__) htmlAssets.push(
-  'assets/js/toolset.js',
-  'assets/js/datasources.js',
   'assets/vendor/js/d3/d3.js',
   'assets/vendor/js/urlon/urlon.umd.js',
   'assets/vendor/js/vizabi/vizabi.js',
   'assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader-web.js',
+  'assets/vendor/js/vizabi-csv-reader/vizabi-csv-reader.js',
   'assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js',
   ...allTools.tools.map(tool => {
     const toolName = allTools.paths[tool] && allTools.paths[tool].js || `vizabi-${tool}`;
     return path.join("assets/vendor/js", (path.extname(toolName) === "" ? path.join(toolName, path.basename(require.resolve(toolName))) : path.join(path.basename(toolName, ".js"), path.basename(toolName))));
-  })
+  }),
+  'config/toolset.js',
+  'config/datasources.js',
+  'config/conceptMapping.js',
 );
 
 const sep = '\\' + path.sep;
@@ -147,9 +149,12 @@ const toolspage = {
     alias: {
       "d3": "d3/build/d3.js",
       "urlon": "urlon/dist/urlon.umd.js",
+      "vizabi-csv-reader": "vizabi-csv-reader/dist/vizabi-csv-reader.js",
       "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
       "vizabi-ws-reader-web": "vizabi-ws-reader/dist/vizabi-ws-reader-web.js",
-      "datasources": `datasources.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`
+      "toolset": path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
+      "datasources": path.resolve(__dirname, "src", "config", `datasources.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
+      "conceptMapping": path.resolve(__dirname, "src", "config", "conceptMapping.js")
     },
     modules: [
       path.resolve(__dirname, 'src'),
@@ -319,7 +324,7 @@ const toolspage = {
         use: [{
           loader: 'file-loader',
           options: {
-            name: 'assets/js/toolconfigs/[name].js',
+            name: 'config/toolconfigs/[name].js',
             publicPath: "./"
           }
         },
@@ -349,16 +354,22 @@ const toolspage = {
     new CleanWebpackPlugin(['build']),
     new CopyWebpackPlugin([
       {
+        from: path.resolve(__dirname, 'src', 'config', 'toolconfigs'),
+        to: path.resolve(path.resolve(__dirname, 'build', 'tools', 'config', 'toolconfigs')),
+      }
+    ]),
+    new CopyWebpackPlugin([
+      {
         from: path.resolve(__dirname, 'src', 'assets'),
         to: path.resolve(path.resolve(__dirname, 'build', 'tools', 'assets')),
       }
     ]),
-    // new CopyWebpackPlugin([
-    //   {
-    //     from: path.resolve(__dirname, 'src', 'data'),
-    //     to: path.resolve(path.resolve(__dirname, 'build', 'tools', 'data')),
-    //   }
-    // ]),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, 'src', 'data'),
+        to: path.resolve(path.resolve(__dirname, 'build', 'tools', 'data')),
+      }
+    ]),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'src/index.html',
@@ -390,7 +401,15 @@ if (__PROD__) {
 
   toolspage.module.rules = [
     {
-      test: /ddfcsv-reader\.js$/,
+      test: /-csv-reader\.js$/,
+      include: [
+        path.resolve(__dirname, 'node_modules'),
+      ],
+      use: 'exports-loader?CsvReader'
+    },
+
+    {
+      test: /-ddfcsv-reader\.js$/,
       include: [
         path.resolve(__dirname, 'node_modules'),
       ],
@@ -398,11 +417,19 @@ if (__PROD__) {
     },
 
     {
-      test: /ws-reader-web\.js$/,
+      test: /-ws-reader-web\.js$/,
       include: [
         path.resolve(__dirname, 'node_modules'),
       ],
       use: 'exports-loader?WsReader'
+    },
+
+    {
+      test: /conceptMapping\.js$/,
+      include: [
+        path.resolve(__dirname, 'src', 'config'),
+      ],
+      use: 'exports-loader?toolsPage_conceptMapping'
     }
   ].concat(toolspage.module.rules);
 
@@ -488,14 +515,14 @@ if (__PROD__) {
 
     {
       type: 'javascript/auto',
-      test: /(toolset|datasources.*)\.json$/,
+      test: /(toolset.*|datasources.*)\.json$/,
       include: [
-        path.resolve(__dirname, 'src'),
+        path.resolve(__dirname, "src", "config"),
       ],
       use: [{
         loader: 'file-loader',
         options: {
-          name: 'assets/js/[1].js',
+          name: 'config/[1].js',
           regExp: /(\w+)\.?\w*.json/,
           publicPath: "./"
         }
@@ -507,7 +534,22 @@ if (__PROD__) {
           varName: varNameWithFileName("toolsPage_")
         }
       }]
+    },
+
+    {
+      test: /conceptMapping\.js$/,
+      include: [
+        path.resolve(__dirname, "src", "config"),
+      ],
+      use: [{
+        loader: 'file-loader',
+        options: {
+          name: 'config/[name].[ext]',
+          publicPath: "./"
+        }
+      }]
     }
+
   ].concat(toolspage.module.rules);
 }
 

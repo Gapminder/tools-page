@@ -35,6 +35,11 @@
   
   var gaEnabled = location.hostname.indexOf("gapminder.org") > -1;
 </script>  
+  
+<script>
+  //kill service worker if present
+  if ('serviceWorker' in navigator) navigator.serviceWorker.ready.then(function(registration) {registration.unregister();})
+</script>
 
 <body>
   <div class="wrapper">
@@ -93,6 +98,8 @@
     
     </div>
     
+    <span class="app-message"></span>
+
     <div class="header-divider"></div>
 
     <div class="column main">

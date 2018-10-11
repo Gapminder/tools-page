@@ -11,6 +11,7 @@ export class BubbleChart extends CommonChartPage {
 
   public dataDoubtsLink: ExtendedElementFinder = _$('.vzb-data-warning');
   public dataDoubtsWindow: ElementFinder = $('.vzb-data-warning-body');
+  public dataDoubtsWindowClose: ExtendedElementFinder = _$('.vzb-data-warning-close');
   public allBubbles: ExtendedArrayFinder = _$$('circle[class*="vzb-bc-entity"]');
   public invisibleBubbles: ExtendedArrayFinder = _$$('circle[class*="vzb-invisible"]');
   public bubbleLabelOnMouseHover: ExtendedElementFinder = _$('g[class="vzb-bc-tooltip"]');
@@ -27,8 +28,8 @@ export class BubbleChart extends CommonChartPage {
   public indiaTrails: ElementArrayFinder = $$('.trail-ind [class="vzb-bc-trailsegment"]');
   public usaTrails: ElementArrayFinder = $$('.trail-usa [class="vzb-bc-trailsegment"]');
   public selectedCountries: ExtendedArrayFinder = _$$('[class*="vzb-bc-entity label"]');
-
-  public lockButton: ExtendedElementFinder = _$$('[data-btn="lock"]')[browser.params.mobile ? "first" : "last"]();
+  
+  public lockButton: ExtendedElementFinder = _$$('[data-btn="lock"]').filter(el => el.isDisplayed()).first();
   public trailsButton: ExtendedElementFinder = _$$('button[data-btn="trails"]').last();
   public sidebar = {
     bubbleOpacityControl: $('.vzb-dialog-bubbleopacity'),

@@ -10,7 +10,7 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
   for (let tool of tools) {
     itemTemplate.clone(true)
       .datum(tool)
-      .attr("hidden", tool.id === selectedTool ? true : null)
+      .attr("hidden", (tool.id === selectedTool || tool.hideThumbnail) ? true : null)
       .raise()
       .call(fillToolItem);
   }
@@ -26,7 +26,8 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
   });
 
   dispatch.on("toolChanged.seeAlso", d => {
-    toolChanged(d);
+    const tool = tools.filter(({id}) => id === d)[0];
+    toolChanged(tool);
   })
 
   function translate() {
@@ -37,7 +38,7 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
 
   function toolChanged(tool) {
     placeHolder.selectAll(".other-tools-item")
-    .attr("hidden", _d => _d.id === tool.id ? true : null)
+    .attr("hidden", _d => (_d.id === tool.id || _d.hideThumbnail) ? true : null)
   }
 
   function getLink(tool) {

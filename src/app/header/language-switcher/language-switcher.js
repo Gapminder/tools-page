@@ -1,4 +1,4 @@
-const LanguageSwitcher = function (placeHolder, translator, { languages, selectedLanguage, onClick }) {
+const LanguageSwitcher = function (placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
   const templateHtml = require("./language-switcher.html");
 
   const template = d3.create("div")
@@ -14,9 +14,16 @@ const LanguageSwitcher = function (placeHolder, translator, { languages, selecte
         switchLanguage.call(this);
         onClick(d);
       })
+      .style("font-family", (d) => d.fontFamily ? d.fontFamily : null)
       .text((d) => d.text);
   }
   itemTemplate.remove();
+
+  dispatch.on("languageChanged.languageSwitcher", d => {
+    const selectedLanguageConfig = languages.filter(({key}) => key === d)[0];
+    placeHolder.select(".lang-current")
+      .text(selectedLanguageConfig.text);
+  })
 
   this.isLanguageSwitcherVisible = false;
   const selectedLanguageConfig = languages.filter(({key}) => key === selectedLanguage)[0];

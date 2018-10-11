@@ -1,9 +1,0 @@
-[
-  {
-    "toolIds": ["bubbles", "map-kommun", "map-basomrade", "barchart", "bubbles-filtered", "combo" ],
-    "datasource": {
-      "reader": "ddf",
-      "path": "https://raw.githubusercontent.com/open-numbers/ddf--sodertornsmodellen/develop"      
-    }
-  }
-]

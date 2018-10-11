@@ -10,7 +10,7 @@ describe('Mountains chart: Sidebar', () => {
     await mountainChart.openChart();
   });
 
-  it('"show" section hide all countries except selected', async() => {
+  xit('"show" section hide all countries except selected', async() => {
     /**
      * should check that only checked countries displayed after click "show", check a few countries(TC21)
      */
@@ -32,7 +32,7 @@ describe('Mountains chart: Sidebar', () => {
     expect(await mountainChart.rightSidePanelCountriesList.count()).toEqual(3);
   });
 
-  it('uncheck all countries from "show" return to the default view', async() => {
+  xit('uncheck all countries from "show" return to the default view', async() => {
     /**
      * should check that uncheck the countries from "show", when the last one is unchecked,
      * the picture should return to a default view = stacked shapes of all countries(TC22)

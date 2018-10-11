@@ -3,6 +3,8 @@
     "id": "bubbles",
     "tool": "BubbleChart",
     "config": "BubbleChart-sodertorn",
+    "dataSources": ["sodertorn"],
+    "transition": [],
     "title": "bubbles",
     "image": "/assets/images/chart/bubbles-sodertorn.png"
   },
@@ -10,13 +12,17 @@
     "id": "map-kommun",
     "tool": "ExtApiMap",
     "config": "ExtApiMap-sodertorn-kommun",
+    "dataSources": ["sodertorn"],
+    "transition": [],
     "title": "map-kommun",
     "image": "/assets/images/chart/map-kommun.png"
-  },
+  },  
   {
     "id": "map-basomrade",
     "tool": "ExtApiMap",
     "config": "ExtApiMap-sodertorn",
+    "dataSources": ["sodertorn"],
+    "transition": [],
     "title": "map-basomrade",
     "image": "/assets/images/chart/map-basomrade.png"
   },
@@ -24,6 +30,8 @@
     "id": "combo",
     "tool": "combo",
     "config": "Combo-map-and-bubbles",
+    "dataSources": ["sodertorn"],
+    "transition": [],
     "title": "combo",
     "image": "/assets/images/chart/combo.png"
   },
@@ -31,6 +39,8 @@
     "id": "barchart",
     "tool": "BarChartDS",
     "config": "BarChartDS-sodertorn",
+    "dataSources": ["sodertorn"],
+    "transition": [],
     "title": "barchart",
     "image": "/assets/images/chart/barchart.png"
   },
@@ -38,7 +48,10 @@
     "id": "bubbles-filtered",
     "tool": "BubbleChart",
     "config": "BubbleChart-only-sodertorn",
+    "dataSources": ["sodertorn"],
+    "transition": [],
     "title": "bubbles-filtered",
     "image": "/assets/images/chart/bubbles-filtered.png"
   }
+  
 ]

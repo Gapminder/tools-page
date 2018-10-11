@@ -79,9 +79,11 @@ function createToolsHash(gwHash) {
 		var inc = 'inc_' + hook;
 		var map = 'map_' + hook;
 		gt_hooks[hook] = {};
-
-		gt_hooks[hook].use = use[gwHash[inc].by];
-		gt_hooks[hook].which = (gwHash[inc].by == 'ind') ? which[gwHash[inc].by][gwHash[inc].iid] : which[gwHash[inc].by][gwHash[inc].gid];
+		
+		if (gwHash[inc] && gwHash[inc].by) {
+			gt_hooks[hook].use = use[gwHash[inc].by];
+			gt_hooks[hook].which = (gwHash[inc].by == 'ind') ? which[gwHash[inc].by][gwHash[inc].iid] : which[gwHash[inc].by][gwHash[inc].gid];
+		}
 
 		if (gt_hooks[hook].which == 'time') {
 			gt_hooks[hook].allow = {
@@ -97,15 +99,15 @@ function createToolsHash(gwHash) {
 				gt_hooks[hook].domainMax = null;
 			} else {
 				gt_hooks[hook].scaleType = scaletypes[gwHash[map].scale] || gt_hooks[hook].scaleType || gwHash[map].scale; // if time it's already set
-					gt_hooks[hook].zoomedMin = gwHash[map].dataMin;
-				gt_hooks[hook].zoomedMax = gwHash[map].dataMax;
+				gt_hooks[hook].zoomedMin = gwHash[map].dataMin || null;
+				gt_hooks[hook].zoomedMax = gwHash[map].dataMax || null;
 				gt_hooks[hook].domainMin = null;
 				gt_hooks[hook].domainMax = null;
 			}
 		}
 	});
 
-	var geo_ids = Object.keys(gwHash.inds);
+	var geo_ids = Object.keys(gwHash.inds || {});
 	var select = [];
 	var trails = false;
 	geo_ids.forEach(function(geo_id) {

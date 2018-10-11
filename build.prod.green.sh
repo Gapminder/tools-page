@@ -10,5 +10,6 @@ if [ ! -d ./$1 ] || [ -z "$1" ] ;
     tar cvfz "backup-${now}.tar.gz" live/ && echo "✅ The current version is archived in backup-${now}.tar.gz"
     rm -rf live/ && echo "✅ The current version is deleted"
     mkdir live
-    cp -r $1/* live/ && echo "✅ Green prod $1 is now served from live/"
+    mkdir live/tools
+    cp -r $1/* live/tools/ && echo "✅ Green prod $1 is now served from live/"
 fi

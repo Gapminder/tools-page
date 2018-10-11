@@ -1,5 +1,3 @@
-import { URLI } from "./url";
-
 const transition = {
   SELECT: "select",
   SHOW: "show",
@@ -30,6 +28,7 @@ const transitions = {
       return values ? values.slice(0) : null;
     },
     to: (values, dim) => {
+      if (values.length == 0) return {};
       return {
         entities: {
           show: {
@@ -49,22 +48,17 @@ const transitions = {
   }
 }
 
-function getCurrentTransition() {
-  return toolsPage_toolset.filter(f => f.id === URLI["chart-type"])[0].transition;
-}
-
-function getTransitionModel(newTransition) {
+function getTransitionModel(oldModel, oldTransition, newTransition) {
   const result = { state: {} };
-  const currentTransition = getCurrentTransition();
-  if (!currentTransition || !newTransition ||
-    currentTransition.includes(transition.NONE) || 
+  if (!oldTransition || !newTransition ||
+    oldTransition.includes(transition.NONE) || 
     newTransition.includes(transition.NONE)) return {};
 
   const dim = "geo";
 
   newTransition.forEach(transitionTo => {
-    const transitionFrom = currentTransition.filter(transition => transitions[transitionTo].allow.includes(transition))[0];
-    const values = transitions[transitionFrom].from(URLI.model.state || {}, dim);
+    const transitionFrom = oldTransition.filter(transition => transitions[transitionTo].allow.includes(transition))[0];
+    const values = transitions[transitionFrom].from(oldModel.state || {}, dim);
     if (!values) return;
     Object.assign(result.state, transitions[transitionTo].to(values, dim));
   });
