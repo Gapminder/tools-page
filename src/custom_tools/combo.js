@@ -45,7 +45,7 @@ Vizabi.Tool.extend('combo', {
     }, {
       component: Vizabi.Component.get("treemenu"),
       placeholder: ".vzb-tool-treemenu",
-      model: ["state.marker", "state.marker_tags", "state.time", "locale"]
+      model: ["state.marker", "state.time", "locale", "ui"]
     }];
 
     this._super(placeholder, external_model);
