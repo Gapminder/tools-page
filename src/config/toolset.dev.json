@@ -52,6 +52,15 @@
     "transition": [],
     "title": "bubbles-filtered",
     "image": "/assets/images/chart/bubbles-filtered.png"
+  },
+  {
+    "id": "map-2000",
+    "tool": "ExtApiMap",
+    "config": "map-2000",
+    "dataSources": ["local"],
+    "transition": [],
+    "title": "map2000",
+    "image": "/assets/images/chart/map-basomrade.png"
   }
   
 ]

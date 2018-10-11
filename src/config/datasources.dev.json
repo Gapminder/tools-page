@@ -2,5 +2,11 @@
   "sodertorn": {
       "reader": "ddf",
       "path": "https://raw.githubusercontent.com/open-numbers/ddf--sodertornsmodellen/master"    
+  },
+  "local": {
+      "reader": "csv",
+      "hasNameColumn": true,
+      "nameColumnIndex": 1,
+      "path": "data/MASTER_00-17rensad.csv"    
   }
 }
