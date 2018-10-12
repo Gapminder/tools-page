@@ -95,10 +95,10 @@ VIZABI_MODEL = {
       },
       "projection": "mercator",
       "topology": {
-        "path": "data/sodertorn-basomr2010.json",
+        "path": "data/basomr2010_110617_wgs84.json",
         "objects": {
-          "geo": "c1e171fae817c0bfc26dc7df82219e08",
-          "boundaries": "c1e171fae817c0bfc26dc7df82219e08"
+          "geo": "basomr2010_110617",
+          "boundaries": "basomr2010_110617"
         },
         "geoIdProperty": "BASKOD2000"
       }

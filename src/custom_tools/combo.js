@@ -57,12 +57,6 @@ Vizabi.Tool.extend('combo', {
       time: {},
       entities: {},
       entities_colorlegend: {},
-      entities_tags: {},
-      marker_tags: {
-        space: ["entities_tags"],
-        label: {},
-        hook_parent: {}
-      },
       marker: {
         space: ["entities", "time"],
         axis_x: {},
