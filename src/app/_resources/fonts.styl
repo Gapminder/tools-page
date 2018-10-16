@@ -92,12 +92,14 @@ $fonts_dir := "/assets/fonts/";
 
 @font-face
   font-family: 'Courier Prime';
-  src: url($fonts_dir + 'courier-prime-sans.ttf') format('truetype');
+  src: url($fonts_dir + 'courier-prime-sans.eot?#iefix') format('embedded-opentype'),
+    url($fonts_dir + 'courier-prime-sans.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 
 @font-face
   font-family: 'Courier Prime Bold';
-  src: url($fonts_dir + 'courier-prime-sans-bold.ttf') format('truetype');
+  src: url($fonts_dir + 'courier-prime-sans-bold.eot?#iefix') format('embedded-opentype'),
+    url($fonts_dir + 'courier-prime-sans-bold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
