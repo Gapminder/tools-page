@@ -40,3 +40,5 @@ yarn.lock
 src/assets/*.css
 
 logs
+
+src/data/*
