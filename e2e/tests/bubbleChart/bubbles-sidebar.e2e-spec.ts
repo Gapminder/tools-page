@@ -232,8 +232,9 @@ describe('Bubbles chart: Sidebar', () => {
   it('Click on minimap region - "Remove everything else"', async () => {
     await sidebar.colorSection.removeEverythingElseInMinimap();
     const visibleBubblecCount = await bubbleChart.allBubbles.count() - await bubbleChart.invisibleBubbles.count();
+    const expectedResult = await bubbleChart.countBubblesByColor('red');
 
-    await expect(visibleBubblecCount).toEqual(bubbleChart.countBubblesByColor('red'));
+    await expect(visibleBubblecCount).toEqual(expectedResult);
   });
 
   it('Click on minimap region - "Select all in this group"', async () => {

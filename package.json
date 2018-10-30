@@ -20,7 +20,7 @@
     "e2e:stage": "URL='https://tools-stage.gapminderdev.org/tools/' ./node_modules/.bin/protractor protractor.conf.js",
     "e2e:blue": "URL='http://178.62.135.203:3001/tools/' ./node_modules/.bin/protractor protractor.conf.js",
     "e2e:green": "URL='https://www.gapminder.org/tools/' ./node_modules/.bin/protractor protractor.conf.js",
-    "postinstall": "./node_modules/protractor/bin/webdriver-manager update",
+    "postinstall": "./node_modules/protractor/bin/webdriver-manager update --versions.chrome=2.41",
     "ncu-vizabi": "ncu -u vizabi vizabi vizabi-barchart-ds vizabi-barrankchart vizabi-bubblechart vizabi-bubblemap vizabi-config-systema_globalis vizabi-csv-reader vizabi-ddfcsv-reader vizabi-extapimap vizabi-linechart vizabi-mountainchart vizabi-popbyage vizabi-sankey vizabi-spreadsheet vizabi-ws-reader"
   },
   "repository": {
