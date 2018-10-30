@@ -39,7 +39,7 @@ export class CommonChartPage {
   public static buttonPause: ExtendedElementFinder = _$('.vzb-ts-btn-pause.vzb-ts-btn');
   public static mainChart: ElementFinder = $('.vzb-tool');
   public static spinner: ElementFinder = $('.vzb-loading-data');
-  public static sliderReady: ElementFinder = $('.domain.rounded');
+  public static sliderReady: ElementFinder = $$('.domain').get(0);
   public static sliderProgress: ElementFinder = $('.domain');
   public movingSliderProgress: ElementArrayFinder = $$('.domain.rounded');
 

@@ -51,7 +51,9 @@ describe('Header: ', () => {
         `/tools/#$${lineChart.url}`,
         `/tools/#$${rankingsChart.url}`,
         `/tools/#$${bubbleChart.url}`,
-        `/tools/#$${agesChart.url}`
+        `/tools/#$${agesChart.url}`,
+        `/tools/#$chart-type=spreadsheet`   // TODO: create and add spreadsheet chart for testing
+
       ];
 
       const chartLinks = $$('.chart-switcher-options a');
