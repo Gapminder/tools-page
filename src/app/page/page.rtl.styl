@@ -37,18 +37,26 @@ body
 
     .lang-wrapper
       float left
-      margin 7px -280px 0 5px
+      .lang-current
+        padding-left 25px
+        padding-right 0
+        &:after
+          left 4px
+          right auto
+          padding 0 4px 0 0
+          border-left none
+          border-right 1px solid #ffca34
 
       +for_breakpoint(not-small)
         margin-left 10px
+        margin-right 8px
 
       +for_breakpoint(small)
         &.opened
           display inline-block
 
     .social-list
-      float right
-      margin 5px 0 0 100px
+      float left
 
       li
         float right
