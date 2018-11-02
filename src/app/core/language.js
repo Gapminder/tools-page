@@ -10,8 +10,10 @@ const AVAILABLE_LANGUAGES = [
   { key: 'ar-SA', text: 'العربية', isRtl: true },
 //  { key: 'he-IL', text: 'עִבְרִית', isRtl: true },
 //  { key: 'es-ES', text: 'Español', isRtl: false },
+//  { key: 'vi-VN', text: 'Tiếng Việt', isRtl: false, fontFamily: 'Helvetica, Arial, Sans-Serif'},
 //  { key: 'ru-RU', text: 'Русский', isRtl: false, fontFamily: 'Helvetica, Arial, Sans-Serif'}
 ];
+const TRANSLATE_CONTRIBUTION_LINK = "https://docs.google.com/document/d/1bzTWStFYAq2Oj9kV3vm261Dj9FW8C2tS7Jwj1wtTn1Q";
 
 const TRANSLATION_DICTIONARY = {};
 
@@ -85,5 +87,6 @@ function getLanguages () {
 export {
   translator,
   setLanguage,
-  getLanguages
+  getLanguages,
+  TRANSLATE_CONTRIBUTION_LINK
 }

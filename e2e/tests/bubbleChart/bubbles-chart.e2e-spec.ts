@@ -131,7 +131,7 @@ describe('Bubbles chart', () => {
 
   it(`trialsegments are left for bubbles on drag'n'drop`, async () => {
     /**
-     * should check that when select China and the United States bubbles and and drag the timeslider,
+     * should check that when select China and the United States bubbles and drag the timeslider,
      * the trails being left for those two countries(TC14)
      */
     await bubbleChart.clickOnCountryBubble('India');

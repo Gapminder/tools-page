@@ -24,9 +24,9 @@ export class BubbleChart extends CommonChartPage {
   public allLabels: ExtendedArrayFinder = _$$('.vzb-bc-entity[class*=label-][transform*=translate]');
   public xIconOnBubble: ExtendedElementFinder = _$('[class="vzb-bc-label-x"]');
   public trials: ElementArrayFinder = $$('.vzb-bc-entity.entity-trail');
-  public chinaTrails: ElementArrayFinder = $$('.trail-chn [class="vzb-bc-trailsegment"]');
-  public indiaTrails: ElementArrayFinder = $$('.trail-ind [class="vzb-bc-trailsegment"]');
-  public usaTrails: ElementArrayFinder = $$('.trail-usa [class="vzb-bc-trailsegment"]');
+  public chinaTrails: ElementArrayFinder = $$('.trail-chn .vzb-bc-trailsegment');
+  public indiaTrails: ElementArrayFinder = $$('.trail-ind .vzb-bc-trailsegment');
+  public usaTrails: ElementArrayFinder = $$('.trail-usa .vzb-bc-trailsegment');
   public selectedCountries: ExtendedArrayFinder = _$$('[class*="vzb-bc-entity label"]');
   
   public lockButton: ExtendedElementFinder = _$$('[data-btn="lock"]').filter(el => el.isDisplayed()).first();
