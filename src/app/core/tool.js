@@ -6,9 +6,6 @@ import {
   updateURL
 } from "./url";
 import {
-  TRANSLATE_CONTRIBUTION_LINK
-} from "./language";
-import {
   getTransitionModel
 } from "./chart-transition";
 import { loadJS } from "./utils";
@@ -137,7 +134,6 @@ function setTool(tool, skipTransition) {
 
     const transitionModel = (!skipTransition && viz) ? getTransitionModel(toolModelPrevious, toolConfigPrevious.transition, toolConfig.transition) : URLI.model;
     viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, _VIZABI_MODEL, transitionModel, true));
-    viz.model.locale.setTranslateContributionLink(TRANSLATE_CONTRIBUTION_LINK);
     
     timeLogger.removeAll();
     timeLogger.add("TOTAL")
