@@ -8,6 +8,7 @@ const DEFAULT_LANGUAGE = { key: 'en', text: 'English' };
 const AVAILABLE_LANGUAGES = [
   DEFAULT_LANGUAGE,
   { key: 'ar-SA', text: 'العربية', isRtl: true },
+  { key: 'sv-SE', text: 'Svenska', isRtl: false },
   { key: 'he-IL', text: 'עִבְרִית', isRtl: true },
   { key: 'es-ES', text: 'Español', isRtl: false },
   { key: 'vi-VN', text: 'Tiếng Việt', isRtl: false, fontFamily: 'Helvetica, Arial, Sans-Serif'},

@@ -1,18 +1,18 @@
 {
   "all": {
     "reader": "csv",
-    "path": "data/Gapminder Norrland - all.csv",
+    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=all"
   },
   "youth": {
     "reader": "csv",
-    "path": "data/Gapminder Norrland - youth.csv",
+    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=youth"
   },
   "adults": {
     "reader": "csv",
-    "path": "data/Gapminder Norrland - adults.csv",
+    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=adults"
   },
   "elderly": {
     "reader": "csv",
-    "path": "data/Gapminder Norrland - elderly.csv",
+    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=elderly"
   }
 }

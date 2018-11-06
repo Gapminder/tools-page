@@ -54,16 +54,56 @@ Vizabi.Tool.extend('combo', {
   //provide the default options
   default_model: {
     state: {
-      time: {},
-      entities: {},
-      entities_colorlegend: {},
+      time: {
+        "autoconfig": {
+          "type": "time"
+        }
+      },
+      entities: {
+        "autoconfig": {
+          "type": "entity_domain",
+          "excludeIDs": ["tag"]
+        }
+      },
+      entities_colorlegend: {
+        "autoconfig": {
+          "type": "entity_domain",
+          "excludeIDs": ["tag"]
+        }
+      },
       marker: {
         space: ["entities", "time"],
-        axis_x: {},
-        axis_y: {},
-        label: {},
-        size: {},
-        color: {},
+        axis_x: {
+          use: "indicator",
+          "autoconfig": {
+            index: 0,
+            type: "measure"
+          }
+        },
+        axis_y: {
+          use: "indicator",
+          "autoconfig": {
+            index: 1,
+            type: "measure"
+          }
+        },
+        label: {
+          use: "property",
+          "autoconfig": {
+            "includeOnlyIDs": ["name"],
+            "type": "string"
+          }
+        },
+        size: {
+          "autoconfig": {
+              index: 2,
+              type: "measure"
+            }
+        },
+        color: {
+          syncModels: ["marker_colorlegend"],
+          "autoconfig": {}
+        },
         size_label: {
           use: "constant",
           which: "_default",

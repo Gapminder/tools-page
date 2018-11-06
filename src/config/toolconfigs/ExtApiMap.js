@@ -1,46 +1,24 @@
 var VIZABI_MODEL = {
   "state": {
-    "time": {
-      "startOrigin": "2006",
-      "endOrigin": "2014",
-      "value": "2014",
-      "dim": "YEAR",
-      "delay": 700
-    },
-    "entities": {
-      "dim": "HASC_2"
-    },
-    "entities_map_colorlegend": {
-      "dim": "HASC_2"
-    },
-    "entities_colorlegend": {
-      "dim": "HASC_2"
-    },
-    "entities_tags": {
-    },
     "marker": {
       "space": ["entities", "time"],
       "label": {
         "use": "property",
         "which": "NAME_2"
       },
+      size: {
+        "autoconfig": {
+          index: 2,
+          type: "measure"
+        }
+      },      
       "hook_centroid": {
         "use": "property",
         "which": "ID_2",
         "_important": true
       },
-      "size": {
-        "which": "Population",
-        "use": "indicator",
-        "scaleType": "linear",
-        "extent": [0, 0.95],
-        "allow": {
-          "scales": ["linear"]
-        }
-      },
       "color": {
         "use": "indicator",
-        "which": "Self-rated health T",
         "scaleType": "linear",
         "syncModels": ["marker_colorlegend"]
       },
@@ -74,17 +52,6 @@ var VIZABI_MODEL = {
       "hook_geoshape": {
         "use": "property",
         "which": "shape_lores_svg"
-      }
-    },
-    "marker_tags": {
-      "space": ["entities_tags"],
-      "label": {
-        "use": "property",
-        "which": "name"
-      },
-      "hook_parent": {
-        "use": "property",
-        "which": "parent"
       }
     }
   },

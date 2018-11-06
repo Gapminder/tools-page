@@ -1,6 +1,6 @@
 [
   {
-    "id": "all",
+    "id": "combo-all",
     "tool": "combo",
     "config": "Combo",
     "dataSources": ["all"],
@@ -9,7 +9,7 @@
     "image": "/assets/images/chart/combo.png"
   },
   {
-    "id": "youth",
+    "id": "combo-youth",
     "tool": "combo",
     "config": "Combo",
     "dataSources": ["youth"],
@@ -18,7 +18,7 @@
     "image": "/assets/images/chart/combo.png"
   },
   {
-    "id": "adults",
+    "id": "combo-adults",
     "tool": "combo",
     "config": "Combo",
     "dataSources": ["adults"],
@@ -27,12 +27,84 @@
     "image": "/assets/images/chart/combo.png"
   },
   {
-    "id": "elderly",
+    "id": "combo-elderly",
     "tool": "combo",
     "config": "Combo",
     "dataSources": ["elderly"],
     "transition": ["select","time"],
     "title": "elderly",
     "image": "/assets/images/chart/combo.png"
+  },
+  {
+    "id": "bubbles-all",
+    "tool": "BubbleChart",
+    "config": "BubbleChart-norrland",
+    "dataSources": ["all"],
+    "transition": ["select","time"],
+    "title": "all",
+    "image": "/assets/images/chart/bubblechart.png"
+  },
+  {
+    "id": "bubbles-youth",
+    "tool": "BubbleChart",
+    "config": "BubbleChart-norrland",
+    "dataSources": ["youth"],
+    "transition": ["select","time"],
+    "title": "youth",
+    "image": "/assets/images/chart/bubblechart.png"
+  },
+  {
+    "id": "bubbles-adults",
+    "tool": "BubbleChart",
+    "config": "BubbleChart-norrland",
+    "dataSources": ["adults"],
+    "transition": ["select","time"],
+    "title": "adults",
+    "image": "/assets/images/chart/bubblechart.png"
+  },
+  {
+    "id": "bubbles-elderly",
+    "tool": "BubbleChart",
+    "config": "BubbleChart-norrland",
+    "dataSources": ["elderly"],
+    "transition": ["select","time"],
+    "title": "elderly",
+    "image": "/assets/images/chart/bubblechart.png"
+  },
+  {
+    "id": "map-all",
+    "tool": "ExtApiMap",
+    "config": "ExtApiMap",
+    "dataSources": ["all"],
+    "transition": ["select","time"],
+    "title": "all",
+    "image": "/assets/images/chart/map-kommun.png"
+  },
+  {
+    "id": "map-youth",
+    "tool": "ExtApiMap",
+    "config": "ExtApiMap",
+    "dataSources": ["youth"],
+    "transition": ["select","time"],
+    "title": "youth",
+    "image": "/assets/images/chart/map-kommun.png"
+  },
+  {
+    "id": "map-adults",
+    "tool": "ExtApiMap",
+    "config": "ExtApiMap",
+    "dataSources": ["adults"],
+    "transition": ["select","time"],
+    "title": "adults",
+    "image": "/assets/images/chart/map-kommun.png"
+  },
+  {
+    "id": "map-elderly",
+    "tool": "ExtApiMap",
+    "config": "ExtApiMap",
+    "dataSources": ["elderly"],
+    "transition": ["select","time"],
+    "title": "elderly",
+    "image": "/assets/images/chart/map-kommun.png"
   }
 ]
