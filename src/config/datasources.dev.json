@@ -1,20 +1,18 @@
 {
-  "sg": {
-    "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--systema_globalis#develop"
+  "all": {
+    "reader": "csv",
+    "path": "data/Gapminder Norrland - all.csv",
   },
-  "pop": {
-    "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--population#develop"
+  "youth": {
+    "reader": "csv",
+    "path": "data/Gapminder Norrland - youth.csv",
   },
-  "wdi": {
-    "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#merge-concepts"
+  "adults": {
+    "reader": "csv",
+    "path": "data/Gapminder Norrland - adults.csv",
+  },
+  "elderly": {
+    "reader": "csv",
+    "path": "data/Gapminder Norrland - elderly.csv",
   }
 }

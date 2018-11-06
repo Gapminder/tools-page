@@ -1,0 +1,27 @@
+.vzb-tool.vzb-tool-combo.vzb-split-vertical
+  .vzb-tool-stage {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100%
+  }
+
+.vzb-tool.vzb-tool-combo.vzb-split-vertical
+  .vzb-tool-time-speed-sliders {
+    -webkit-box-flex: 0;
+    flex: 0 0 100%;
+    align-self: flex-end
+  }
+
+.vzb-tool.vzb-tool-combo.vzb-split-vertical
+  .vzb-tool-viz {
+    -webkit-box-flex: 1;
+    flex: 1 50%;
+    min-height: calc(100% - 40px)
+  }
+
+.vzb-tool.vzb-tool-combo.vzb-split-vertical.vzb-large
+  .vzb-tool-viz {
+    min-height: calc(100% - 50px)
+  }

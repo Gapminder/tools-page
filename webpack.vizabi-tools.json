@@ -9,9 +9,14 @@
     "extapimap",
     "barchartds",
     "sankey",
+    "combo",
     "spreadsheet"
   ],
   "paths": {
+    "combo": {
+      "js": "custom_tools/combo.js",
+      "css": "custom_tools/combo.css"
+    },
     "barchartds": {
       "js": "vizabi-barchart-ds",
       "css": "vizabi-barchart-ds/build/barchart-ds.css"
