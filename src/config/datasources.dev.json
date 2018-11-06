@@ -1,21 +1,6 @@
 {
-  "sg": {
-    "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--systema_globalis#develop",
-    "translateContributionLink": "https://docs.google.com/document/d/1bzTWStFYAq2Oj9kV3vm261Dj9FW8C2tS7Jwj1wtTn1Q"
-  },
-  "pop": {
-    "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--population#develop"
-  },
-  "wdi": {
-    "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#merge-concepts"
+  "data": {
+    "reader": "csv",
+    "path": "https://docs.google.com/spreadsheets/d/1hwr90PIM7IumbxRM9LL74-Y95Q4nBQG7Txw2WyRv_vY/gviz/tq?tqx=out:csv&sheet=data-for-income-quintiles-by-year"
   }
 }
