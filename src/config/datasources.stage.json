@@ -5,7 +5,8 @@
     "reader": "waffle",
     "path": "https://waffle-server-stage.gapminderdev.org/api/ddf/ql",
     "assetsPath": "https://waffle-server-stage.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--systema_globalis#stage"
+    "dataset": "open-numbers/ddf--gapminder--systema_globalis#stage",
+    "translateContributionLink": "https://docs.google.com/document/d/1bzTWStFYAq2Oj9kV3vm261Dj9FW8C2tS7Jwj1wtTn1Q"
   },
   "pop": {
     "NOT_USED_reader": "waffle",

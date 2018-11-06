@@ -15,8 +15,6 @@ const AVAILABLE_LANGUAGES = [
   { key: 'th-TH', text: 'ภาษาไทย', isRtl: false, fontFamily: 'Helvetica, Arial, Sans-Serif'}
 ].filter(({key}) => toolsPage_properties["LANGUAGES"].includes(key));
 
-const TRANSLATE_CONTRIBUTION_LINK = "https://docs.google.com/document/d/1bzTWStFYAq2Oj9kV3vm261Dj9FW8C2tS7Jwj1wtTn1Q";
-
 const TRANSLATION_DICTIONARY = {};
 
 function setLocale(arg) {
@@ -89,6 +87,5 @@ function getLanguages () {
 export {
   translator,
   setLanguage,
-  getLanguages,
-  TRANSLATE_CONTRIBUTION_LINK
+  getLanguages
 }

@@ -2,7 +2,8 @@
   "sg": {
     "reader": "waffle",
     "assetsPath": "https://import-waffle-server.gapminder.org/api/ddf/assets/",
-    "path": "https://waffle-server.gapminder.org/api/ddf/ql"
+    "path": "https://waffle-server.gapminder.org/api/ddf/ql",
+    "translateContributionLink": "https://docs.google.com/document/d/1bzTWStFYAq2Oj9kV3vm261Dj9FW8C2tS7Jwj1wtTn1Q"
   },
   "pop": {
     "reader": "waffle",

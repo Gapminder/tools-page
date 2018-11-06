@@ -7,8 +7,7 @@ import { scrollTo } from "./core/utils";
 import {
   translator,
   setLanguage,
-  getLanguages,
-  TRANSLATE_CONTRIBUTION_LINK
+  getLanguages
 } from "./core/language";
 
 import ChartSwitcher from "./header/chart-switcher/chart-switcher";
