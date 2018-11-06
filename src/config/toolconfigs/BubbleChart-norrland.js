@@ -11,5 +11,8 @@ var VIZABI_MODEL = {
       }
     }
   
+  },
+  "ui": {
+    zoomOnScrolling: false
   }
 };

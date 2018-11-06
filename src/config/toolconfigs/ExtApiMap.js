@@ -56,6 +56,7 @@ var VIZABI_MODEL = {
     }
   },
   "ui": {
+    zoomOnScrolling: false,
     datawarning: {
       doubtDomain: [2000, 2014],
       doubtRange: [0, 0]
