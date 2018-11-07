@@ -5,7 +5,7 @@
     "config": "BubbleChart-norrland",
     "dataSources": ["all"],
     "transition": ["select","time"],
-    "title": "all",
+    "title": "🎈 all",
     "image": "/assets/images/chart/bubblechart.png"
   },
   {
@@ -14,7 +14,7 @@
     "config": "BubbleChart-norrland",
     "dataSources": ["youth"],
     "transition": ["select","time"],
-    "title": "youth",
+    "title": "🎈 youth",
     "image": "/assets/images/chart/bubblechart.png"
   },
   {
@@ -23,7 +23,7 @@
     "config": "BubbleChart-norrland",
     "dataSources": ["adults"],
     "transition": ["select","time"],
-    "title": "adults",
+    "title": "🎈 adults",
     "image": "/assets/images/chart/bubblechart.png"
   },
   {
@@ -32,7 +32,7 @@
     "config": "BubbleChart-norrland",
     "dataSources": ["elderly"],
     "transition": ["select","time"],
-    "title": "elderly",
+    "title": "🎈 elderly",
     "image": "/assets/images/chart/bubblechart.png"
   },
   {
@@ -41,7 +41,7 @@
     "config": "ExtApiMap",
     "dataSources": ["all"],
     "transition": ["select","time"],
-    "title": "all",
+    "title": "🌍 all",
     "image": "/assets/images/chart/map-kommun.png"
   },
   {
@@ -50,7 +50,7 @@
     "config": "ExtApiMap",
     "dataSources": ["youth"],
     "transition": ["select","time"],
-    "title": "youth",
+    "title": "🌍 youth",
     "image": "/assets/images/chart/map-kommun.png"
   },
   {
@@ -59,7 +59,7 @@
     "config": "ExtApiMap",
     "dataSources": ["adults"],
     "transition": ["select","time"],
-    "title": "adults",
+    "title": "🌍 adults",
     "image": "/assets/images/chart/map-kommun.png"
   },
   {
@@ -68,7 +68,51 @@
     "config": "ExtApiMap",
     "dataSources": ["elderly"],
     "transition": ["select","time"],
-    "title": "elderly",
+    "title": "🌍 elderly",
     "image": "/assets/images/chart/map-kommun.png"
-  }
+  },
+  {
+    "id": "combo-all",
+    "tool": "combo",
+    "config": "Combo",
+    "dataSources": ["all"],
+    "transition": ["select","time"],
+    "title": "🎈🌍 all",
+    "image": "/assets/images/chart/combo.png",
+    "hideThumbnail": true
+  },
+  {
+    "id": "combo-youth",
+    "tool": "combo",
+    "config": "Combo",
+    "dataSources": ["youth"],
+    "transition": ["select","time"],
+    "title": "🎈🌍 youth",
+    "image": "/assets/images/chart/combo.png",
+    "hideThumbnail": true
+  },
+  {
+    "id": "combo-adults",
+    "tool": "combo",
+    "config": "Combo",
+    "dataSources": ["adults"],
+    "transition": ["select","time"],
+    "title": "🎈🌍 adults",
+    "image": "/assets/images/chart/combo.png",
+    "hideThumbnail": true
+  },
+  {
+    "id": "combo-elderly",
+    "tool": "combo",
+    "config": "Combo",
+    "dataSources": ["elderly"],
+    "transition": ["select","time"],
+    "title": "🎈🌍 elderly",
+    "image": "/assets/images/chart/combo.png",
+    "hideThumbnail": true
+  }  
 ]
+
+
+
+
