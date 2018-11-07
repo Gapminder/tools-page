@@ -4,7 +4,7 @@
     "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
     "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
     "dataset": "open-numbers/ddf--gapminder--systema_globalis#develop",
-    "translateContributionLink": "https://docs.google.com/document/d/1bzTWStFYAq2Oj9kV3vm261Dj9FW8C2tS7Jwj1wtTn1Q"
+    "translateContributionLink": "https://crowdin.com/project/systema-globalis"
   },
   "pop": {
     "reader": "waffle",
