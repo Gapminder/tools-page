@@ -115,14 +115,14 @@ function createToolsHash(gwHash) {
 			var trailStartTime = gwHash.inds[geo_id].substring(3,7);
 			if (/^\d+$/.test(trailStartTime)) {
 				select.push({
-					geo: countries[geo_id],
+					country: countries[geo_id],
 					trailStartTime: trailStartTime
 				});
 				trails = true;
 			}
 			else
 				select.push({
-					geo: countries[geo_id]
+					country: countries[geo_id]
 				});
 		}
 
