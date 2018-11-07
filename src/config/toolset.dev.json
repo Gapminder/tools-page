@@ -1,41 +1,5 @@
 [
   {
-    "id": "combo-all",
-    "tool": "combo",
-    "config": "Combo",
-    "dataSources": ["all"],
-    "transition": ["select","time"],
-    "title": "all",
-    "image": "/assets/images/chart/combo.png"
-  },
-  {
-    "id": "combo-youth",
-    "tool": "combo",
-    "config": "Combo",
-    "dataSources": ["youth"],
-    "transition": ["select","time"],
-    "title": "youth",
-    "image": "/assets/images/chart/combo.png"
-  },
-  {
-    "id": "combo-adults",
-    "tool": "combo",
-    "config": "Combo",
-    "dataSources": ["adults"],
-    "transition": ["select","time"],
-    "title": "adults",
-    "image": "/assets/images/chart/combo.png"
-  },
-  {
-    "id": "combo-elderly",
-    "tool": "combo",
-    "config": "Combo",
-    "dataSources": ["elderly"],
-    "transition": ["select","time"],
-    "title": "elderly",
-    "image": "/assets/images/chart/combo.png"
-  },
-  {
     "id": "bubbles-all",
     "tool": "BubbleChart",
     "config": "BubbleChart-norrland",
