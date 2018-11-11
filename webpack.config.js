@@ -336,12 +336,11 @@ const toolspage = {
           }
         }],
       },
-
       {
-        test: /favicon\.ico$/,
+        test: /favicon.*\.(ico|png)$/,
         loader: 'file-loader',
         options: { 
-          limit: 1,
+          limit: 6,
           name: '[name].[ext]',
         }
       },

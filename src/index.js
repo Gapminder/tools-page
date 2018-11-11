@@ -1,5 +1,10 @@
 import './app/app.styl';
 import './favicon.ico';
+import './favicon-16x16.png';
+import './favicon-32x32.png';
+import './favicon-96x96.png';
+import './favicon-160x160.png';
+import './favicon-196x196.png';
 
 window.d3 = window.d3 || require('d3');
 window.urlon = window.urlon || require('urlon');
