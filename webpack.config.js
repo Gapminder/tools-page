@@ -80,6 +80,7 @@ if(!__PROD__) htmlAssets.push(
   'config/toolset.js',
   'config/datasources.js',
   'config/conceptMapping.js',
+  'config/entitysetMapping.js',
 );
 
 const sep = '\\' + path.sep;
@@ -156,7 +157,8 @@ const toolspage = {
       "properties": path.resolve(__dirname, "src", "config", `properties.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
       "toolset": path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
       "datasources": path.resolve(__dirname, "src", "config", `datasources.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
-      "conceptMapping": path.resolve(__dirname, "src", "config", "conceptMapping.js")
+      "conceptMapping": path.resolve(__dirname, "src", "config", "conceptMapping.js"),
+      "entitysetMapping": path.resolve(__dirname, "src", "config", "entitysetMapping.js")
     },
     modules: [
       path.resolve(__dirname, 'src'),
@@ -432,6 +434,14 @@ if (__PROD__) {
         path.resolve(__dirname, 'src', 'config'),
       ],
       use: 'exports-loader?toolsPage_conceptMapping'
+    },
+
+    {
+      test: /entitysetMapping\.js$/,
+      include: [
+        path.resolve(__dirname, 'src', 'config'),
+      ],
+      use: 'exports-loader?toolsPage_entitysetMapping'
     }
   ].concat(toolspage.module.rules);
 
@@ -540,6 +550,20 @@ if (__PROD__) {
 
     {
       test: /conceptMapping\.js$/,
+      include: [
+        path.resolve(__dirname, "src", "config"),
+      ],
+      use: [{
+        loader: 'file-loader',
+        options: {
+          name: 'config/[name].[ext]',
+          publicPath: "./"
+        }
+      }]
+    },
+
+    {
+      test: /entitysetMapping\.js$/,
       include: [
         path.resolve(__dirname, "src", "config"),
       ],

@@ -27,3 +27,4 @@ window.toolsPage_properties = window.toolsPage_properties || require("properties
 window.toolsPage_toolset = window.toolsPage_toolset || require("toolset");
 window.toolsPage_datasources = window.toolsPage_datasources || require("datasources");
 window.toolsPage_conceptMapping = window.toolsPage_conceptMapping || require("conceptMapping");
+window.toolsPage_entitysetMapping = window.toolsPage_entitysetMapping || require("entitysetMapping");
