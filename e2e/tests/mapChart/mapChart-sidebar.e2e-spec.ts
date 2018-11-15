@@ -20,8 +20,8 @@ describe('Maps chart: Sidebar', () => {
 
     expect(await mapChart.selectedCountriesLabels.getText()).toMatch('China');
     expect(await mapChart.selectedCountriesLabels.getText()).toMatch('India');
-    expect(await browser.getCurrentUrl()).toContain('geo=ind');
-    expect(await browser.getCurrentUrl()).toContain('geo=chn');
+    expect(await browser.getCurrentUrl()).toContain('country=ind');
+    expect(await browser.getCurrentUrl()).toContain('country=chn');
 
     await sidebar.findSelect.deselectCountryInSearch('India');
     expect(await mapChart.selectedCountries.count()).toEqual(1);
@@ -29,7 +29,7 @@ describe('Maps chart: Sidebar', () => {
     await sidebar.findSelect.deselectCountryInSearch('China');
     expect(await mapChart.selectedCountries.count()).toEqual(0);
 
-    expect(await browser.getCurrentUrl()).not.toContain('geo=ind');
-    expect(await browser.getCurrentUrl()).not.toContain('geo=chn');
+    expect(await browser.getCurrentUrl()).not.toContain('country=ind');
+    expect(await browser.getCurrentUrl()).not.toContain('country=chn');
   });
 });
