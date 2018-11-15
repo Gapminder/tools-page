@@ -45,9 +45,9 @@ describe('Mountains chart', () => {
     expect(await mountainChart.visualizationSelectedCountries.get(2).getAttribute('style')).toContain('opacity: 1;');
 
     expect(await mountainChart.allCountriesOnChart.count()).toEqual(162);
-    expect(await browser.getCurrentUrl()).toContain('geo=ind');
-    expect(await browser.getCurrentUrl()).toContain('geo=chn');
-    expect(await browser.getCurrentUrl()).toContain('geo=bra');
+    expect(await browser.getCurrentUrl()).toContain('country=ind');
+    expect(await browser.getCurrentUrl()).toContain('country=chn');
+    expect(await browser.getCurrentUrl()).toContain('country=bra');
   });
 
   if (browser.params.desktop) {

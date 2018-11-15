@@ -34,8 +34,8 @@ describe('Bubbles chart: Sidebar', () => {
 
     expect(await bubbleChart.selectedCountries.getText()).toMatch('China 2018');
     expect(await bubbleChart.selectedCountries.getText()).toMatch('India 2018');
-    expect(await browser.getCurrentUrl()).toContain('geo=ind');
-    expect(await browser.getCurrentUrl()).toContain('geo=chn');
+    expect(await browser.getCurrentUrl()).toContain('country=ind');
+    expect(await browser.getCurrentUrl()).toContain('country=chn');
 
     await sidebar.findSelect.deselectCountryInSearch('India');
     expect(await bubbleChart.selectedCountries.count()).toEqual(1);
@@ -43,8 +43,8 @@ describe('Bubbles chart: Sidebar', () => {
     await sidebar.findSelect.deselectCountryInSearch('China');
     expect(await bubbleChart.selectedCountries.count()).toEqual(0);
 
-    expect(await browser.getCurrentUrl()).not.toContain('geo=ind');
-    expect(await browser.getCurrentUrl()).not.toContain('geo=chn');
+    expect(await browser.getCurrentUrl()).not.toContain('country=ind');
+    expect(await browser.getCurrentUrl()).not.toContain('country=chn');
   });
 
   it('x, y, trails and zoom remains after page refresh', async () => {
