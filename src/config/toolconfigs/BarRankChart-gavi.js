@@ -1,14 +1,16 @@
 var VIZABI_MODEL = {
   "state": {
     "time": {
-      "dim": "time"
+      "dim": "time",
+      "delay": 1000,
+      value: "2017"
     },
     "entities": {
       "dim": "country",
       "show": {}
     },
     "entities_colorlegend": {
-      "dim": "gavi_region"
+      "dim": "gavi"
     },
     "marker": {
       "space": ["entities", "time"],
@@ -18,7 +20,7 @@ var VIZABI_MODEL = {
       },
       "axis_x": {
         "use": "indicator",
-        "which": "co_financing_payments"
+        "which": "underimmunized"
       },
       "axis_y": {
         "use": "property",
@@ -26,21 +28,12 @@ var VIZABI_MODEL = {
       },
       "color": {
         "use": "property",
-        "which": "gavi_region"
-      }
+        "which": "gavi"
+      },
+      opacitySelectDim: 0.1
     }
   },
   "ui": {
-    "treemenu": {
-      "folderStrategyByDataset": {
-        "data": "spread",
-        "data_wdi": "folder:other_datasets"
-      }
-    },
-    "datawarning": {
-      "doubtDomain": [1800, 1950, 2015],
-      "doubtRange": [1.0, 0.8, 0.6]
-    },
     "dialogs": {
       "dialog": {
         "find": { 

@@ -1,14 +1,16 @@
 var VIZABI_MODEL = {
   "state": {
     "time": {
-      "dim": "time"
+      "dim": "time",
+      "delay": 1000,
+      value: "2017"
     },
     "entities": {
       "dim": "country",
-      "show": {}
+      "show": { "gavi": { "$in": ["gavi"] }}
     },
     "entities_colorlegend": {
-      "dim": "gavi_region"
+      "dim": null
     },
     "marker": {
       "space": ["entities", "time"],
@@ -27,25 +29,23 @@ var VIZABI_MODEL = {
         "_important": true
       },
       "color": {
-        "use": "property",
-        "which": "gavi_region"
+        "use": "indicator",
+        "which": "u5mr"
       },
       "size": {
         "use": "indicator",
-        "which": "bcg_fvp"
-      }
+        "which": "u5_deaths"
+      },
+      opacitySelectDim: 0.1
     }
   },
   "ui": {
-    "treemenu": {
-      "folderStrategyByDataset": {
-        "data": "spread",
-        "data_wdi": "folder:other_datasets"
+    "dialogs": {
+      "dialog": {
+        "find": { 
+          enableSelectShowSwitch: true,
+        }
       }
-    },
-    "datawarning": {
-      "doubtDomain": [1800, 1950, 2015],
-      "doubtRange": [1.0, 0.3, 0.2]
     },
     "map": {
       "scale": 1,

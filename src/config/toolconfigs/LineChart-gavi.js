@@ -1,13 +1,13 @@
 var VIZABI_MODEL = {
   "state": {
     "time": {
-      "dim": "time"
+      "dim": "time",
+      "delay": 1000,
+      "value": "2000"
     },
     "entities": {
-      "dim": "country",
-      "show": {
-        "country": { "$in": ["usa", "rus", "chn", "nga"] }
-      }
+      "dim": "wb_long_2017",
+      "show": {}
     },
     "marker": {
       "space": ["entities", "time"],
@@ -15,23 +15,23 @@ var VIZABI_MODEL = {
         "use": "property",
         "which": "name"
       },
+      "axis_y": {
+        "use": "indicator",
+        "which": "dtp3_coverage"
+      },
+      "color": {
+        "use": "indicator",
+        "which": "dtp3_coverage"
+      },
       "axis_x": {
         "use": "indicator",
         "which": "time",
         "scaleType": "time"
-      }
+      },
+      opacitySelectDim: 0.1
     }
   },
   "ui": {
-    "treemenu": {
-      "folderStrategyByDataset": {
-        "data": "spread"
-      }
-    },
-    "datawarning": {
-      "doubtDomain": [1800, 1950, 2015],
-      "doubtRange": [1.0, 0.3, 0.2]
-    },
     "dialogs": {
       "dialog": {
         "find": { 

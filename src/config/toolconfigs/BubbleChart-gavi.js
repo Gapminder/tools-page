@@ -1,19 +1,35 @@
 var VIZABI_MODEL = {
   state: {
+    time: {
+      "dim": "time",
+      "delay": 1000,
+      value: "2000"
+    },
+    entities: {
+      "dim": "country"
+    },
     "entities_colorlegend": {
-      "dim": "gavi_region"
+      "dim": "gavi"
     },
     marker: {
       color: {
-      	use: "property",
-      	which: "gavi_region"
+        use: "property",
+        which: "gavi"
       },
       axis_x: {
-      	which: "bcg_coverage"
+        which: "bop"
       },
       axis_y: {
-      	which: "dtp1_coverage"
-      }
+        which: "penta_coverage"
+      },
+      label: {
+        which: "name"
+      },
+      size: {
+        which: "surviving_infants",
+        use: "indicator"
+      },
+      opacitySelectDim: 0.1
     }
   },
   ui: { 
@@ -22,7 +38,7 @@ var VIZABI_MODEL = {
         find: {
           enableSelectShowSwitch: true,
           enablePicker: true
-    	  }
+        }
       }
     }
   }

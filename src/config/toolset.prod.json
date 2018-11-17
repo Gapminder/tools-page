@@ -12,6 +12,7 @@
     "id": "map",
     "tool": "BubbleMap",
     "dataSources": ["gavi"],
+    "config": "BubbleMap-gavi",
     "transition": ["select","time"],
     "title": "maps",
     "image": "/assets/images/chart/maps-chart.png"
@@ -20,6 +21,7 @@
     "id": "linechart",
     "tool": "LineChart",
     "dataSources": ["gavi"],
+    "config": "LineChart-gavi",
     "transition": ["show","time"],
     "title": "trends",
     "image": "/assets/images/chart/trends-chart.png"
@@ -28,6 +30,7 @@
     "id": "barrank",
     "tool": "BarRankChart",
     "dataSources": ["gavi"],
+    "config": "BarRankChart-gavi",
     "transition": ["select","time"],
     "title": "ranks",
     "image": "/assets/images/chart/ranks-chart.png"
@@ -36,6 +39,7 @@
     "id": "spreadsheet",
     "tool": "Spreadsheet",
     "dataSources": ["gavi"],
+    "config": "Spreadsheet-gavi",
     "transition": ["none"],
     "title": "spreadsheet",
     "image": "/assets/images/chart/spreadsheet.png",
