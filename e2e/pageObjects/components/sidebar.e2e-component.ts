@@ -38,10 +38,14 @@ export class Sidebar {
   /**
    * Options
    */
-  optionsButton: ExtendedElementFinder = _$$('[data-btn="moreoptions"]').last();
+  optionsButton: ExtendedElementFinder = _$('.vzb-tool-buttonlist [data-btn="moreoptions"]');
   optionsMenuSizeButton: ExtendedElementFinder = _$$('span[data-vzb-translate="buttons/size"]').last();
   optionsMenuHandIcon: ElementFinder = $('.thumb-tack-class-ico-drag[data-dialogtype="moreoptions"]');
   optionsModalDialogue: ElementArrayFinder = $$('div[data-dlg="moreoptions"]');
+  optionsXY: ExtendedElementFinder = _$('[data-dlg="axes"]');
+  optionsXmin: ExtendedElementFinder = _$$('.vzb-mmi-zoomedmin').get(0);
+  optionsXmax: ExtendedElementFinder = _$$('.vzb-mmi-zoomedmax').get(0);
+  optionsOkButton: ExtendedElementFinder = _$$('.vzb-label-primary [data-vzb-translate="buttons/ok"]').last();
 
   activeOptionsMenu: ExtendedElementFinder = _$('.vzb-accordion-active');
   opacityMenu: ExtendedElementFinder = _$('[data-dlg="opacity"]');
