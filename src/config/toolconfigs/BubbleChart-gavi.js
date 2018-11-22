@@ -13,8 +13,9 @@ var VIZABI_MODEL = {
     },
     marker: {
       color: {
-        use: "property",
-        which: "gavi"
+        use: "indicator",
+        which: "eligibility",
+        spaceRef: null
       },
       axis_x: {
         which: "bop"

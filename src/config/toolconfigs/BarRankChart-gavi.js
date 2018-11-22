@@ -27,8 +27,9 @@ var VIZABI_MODEL = {
         "which": "name"
       },
       "color": {
-        "use": "property",
-        "which": "gavi"
+        "use": "indicator",
+        "which": "eligibility",
+        "spaceRef": null
       },
       opacitySelectDim: 0.1
     }
