@@ -1,0 +1,1 @@
+require('ts-node/dist').register({ project: 'e2e/tsconfig.json' });

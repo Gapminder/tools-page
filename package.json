@@ -21,7 +21,9 @@
     "e2e:blue": "URL='http://178.62.135.203:3001/tools/' ./node_modules/.bin/protractor protractor.conf.js",
     "e2e:green": "URL='https://www.gapminder.org/tools/' ./node_modules/.bin/protractor protractor.conf.js",
     "postinstall": "./node_modules/protractor/bin/webdriver-manager update --versions.chrome=2.41",
-    "ncu-vizabi": "ncu -u vizabi vizabi vizabi-barchart-ds vizabi-barrankchart vizabi-bubblechart vizabi-bubblemap vizabi-config-systema_globalis vizabi-csv-reader vizabi-ddfcsv-reader vizabi-extapimap vizabi-linechart vizabi-mountainchart vizabi-popbyage vizabi-sankey vizabi-spreadsheet vizabi-ws-reader"
+    "ncu-vizabi": "ncu -u vizabi vizabi vizabi-barchart-ds vizabi-barrankchart vizabi-bubblechart vizabi-bubblemap vizabi-config-systema_globalis vizabi-csv-reader vizabi-ddfcsv-reader vizabi-extapimap vizabi-linechart vizabi-mountainchart vizabi-popbyage vizabi-sankey vizabi-spreadsheet vizabi-ws-reader",
+    "api-test": "jasmine --config=e2e/helpers/jasmine.json --helper=e2e/helpers/{reporter,ts-node}.helper.js",
+    "preapi-test": "node ./e2e/helpers/generateJson.ts"
   },
   "repository": {
     "type": "git",
@@ -75,6 +77,7 @@
     "postcss-url": "^7.3.2",
     "poststylus": "^1.0.0",
     "protractor": "5.3.2",
+    "request-promise": "4.2.2",
     "shelljs": "^0.8.1",
     "style-loader": "^0.21.0",
     "stylus": ">=0.52.4",
