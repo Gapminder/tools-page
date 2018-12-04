@@ -105,4 +105,8 @@ export class LineChart extends CommonChartPage {
       .first()
       .getCssValue('stroke');
   }
+
+  async waitForLastLineValue(value: string) {
+    return browser.wait(EC.textToBePresentInElement(this.axisValues.last(), value));
+  }
 }
