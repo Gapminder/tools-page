@@ -1,9 +1,9 @@
-import { browser } from 'protractor';
+import { browser, protractor, ExpectedConditions as EC } from 'protractor';
 
-import { safeExpectIsDispayed, waitForSliderToBeReady } from '../../helpers/helper';
+import { safeExpectIsDispayed, waitForSliderToBeReady, waitForSpinner } from '../../helpers/helper';
 import { waitUntil } from '../../helpers/waitHelper';
 import { Sidebar, Slider } from '../../pageObjects/components';
-import { LineChart, CommonChartPage } from '../../pageObjects/charts';
+import { CommonChartPage, LineChart } from '../../pageObjects/charts';
 
 const lineChart: LineChart = new LineChart();
 const sidebar: Sidebar = new Sidebar();
@@ -104,26 +104,25 @@ describe('Line chart: ', () => {
     });
   }
 
-  // xit(`Change Options X and Y values`, async() => {
-  // TODO tough stuff, will try to sort it out later. xMin input works super weird!
-  //   const min = '1900';
-  //   const max = '2000';
-  //   await Helper.safeClick(sidebar.optionsButton);
-  //   await Helper.safeClick(sidebar.optionsXandY.openBtn);
-  //   await Helper.safeSendKeys(sidebar.optionsXandY.xMin, '1900');
-  //   await sidebar.optionsXandY.xMin.click();
-  //   await sidebar.optionsXandY.xMin.sendKeys(protractor.Key.BACK_SPACE);
-  //   await sidebar.optionsXandY.xMin.sendKeys(protractor.Key.BACK_SPACE);
-  //   await sidebar.optionsXandY.xMin.sendKeys(protractor.Key.BACK_SPACE);
-  //   await sidebar.optionsXandY.xMin.sendKeys(protractor.Key.BACK_SPACE);
-  //   await sidebar.optionsXandY.xMin.sendKeys(min);
-  //   await browser.sleep(2000);
-  //   await Helper.safeSendKeys(sidebar.optionsXandY.xMax, max);
-  //   await Helper.safeClick(sidebar.optionsOkBtn);
-  //
-  //   await browser.sleep(2000);
-  //   expect(await lineChart.axisValues.getText()).toMatch(min);
-  //   expect(await lineChart.axisValues.last().getText()).toEqual(max);
-  // });
+  it(`Change Options for X values`, async() => {
+      const ctrlA = protractor.Key.chord(protractor.Key.CONTROL, 'a');
+      const min = '1900';
+      const max = '2000';
+
+      await sidebar.optionsButton.safeClick();
+      await sidebar.optionsXY.safeClick();
+      await sidebar.optionsXmin.sendKeys(ctrlA);
+      await sidebar.optionsXmin.sendKeys(min);
+      await sidebar.optionsXmax.sendKeys(protractor.Key.ENTER);
+      await sidebar.optionsXmax.sendKeys(ctrlA);
+      await sidebar.optionsXmax.sendKeys(max);
+      await sidebar.optionsXmax.sendKeys(protractor.Key.ENTER);
+      await sidebar.optionsOkButton.safeClick();
+
+      // need to wait until last value will be rebuild
+      await lineChart.waitForLastLineValue(max);
+      expect(await lineChart.axisValues.get(0).getText()).toEqual(min);
+      expect(await lineChart.axisValues.last().getText()).toEqual(max);
+  });
 
 });

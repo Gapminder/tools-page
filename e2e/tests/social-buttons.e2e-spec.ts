@@ -17,8 +17,8 @@ describe('Social media buttons', () => {
   const twitterUrl = 'https://twitter.com/intent/tweet?original_referer=';
 
   const faceBookForm: ExtendedElementFinder = _$('#login_form');
-  const facebookUrl = 'https://www.facebook.com/login.php?skip_api_login=1&api_key=966242223397117&signed_next=1&next=https%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php';
-  const facebookFormAction = '/login.php?login_attempt=1&next=https%3A%2F%2Fwww.facebook.com%2Fsharer%2Fsharer.php';
+  const facebookUrl = 'https://www.facebook.com/login.php?skip_api_login=1&api_key=5303202981&signed_next=1&next=https%3A%2F%2Fwww.facebook.com';
+  const facebookFormAction = '/login/device-based/regular/login/?login_attempt=1&next=https%3A%2F%2Fwww.facebook.com%2Fv2.8%2Fdialog%2Fshare';
 
   beforeAll(async () => {
     await browser.get('./');
@@ -66,13 +66,19 @@ describe('Social media buttons', () => {
     expect(await browser.getCurrentUrl()).toContain('Gapminder');
   });
 
-  xit('facebook: https://github.com/Gapminder/ng2-tools-page/issues/174', async () => {
+  it('facebook', async () => {
     await header.clickOnFacebookIcon();
     const handles = await browser.getAllWindowHandles();
     await browser.switchTo().window(handles[1]);
 
     expect(await faceBookForm.safeGetAttribute('action')).toContain(facebookFormAction);
     expect(await browser.getCurrentUrl()).toContain(facebookUrl);
+
+    /*
+    * Next steps will close facebook popup after testing
+    * */
+    browser.close();
+    await browser.switchTo().window(handles[0]);
   });
 
   /**
