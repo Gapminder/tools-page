@@ -76,9 +76,11 @@ if(!__PROD__) htmlAssets.push(
     const toolName = allTools.paths[tool] && allTools.paths[tool].js || `vizabi-${tool}`;
     return path.join("assets/vendor/js", (path.extname(toolName) === "" ? path.join(toolName, path.basename(require.resolve(toolName))) : path.join(path.basename(toolName, ".js"), path.basename(toolName))));
   }),
+  'config/properties.js',
   'config/toolset.js',
   'config/datasources.js',
   'config/conceptMapping.js',
+  'config/entitysetMapping.js',
 );
 
 const sep = '\\' + path.sep;
@@ -152,9 +154,11 @@ const toolspage = {
       "vizabi-csv-reader": "vizabi-csv-reader/dist/vizabi-csv-reader.js",
       "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
       "vizabi-ws-reader-web": "vizabi-ws-reader/dist/vizabi-ws-reader-web.js",
+      "properties": path.resolve(__dirname, "src", "config", `properties.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
       "toolset": path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
       "datasources": path.resolve(__dirname, "src", "config", `datasources.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
-      "conceptMapping": path.resolve(__dirname, "src", "config", "conceptMapping.js")
+      "conceptMapping": path.resolve(__dirname, "src", "config", "conceptMapping.js"),
+      "entitysetMapping": path.resolve(__dirname, "src", "config", "entitysetMapping.js")
     },
     modules: [
       path.resolve(__dirname, 'src'),
@@ -429,6 +433,14 @@ if (__PROD__) {
         path.resolve(__dirname, 'src', 'config'),
       ],
       use: 'exports-loader?toolsPage_conceptMapping'
+    },
+
+    {
+      test: /entitysetMapping\.js$/,
+      include: [
+        path.resolve(__dirname, 'src', 'config'),
+      ],
+      use: 'exports-loader?toolsPage_entitysetMapping'
     }
   ].concat(toolspage.module.rules);
 
@@ -514,7 +526,7 @@ if (__PROD__) {
 
     {
       type: 'javascript/auto',
-      test: /(toolset.*|datasources.*)\.json$/,
+      test: /(properties.*|toolset.*|datasources.*)\.json$/,
       include: [
         path.resolve(__dirname, "src", "config"),
       ],
@@ -537,6 +549,20 @@ if (__PROD__) {
 
     {
       test: /conceptMapping\.js$/,
+      include: [
+        path.resolve(__dirname, "src", "config"),
+      ],
+      use: [{
+        loader: 'file-loader',
+        options: {
+          name: 'config/[name].[ext]',
+          publicPath: "./"
+        }
+      }]
+    },
+
+    {
+      test: /entitysetMapping\.js$/,
       include: [
         path.resolve(__dirname, "src", "config"),
       ],

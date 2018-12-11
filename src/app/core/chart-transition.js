@@ -54,7 +54,7 @@ function getTransitionModel(oldModel, oldTransition, newTransition) {
     oldTransition.includes(transition.NONE) || 
     newTransition.includes(transition.NONE)) return {};
 
-  const dim = "geo";
+  const dim = "country";
 
   newTransition.forEach(transitionTo => {
     const transitionFrom = oldTransition.filter(transition => transitions[transitionTo].allow.includes(transition))[0];

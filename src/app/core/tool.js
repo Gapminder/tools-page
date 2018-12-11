@@ -134,7 +134,7 @@ function setTool(tool, skipTransition) {
 
     const transitionModel = (!skipTransition && viz) ? getTransitionModel(toolModelPrevious, toolConfigPrevious.transition, toolConfig.transition) : URLI.model;
     viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, _VIZABI_MODEL, transitionModel, true));
-
+    
     timeLogger.removeAll();
     timeLogger.add("TOTAL")
     timeLogger.add((viz.model.ui||{}).splash? "SPLASH" : "FULL");
