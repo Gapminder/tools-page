@@ -36,11 +36,13 @@ function setTool(tool, skipTransition) {
     const dataSources = dataSourcesId.map(ds => toolsPage_datasources[ds]);
 
     const urlDataModel = (URLI.model || {}).data;
-    const skipModel = urlDataModel && !Vizabi.utils.comparePlainObjects(urlDataModel, dataSources[0]);
+    const urlHasDataModel = Object.keys(URLI.model || {}).some(f => f.includes("data"));
+    const skipPageConfig = urlDataModel && !Vizabi.utils.comparePlainObjects(urlDataModel, dataSources[0]);
 
-    const _VIZABI_MODEL =  skipModel ? {} : VIZABI_MODEL;
+    const _VIZABI_MODEL =  skipPageConfig ? {} : VIZABI_MODEL;
 
-    if (!skipModel) {
+    // apply data models from configuration to _VIZABI_MODEL
+    if (!skipPageConfig && !urlHasDataModel) {
       Object.assign(_VIZABI_MODEL, dataSources.length > 1 ?
         dataSources.reduce(function(result, ds, index) {
           result["data" + (index ? "_" + dataSourcesId[index] : "")] = ds;
