@@ -9,7 +9,7 @@ import {
 
 const readersSchema = {
   "waffle": {
-    props: ["path", "dataset", "assetsPath"]
+    props: ["path", "dataset", "assetsPath", "translateContributionLink"]
   },
   "ddf": {
     props: ["path"]
@@ -23,7 +23,7 @@ const readersSchema = {
 }
 
 const DataEditor = function (placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
-  const propNames = ["reader", "path", "dataset", "assetsPath", "data", "timeInColumns", "hasNameColumn", "nameColumnIndex"];
+  const propNames = ["reader", "path", "dataset", "assetsPath", "data", "timeInColumns", "hasNameColumn", "nameColumnIndex", "translateContributionLink"];
   const defaultValues = {
     "reader": "waffle",
     "nameColumnIndex": 1
