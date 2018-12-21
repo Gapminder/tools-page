@@ -8,9 +8,9 @@
   },
   "pop": {
     "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--population#develop"
+    "path": "https://waffle-server.gapminder.org/api/ddf/ql",
+    "assetsPath": "https://waffle-server.gapminder.org/api/ddf/assets/",
+    "dataset": "open-numbers/ddf--gapminder--population"
   },
   "wdi": {
     "reader": "waffle",
