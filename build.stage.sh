@@ -19,4 +19,4 @@ echo && echo 🗂 $PWD && echo "👉 npm install"
 npm i --quiet --depth 0 --unsafe-perm && echo "✅ npm install done"
   
 echo && echo 🗂 $PWD && echo "👉 npm run build:prod:stage"
-npm run build:prod && echo "✅ Tools page build done"
+npm run build:prod:stage && echo "✅ Tools page build done"
