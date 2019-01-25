@@ -164,8 +164,8 @@ const platformConfigurations = [
   // config.chromeOptions = {
   //   args: ['no-sandbox']
   // }
-  config.nativeWebTap = true,//need for IOS
-  config.idleTimeout = 300,
+  config.nativeWebTap = true;//need for IOS
+  config.idleTimeout = 300;
   config.recordVideo = false;
   config.recordScreenshots = true;
   //config.recordLogs = false;
