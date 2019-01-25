@@ -23,7 +23,7 @@ describe('Mountains chart', () => {
 
     await browser.wait(EC.presenceOf(mountainChart.allCountriesOnChart.first()));
 
-    expect(await mountainChart.allCountriesOnChart.count()).toEqual(165);
+    expect(await mountainChart.allCountriesOnChart.count()).toEqual(193);
     await sidebar.findSelect.searchAndSelectCountry('China');
     await browser.wait(EC.presenceOf(mountainChart.selectedCountries.first()));
 
@@ -44,7 +44,7 @@ describe('Mountains chart', () => {
     expect(await mountainChart.visualizationSelectedCountries.count()).toEqual(3);
     expect(await mountainChart.visualizationSelectedCountries.get(2).getAttribute('style')).toContain('opacity: 1;');
 
-    expect(await mountainChart.allCountriesOnChart.count()).toEqual(162);
+    expect(await mountainChart.allCountriesOnChart.count()).toEqual(190);
     expect(await browser.getCurrentUrl()).toContain('country=ind');
     expect(await browser.getCurrentUrl()).toContain('country=chn');
     expect(await browser.getCurrentUrl()).toContain('country=bra');
@@ -54,7 +54,7 @@ describe('Mountains chart', () => {
     it('text on vertical line at the end of the chart', async () => {
       /**
        * should check that in 2015, the percentage of people living in the extreme poverty should be 11.5 ± 0.3%,
-       * and the world population should be 7.33B(TC19)
+       * and the world population should be 7.34B(TC19)
        */
       await waitForSliderToBeReady();
       const extremePovertyPercentage = await mountainChart.extremePovertyPercentage.getText();
@@ -63,22 +63,22 @@ describe('Mountains chart', () => {
       await expect(Number(extremePovertyPercentage.replace('%', ''))).toBeLessThan(11.8);
 
       await mountainChart.hoverMouseOver500AxisXOnMountainsChart();
-      expect(await mountainChart.verticalLine.getText()).toEqual('7.33B');
+      expect(await mountainChart.verticalLine.getText()).toEqual('7.34B');
     });
 
     it('labels on vertical line in 2015 and in 1800 match', async () => {
       /**
        * should check that in 2015 there is roughly the same amount of people living in the extreme poverty
-       * as there was in 1800 (830 and 812 Millions)(TC20)
+       * as there was in 1800 (861 and 823 Millions)(TC20)
        */
       await mountainChart.hoverMouserOverExtremePovertyTitle();
 
-      expect(await mountainChart.verticalLine.getText()).toEqual('852M');
+      expect(await mountainChart.verticalLine.getText()).toEqual('861M');
 
       await slider.dragToStart();
       await mountainChart.hoverMouserOverExtremePovertyTitle();
 
-      expect(await mountainChart.verticalLine.getText()).toEqual('812M');
+      expect(await mountainChart.verticalLine.getText()).toEqual('823M');
     });
   }
 });
