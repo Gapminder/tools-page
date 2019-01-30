@@ -19,8 +19,8 @@ describe('Ranks chart', () => {
     expect(await ranksChart.getBarOpacity('India')).toEqual(CommonChartPage.opacity.highlighted);
     expect(await ranksChart.countHighlightedBars()).toEqual(1);
   });
-
-  it('Data doubts button', async () => {
+  //fixme: https://github.com/Gapminder/tools-page/issues/87
+  xit('Data doubts button', async () => {
     await ranksChart.dataDoubtsLink.safeClick();
 
     await safeExpectIsDispayed(ranksChart.dataDoubtsWindow);

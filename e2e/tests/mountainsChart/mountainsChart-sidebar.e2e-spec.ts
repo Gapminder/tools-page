@@ -14,7 +14,7 @@ describe('Mountains chart: Sidebar', () => {
         /**
          * should check that only checked countries displayed after click "show", check a few countries(TC21)
          */
-        expect(await mountainChart.allCountriesOnChart.count()).toEqual(165);
+        expect(await mountainChart.allCountriesOnChart.count()).toEqual(193);
 
         await sidebar.findSelect.searchAndSelectCountry('Ukraine');
 
@@ -50,7 +50,7 @@ describe('Mountains chart: Sidebar', () => {
 
         await sidebar.findSelect.deselectCountryInSearch('Ukraine');
         await sidebar.findSelect.deselectCountryInSearch('Austria');
-        expect(await mountainChart.allCountriesOnChart.count()).toEqual(165);
+        expect(await mountainChart.allCountriesOnChart.count()).toEqual(193);
         expect(await mountainChart.rightSidePanelCountriesList.count()).toBeGreaterThan(25);
     });
 });

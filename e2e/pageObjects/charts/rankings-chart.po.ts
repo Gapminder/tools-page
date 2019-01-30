@@ -9,7 +9,7 @@ export class RankingsChart extends CommonChartPage {
   url = 'chart-type=barrank';
   chartLink: ExtendedElementFinder = _$('.about a[href*="barrank"]');
 
-  dataDoubtsLink: ExtendedElementFinder = _$('.vzb-data-warning');
+  dataDoubtsLink: ExtendedElementFinder = _$$('.vzb-data-warning').first();
   dataDoubtsWindow: ExtendedElementFinder = _$('.vzb-data-warning-box');
   selectedCountries: ExtendedArrayFinder = _$$('.vzb-br-bar.vzb-selected .vzb-br-label'); // TODO
   bars: ExtendedArrayFinder = _$$('.vzb-br-bar');
