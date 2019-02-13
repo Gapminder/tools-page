@@ -10,7 +10,7 @@
     "reader": "waffle",
     "path": "https://waffle-server-stage.gapminder.org/api/ddf/ql",
     "assetsPath": "https://waffle-server-stage.gapminder.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--population#stage"
+    "dataset": "open-numbers/ddf--gapminder--population#master"
   },
   "wdi": {
     "reader": "waffle",
