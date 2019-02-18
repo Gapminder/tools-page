@@ -149,7 +149,7 @@ const toolspage = {
 
   resolve: {
     alias: {
-      "d3": "d3/build/d3.js",
+      "d3": "d3/dist/d3.js",
       "urlon": "urlon/dist/urlon.umd.js",
       "vizabi-csv-reader": "vizabi-csv-reader/dist/vizabi-csv-reader.js",
       "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
