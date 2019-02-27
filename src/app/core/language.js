@@ -32,7 +32,7 @@ function setLocale(arg) {
 
 function loadTranslation(language) {
   return new Promise((resolve, reject) => {
-    d3.json("assets/i18n/" + language + ".json", (error, translation) => {
+    Vizabi.utils.d3json("assets/i18n/" + language + ".json", (error, translation) => {
       if (error) {
         reject(error)
       } else {
