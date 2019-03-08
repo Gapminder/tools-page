@@ -20,9 +20,9 @@
   },
   "fasttrack": {
     "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--test_fasttrack#master"
+    "path": "https://waffle-server-dev.gapminder.org/api/ddf/ql",
+    "assetsPath": "https://waffle-server-dev.gapminder.org/api/ddf/assets/",
+    "dataset": "open-numbers/ddf--gapminder--fasttrack#master"
   }
 }
 
