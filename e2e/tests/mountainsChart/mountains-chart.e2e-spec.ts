@@ -27,20 +27,20 @@ describe('Mountains chart', () => {
     await sidebar.findSelect.searchAndSelectCountry('China');
     await browser.wait(EC.presenceOf(mountainChart.selectedCountries.first()));
 
-    expect(await mountainChart.selectedCountries.getText()).toMatch('China: 1.4B people');
+    expect(await mountainChart.selectedCountries.getText()).toMatch('China: 1.42B people');
     await browser.wait(EC.presenceOf(mountainChart.visualizationSelectedCountries.first()));
     expect(await mountainChart.visualizationSelectedCountries.count()).toEqual(1);
     expect(await mountainChart.visualizationSelectedCountries.get(0).getAttribute('style')).toContain('opacity: 1;');
 
     await sidebar.findSelect.searchAndSelectCountry('India');
     await browser.wait(EC.presenceOf(mountainChart.visualizationSelectedCountries.first()));
-    expect(await mountainChart.selectedCountries.getText()).toMatch('India: 1.31B');
+    expect(await mountainChart.selectedCountries.getText()).toMatch('India: 1.35B');
     expect(await mountainChart.visualizationSelectedCountries.count()).toEqual(2);
     expect(await mountainChart.visualizationSelectedCountries.get(1).getAttribute('style')).toContain('opacity: 1;');
 
     await sidebar.findSelect.searchAndSelectCountry('Brazil');
     await browser.wait(EC.presenceOf(mountainChart.visualizationSelectedCountries.first()));
-    expect(await mountainChart.selectedCountries.getText()).toMatch('Brazil: 206M');
+    expect(await mountainChart.selectedCountries.getText()).toMatch('Brazil: 211M');
     expect(await mountainChart.visualizationSelectedCountries.count()).toEqual(3);
     expect(await mountainChart.visualizationSelectedCountries.get(2).getAttribute('style')).toContain('opacity: 1;');
 
@@ -54,16 +54,16 @@ describe('Mountains chart', () => {
     it('text on vertical line at the end of the chart', async () => {
       /**
        * should check that in 2015, the percentage of people living in the extreme poverty should be 11.5 ± 0.3%,
-       * and the world population should be 7.34B(TC19)
+       * and the world population should be 7.59B(TC19)
        */
       await waitForSliderToBeReady();
       const extremePovertyPercentage = await mountainChart.extremePovertyPercentage.getText();
 
-      await expect(Number(extremePovertyPercentage.replace('%', ''))).toBeGreaterThan(11.2);
+      await expect(Number(extremePovertyPercentage.replace('%', ''))).toBeGreaterThan(10.2);
       await expect(Number(extremePovertyPercentage.replace('%', ''))).toBeLessThan(11.8);
 
       await mountainChart.hoverMouseOver500AxisXOnMountainsChart();
-      expect(await mountainChart.verticalLine.getText()).toEqual('7.34B');
+      expect(await mountainChart.verticalLine.getText()).toEqual('7.59B');
     });
 
     it('labels on vertical line in 2015 and in 1800 match', async () => {
@@ -73,7 +73,7 @@ describe('Mountains chart', () => {
        */
       await mountainChart.hoverMouserOverExtremePovertyTitle();
 
-      expect(await mountainChart.verticalLine.getText()).toEqual('861M');
+      expect(await mountainChart.verticalLine.getText()).toEqual('808M');
 
       await slider.dragToStart();
       await mountainChart.hoverMouserOverExtremePovertyTitle();
