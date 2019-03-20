@@ -21,6 +21,6 @@
     "reader": "waffle",
     "path": "https://waffle-server.gapminder.org/api/ddf/ql",
     "assetsPath": "https://waffle-server.gapminder.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--test_fasttrack"
+    "dataset": "open-numbers/ddf--gapminder--fasttrack"
   }
 }
