@@ -19,11 +19,14 @@ const readersSchema = {
   },
   "inline": {
     props: ["data"]
+  },
+  "ddfbw": {
+    props: ["service", "dataset", "version"]
   }
 }
 
 const DataEditor = function (placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
-  const propNames = ["reader", "path", "dataset", "assetsPath", "data", "timeInColumns", "hasNameColumn", "nameColumnIndex", "translateContributionLink"];
+  const propNames = ["reader", "path", "dataset", "assetsPath", "data", "timeInColumns", "hasNameColumn", "nameColumnIndex", "translateContributionLink", "service", "version"];
   const defaultValues = {
     "reader": "waffle",
     "nameColumnIndex": 1
