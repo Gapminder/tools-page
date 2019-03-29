@@ -17,7 +17,7 @@
   "fasttrack": {
     "reader": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "SG"
+    "dataset": "fasttrack"
   }
 }
 

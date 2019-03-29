@@ -7,11 +7,11 @@ window.Vizabi = window.Vizabi || require('vizabi');
 window.WsReader = window.WsReader || require('vizabi-ws-reader-web');
 window.DDFCsvReader = window.DDFCsvReader || require('vizabi-ddfcsv-reader');
 window.CsvReader = window.CsvReader || require('vizabi-csv-reader');
-window.BigWaffleReader = window.BigWaffleReader; // || require('vizabi-ddfbw-reader');
+window.DDFServiceReader = window.DDFServiceReader || require('vizabi-ddfservice-reader');
 
 
 // BW reader integration
-var bwReader = BigWaffleReader.getReader();
+var bwReader = DDFServiceReader.getReader();
 Vizabi.Reader.extend("ddfbw", bwReader);
 //WS reader integration
 var wsReader = WsReader.WsReader.getReader();

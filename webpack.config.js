@@ -72,6 +72,7 @@ if(!__PROD__) htmlAssets.push(
   'assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader-web.js',
   'assets/vendor/js/vizabi-csv-reader/vizabi-csv-reader.js',
   'assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js',
+  'assets/vendor/js/vizabi-ddfservice-reader/vizabi-ddfservice-reader.js',
   ...allTools.tools.map(tool => {
     const toolName = allTools.paths[tool] && allTools.paths[tool].js || `vizabi-${tool}`;
     return path.join("assets/vendor/js", (path.extname(toolName) === "" ? path.join(toolName, path.basename(require.resolve(toolName))) : path.join(path.basename(toolName, ".js"), path.basename(toolName))));
@@ -153,6 +154,7 @@ const toolspage = {
       "urlon": "urlon/dist/urlon.umd.js",
       "vizabi-csv-reader": "vizabi-csv-reader/dist/vizabi-csv-reader.js",
       "vizabi-ddfcsv-reader": "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader.js",
+      "vizabi-ddfservice-reader": "vizabi-ddfservice-reader/dist/vizabi-ddfservice-reader.js",
       "vizabi-ws-reader-web": "vizabi-ws-reader/dist/vizabi-ws-reader-web.js",
       "properties": path.resolve(__dirname, "src", "config", `properties.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
       "toolset": path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`),
@@ -418,6 +420,14 @@ if (__PROD__) {
         path.resolve(__dirname, 'node_modules'),
       ],
       use: 'exports-loader?DDFCsvReader'
+    },
+
+    {
+      test: /-ddfservice-reader\.js$/,
+      include: [
+        path.resolve(__dirname, 'node_modules'),
+      ],
+      use: 'exports-loader?DDFServiceReader'
     },
 
     {
