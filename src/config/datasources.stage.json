@@ -7,10 +7,9 @@
     "translateContributionLink": "https://crowdin.com/project/systema-globalis"
   },
   "pop": {
-    "reader": "waffle",
-    "path": "https://waffle-server-stage.gapminder.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-stage.gapminder.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--population#master"
+    "reader": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "population"
   },
   "wdi": {
     "reader": "waffle",
