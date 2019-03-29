@@ -1,8 +1,10 @@
 {
   "sg": {
-    "reader": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "SG"
+    "reader": "waffle",
+    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
+    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
+    "dataset": "open-numbers/ddf--gapminder--systema_globalis#develop",
+    "translateContributionLink": "https://crowdin.com/project/systema-globalis"
   },
   "pop": {
     "reader": "ddfbw",
@@ -10,15 +12,16 @@
     "dataset": "population"
   },
   "wdi": {
-    "reader": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "SG"
+    "reader": "waffle",
+    "path": "https://waffle-server-dev.gapminderdev.org/api/ddf/ql",
+    "assetsPath": "https://waffle-server-dev.gapminderdev.org/api/ddf/assets/",
+    "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#develop"
   },
   "fasttrack": {
-    "reader": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "fasttrack"
+    "reader": "waffle",
+    "path": "https://waffle-server-dev.gapminder.org/api/ddf/ql",
+    "assetsPath": "https://waffle-server-dev.gapminder.org/api/ddf/assets/",
+    "dataset": "open-numbers/ddf--gapminder--fasttrack#master"
   }
 }
-
 
