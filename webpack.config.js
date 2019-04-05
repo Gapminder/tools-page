@@ -422,13 +422,13 @@ if (__PROD__) {
       use: 'exports-loader?DDFCsvReader'
     },
 
-    {
-      test: /-ddfservice-reader\.js$/,
-      include: [
-        path.resolve(__dirname, 'node_modules'),
-      ],
-      use: 'exports-loader?DDFServiceReader'
-    },
+    // {
+    //   test: /-ddfservice-reader\.js$/,
+    //   include: [
+    //     path.resolve(__dirname, 'node_modules'),
+    //   ],
+    //   use: 'exports-loader?getReader'
+    // },
 
     {
       test: /-ws-reader-web\.js$/,
