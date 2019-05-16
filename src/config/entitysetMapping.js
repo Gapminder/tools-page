@@ -1,3 +1,6 @@
 var toolsPage_entitysetMapping = {
-  "geo": "country"
+  "chartTypes": ["bubbles", "mountain", "map", "linechart", "barrank", "spreadsheet"],
+  "entitySets": {
+    "geo": "country"
+  }
 }

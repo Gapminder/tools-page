@@ -5,17 +5,22 @@ const rule = {
 
     const hash = url.substr(hashIndex+1);
 
-    return Object.keys(toolsPage_entitysetMapping).some(m => hash.includes("$" + m + "$/$in") || hash.includes("$" + m + "="));
+    return toolsPage_entitysetMapping.chartTypes.some(m =>
+        hash.includes("chart-type=" + m)
+    ) && Object.keys(toolsPage_entitysetMapping.entitySets).some(m => 
+        hash.includes("$" + m + "$/$in") || hash.includes("$" + m + "=")
+    );
   },
 
   use: function(url) {
     const hashIndex = url.indexOf("#");
     const hashPrefix = url.substr(0, hashIndex);
     let hash = url.substr(hashIndex);
+    const entitySets = toolsPage_entitysetMapping.entitySets;
     
-    Object.keys(toolsPage_entitysetMapping).forEach(m => {
-      hash = hash.split("$" + m + "$/$in").join("$" + toolsPage_entitysetMapping[m] + "$/$in");
-      hash = hash.split("$" + m + "=").join("$" + toolsPage_entitysetMapping[m] + "=");
+    Object.keys(entitySets).forEach(m => {
+      hash = hash.split("$" + m + "$/$in").join("$" + entitySets[m] + "$/$in");
+      hash = hash.split("$" + m + "=").join("$" + entitySets[m] + "=");
     });
                                                   
   return hashPrefix + hash;
