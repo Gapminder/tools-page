@@ -17,6 +17,9 @@ const readersSchema = {
   "csv": {
     props: ["path", "timeInColumns", "hasNameColumn", "nameColumnIndex"]
   },
+  "google_csv": {
+    props: ["path", "sheet", "timeInColumns", "hasNameColumn", "nameColumnIndex"]
+  },
   "inline": {
     props: ["data"]
   },
@@ -26,7 +29,7 @@ const readersSchema = {
 }
 
 const DataEditor = function (placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
-  const propNames = ["reader", "path", "dataset", "assetsPath", "data", "timeInColumns", "hasNameColumn", "nameColumnIndex", "translateContributionLink", "service", "version"];
+  const propNames = ["reader", "path", "sheet", "dataset", "assetsPath", "data", "timeInColumns", "hasNameColumn", "nameColumnIndex", "translateContributionLink", "service", "version"];
   const defaultValues = {
     "reader": "waffle",
     "nameColumnIndex": 1
