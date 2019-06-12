@@ -21,6 +21,8 @@ var ddfReader = new DDFCsvReader.getDDFCsvReaderObject()
 Vizabi.Reader.extend("ddf", ddfReader);
 //CSV reader integration
 Vizabi.Reader.extend("csv", CsvReader.csvReaderObject);
+//Google spreadsheet CSV reader integration, same as normal csv 
+Vizabi.Reader.extend("google_csv", CsvReader.csvReaderObject);
 
 require('vizabi/build/vizabi.css');
 
