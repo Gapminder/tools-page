@@ -63,6 +63,8 @@ const Menu = function (placeHolder, translator, dispatch, { menuItems }) {
   d3.select(window).on("resize.menu", () => {
     //skip menu resize in fullscreen
     if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || document.mozFullScreenElement) return;
+    if (this.selectedMenuItem === "data_editor") return;
+
     this.selectedMenuItem = null;
     selectMenuItem({});
     switchHowTo.call(this);
