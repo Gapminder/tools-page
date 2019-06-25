@@ -9,7 +9,8 @@
   "pop": {
     "reader": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "population"
+    "dataset": "population",
+    "version": "4ced761"
   },
   "wdi": {
     "reader": "waffle",
