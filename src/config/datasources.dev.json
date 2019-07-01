@@ -10,7 +10,7 @@
     "reader": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
     "dataset": "population",
-    "version": "4ced761"
+    "version": "79ce392"
   },
   "wdi": {
     "reader": "waffle",
