@@ -9,13 +9,12 @@
   "pop": {
     "reader": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "population"
+    "dataset": "population-stage"
   },
   "wdi": {
-    "reader": "waffle",
-    "path": "https://waffle-server-stage.gapminder.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-stage.gapminder.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--open_numbers--world_development_indicators#master"
+    "reader": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "wdi-master"
   },
   "fasttrack": {
     "reader": "waffle",
