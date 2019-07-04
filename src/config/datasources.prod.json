@@ -8,7 +8,7 @@
   "pop": {
     "reader": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "population"
+    "dataset": "population-master"
   },
   "wdi": {
     "reader": "waffle",
