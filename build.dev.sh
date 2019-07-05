@@ -4,6 +4,9 @@ eval "$(ssh-agent -s)"
 cd /home/root || return
 ssh-add /home/root/vizabi_tools_deploy_ssh
 
+git config --global user.email "dev@gapminder.org"
+git config --global user.name "gapminderdeploy"
+
 # BUILD: Tools Page --------------------------------------------
 git clone git@github.com:Gapminder/tools-page.git -b development
 cd tools-page || return
