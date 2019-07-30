@@ -11,10 +11,9 @@
     "dataset": "population-master"
   },
   "wdi": {
-    "reader": "waffle",
-    "path": "https://waffle-server.gapminder.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server.gapminder.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--open_numbers--world_development_indicators"
+    "reader": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "wdi-master"
   },
   "fasttrack": {
     "reader": "waffle",
