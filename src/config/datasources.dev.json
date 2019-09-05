@@ -16,10 +16,9 @@
     "dataset": "wdi-develop"
   },
   "fasttrack": {
-    "reader": "waffle",
-    "path": "https://waffle-server-dev.gapminder.org/api/ddf/ql",
-    "assetsPath": "https://waffle-server-dev.gapminder.org/api/ddf/assets/",
-    "dataset": "open-numbers/ddf--gapminder--fasttrack#master"
+    "reader": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "fasttrack"
   }
 }
 
