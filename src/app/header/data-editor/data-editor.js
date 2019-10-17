@@ -8,9 +8,6 @@ import {
 } from "../../core/url";
 
 const readersSchema = {
-  "waffle": {
-    props: ["path", "dataset", "assetsPath", "translateContributionLink"]
-  },
   "ddf": {
     props: ["path"]
   },
@@ -20,18 +17,15 @@ const readersSchema = {
   "google_csv": {
     props: ["path", "sheet", "timeInColumns", "hasNameColumn", "nameColumnIndex"]
   },
-  "inline": {
-    props: ["data"]
-  },
   "ddfbw": {
-    props: ["service", "dataset", "version"]
+    props: ["service", "dataset", "version", "translateContributionLink"]
   }
 }
 
 const DataEditor = function (placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
-  const propNames = ["reader", "path", "sheet", "dataset", "assetsPath", "data", "timeInColumns", "hasNameColumn", "nameColumnIndex", "translateContributionLink", "service", "version"];
+  const propNames = ["reader", "path", "sheet", "dataset", "timeInColumns", "hasNameColumn", "nameColumnIndex", "translateContributionLink", "service", "version"];
   const defaultValues = {
-    "reader": "waffle",
+    "reader": "ddfbw",
     "nameColumnIndex": 1
   };
   const propDependency = {

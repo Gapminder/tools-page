@@ -32,7 +32,7 @@ json -I -f package.json -e 'this.dependencies["vizabi-spreadsheet"]="latest"'
 json -I -f package.json -e 'this.dependencies["vizabi-config-systema_globalis"]="latest"'
 json -I -f package.json -e 'this.dependencies["vizabi-ddfcsv-reader"]="latest"'
 json -I -f package.json -e 'this.dependencies["vizabi-csv-reader"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-ws-reader"]="latest"'
+json -I -f package.json -e 'this.dependencies["vizabi-ddfservice-reader"]="latest"'
 npm i --quiet --depth 0 --unsafe-perm
   
 echo && echo 🗂 $PWD && echo "👉 npm run build"
