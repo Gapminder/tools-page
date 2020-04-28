@@ -16,7 +16,7 @@ export class Header {
   mailLink: ExtendedElementFinder = this.social._$('.app-social-buttons > a');
   twitterSocial: ExtendedElementFinder = this.social._$('.twitter.button');
   facebookSocial: ExtendedElementFinder = this.social._$('.facebook.button');
-  icoplaneSocial: ExtendedElementFinder = this.social._$('.button.ico-plane');
+  icoplaneSocial: ExtendedElementFinder = this.social._$('.button.ico-link');
   icocodeSocial: ExtendedElementFinder = this.social._$('.button.ico-code');
   shareLabel: ExtendedElementFinder = this.social._$('.share-text-box');
   howToButton: ExtendedElementFinder = this.rootSelector._$('.how-to-button');

@@ -14,8 +14,10 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
     .on("click", twitter);
   template.select(".facebook.button")
     .on("click", facebook);
-  template.select(".ico-plane.button")
+  template.select(".ico-link.button")
     .on("click", shareLink);
+  template.select(".ico-download.button")
+    .on("click", download);
   template.select(".ico-code.button")
     .on("click", getEmbeddedUrl);
 
@@ -65,6 +67,15 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
 
   function shareLink() {
     bitlyService.shortenUrl(undefined, shortened => prompt('Copy the following link: ', shortened));
+  }
+
+  function download() {
+    var e = document.createElement('script');
+    e.setAttribute('src', 'assets/js/svg-crowbar-2.js');
+    e.setAttribute('class', 'svg-crowbar');
+    e.setAttribute('data-svg-select', 'div>svg.vzb-export');
+    e.setAttribute('data-exclude-element-select', '.vzb-noexport');
+    document.body.appendChild(e); 
   }
 
   function getEmbeddedUrl() {
