@@ -1,4 +1,14 @@
 {
+  "covid_spread": {
+    "reader": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "covid-spread",
+  },
+  "covid_response": {
+    "reader": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "covid-response"
+  },
   "sg": {
     "reader": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
