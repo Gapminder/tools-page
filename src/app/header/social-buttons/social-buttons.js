@@ -14,11 +14,11 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
     .on("click", twitter);
   template.select(".facebook.button")
     .on("click", facebook);
-  template.select(".ico-link.button")
+  template.select(".link.button")
     .on("click", shareLink);
-  template.select(".ico-download.button")
+  template.select(".download.button")
     .on("click", download);
-  template.select(".ico-code.button")
+  template.select(".code.button")
     .on("click", getEmbeddedUrl);
 
   for (const elem of Array.from(template.node().children)) {
@@ -36,11 +36,11 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
   }
 
   function twitter() {
-    openWindow(`https://twitter.com/intent/tweet?original_referer=#{url}&amp;related=Gapminder&amp;text=Gapminder&amp;tw_p=tweetbutton&amp;url=#{url}`);
+    openWindow(`https://twitter.com/intent/tweet?url=#{url}`);
   }
 
   function facebook() {
-    openWindow(`http://www.addtoany.com/add_to/facebook?linkurl=#{url}&amp;`);
+    openWindow(`http://www.addtoany.com/add_to/facebook?linkurl=#{url}`);
   }
 
   function mail() {
