@@ -3,7 +3,7 @@
     "id": "bubbles",
     "tool": "BubbleChart",
     "config": "BubbleChart-corona",
-    "dataSources": ["covid_spread", "covid_response"],
+    "dataSources": ["sg", "wdi", "fasttrack", "covid_spread", "covid_response"],
     "transition": ["select","time"],
     "title": "bubbles",
     "image": "/assets/images/chart/bubble-chart.png"
@@ -11,7 +11,8 @@
   {
     "id": "map",
     "tool": "BubbleMap",
-    "dataSources": ["sg", "wdi", "fasttrack"],
+    "config": "BubbleMap-corona",
+    "dataSources": ["sg", "wdi", "fasttrack", "covid_spread", "covid_response"],
     "transition": ["select","time"],
     "title": "maps",
     "image": "/assets/images/chart/maps-chart.png"

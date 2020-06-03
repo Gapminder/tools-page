@@ -14,12 +14,21 @@ VIZABI_MODEL = {
     "entities_colorlegend": {
       "dim": "world_4region"
     },
-    
     "marker": {
       "space": ["entities", "time"],
       "label": {
         "use": "property",
         "which": "name"
+      },
+      "size": {
+        "use": "indicator",
+        "data": "data_covid_spread",
+        "which": "cases",
+        "scaleType": "linear",
+        "allow": {
+          "scales": ["linear"],
+          "names": ["_default"]
+        }
       },
       "color": {
         "use": "property",
@@ -27,28 +36,16 @@ VIZABI_MODEL = {
         "scaleType": "ordinal",
         "syncModels": ["marker_colorlegend"]
       },
-      "axis_y": {
-        "use": "indicator",
-        "data": "data_covid_spread",
-        "which": "cases",
-        "scaleType": "linear"
+      "hook_lat": {
+        "use": "property",
+        "which": "latitude",
+        "_important": true
       },
-      "axis_x": {
-        "use": "indicator",
-        "data": "data_covid_spread",
-        "which": "deaths",
-        "scaleType": "linear"
-      },
-      "size": {
-        "use": "constant",
-        "data": "data",
-        "which": "_default",
-        "scaleType": "ordinal",
-        "allow": {
-          "scales": ["linear"],
-          "names": ["_default"]
-        }
-      },
+      "hook_lng": {
+        "use": "property",
+        "which": "longitude",
+        "_important": true
+      }
     },
     "marker_colorlegend":{
       "space": ["entities_colorlegend"],
@@ -82,6 +79,14 @@ VIZABI_MODEL = {
       "doubtDomain": [1800, 2050],
       "doubtRange": [0, 0]
     },
-    "splash": false
+    "map": {
+      "scale": 1,
+      "preserveAspectRatio": false,
+      "offset": {
+        "top": 0.05,
+        "bottom": -0.12
+      }
+    },
+    "splash": true
   }
 }
