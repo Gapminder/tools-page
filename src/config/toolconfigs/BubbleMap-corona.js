@@ -22,8 +22,8 @@ VIZABI_MODEL = {
       },
       "size": {
         "use": "indicator",
-        "data": "data_covid_spread",
-        "which": "cases",
+        "data": "data_covid_csv",
+        "which": "Deaths reported during last 7 days",
         "scaleType": "linear",
         "allow": {
           "scales": ["linear"],
@@ -31,9 +31,27 @@ VIZABI_MODEL = {
         }
       },
       "color": {
-        "use": "property",
-        "which": "world_4region",
-        "scaleType": "ordinal",
+        "use": "indicator",
+        "data": "data_covid_csv",
+        "which": "Change of number of deaths reported  compared to previouse 7 days",
+        "scaleType": "linear",
+        "paletteHiddenKeys": [],
+        "palette": { 
+          "-2": "#61B15A",
+          "0": "#61B15A",
+          "0.40": "#6DC55B",
+          "0.70": "#74CF4A",
+          "0.90": "#92D955",
+          "0.95": "#EEAC3C",
+          "1.10": "#EEAC3C",
+          "1.50": "#E47449",
+          "3.00": "#E4622B",
+          "4.50": "#CB493B",
+          "25": "#BD2A23",
+          "50": "#BD2A23",
+          "75": "#BD2A23",
+          "100": "#BD2A23"
+        },
         "syncModels": ["marker_colorlegend"]
       },
       "hook_lat": {
@@ -70,6 +88,7 @@ VIZABI_MODEL = {
       "folderStrategyByDataset": {
         "data": "folder:other_datasets",
         "data_covid_spread": "spread",
+        "data_covid_csv": "spread",
         "data_covid_response": "root",
         "data_fasttrack": "folder:other_datasets",
         "data_wdi": "folder:other_datasets"
@@ -87,6 +106,6 @@ VIZABI_MODEL = {
         "bottom": -0.12
       }
     },
-    "splash": true
+    "splash": false
   }
 }

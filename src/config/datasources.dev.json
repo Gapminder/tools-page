@@ -1,4 +1,11 @@
 {
+  "covid_csv": {
+    "reader": "google_csv",
+    "path": "https://docs.google.com/spreadsheets/d/1y38xe0iLAdJy9GEB-BgUjtW53hOeOQRGCMf33-kVwu4",
+    "sheet": "data-for-countries-etc-by-day",
+    "hasNameColumn": true,
+    "nameColumnIndex": 1
+  },
   "covid_spread": {
     "reader": "ddfbw",
     "service": "https://big-waffle.gapminder.org",

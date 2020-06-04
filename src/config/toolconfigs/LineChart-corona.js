@@ -1,5 +1,3 @@
-
-
 VIZABI_MODEL = { 
   "state": {
     "time": {
@@ -9,51 +7,47 @@ VIZABI_MODEL = {
       "format": {"ui": "%d %b"}
     },
     "entities": {
-      "dim": "geo"
+      "dim": "country",
+      "filter": {
+        "country": {"un_state": true}
+      },
+      "show": {
+        "country": { "$in": ["usa", "rus", "chn", "nga"] }
+      }
     },
-    "entities_colorlegend": {
+    "entities_colorlegend": { 
       "dim": "world_4region"
     },
-    
     "marker": {
       "space": ["entities", "time"],
       "label": {
         "use": "property",
         "which": "name"
       },
+      "axis_y": {
+        "use": "indicator",
+        "which": "income_per_person_gdppercapita_ppp_inflation_adjusted",
+        "scaleType": "log"
+      },
+      "axis_x": {
+        "use": "indicator",
+        "which": "time",
+        "scaleType": "time"
+      },
       "color": {
         "use": "property",
         "which": "world_4region",
         "scaleType": "ordinal",
-        "syncModels": ["marker_colorlegend"]
-      },
-      "axis_y": {
-        "use": "indicator",
-        "data": "data_covid_spread",
-        "which": "cases",
-        "scaleType": "linear"
-      },
-      "axis_x": {
-        "use": "indicator",
-        "data": "data_covid_spread",
-        "which": "deaths",
-        "scaleType": "linear"
-      },
-      "size": {
-        "use": "constant",
-        "data": "data",
-        "which": "_default",
-        "scaleType": "ordinal",
         "allow": {
-          "scales": ["linear"],
-          "names": ["_default"]
-        }
-      },
+          "scales": ["ordinal"]
+        },
+        "syncModels": ["marker_colorlegend"]
+      }
     },
-    "marker_colorlegend":{
+    "marker_colorlegend": {
       "space": ["entities_colorlegend"],
       "opacityRegular": 0.8,
-      "opacityHighlightDim": 0.3,
+      "opacityHighlightDim": 0.3, 
       "label": {
         "use": "property",
         "which": "name"
@@ -73,7 +67,6 @@ VIZABI_MODEL = {
       "folderStrategyByDataset": {
         "data": "folder:other_datasets",
         "data_covid_spread": "spread",
-        "data_covid_csv": "spread",
         "data_covid_response": "root",
         "data_fasttrack": "folder:other_datasets",
         "data_wdi": "folder:other_datasets"
@@ -83,6 +76,10 @@ VIZABI_MODEL = {
       "doubtDomain": [1800, 2050],
       "doubtRange": [0, 0]
     },
-    "splash": false
+    "dialogs": {
+      "dialog": {
+        "find": {"showTabs": {"country": "open"}}
+      }
+    }
   }
 }
