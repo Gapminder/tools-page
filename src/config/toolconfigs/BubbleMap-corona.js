@@ -86,12 +86,10 @@ VIZABI_MODEL = {
   "ui": {
     "treemenu": {
       "folderStrategyByDataset": {
-        "data": "folder:other_datasets",
+        "data": "spread",
         "data_covid_spread": "spread",
-        "data_covid_csv": "spread",
         "data_covid_response": "root",
-        "data_fasttrack": "folder:other_datasets",
-        "data_wdi": "folder:other_datasets"
+        "data_covid_csv": "spread"
       }
     },
     "datawarning": {

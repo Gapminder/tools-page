@@ -25,19 +25,28 @@ VIZABI_MODEL = {
         "use": "property",
         "which": "world_4region",
         "scaleType": "ordinal",
-        "syncModels": ["marker_colorlegend"]
+        "syncModels": ["marker_colorlegend"],
+        "allow": {
+          "names": ["!time"]
+        }   
       },
       "axis_y": {
         "use": "indicator",
         "data": "data_covid_spread",
         "which": "cases",
-        "scaleType": "linear"
+        "scaleType": "linear",
+        "allow": {
+          "names": ["!time"]
+        }        
       },
       "axis_x": {
         "use": "indicator",
         "data": "data_covid_spread",
         "which": "deaths",
-        "scaleType": "linear"
+        "scaleType": "linear",
+        "allow": {
+          "names": ["!time"]
+        }
       },
       "size": {
         "use": "constant",
@@ -46,7 +55,7 @@ VIZABI_MODEL = {
         "scaleType": "ordinal",
         "allow": {
           "scales": ["linear"],
-          "names": ["_default"]
+          "names": ["_default", "!time"]
         }
       },
     },
@@ -71,12 +80,10 @@ VIZABI_MODEL = {
   "ui": {
     "treemenu": {
       "folderStrategyByDataset": {
-        "data": "folder:other_datasets",
+        "data": "spread",
         "data_covid_spread": "spread",
-        "data_covid_csv": "spread",
         "data_covid_response": "root",
-        "data_fasttrack": "folder:other_datasets",
-        "data_wdi": "folder:other_datasets"
+        "data_covid_csv": "spread"
       }
     },
     "datawarning": {

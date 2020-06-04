@@ -1,4 +1,9 @@
 {
+  "yearly": {
+    "reader": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "yearly-data-as-daily"
+  },
   "covid_csv": {
     "reader": "google_csv",
     "path": "https://docs.google.com/spreadsheets/d/1y38xe0iLAdJy9GEB-BgUjtW53hOeOQRGCMf33-kVwu4",
