@@ -22,9 +22,29 @@ VIZABI_MODEL = {
         "which": "name"
       },
       "color": {
-        "use": "property",
-        "which": "world_4region",
-        "scaleType": "ordinal",
+        "use": "indicator",
+        "data": "data_covid_spread",
+        "which": "week_growth_rate",
+        "scaleType": "linear",
+        "paletteHiddenKeys": [],
+        "domainMin": 0,
+        "domainMax": 5,
+        "clamp": true,
+        "palette": { 
+          "0": "#80ffd3",
+          "8": "#6DC55B",
+          "14": "#74CF4A",
+          "18": "#92D955",
+          "19": "#EEAC3C",
+          "22": "#EEAC3C",
+          "25": "#ee9c3c",          
+          "30": "#E47449",
+          "50": "#f47843",  
+          "60": "#E4622B",
+          "75": "#db501d",
+          "90": "#CB493B",          
+          "100": "#BD2A23",
+        },
         "syncModels": ["marker_colorlegend"],
         "allow": {
           "names": ["!time"]
@@ -33,7 +53,7 @@ VIZABI_MODEL = {
       "axis_y": {
         "use": "indicator",
         "data": "data_covid_spread",
-        "which": "cases",
+        "which": "last_seven_days_deaths",
         "scaleType": "linear",
         "allow": {
           "names": ["!time"]
@@ -41,18 +61,18 @@ VIZABI_MODEL = {
       },
       "axis_x": {
         "use": "indicator",
-        "data": "data_covid_spread",
-        "which": "deaths",
+        "data": "data",
+        "which": "population_aged_65plus_years_both_sexes_percent",
         "scaleType": "linear",
         "allow": {
           "names": ["!time"]
         }
       },
       "size": {
-        "use": "constant",
+        "use": "indicator",
         "data": "data",
-        "which": "_default",
-        "scaleType": "ordinal",
+        "which": "population_total",
+        "scaleType": "linear",
         "allow": {
           "scales": ["linear"],
           "names": ["_default", "!time"]
