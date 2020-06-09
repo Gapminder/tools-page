@@ -1,5 +1,3 @@
-
-
 VIZABI_MODEL = { 
   "state": {
     "time": {
@@ -22,8 +20,8 @@ VIZABI_MODEL = {
       },
       "size": {
         "use": "indicator",
-        "data": "data_covid_csv",
-        "which": "Deaths reported during last 7 days",
+        "data": "data_covid_spread",
+        "which": "last_seven_days_deaths",
         "scaleType": "linear",
         "allow": {
           "scales": ["linear"],
@@ -32,8 +30,8 @@ VIZABI_MODEL = {
       },
       "color": {
         "use": "indicator",
-        "data": "data_covid_csv",
-        "which": "Change of number of deaths reported  compared to previouse 7 days",
+        "data": "data_covid_spread",
+        "which": "week_growth_rate",
         "scaleType": "linear",
         "paletteHiddenKeys": [],
         "domainMin": 0,
