@@ -4,19 +4,17 @@ VIZABI_MODEL = {
       "dim": "time",
       "showForecast": false,
       "unit": "day",
-      "format": {"ui": "%Y %b %d"}
+      "format": {"ui": "%d %b"}
     },
     "entities": {
       "dim": "country",
       "filter": {
         "country": {"un_state": true}
       },
-      "show": {
-        "country": { "$in": ["swe", "fin", "dnk", "nor"] }
-      }
+      "show": {}
     },
-    "entities_colorlegend": { 
-      "dim": "world_4region"
+    "entities_colorlegend": {
+      "dim": "country"
     },
     "marker": {
       "space": ["entities", "time"],
@@ -24,33 +22,27 @@ VIZABI_MODEL = {
         "use": "property",
         "which": "name"
       },
-      "axis_y": {
+      "axis_x": {
         "use": "indicator",
-        //"which": "income_per_person_gdppercapita_ppp_inflation_adjusted",
         "data": "data_covid_spread",
         "which": "last_seven_days_deaths",
-        //"scaleType": "linear"
+        "scaleType": "linear"
       },
-      "axis_x": {
-        "data": "data_covid_spread",
-        "use": "indicator",
-        "which": "time",
-        "scaleType": "time"
+      "axis_y": {
+        "use": "property",
+        "which": "name"
       },
       "color": {
         "use": "property",
-        "which": "country",
+        "which": "world_4region",
         "scaleType": "ordinal",
-        "allow": {
-          "scales": ["ordinal"]
-        },
         "syncModels": ["marker_colorlegend"]
       }
     },
     "marker_colorlegend": {
       "space": ["entities_colorlegend"],
       "opacityRegular": 0.8,
-      "opacityHighlightDim": 0.3, 
+      "opacityHighlightDim": 0.3,
       "label": {
         "use": "property",
         "which": "name"
@@ -78,10 +70,6 @@ VIZABI_MODEL = {
       "doubtDomain": [1800, 2050],
       "doubtRange": [0, 0]
     },
-    "dialogs": {
-      "dialog": {
-        "find": {"showTabs": {"country": "open"}}
-      }
-    }
+    "splash": false
   }
 }

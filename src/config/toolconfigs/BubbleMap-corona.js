@@ -7,7 +7,10 @@ VIZABI_MODEL = {
       "format": {"ui": "%Y %b %d"}
     },
     "entities": {
-      "dim": "geo"
+      "dim": "country",
+      "filter": {
+        "country": {"un_state": true}
+      }
     },
     "entities_colorlegend": {
       "dim": "world_4region"

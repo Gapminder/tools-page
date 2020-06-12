@@ -20,7 +20,8 @@
   {
     "id": "linechart",
     "tool": "LineChart",
-    "dataSources": ["sg", "wdi", "fasttrack"],
+    "config": "LineChart-corona",
+    "dataSources": ["yearly", "covid_spread", "covid_response"],
     "transition": ["show","time"],
     "title": "trends",
     "image": "/assets/images/chart/trends-chart.png"
@@ -28,7 +29,8 @@
   {
     "id": "barrank",
     "tool": "BarRankChart",
-    "dataSources": ["sg", "wdi", "fasttrack"],
+    "config": "BarRankChart-corona",
+    "dataSources": ["yearly", "covid_spread", "covid_response"],
     "transition": ["select","time"],
     "title": "ranks",
     "image": "/assets/images/chart/ranks-chart.png"

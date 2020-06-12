@@ -9,7 +9,10 @@ VIZABI_MODEL = {
       "format": {"ui": "%d %b"}
     },
     "entities": {
-      "dim": "geo"
+      "dim": "country",
+      "filter": {
+        "country": {"un_state": true}
+      }
     },
     "entities_colorlegend": {
       "dim": "world_4region"
@@ -79,6 +82,7 @@ VIZABI_MODEL = {
     }
   },
   "ui": {
+    "show_ticks": false,
     "treemenu": {
       "folderStrategyByDataset": {
         "data": "spread",
