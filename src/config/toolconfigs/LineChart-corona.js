@@ -4,7 +4,7 @@ VIZABI_MODEL = {
       "dim": "time",
       "showForecast": false,
       "unit": "day",
-      "format": {"ui": "%Y %b %d"}
+      "format": {"ui": "%b %d"}
     },
     "entities": {
       "dim": "country",
