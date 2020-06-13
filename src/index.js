@@ -1,12 +1,19 @@
 import './app/app.styl';
-import './favicon.ico';
 
-window.d3 = window.d3 || require('d3');
-window.urlon = window.urlon || require('urlon');
-window.Vizabi = window.Vizabi || require('vizabi');
-window.DDFCsvReader = window.DDFCsvReader || require('vizabi-ddfcsv-reader');
-window.CsvReader = window.CsvReader || require('vizabi-csv-reader');
-window.DDFServiceReader = window.DDFServiceReader || require('vizabi-ddfservice-reader');
+import 'vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader';
+import 'vizabi-csv-reader/dist/vizabi-csv-reader';
+import 'vizabi-ddfservice-reader/dist/vizabi-ddfservice-reader';
+import 'd3/dist/d3';
+import urlon from 'urlon';
+
+//import * as d3 from 'd3';
+//
+////window.d3 = window.d3 || require('d3');
+//window.urlon = window.urlon || require('urlon');
+//window.Vizabi = window.Vizabi || require('vizabi');
+//window.DDFCsvReader = window.DDFCsvReader || require('vizabi-ddfcsv-reader');
+//window.CsvReader = window.CsvReader || require('vizabi-csv-reader');
+//window.DDFServiceReader = window.DDFServiceReader || require('vizabi-ddfservice-reader');
 
 
 // BW reader integration
