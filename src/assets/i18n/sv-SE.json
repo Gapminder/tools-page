@@ -68,6 +68,7 @@
   "spreadsheet": "Spreadsheet",
   "bubble_map_desc": "This graph shows the population on a map",
   "trends": "Trends",
+  "globaltrends": "Global Trends",
   "line_chart_desc": "This graph shows how a trend changes across the years",
   "ages": "Ages",
   "pop_by_age_desc": "This graph shows the population by age",
