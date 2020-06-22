@@ -32,6 +32,16 @@
     "image": "/assets/images/chart/trends-chart.png"
   },
   {
+    "id": "linechart-global",
+    "tool": "LineChart",
+    "dataSources": ["sg", "wdi", "fasttrack"],
+    "transition": ["none"],
+    "title": "globaltrends",
+    "config": "LineChart-global",
+    "hideThumbnail": true,
+    "image": "/assets/images/chart/globaltrends-chart.png"
+  },
+  {
     "id": "barrank",
     "tool": "BarRankChart",
     "dataSources": ["sg", "wdi", "fasttrack"],
