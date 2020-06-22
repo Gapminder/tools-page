@@ -68,6 +68,7 @@
   "spreadsheet": "Tabelle",
   "bubble_map_desc": "Dieses Diagramm zeigt die Bevölkerung auf einer Karte",
   "trends": "Trends",
+  "globaltrends": "Global Trends",
   "line_chart_desc": "Dieses Diagramm zeigt, wie ein Trend über die Jahre hinweg verändert",
   "ages": "Alter",
   "pop_by_age_desc": "Dieses Diagramm zeigt die Bevölkerung nach Altersgruppen",
