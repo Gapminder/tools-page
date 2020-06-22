@@ -68,6 +68,7 @@
   "spreadsheet": "Hoja de cálculo",
   "bubble_map_desc": "Esta gráfica muestra la población en un mapa",
   "trends": "Tendencias",
+  "globaltrends": "Global Trends",
   "line_chart_desc": "Esta gráfica muestra cómo cambia una tendencia a lo largo de los años",
   "ages": "Edades",
   "pop_by_age_desc": "Esta gráfica muestra la población por edad",
