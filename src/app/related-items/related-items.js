@@ -1,7 +1,30 @@
 import * as utils from "../core/utils";
 
 const RelatedItems = function (placeHolder, translator, dispatch, { relatedItems }) {
-  const templateHtml = require("./related-items.html");
+  const templateHtml = `  
+    <div class="related-block">
+      <h2 class="heading-2 related-heading" data-text="popular"></h2>
+
+      <div class="related-container">
+        <ul class="related-items">
+
+          <li class="related-item">
+            <a rel="noopener">
+              <div class="related-item-thumbnail">
+                <img>
+              </div>
+              <div class="related-item-info">
+                <span class="title"></span>
+                <span class="subtitle"></span>
+              </div>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  `;
+  //require("./related-items.html");
 
   const template = d3.create("div")
   template.html(templateHtml);
