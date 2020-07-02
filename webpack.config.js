@@ -183,7 +183,7 @@ const toolspage = {
             loader: 'babel-loader',
             options: {
               cacheDirectory: !__PROD__,
-              presets: ['env']
+              presets: ['@babel/preset-env']
             }
           }
         ]
