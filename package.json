@@ -85,7 +85,7 @@
     "rollup-plugin-stylus-compiler": "^1.0.1",
     "rollup-plugin-terser": "^5.1.2",
     "@rollup/plugin-url": "^5.0.1",
-    "rollup-plugin-visualizer": "^2.6.0",
+    "rollup-plugin-visualizer": "4.1.0",
     "@rollup/plugin-alias": "^3.1.1",
     "@rollup/plugin-virtual": "^2.0.3",
     "rollup-plugin-iife": "^0.3.1",
