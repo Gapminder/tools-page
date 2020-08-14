@@ -1,5 +1,13 @@
 const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, appState, onClick }) {
-  const templateHtml = require("./chart-switcher.html");
+  const templateHtml = `
+    <div class="chart-switcher">
+      <a class="chart-switcher-button"></a>
+    </div>
+    <div class="chart-switcher-options" hidden>
+        <div><a rel="noopener"></a></div>
+    </div>
+  `;
+  //require("./chart-switcher.html");
 
   const template = d3.create("div")
   template.html(templateHtml);

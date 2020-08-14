@@ -1,5 +1,12 @@
 const LanguageSwitcher = function (placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
-  const templateHtml = require("./language-switcher.html");
+  const templateHtml = `
+    <div class="lang-current"></div>
+
+    <ul>
+      <li></li>
+    </ul>
+  `;
+  //require("./language-switcher.html");
 
   const template = d3.create("div")
   template.html(templateHtml);

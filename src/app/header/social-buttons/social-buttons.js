@@ -1,7 +1,43 @@
 import * as utils from "../../core/utils";
 
 const SocialButtons = function (placeHolder, translator, dispatch, { bitlyService, locationService }) {
-  const templateHtml = require("./social-buttons.html");
+  const templateHtml = `
+    <li>
+      <div class="share-text-box" data-text="share"></div>
+    </li>
+    <li>
+      <a class="mail button">
+        <i class="fa fa-envelope-o"></i>
+      </a>
+    </li>
+    <li>
+      <a class="twitter button">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook button">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="link button">
+        <i class="fa fa-link"></i>
+      </a>
+    </li>
+    <li>
+      <a class="download button">
+        <i class="fa fa-download"></i>
+      </a>
+    </li>
+    <li>
+      <a class="button code">
+        <i class="fa fa-code"></i>
+      </a>
+    </li>
+    <a class="mailLink" href="#"></a>
+  `;
+  //require("./social-buttons.html");
 
   const template = d3.create("div")
   template.html(templateHtml);
