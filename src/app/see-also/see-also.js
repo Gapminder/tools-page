@@ -1,7 +1,21 @@
 import * as utils from "../core/utils";
 
 const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTool, onClick }) {
-  const templateHtml = require("./see-also.html");
+  const templateHtml = `
+    <div class="see-also-block">
+      <h2 class="heading-2 see-also-heading" data-text="other_tools"></h2>
+
+      <div class="other-tools-container">
+        <div class="other-tools-item">
+          <a rel="noopener">
+            <img class="image"/>
+            <span class="title"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+  //require("./see-also.html");
 
   const template = d3.create("div")
   template.html(templateHtml);
