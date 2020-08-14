@@ -31,7 +31,7 @@ const copyright = `// ${meta.homepage} v${meta.version} Copyright ${(new Date).g
 const __PROD__ = process.env.NODE_ENV === 'production';
 const __STAGE__ = process.env.STAGE;
 
-const allTools = require(path.resolve(__dirname, "webpack.vizabi-tools.json"));
+const allTools = require(path.resolve(__dirname, "vizabi-tools.json"));
 const toolset = require(path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`));
 const inToolsetTools = Object.keys(toolset.reduce((result, { tool }) => {
   tool && (result[tool.toLowerCase()] = true);
