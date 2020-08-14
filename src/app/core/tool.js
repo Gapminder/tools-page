@@ -151,8 +151,9 @@ function setTool(tool, skipTransition) {
 
     const ui = Vizabi.mobx.observable(MODEL.ui);
 
-    console.log(toolConfig.tool);
-    viz = new LineChart({
+    //TODO: how to do it without eval? we no longer have registry of all the tools, such as in old vizabi
+    const toolPrototype = eval(toolConfig.tool);
+    viz = new toolPrototype({
       placeholder: document.getElementsByClassName("vzb-placeholder")[0],
       model,
       locale,

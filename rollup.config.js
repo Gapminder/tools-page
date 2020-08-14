@@ -104,7 +104,7 @@ const htmlTemplateWrapper = (plugin, varNameFunc, emitFilePath, nameRegex) => {
 
   plugin.generateBundle = async function(outputOptions, bundleInfo) {
     const _bundleInfo = [...jsAssets,
-      ...["vizabi/build/vizabi.css", ...getEntryToolsCssFilenames()].map(f => {
+      ...["vizabi-shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()].map(f => {
           return "assets/css/" + path.basename(f);
         }),
       "styles.css"].reduce((res, asset) => {

@@ -1,4 +1,12 @@
-[
+[  {
+  "id": "barrank",
+  "tool": "BarRankChart",
+  "config": "BarRankChart-reactive", 
+  "dataSources": ["sg", "wdi", "fasttrack"],
+  "transition": ["select","time"],
+  "title": "ranks",
+  "image": "/assets/images/chart/ranks-chart.png"
+  },
   {
     "id": "linechart",
     "tool": "LineChart",
@@ -11,6 +19,7 @@
   {
     "id": "bubbles",
     "tool": "BubbleChart",
+    "config": "BubbleChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
     "title": "bubbles",
@@ -32,14 +41,7 @@
     "title": "maps",
     "image": "/assets/images/chart/maps-chart.png"
   },
-  {
-    "id": "barrank",
-    "tool": "BarRankChart",
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["select","time"],
-    "title": "ranks",
-    "image": "/assets/images/chart/ranks-chart.png"
-  },
+
   {
     "id": "popbyage",
     "tool": "PopByAge",
