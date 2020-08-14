@@ -10,29 +10,35 @@ import {
   appState,
   dispatch
 } from "./global";
+import {
+  debounce,
+  deepExtend,
+  diffObject,
+  comparePlainObjects
+} from "./utils";
 
 var poppedModel = {};
 var URLI = {};
 var minModel;
 
 var popStateLoopFlag = false;
-var resetPopStateLoopFlag = Vizabi.utils.debounce(() => {
+var resetPopStateLoopFlag = debounce(() => {
   popStateLoopFlag = false;
 }, 500);
 
 window.addEventListener('popstate', function(e) {
-  //console.log(e, Vizabi.utils.diffObject());
+  //console.log(e, diffObject());
   if (!e.state) {
     parseURL();
     window.history.replaceState({ 
       tool: URLI["chart-type"], 
-      model: Vizabi.utils.deepExtend({}, URLI.model, true) 
+      model: deepExtend({}, URLI.model, true) 
     }, 'Title');
     poppedModel = {};
     return;
   }
 
-  console.log("model diff", Vizabi.utils.diffObject(e.state.model, viz.getModel()));
+  console.log("model diff", diffObject(e.state.model, viz.getModel()));
   poppedModel = e.state.model;
   if (e.state.tool !== appState.tool) {
     parseURL();
@@ -57,7 +63,7 @@ window.addEventListener('popstate', function(e) {
 //grabs width, height, tabs open, and updates the url
 function updateURL(event, replaceInsteadPush) {
   resetPopStateLoopFlag();
-  if (popStateLoopFlag || (poppedModel && Vizabi.utils.comparePlainObjects(viz.getModel(), poppedModel))) {
+  if (popStateLoopFlag || (poppedModel && comparePlainObjects(viz.getModel(), poppedModel))) {
     //popStateLoopFlag = false;
     return;
   }

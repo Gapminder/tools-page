@@ -2,7 +2,7 @@ import { setTool } from "./core/tool";
 import { URLI, parseURL } from "./core/url";
 import { appState, dispatch } from "./core/global";
 import { upgradeUrl } from "./core/deprecated-url";
-import { scrollTo } from "./core/utils";
+import { scrollTo, deepExtend } from "./core/utils";
 
 import {
   translator,
@@ -47,9 +47,9 @@ Object.assign(appState, {
   tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
   language: ((URLI.model || {}).locale || {}).id || "en"
 });
-window.history.replaceState({ 
-  tool: appState.tool, 
-  model: Vizabi.utils.deepExtend({}, URLI.model, true) 
+window.history.replaceState({
+  tool: appState.tool,
+  model: deepExtend({}, URLI.model, true)
 }, 'Title');
 setTool();
 

@@ -189,7 +189,7 @@ export default [
       if (/vizabi/.test(id)) {
         return 'tools';
       }
-      if (/d3|urlon.umd/.test(id)) {
+      if (/d3|mobx.umd|urlon.umd/.test(id)) {
         return 'vendor';
       }
     }
@@ -231,7 +231,7 @@ export default [
         { src: "src/config/conceptMapping.js", dest: "build/tools/config" },
         { src: "src/config/entitysetMapping.js", dest: "build/tools/config" },
         { src: "src/favicon.ico", dest: "build/tools" },
-        { src: [ "vizabi/build/vizabi.css", ...getEntryToolsCssFilenames()].map(css=>require.resolve(css))
+        { src: [ "vizabi-shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()].map(css=>require.resolve(css))
           , dest: "build/tools/assets/css" }
       ],
       copyOnce: true,
@@ -244,15 +244,15 @@ export default [
       })
     ),
     //(process.env.NODE_ENV === "production" && eslint()),
-    babel({
-      exclude: "node_modules/**",
-      presets: [["@babel/preset-env", {
-        targets: {
-          "ie": "11"
-        },
-        modules: false,
-      }]]
-    }),
+    // babel({
+    //   exclude: "node_modules/**",
+    //   presets: [["@babel/preset-env", {
+    //     targets: {
+    //       "ie": "11"
+    //     },
+    //     modules: false,
+    //   }]]
+    // }),
     iife(),
     jsonToJsEmitAssets(
       json({
@@ -318,7 +318,9 @@ export default [
     }),
     (process.env.NODE_ENV === "production" && terser({output: {preamble: copyright}})),
     (process.env.NODE_ENV === "devserver" && serve({
-      contentBase: ["build"]
+      contentBase: ["build"],
+      port: 4200,
+      verbose: true
     }) ),
     (process.env.NODE_ENV === "devserver" && livereload("build/")),
     visualizer({

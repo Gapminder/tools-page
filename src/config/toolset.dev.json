@@ -1,5 +1,14 @@
 [
   {
+    "id": "linechart",
+    "tool": "LineChart",
+    "config": "LineChart-reactive", 
+    "dataSources": ["sg", "wdi", "fasttrack"],
+    "transition": ["show","time"],
+    "title": "trends",
+    "image": "/assets/images/chart/trends-chart.png"
+  },
+  {
     "id": "bubbles",
     "tool": "BubbleChart",
     "dataSources": ["sg", "wdi", "fasttrack"],
@@ -22,14 +31,6 @@
     "transition": ["select","time"],
     "title": "maps",
     "image": "/assets/images/chart/maps-chart.png"
-  },
-  {
-    "id": "linechart",
-    "tool": "LineChart",
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["show","time"],
-    "title": "trends",
-    "image": "/assets/images/chart/trends-chart.png"
   },
   {
     "id": "barrank",

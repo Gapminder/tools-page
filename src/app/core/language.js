@@ -3,6 +3,9 @@ import {
   appState,
   dispatch
 } from "./global";
+import {
+  d3json
+} from "./utils";
 
 const DEFAULT_LANGUAGE = { key: 'en', text: 'English' };
 const AVAILABLE_LANGUAGES = [
@@ -32,13 +35,13 @@ function setLocale(arg) {
 
 function loadTranslation(language) {
   return new Promise((resolve, reject) => {
-    Vizabi.utils.d3json("assets/i18n/" + language + ".json", (error, translation) => {
+    d3json("assets/i18n/" + language + ".json", (error, translation) => {
       if (error) {
-        reject(error)
+        reject(error);
       } else {
         resolve(translation);
       }
-    })
+    });
   });
 }
 

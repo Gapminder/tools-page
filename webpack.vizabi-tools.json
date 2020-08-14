@@ -1,20 +1,7 @@
 {
   "tools": [
-    "bubblechart",
-    "bubblemap",
-    "mountainchart",
-    "linechart",
-    "barrankchart",
-    "popbyage",
-    "extapimap",
-    "barchartds",
-    "sankey",
-    "spreadsheet"
+    "linechart"
   ],
   "paths": {
-    "barchartds": {
-      "js": "vizabi-barchart-ds",
-      "css": "vizabi-barchart-ds/build/barchart-ds.css"
-    }
   }
 }

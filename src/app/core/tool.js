@@ -8,7 +8,7 @@ import {
 import {
   getTransitionModel
 } from "./chart-transition";
-import { loadJS } from "./utils";
+import { loadJS, comparePlainObjects, deepExtend } from "./utils";
 import timeLogger from "./timelogger";
 
 let viz;
@@ -19,8 +19,9 @@ function setTool(tool, skipTransition) {
   const toolConfig = toolsPage_toolset.filter(function(f) { return f.id === tool; })[0];
   const toolConfigPrevious = toolsPage_toolset.filter(function(f) { return f.id === appState.tool; })[0];
   const toolModelPrevious = viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL) : {};
-  
-  Vizabi.clearInstances();
+ 
+//TODO: missing from vizabi reactive
+// Vizabi.clearInstances();
   d3.select(".vzb-placeholder").remove();
   d3.select("body").select(".column.main").select(".vizabi-placeholder")
     .append("div")
@@ -37,7 +38,7 @@ function setTool(tool, skipTransition) {
 
     const urlDataModel = (URLI.model || {}).data;
     const urlHasDataModel = Object.keys(URLI.model || {}).some(f => f.includes("data"));
-    const skipPageConfig = urlDataModel && !Vizabi.utils.comparePlainObjects(urlDataModel, dataSources[0]);
+    const skipPageConfig = urlDataModel && !comparePlainObjects(urlDataModel, dataSources[0]);
 
     const _VIZABI_MODEL =  skipPageConfig ? {} : VIZABI_MODEL;
 
@@ -51,92 +52,115 @@ function setTool(tool, skipTransition) {
       : { data: dataSources[0] })
     }
   
-    let snapOnceDataLoaded = false;
+    //let snapOnceDataLoaded = false;
     
-    _VIZABI_MODEL.bind = {
-      'ready': function(evt) {
-          var splashTime = timeLogger.snapOnce("SPLASH");            
-          if (gtag && splashTime) gtag('event', 'timing_complete', {
-            'name' : 'splashload',
-            'value' : splashTime,
-            'event_category' : 'Splash data loading time'
-          });
+    // _VIZABI_MODEL.bind = {
+    //   'ready': function(evt) {
+    //       var splashTime = timeLogger.snapOnce("SPLASH");            
+    //       if (gtag && splashTime) gtag('event', 'timing_complete', {
+    //         'name' : 'splashload',
+    //         'value' : splashTime,
+    //         'event_category' : 'Splash data loading time'
+    //       });
 
-          var fullTime = timeLogger.snapOnce("FULL");
-          if (gtag && fullTime) gtag('event', 'timing_complete', {
-            'name' : 'allyearsload',
-            'value' : fullTime,
-            'event_category' : 'Complete data loading time'
-          });
+    //       var fullTime = timeLogger.snapOnce("FULL");
+    //       if (gtag && fullTime) gtag('event', 'timing_complete', {
+    //         'name' : 'allyearsload',
+    //         'value' : fullTime,
+    //         'event_category' : 'Complete data loading time'
+    //       });
         
-          if ((this.ui||{}).splash) timeLogger.add("FULL");
-          timeLogger.add("DATA");
-          timeLogger.update("DATA");
+    //       if ((this.ui||{}).splash) timeLogger.add("FULL");
+    //       timeLogger.add("DATA");
+    //       timeLogger.update("DATA");
         
-          if (snapOnceDataLoaded) {
-            updateURL(evt);
-          }
+    //       if (snapOnceDataLoaded) {
+    //         updateURL(evt);
+    //       }
 
-          if (!snapOnceDataLoaded && (!(this.ui||{}).splash || fullTime)) {
-            snapOnceDataLoaded = true;
-            updateURL(evt, true);
-        }
-      },
-      'persistentChange': function(evt) {
-          updateURL(evt); // force update
-      },
-      'change_hook_which': function(evt, arg) {
-        if (gtag) gtag('event', 'indicator selected', {
-          'event_label': arg.which,
-          'event_category': arg.hook
-        });
-      },
-      'load_error': function(evt, error) {            
-        if (gtag) gtag('event', 'error', {
-          'event_label': JSON.stringify(error).substring(0, 500), //500 characters is the limit of GA field
-          'event_category': this._name
-        });
-        if (gtag) gtag('event', 'exception', {
-          'description': JSON.stringify(error).substr(0,150), //150 characters is the limit of GA field
-          'fatal': true
-        });
+    //       if (!snapOnceDataLoaded && (!(this.ui||{}).splash || fullTime)) {
+    //         snapOnceDataLoaded = true;
+    //         updateURL(evt, true);
+    //     }
+    //   },
+    //   'persistentChange': function(evt) {
+    //       updateURL(evt); // force update
+    //   },
+    //   'change_hook_which': function(evt, arg) {
+    //     if (gtag) gtag('event', 'indicator selected', {
+    //       'event_label': arg.which,
+    //       'event_category': arg.hook
+    //     });
+    //   },
+    //   'load_error': function(evt, error) {            
+    //     if (gtag) gtag('event', 'error', {
+    //       'event_label': JSON.stringify(error).substring(0, 500), //500 characters is the limit of GA field
+    //       'event_category': this._name
+    //     });
+    //     if (gtag) gtag('event', 'exception', {
+    //       'description': JSON.stringify(error).substr(0,150), //150 characters is the limit of GA field
+    //       'fatal': true
+    //     });
         
-        var totalTime = timeLogger.snapOnce("TOTAL");
-        if (gtag && totalTime) gtag('event', 'timing_complete', {
-          'name' : 'loadtotal',
-          'value' : totalTime,
-          'event_category' : 'Time to error since vizabi object created'
-        });
-      },
-      'dataLoaded': function() {        
-        var dataTime = timeLogger.snapOnce("DATA");
-        if (gtag && dataTime) gtag('event', 'timing_complete', {
-          'name' : 'gapfill',
-          'value' : dataTime,
-          'event_category' : 'Gap filling time'
-        });
+    //     var totalTime = timeLogger.snapOnce("TOTAL");
+    //     if (gtag && totalTime) gtag('event', 'timing_complete', {
+    //       'name' : 'loadtotal',
+    //       'value' : totalTime,
+    //       'event_category' : 'Time to error since vizabi object created'
+    //     });
+    //   },
+    //   'dataLoaded': function() {        
+    //     var dataTime = timeLogger.snapOnce("DATA");
+    //     if (gtag && dataTime) gtag('event', 'timing_complete', {
+    //       'name' : 'gapfill',
+    //       'value' : dataTime,
+    //       'event_category' : 'Gap filling time'
+    //     });
 
-        var totalTime = timeLogger.snapOnce("TOTAL");
-        if (gtag && totalTime) gtag('event', 'timing_complete', {
-          'name' : 'loadtotal',
-          'value' : totalTime,
-          'event_category' : 'Total loading time since vizabi object created'
-        });
-      }
-    }
+    //     var totalTime = timeLogger.snapOnce("TOTAL");
+    //     if (gtag && totalTime) gtag('event', 'timing_complete', {
+    //       'name' : 'loadtotal',
+    //       'value' : totalTime,
+    //       'event_category' : 'Total loading time since vizabi object created'
+    //     });
+    //   }
+    // }
 
     _VIZABI_MODEL.locale = {
       "id": appState.language,
       "filePath": "assets/translation/"
     };
 
-    VIZABI_PAGE_MODEL = Vizabi.utils.deepExtend({}, _VIZABI_MODEL);
+    const locale = {
+      "id": appState.language,
+      "path": "assets/translation/"
+    };
+
+    VIZABI_PAGE_MODEL = deepExtend({}, _VIZABI_MODEL);
     delete VIZABI_PAGE_MODEL.bind;
     delete VIZABI_PAGE_MODEL.locale.id;
 
     const transitionModel = (!skipTransition && viz) ? getTransitionModel(toolModelPrevious, toolConfigPrevious.transition, toolConfig.transition) : URLI.model;
-    viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], Vizabi.utils.deepExtend({}, _VIZABI_MODEL, transitionModel, true));
-    
+    //viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], deepExtend({}, _VIZABI_MODEL, transitionModel, true));
+
+    let MODEL = deepExtend({}, _VIZABI_MODEL, transitionModel, true);
+
+    const model = MODEL.model.markers ?
+      Vizabi(MODEL.model) :
+      Vizabi.marker(MODEL.model);
+
+    const ui = Vizabi.mobx.observable(MODEL.ui);
+
+    console.log(toolConfig.tool);
+    viz = new LineChart({
+      placeholder: document.getElementsByClassName("vzb-placeholder")[0],
+      model,
+      locale,
+      ui
+    });
+
+    window.viz = viz;
+
     timeLogger.removeAll();
     timeLogger.add("TOTAL")
     timeLogger.add((viz.model.ui||{}).splash? "SPLASH" : "FULL");
