@@ -41,7 +41,16 @@
     "title": "maps",
     "image": "/assets/images/chart/maps-chart.png"
   },
-
+  {
+    "id": "linechart-global",
+    "tool": "LineChart",
+    "dataSources": ["sg", "wdi", "fasttrack"],
+    "transition": ["none"],
+    "title": "globaltrends",
+    "config": "LineChart-global",
+    "hideThumbnail": true,
+    "image": "/assets/images/chart/globaltrends-chart.png"
+  },
   {
     "id": "popbyage",
     "tool": "PopByAge",
