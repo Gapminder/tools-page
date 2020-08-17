@@ -17,6 +17,9 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
   `;
   //require("./see-also.html");
 
+  //TODO why is it not passed via arguments?
+  tools = toolsPage_toolset;
+  
   const template = d3.create("div")
   template.html(templateHtml);
 

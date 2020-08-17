@@ -12,6 +12,9 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, appS
   const template = d3.create("div")
   template.html(templateHtml);
 
+  //TODO why is it not passed via arguments?
+  tools = toolsPage_toolset;
+
   const itemTemplate = template.select(".chart-switcher-options div");
   const onlyChartTools = tools.filter(({tool}) => tool);
   for (let tool of onlyChartTools) {
