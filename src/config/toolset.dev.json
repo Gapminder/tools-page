@@ -1,4 +1,14 @@
-[  {
+[  
+  {
+    "id": "bubbles",
+    "tool": "BubbleChart",
+    "config": "BubbleChart-reactive", 
+    "dataSources": ["sg", "wdi", "fasttrack"],
+    "transition": ["select","time"],
+    "title": "bubbles",
+    "image": "/assets/images/chart/bubble-chart.png"
+  },
+  {
   "id": "barrank",
   "tool": "BarRankChart",
   "config": "BarRankChart-reactive", 
@@ -16,15 +26,7 @@
     "title": "trends",
     "image": "/assets/images/chart/trends-chart.png"
   },
-  {
-    "id": "bubbles",
-    "tool": "BubbleChart",
-    "config": "BubbleChart-reactive", 
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["select","time"],
-    "title": "bubbles",
-    "image": "/assets/images/chart/bubble-chart.png"
-  },
+
   {
     "id": "mountain",
     "tool": "MountainChart",

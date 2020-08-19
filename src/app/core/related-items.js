@@ -68,4 +68,4 @@ export default [
     "title": "How Did The World Population Change?",
     "__v": 0
   },
-]
+];

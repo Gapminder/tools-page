@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 const SAUSE_MAX_INSTANCES = 5;
 const SAUSE_MAX_SESSIONS = 5;
 const LOCAL_MAX_INSTANCES = 1;
 const LOCAL_MAX_SESSIONS = 2;
-const url = process.env.URL || 'http://localhost:4200/tools/';
-const device = process.env.DEVICE || 'desktop'; // 'desktop' or 'tablet' or 'mobile'
-const fs = require('fs');
+const url = process.env.URL || "http://localhost:4200/tools/";
+const device = process.env.DEVICE || "desktop"; // 'desktop' or 'tablet' or 'mobile'
+const fs = require("fs");
 
-const testResultsDir = 'results';
+const testResultsDir = "results";
 const testResultsFile = `./${testResultsDir}/testResults.txt`;
 
 let screenSize = {
@@ -18,20 +18,20 @@ let screenSize = {
   height: 1080
 };
 
-if (device === 'desktop') {
+if (device === "desktop") {
   screenSize.desktop = true;
   screenSize.width = 1920;
   screenSize.height = 1080;
 }
 
-if (device === 'mobile') {
+if (device === "mobile") {
   screenSize.desktop = false;
   screenSize.mobile = true;
   screenSize.width = 375;
   screenSize.height = 667;
 }
 
-if (device === 'tablet') {
+if (device === "tablet") {
   screenSize.desktop = false;
   screenSize.tablet = true;
   screenSize.width = 768;
@@ -62,19 +62,19 @@ const platformConfigurations = [
     browserName: "chrome",
     platform: "Windows 7",
     version: "latest",
-    seleniumVersion: '3.12.0'
+    seleniumVersion: "3.12.0"
   },
   {
     browserName: "chrome",
     platform: "Windows 7",
     version: "latest-1",
-    seleniumVersion: '3.12.0'
+    seleniumVersion: "3.12.0"
   },
   {
     browserName: "chrome",
     platform: "Windows 7",
     version: "latest-2",
-    seleniumVersion: '3.12.0'
+    seleniumVersion: "3.12.0"
   },
   // {
   //   browserName: "firefox",
@@ -92,7 +92,7 @@ const platformConfigurations = [
     browserName: "chrome",
     platform: "Windows 10",
     version: "latest",
-    seleniumVersion: '3.12.0'
+    seleniumVersion: "3.12.0"
   },
   // {
   //   browserName: "MicrosoftEdge",
@@ -110,7 +110,7 @@ const platformConfigurations = [
     browserName: "chrome",
     platform: "macOS 10.12",
     version: "latest",
-    seleniumVersion: '3.12.0'
+    seleniumVersion: "3.12.0"
   },
   // {
   //   device: 'mobile',
@@ -159,7 +159,7 @@ const platformConfigurations = [
 ].map(config => {
   config.name = `toolpage ${config.platform || "" + config.platformName || "" + config.platformVersion || ""},${config.browserName},${config.version || "" + config.deviceName || ""}`;
   config.maxInstances = SAUSE_MAX_INSTANCES;
-  if (!config.platformName) config.screenResolution = '1600x1200';
+  if (!config.platformName) config.screenResolution = "1600x1200";
   config.shardTestFiles = true;
   // config.chromeOptions = {
   //   args: ['no-sandbox']
@@ -170,18 +170,18 @@ const platformConfigurations = [
   config.recordScreenshots = true;
   //config.recordLogs = false;
   return config;
-})
+});
 
 const capabilityForSaucelabs = {
-  browserName: 'chrome',
-  platform: 'Windows 10',
-  version: '63.0',
-  chromedriverVersion: '2.33',
-  screenResolution: '1920x1080',
+  browserName: "chrome",
+  platform: "Windows 10",
+  version: "63.0",
+  chromedriverVersion: "2.33",
+  screenResolution: "1920x1080",
   shardTestFiles: true,
   maxInstances: 4,
   chromeOptions: {
-    args: ['no-sandbox']
+    args: ["no-sandbox"]
   }
 };
 
@@ -192,12 +192,12 @@ const capabilityForLocalRun = {
   //   args: [ `-headless` ]
   // },
   device: device,
-  browserName: 'chrome',
-  screenResolution: '1920x1080',
+  browserName: "chrome",
+  screenResolution: "1920x1080",
   shardTestFiles: true,
   maxInstances: LOCAL_MAX_INSTANCES,
   chromeOptions: {
-    args: ['no-sandbox']//, 'headless']
+    args: ["no-sandbox"]//, 'headless']
   }
 };
 
@@ -207,8 +207,8 @@ const SAUCEKEY = process.env.SAUCEKEY;
 exports.config = {
   sauceUser: SAUCEUSER,
   sauceKey: SAUCEKEY,
-  specs: ['./e2e/**/*.e2e-spec.ts'],
-  exclude: ['./e2e/redirects-spec.js'],
+  specs: ["./e2e/**/*.e2e-spec.ts"],
+  exclude: ["./e2e/redirects-spec.js"],
   capabilities: SAUCEUSER && SAUCEKEY ? {} : capabilityForLocalRun,
   multiCapabilities: SAUCEUSER && SAUCEKEY ? platformConfigurations : {},
   maxSessions: SAUCEUSER && SAUCEKEY ? SAUSE_MAX_SESSIONS : LOCAL_MAX_SESSIONS,
@@ -245,7 +245,7 @@ exports.config = {
   // temporary disabled, because it causes NoSuchSessionError
   // typescript compiles 'async await' into generators, so it won't affect protractor controlFlow
   // SELENIUM_PROMISE_MANAGER: false,
-  framework: 'jasmine',
+  framework: "jasmine",
   jasmineNodeOpts: {
     showTiming: true,
     showColors: true,
@@ -257,14 +257,14 @@ exports.config = {
 
   // this will be run after all the tests will be finished
   afterLaunch: function() {
-    const fileParse = fs.readFileSync(testResultsFile, 'utf-8');
+    const fileParse = fs.readFileSync(testResultsFile, "utf-8");
     const testResults = JSON.parse(fileParse);
 
     // print consolidated report to the console
     for (const testResult of testResults) {
       console.log(`\n${testResults.indexOf(testResult) + 1}) ${testResult.fullName} - ${testResult.name}`);
       testResult.failedExpectations.forEach(exp => {
-        console.log('  - [31m' + exp.message + '[39m');
+        console.log("  - [31m" + exp.message + "[39m");
       });
     }
   },
@@ -282,7 +282,7 @@ exports.config = {
       fs.unlinkSync(`${testResultsDir}/${file}`);
     }
     // fill the file with default values
-    fs.writeFileSync(testResultsFile, JSON.stringify([]), 'utf-8');
+    fs.writeFileSync(testResultsFile, JSON.stringify([]), "utf-8");
   },
 
   onPrepare: async () => {
@@ -295,35 +295,35 @@ exports.config = {
         return res;
       }, {}));
     }
-    require('ts-node').register({ project: 'e2e/tsconfig.json' });
+    require("ts-node").register({ project: "e2e/tsconfig.json" });
 
-    let SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+    let SpecReporter = require("jasmine-spec-reporter").SpecReporter;
 
     jasmine.getEnv().addReporter(
       new SpecReporter({
         spec: {
-          displayStacktrace: 'specs'
+          displayStacktrace: "specs"
         }
       })
     );
 
     jasmine.getEnv().addReporter({
       specDone: function(result) {
-        if (result.status === 'failed') {
+        if (result.status === "failed") {
           // take screenshot on fail
           browser.takeScreenshot().then(function(screenShot) {
 
-            const existingResults = fs.readFileSync(testResultsFile, 'utf-8');
+            const existingResults = fs.readFileSync(testResultsFile, "utf-8");
             const appendedRes = JSON.parse(existingResults);
             appendedRes.push(Object.assign({}, result, { name: config.capabilities.name }));
 
             // write consolidated result to file
-            fs.writeFileSync(testResultsFile, JSON.stringify(appendedRes), 'utf-8');
+            fs.writeFileSync(testResultsFile, JSON.stringify(appendedRes), "utf-8");
 
             // Save screenshot
-            fs.writeFile(`${testResultsDir}/${result.fullName} - ${config.capabilities.name}.png`, screenShot, 'base64', function(err) {
+            fs.writeFile(`${testResultsDir}/${result.fullName} - ${config.capabilities.name}.png`, screenShot, "base64", function(err) {
               if (err) throw err;
-              console.log('File saved.');
+              console.log("File saved.");
             });
           });
         }

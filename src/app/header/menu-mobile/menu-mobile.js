@@ -1,7 +1,7 @@
 import * as utils from "../../core/utils";
 
-const MobileMenu = function (placeHolder, translator, dispatch, { menu }) {
-  
+const MobileMenu = function(placeHolder, translator, dispatch, { menu }) {
+
   this.isMobileMenuOpen = false;
   placeHolder.on("click", () => switchMobileMenu.call(this));
 
@@ -12,7 +12,7 @@ const MobileMenu = function (placeHolder, translator, dispatch, { menu }) {
     menu.classed("open", this.isMobileMenuOpen);
     placeHolder.classed("open", this.isMobileMenuOpen);
   }
-  
-}
+
+};
 
 export default MobileMenu;

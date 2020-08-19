@@ -20,9 +20,9 @@ const readersSchema = {
   "ddfbw": {
     props: ["service", "dataset", "version", "translateContributionLink"]
   }
-}
+};
 
-const DataEditor = function (placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
+const DataEditor = function(placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
   const propNames = ["reader", "path", "sheet", "dataset", "timeInColumns", "hasNameColumn", "nameColumnIndex", "translateContributionLink", "service", "version"];
   const defaultValues = {
     "reader": "ddfbw",
@@ -32,9 +32,9 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
     "nameColumnIndex": {
       "hasNameColumn": true
     }
-  }
+  };
   const propTypes = {
-    "reader": { 
+    "reader": {
       "type": "dropdown",
       "data": Object.keys(readersSchema)
     },
@@ -51,8 +51,8 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
   const propIndexInData = ["name"].concat(propNames)
     .reduce((prev, v, i) => {
       prev[v] = i;
-      return prev;  
-    }, {})
+      return prev;
+    }, {});
 
   const table = Table()
     .on("edit", d => update(d))
@@ -62,7 +62,7 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
     })
     .on("prop_change", () => {
       filterDataRows();
-    })
+    });
 
   function updateTable(_data) {
     placeHolder.select(".table")
@@ -81,23 +81,23 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
         const selectedReader = d.data[propIndexInData["reader"]];
         const allowProps = getCurrentAllowProp(["name", "reader", ...readersSchema[selectedReader].props], d.data);
         el.style("display", allowProps.includes(allPropNames[i]) ? null : "none");
-      })
+      });
   }
 
   function getCurrentAllowProp(props, data) {
-    return props.filter(prop => 
+    return props.filter(prop =>
       !propDependency[prop] ? true :
         Object.keys(propDependency[prop]).every(
           depProp => propDependency[prop][depProp] === data[propIndexInData[depProp]]
         )
-    )
+    );
   }
 
   placeHolder.select(".add-row")
     .on("click", () => {
       const newIndex = data[data.length - 1] ? data[data.length - 1].index + 1 : 0;
       const newData = {
-        data: ["data_", ...propNames.map((name) => defaultValues[name] || "")],
+        data: ["data_", ...propNames.map(name => defaultValues[name] || "")],
         index: newIndex
       };
       data.push(newData);
@@ -138,24 +138,24 @@ const DataEditor = function (placeHolder, translator, dispatch, { languages, sel
 
   function createTable() {
     const model = viz.getModel();
-    const dataSourcesIds = Object.keys(model).filter(m => /^data/.test(m)); 
+    const dataSourcesIds = Object.keys(model).filter(m => /^data/.test(m));
     data = dataSourcesIds.reduce((result, id, index) => {
       result.push({
         data: [id, ...propNames.map(name => model[id][name] || "")],
         index
       });
       return result;
-    },[]);
-    updateTable([[], ["name"].concat(propNames), propTypes]);  
-    updateTable([data, ["name"].concat(propNames), propTypes]);  
+    }, []);
+    updateTable([[], ["name"].concat(propNames), propTypes]);
+    updateTable([data, ["name"].concat(propNames), propTypes]);
   }
 
   dispatch.on("menuOpen.dataEditor", d => {
     if (d.menu_label !== "data_editor") return;
 
     createTable();
-  })
+  });
 
-}
+};
 
 export default DataEditor;

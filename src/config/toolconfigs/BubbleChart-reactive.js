@@ -1,9 +1,9 @@
-var __data = {
+const __data = {
   modelType: "ddfcsv",
   path: "./data/ddf--jheeffer--mdtest/"
 };
 
-var VIZABI_MODEL = {
+const VIZABI_MODEL = {
   model: {
     markers: {
       "legend": {
@@ -15,7 +15,7 @@ var VIZABI_MODEL = {
         },
         encoding: {
           color: {
-            data: { 
+            data: {
               concept: { ref: "markers.bubble.encoding.color.data.concept" },
               constant: { ref: "markers.bubble.encoding.color.data.constant" }
             },
@@ -158,10 +158,10 @@ var VIZABI_MODEL = {
         "popup": ["colors", "find", "moreoptions"],
         "sidebar": ["colors", "find", "size", "zoom"],
         "moreoptions": [
-          "opacity", 
+          "opacity",
           "speed",
           //"axes",
-          "size", 
+          "size",
           "colors",
           "label",
           "zoom",
@@ -177,4 +177,4 @@ var VIZABI_MODEL = {
       }
     }
   }
-}
+};

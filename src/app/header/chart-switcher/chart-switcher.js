@@ -1,4 +1,4 @@
-const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, appState, onClick }) {
+const ChartSwitcher = function(placeHolder, translator, dispatch, { tools, appState, onClick }) {
   const templateHtml = `
     <div class="chart-switcher">
       <a class="chart-switcher-button"></a>
@@ -9,15 +9,15 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, appS
   `;
   //require("./chart-switcher.html");
 
-  const template = d3.create("div")
+  const template = d3.create("div");
   template.html(templateHtml);
 
   //TODO why is it not passed via arguments?
   tools = toolsPage_toolset;
 
   const itemTemplate = template.select(".chart-switcher-options div");
-  const onlyChartTools = tools.filter(({tool}) => tool);
-  for (let tool of onlyChartTools) {
+  const onlyChartTools = tools.filter(({ tool }) => tool);
+  for (const tool of onlyChartTools) {
     itemTemplate.clone(true)
       .datum(tool)
       .attr("hidden", tool.id === appState.tool ? true : null)
@@ -31,7 +31,7 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, appS
   switcher.on("click", () => switchTools.call(this));
 
   for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(function() { return elem;});
+    placeHolder.append(() => elem);
   }
 
   translate();
@@ -40,10 +40,10 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, appS
   });
 
   dispatch.on("toolChanged.chartSwitcher", d => {
-    const tool = tools.filter(({id}) => id === d)[0];
+    const tool = tools.filter(({ id }) => id === d)[0];
     toolChanged(tool);
-  })
-  
+  });
+
   d3.select(window).on("resize.chartSwitcher", () => switchTools.call(this, false));
   d3.select(window).on("click.chartSwitcher", () => {
     const event = d3.event;
@@ -53,7 +53,7 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, appS
   });
 
   function translate() {
-    const selectedToolConfig = tools.filter(({id}) => id === appState.tool)[0];
+    const selectedToolConfig = tools.filter(({ id }) => id === appState.tool)[0];
     placeHolder.select(".chart-switcher-button")
       .text(translator(selectedToolConfig.title || selectedToolConfig.id));
     placeHolder.selectAll(".chart-switcher-options div")
@@ -62,9 +62,9 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, appS
 
   function toolChanged(tool) {
     placeHolder.select(".chart-switcher-button")
-    .text(translator(tool.title || tool.id));
+      .text(translator(tool.title || tool.id));
     placeHolder.selectAll(".chart-switcher-options div")
-    .attr("hidden", _d => _d.id === tool.id ? true : null)
+      .attr("hidden", _d => _d.id === tool.id ? true : null);
   }
 
   function switchTools(force) {
@@ -86,6 +86,6 @@ const ChartSwitcher = function (placeHolder, translator, dispatch, { tools, appS
       });
   }
 
-}
+};
 
 export default ChartSwitcher;

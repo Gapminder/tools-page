@@ -7,23 +7,23 @@ import {
   d3json
 } from "./utils";
 
-const DEFAULT_LANGUAGE = { key: 'en', text: 'English' };
+const DEFAULT_LANGUAGE = { key: "en", text: "English" };
 const AVAILABLE_LANGUAGES = [
   DEFAULT_LANGUAGE,
-  { key: 'ar-SA', text: 'العربية', isRtl: true },
-  { key: 'he-IL', text: 'עִבְרִית', isRtl: true },
-  { key: 'es-ES', text: 'Español', isRtl: false },
-  { key: 'vi-VN', text: 'Tiếng Việt', isRtl: false, fontFamily: 'Helvetica, Arial, Sans-Serif'},
-  { key: 'ru-RU', text: 'Русский', isRtl: false, fontFamily: 'Helvetica, Arial, Sans-Serif'},
-  { key: 'th-TH', text: 'ภาษาไทย', isRtl: false, fontFamily: 'Helvetica, Arial, Sans-Serif'}
-].filter(({key}) => toolsPage_properties["LANGUAGES"].includes(key));
+  { key: "ar-SA", text: "العربية", isRtl: true },
+  { key: "he-IL", text: "עִבְרִית", isRtl: true },
+  { key: "es-ES", text: "Español", isRtl: false },
+  { key: "vi-VN", text: "Tiếng Việt", isRtl: false, fontFamily: "Helvetica, Arial, Sans-Serif" },
+  { key: "ru-RU", text: "Русский", isRtl: false, fontFamily: "Helvetica, Arial, Sans-Serif" },
+  { key: "th-TH", text: "ภาษาไทย", isRtl: false, fontFamily: "Helvetica, Arial, Sans-Serif" }
+].filter(({ key }) => toolsPage_properties["LANGUAGES"].includes(key));
 
 const TRANSLATION_DICTIONARY = {};
 
 function setLocale(arg) {
   if (!arg) arg = appState.language;
 
-  const langId = /(\w+)-*/.exec(arg)[1];  
+  const langId = /(\w+)-*/.exec(arg)[1];
   d3.select("html")
     .attr("lang", langId)
     .attr("class", langId);
@@ -52,7 +52,7 @@ function changeLanguage(language) {
     const promises = [];
     if (!TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key] && language !== DEFAULT_LANGUAGE.key) {
       promises.push(loadTranslation(DEFAULT_LANGUAGE.key).then(translation => {
-          TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key] = translation;
+        TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key] = translation;
       }));
     }
     promises.push(loadTranslation(language).then(translation => {
@@ -60,7 +60,7 @@ function changeLanguage(language) {
     }));
     Promise.all(promises).then(() => {
       translateNow();
-    })
+    });
   }
 }
 
@@ -83,7 +83,7 @@ function setLanguage(language) {
   changeLanguage(appState.language);
 }
 
-function getLanguages () {
+function getLanguages() {
   return AVAILABLE_LANGUAGES;
 }
 
@@ -91,4 +91,4 @@ export {
   translator,
   setLanguage,
   getLanguages
-}
+};

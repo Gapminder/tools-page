@@ -1,3 +1,3 @@
-var VIZABI_MODEL = {
+const VIZABI_MODEL = {
 };
 

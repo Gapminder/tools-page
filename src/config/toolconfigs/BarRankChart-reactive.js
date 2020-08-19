@@ -1,9 +1,9 @@
-var __data = {
+const __data = {
   modelType: "ddfcsv",
   path: "./data/ddf--jheeffer--mdtest"
 };
 
-var VIZABI_MODEL = {
+const VIZABI_MODEL = {
   model: {
     data: {
       locale: "en",
@@ -63,13 +63,24 @@ var VIZABI_MODEL = {
   },
   ui: {
     //ui
+    "time-slider": {
+      "show_value": false
+    },
     "buttons": {
       "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
     },
     "dialogs": {
-      "popup": ["timedisplay", "colors", "find", "moreoptions"],
-      "sidebar": ["timedisplay", "colors", "find"],
-      "moreoptions": ["opacity", "speed", "colors", "presentation", "about"]
-    } 
+      "dialogs": {
+        "popup": ["timedisplay", "colors", "find", "moreoptions"],
+        "sidebar": ["timedisplay", "colors", "find"],
+        "moreoptions": ["opacity", "speed", "colors", "presentation", "about"]
+      },
+      "find": {
+        "panelMode": "show",
+        "showTabs": {
+          "country": "open"
+        }
+      }
+    }
   }
-}
+};

@@ -3,7 +3,7 @@ const transition = {
   SHOW: "show",
   TIME: "time",
   NONE: "none"
-}
+};
 
 const transitions = {
   select: {
@@ -12,13 +12,11 @@ const transitions = {
       const markerSelect = (state.marker || {}).select;
       return markerSelect ? markerSelect.map(selection => selection[dim]) : null;
     },
-    to: (values, dim) => {
-      return {
-        marker: {
-          select: values.map(value => ({ [dim]: value }))
-        }
+    to: (values, dim) => ({
+      marker: {
+        select: values.map(value => ({ [dim]: value }))
       }
-    }
+    })
   },
 
   show: {
@@ -37,21 +35,21 @@ const transitions = {
             }
           }
         }
-      }
+      };
     }
   },
 
   time: {
     allow: [transition.TIME],
     from: state => (state.time || {}).value,
-    to: value => ({ time: { value } } )
+    to: value => ({ time: { value } })
   }
-}
+};
 
 function getTransitionModel(oldModel, oldTransition, newTransition) {
   const result = { state: {} };
   if (!oldTransition || !newTransition ||
-    oldTransition.includes(transition.NONE) || 
+    oldTransition.includes(transition.NONE) ||
     newTransition.includes(transition.NONE)) return {};
 
   const dim = "country";
@@ -62,10 +60,10 @@ function getTransitionModel(oldModel, oldTransition, newTransition) {
     if (!values) return;
     Object.assign(result.state, transitions[transitionTo].to(values, dim));
   });
-  
+
   if (!Object.keys(result.state).length) {
     delete result.state;
-  }  
+  }
   return result;
 }
 

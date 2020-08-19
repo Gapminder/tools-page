@@ -1,5 +1,5 @@
-var scaletypes = {
-	"lin": "linear"
-}
+const scaletypes = {
+  "lin": "linear"
+};
 
 export default scaletypes;

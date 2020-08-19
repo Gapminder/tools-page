@@ -13,12 +13,10 @@ addRule(deprecatedConceptsRule);
 addRule(deprecatedEntitysetsRule);
 
 function upgradeUrl(url) {
-  return rules.reduce((resultUrl, {test, use}) => {
-    return test(resultUrl) ? use(resultUrl) : resultUrl;
-  }, url);
+  return rules.reduce((resultUrl, { test, use }) => test(resultUrl) ? use(resultUrl) : resultUrl, url);
 }
 
-function addRule (rule) {
+function addRule(rule) {
   rules.push(rule);
 }
 

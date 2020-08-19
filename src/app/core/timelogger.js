@@ -1,7 +1,7 @@
 export default {
   _values: {},
 
-  add: function (key) {
+  add(key) {
     if (!this._values[key]) {
       this._values[key] = {
         time: this._now(),
@@ -11,21 +11,21 @@ export default {
 
   },
 
-  update: function (key) {
+  update(key) {
     const value = this._values[key];
     if (value) {
       value.time = this._now();
     }
   },
 
-  reset: function (key) {
+  reset(key) {
     const value = this._values[key];
     if (value) {
       value.isSnapped = false;
     }
   },
 
-  snapOnce: function (key) {
+  snapOnce(key) {
     const value = this._values[key];
     if (value && !value.isSnapped) {
       value.isSnapped = true;
@@ -34,23 +34,23 @@ export default {
     return 0;
   },
 
-  snap: function (key) {
+  snap(key) {
     return this._values[key] ? this._diff(key) : 0;
   },
 
-  remove: function (key) {
+  remove(key) {
     delete this._values[key];
   },
-  
-  removeAll: function () {
+
+  removeAll() {
     this._values = {};
   },
 
-  _now: function () {
+  _now() {
     return performance.now();
   },
 
-  _diff: function (key) {
+  _diff(key) {
     return Math.round(this._now() - this._values[key].time);
   },
-}
+};

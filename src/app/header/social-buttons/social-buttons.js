@@ -1,6 +1,6 @@
 import * as utils from "../../core/utils";
 
-const SocialButtons = function (placeHolder, translator, dispatch, { bitlyService, locationService }) {
+const SocialButtons = function(placeHolder, translator, dispatch, { bitlyService, locationService }) {
   const templateHtml = `
     <li>
       <div class="share-text-box" data-text="share"></div>
@@ -39,7 +39,7 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
   `;
   //require("./social-buttons.html");
 
-  const template = d3.create("div")
+  const template = d3.create("div");
   template.html(templateHtml);
 
   template.select(".share-text-box")
@@ -58,7 +58,7 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
     .on("click", getEmbeddedUrl);
 
   for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(function() { return elem;});
+    placeHolder.append(() => elem);
   }
 
   translate();
@@ -93,7 +93,7 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
     const half = 2;
     const windowWidth = 490;
     const left = (window.innerWidth - windowWidth) / half;
-    const newWindow = window.open('', '_blank', `width=${windowWidth}, height=368, top=100, left=${left}`);
+    const newWindow = window.open("", "_blank", `width=${windowWidth}, height=368, top=100, left=${left}`);
 
     bitlyService.shortenUrl(undefined, url => {
       newWindow.location.href = urlTemplate.replace(/#{url}/g, url);
@@ -102,20 +102,20 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
   }
 
   function shareLink() {
-    bitlyService.shortenUrl(undefined, shortened => prompt('Copy the following link: ', shortened));
+    bitlyService.shortenUrl(undefined, shortened => prompt("Copy the following link: ", shortened));
   }
 
   function download() {
-    var e = document.createElement('script');
-    e.setAttribute('src', 'assets/js/svg-crowbar-2.js');
-    e.setAttribute('class', 'svg-crowbar');
-    e.setAttribute('data-svg-select', 'div>svg.vzb-export');
-    e.setAttribute('data-exclude-element-select', '.vzb-noexport');
-    document.body.appendChild(e); 
+    const e = document.createElement("script");
+    e.setAttribute("src", "assets/js/svg-crowbar-2.js");
+    e.setAttribute("class", "svg-crowbar");
+    e.setAttribute("data-svg-select", "div>svg.vzb-export");
+    e.setAttribute("data-exclude-element-select", ".vzb-noexport");
+    document.body.appendChild(e);
   }
 
   function getEmbeddedUrl() {
-    const message = 'Copy this fragment and paste it in your website or blog:\n(more instructions on vizabi.org/tutorials)';
+    const message = "Copy this fragment and paste it in your website or blog:\n(more instructions on vizabi.org/tutorials)";
 
     prompt(message, wrapInIFrame(locationService.getUrlReadyForEmbedding()));
   }
@@ -123,7 +123,7 @@ const SocialButtons = function (placeHolder, translator, dispatch, { bitlyServic
   function wrapInIFrame(content) {
     return `<iframe src="${content}" style="width: 100%; height: 500px; margin: 0 0 0 0; border: 1px solid grey;" allowfullscreen></iframe>`;
   }
-  
-}
+
+};
 
 export default SocialButtons;

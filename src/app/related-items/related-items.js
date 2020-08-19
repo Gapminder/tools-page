@@ -1,6 +1,6 @@
 import * as utils from "../core/utils";
 
-const RelatedItems = function (placeHolder, translator, dispatch, { relatedItems }) {
+const RelatedItems = function(placeHolder, translator, dispatch, { relatedItems }) {
   const templateHtml = `  
     <div class="related-block">
       <h2 class="heading-2 related-heading" data-text="popular"></h2>
@@ -26,11 +26,11 @@ const RelatedItems = function (placeHolder, translator, dispatch, { relatedItems
   `;
   //require("./related-items.html");
 
-  const template = d3.create("div")
+  const template = d3.create("div");
   template.html(templateHtml);
 
   const itemTemplate = template.select(".related-item");
-  for (let relatedItem of relatedItems) {
+  for (const relatedItem of relatedItems) {
     itemTemplate.clone(true)
       .datum(relatedItem)
       .raise()
@@ -39,7 +39,7 @@ const RelatedItems = function (placeHolder, translator, dispatch, { relatedItems
   itemTemplate.remove();
 
   for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(function () { return elem; });
+    placeHolder.append(() => elem);
   }
 
   translate();
@@ -59,11 +59,11 @@ const RelatedItems = function (placeHolder, translator, dispatch, { relatedItems
     a.attr("href", relatedItem.link);
     a.select(".related-item-thumbnail img").attr("src", relatedItem.image);
     a.select(".related-item-info .title")
-      .attr("data-text", 'related-' + relatedItem._id + '-title');
+      .attr("data-text", "related-" + relatedItem._id + "-title");
     a.select(".related-item-info .subtitle")
-      .attr("data-text", 'related-' + relatedItem._id + '-subtitle');
+      .attr("data-text", "related-" + relatedItem._id + "-subtitle");
   }
 
-}
+};
 
 export default RelatedItems;

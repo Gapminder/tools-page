@@ -41,7 +41,7 @@ if (upgradedUrl !== url) {
 const embeddedMatch = /embedded=(true|false)/.exec(window.location.search);
 d3.select(".wrapper").classed("embedded-view", (embeddedMatch || [])[1] === "true");
 
-const tools = toolsPage_toolset.filter(function(f) { return !!f.tool; }).map(function(m) { return m.id; });
+const tools = toolsPage_toolset.filter(f => !!f.tool).map(m => m.id);
 parseURL();
 Object.assign(appState, {
   tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
@@ -50,7 +50,7 @@ Object.assign(appState, {
 window.history.replaceState({
   tool: appState.tool,
   model: deepExtend({}, URLI.model, true)
-}, 'Title');
+}, "Title");
 setTool();
 
 

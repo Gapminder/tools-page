@@ -1,53 +1,53 @@
 const rule = {
-  test: function(url) {
+  test(url) {
     const hashIndex = url.indexOf("#");
     if (hashIndex == -1) return false;
 
-    const hash = url.substr(hashIndex+1);
+    const hash = url.substr(hashIndex + 1);
     const state = urlon.parse(hash);
 
     return findInState(state, toolsPage_conceptMapping);
   },
 
-  use: function(url) {
+  use(url) {
     const hashIndex = url.indexOf("#");
     const hashPrefix = url.substr(0, hashIndex);
-    const hash = url.substr(hashIndex+1);
-    
+    const hash = url.substr(hashIndex + 1);
+
     const state = urlon.parse(hash);
     const newState = replaceInState(state, toolsPage_conceptMapping);
 
     return hashPrefix + "#" + urlon.stringify(newState);
   }
-}
+};
 
-const conceptProperties = new Set(["which","dim"]);
+const conceptProperties = new Set(["which", "dim"]);
 
 function findInState(state, conceptMapping) {
-	return Object.entries(state).some(([key, value]) => {
-		if (conceptProperties.has(key) && conceptMapping.has(value)) {
-			return true;
-		} 
-		if (typeof value == "object" && value != null) {
-			return findInState(value, conceptMapping); 
-		}
-		return false;
-	});
+  return Object.entries(state).some(([key, value]) => {
+    if (conceptProperties.has(key) && conceptMapping.has(value)) {
+      return true;
+    }
+    if (typeof value == "object" && value != null) {
+      return findInState(value, conceptMapping);
+    }
+    return false;
+  });
 }
 
 function replaceInState(state, conceptMapping) {
-	let newState = {};
-	Object.entries(state).forEach(([key, value]) => {
-		if (conceptProperties.has(key) && conceptMapping.has(value)) {
-			newState[key] = conceptMapping.get(value);
-			console.log("Replaced " + value + " by " + conceptMapping.get(value));
-		} else if (typeof value == "object" && value != null && !Array.isArray(value)) {
-			newState[key] = replaceInState(value, conceptMapping); 
-		} else {
-			newState[key] = value;
-		}
-	})
-	return newState;
+  const newState = {};
+  Object.entries(state).forEach(([key, value]) => {
+    if (conceptProperties.has(key) && conceptMapping.has(value)) {
+      newState[key] = conceptMapping.get(value);
+      console.log("Replaced " + value + " by " + conceptMapping.get(value));
+    } else if (typeof value == "object" && value != null && !Array.isArray(value)) {
+      newState[key] = replaceInState(value, conceptMapping);
+    } else {
+      newState[key] = value;
+    }
+  });
+  return newState;
 }
 
 export default rule;

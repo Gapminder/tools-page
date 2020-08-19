@@ -1,6 +1,6 @@
 import * as utils from "../../core/utils";
 
-const Message = function () {
+const Message = function() {
 
   let placeHolder;
 
@@ -16,13 +16,13 @@ const Message = function () {
     `;
     //require("./message.html");
 
-    const template = d3.create("div")
+    const template = d3.create("div");
     template.html(templateHtml);
     template.select("#message-close")
       .on("click", closeMessage);
 
     for (const elem of Array.from(template.node().children)) {
-      placeHolder.append(function() { return elem;});
+      placeHolder.append(() => elem);
     }
 
     translate();
@@ -38,20 +38,20 @@ const Message = function () {
   }
 
   function closeMessage() {
-    placeHolder.style("display","none");
+    placeHolder.style("display", "none");
   }
 
   function showMessage(string) {
-    placeHolder.style("display","block")
-    placeHolder.select('#message-text').html(string);
+    placeHolder.style("display", "block");
+    placeHolder.select("#message-text").html(string);
   }
 
   return {
     closeMessage,
     showMessage,
     init
-  }
-  
-}
+  };
+
+};
 
 export default Message();

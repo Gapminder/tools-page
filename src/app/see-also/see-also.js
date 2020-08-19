@@ -1,6 +1,6 @@
 import * as utils from "../core/utils";
 
-const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTool, onClick }) {
+const SeeAlso = function(placeHolder, translator, dispatch, { tools, selectedTool, onClick }) {
   const templateHtml = `
     <div class="see-also-block">
       <h2 class="heading-2 see-also-heading" data-text="other_tools"></h2>
@@ -19,12 +19,12 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
 
   //TODO why is it not passed via arguments?
   tools = toolsPage_toolset;
-  
-  const template = d3.create("div")
+
+  const template = d3.create("div");
   template.html(templateHtml);
 
   const itemTemplate = template.select(".other-tools-item");
-  for (let tool of tools) {
+  for (const tool of tools) {
     itemTemplate.clone(true)
       .datum(tool)
       .attr("hidden", (tool.id === selectedTool || tool.hideThumbnail) ? true : null)
@@ -34,7 +34,7 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
   itemTemplate.remove();
 
   for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(function () { return elem; });
+    placeHolder.append(() => elem);
   }
 
   translate();
@@ -43,9 +43,9 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
   });
 
   dispatch.on("toolChanged.seeAlso", d => {
-    const tool = tools.filter(({id}) => id === d)[0];
+    const tool = tools.filter(({ id }) => id === d)[0];
     toolChanged(tool);
-  })
+  });
 
   function translate() {
     placeHolder.select(".see-also-heading").each(utils.translateNode(translator));
@@ -55,7 +55,7 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
 
   function toolChanged(tool) {
     placeHolder.selectAll(".other-tools-item")
-    .attr("hidden", _d => (_d.id === tool.id || _d.hideThumbnail) ? true : null)
+      .attr("hidden", _d => (_d.id === tool.id || _d.hideThumbnail) ? true : null);
   }
 
   function getLink(tool) {
@@ -66,7 +66,7 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
     const tool = item.datum();
     const a = item.select("a");
     if (tool.url) {
-      a.attr("href", tool.url)
+      a.attr("href", tool.url);
     } else {
       a.attr("href", getLink(tool.id))
         .on("click", d => {
@@ -76,6 +76,6 @@ const SeeAlso = function (placeHolder, translator, dispatch, { tools, selectedTo
     a.select(".image").attr("src", "." + tool.image);
   }
 
-}
+};
 
 export default SeeAlso;

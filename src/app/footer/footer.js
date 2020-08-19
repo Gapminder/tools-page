@@ -1,6 +1,6 @@
 import * as utils from "../core/utils";
 
-const Footer = function (placeHolder, translator, dispatch) {
+const Footer = function(placeHolder, translator, dispatch) {
   const templateHtml = `
     <div class="footer-container">
         <div class="footer-container menu-holder">
@@ -38,11 +38,11 @@ const Footer = function (placeHolder, translator, dispatch) {
   `;
   //require("./footer.html");
 
-  const template = d3.create("div")
+  const template = d3.create("div");
   template.html(templateHtml);
 
   for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(function() { return elem;});
+    placeHolder.append(() => elem);
   }
 
   translate();
@@ -55,6 +55,6 @@ const Footer = function (placeHolder, translator, dispatch) {
       .each(utils.translateNode(translator));
   }
 
-}
+};
 
 export default Footer;

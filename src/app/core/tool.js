@@ -16,12 +16,12 @@ let viz;
 function setTool(tool, skipTransition) {
   if (tool === appState.tool) return;
   if (!tool) tool = appState.tool;
-  const toolConfig = toolsPage_toolset.filter(function(f) { return f.id === tool; })[0];
-  const toolConfigPrevious = toolsPage_toolset.filter(function(f) { return f.id === appState.tool; })[0];
+  const toolConfig = toolsPage_toolset.filter(f => f.id === tool)[0];
+  const toolConfigPrevious = toolsPage_toolset.filter(f => f.id === appState.tool)[0];
   const toolModelPrevious = viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL) : {};
- 
-//TODO: missing from vizabi reactive
-// Vizabi.clearInstances();
+
+  //TODO: missing from vizabi reactive
+  // Vizabi.clearInstances();
   d3.select(".vzb-placeholder").remove();
   d3.select("body").select(".column.main").select(".vizabi-placeholder")
     .append("div")
@@ -29,11 +29,11 @@ function setTool(tool, skipTransition) {
     .attr("style", "width: 100%; height: 100%;");
 
   appState.tool = tool;
-  loadJS("config/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js" , loadTool, document.body);
+  loadJS("config/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js", loadTool, document.body);
 
   function loadTool() {
 
-    const dataSourcesId = toolConfig.dataSources || Object.keys(toolsPage_datasources); 
+    const dataSourcesId = toolConfig.dataSources || Object.keys(toolsPage_datasources);
     const dataSources = dataSourcesId.map(ds => toolsPage_datasources[ds]);
 
     const urlDataModel = (URLI.model || {}).data;
@@ -45,18 +45,18 @@ function setTool(tool, skipTransition) {
     // apply data models from configuration to _VIZABI_MODEL
     if (!skipPageConfig && !urlHasDataModel) {
       Object.assign(_VIZABI_MODEL, dataSources.length > 1 ?
-        dataSources.reduce(function(result, ds, index) {
+        dataSources.reduce((result, ds, index) => {
           result["data" + (index ? "_" + dataSourcesId[index] : "")] = ds;
           return result;
         }, {})
-      : { data: dataSources[0] })
+        : { data: dataSources[0] });
     }
-  
+
     //let snapOnceDataLoaded = false;
-    
+
     // _VIZABI_MODEL.bind = {
     //   'ready': function(evt) {
-    //       var splashTime = timeLogger.snapOnce("SPLASH");            
+    //       var splashTime = timeLogger.snapOnce("SPLASH");
     //       if (gtag && splashTime) gtag('event', 'timing_complete', {
     //         'name' : 'splashload',
     //         'value' : splashTime,
@@ -69,11 +69,11 @@ function setTool(tool, skipTransition) {
     //         'value' : fullTime,
     //         'event_category' : 'Complete data loading time'
     //       });
-        
+
     //       if ((this.ui||{}).splash) timeLogger.add("FULL");
     //       timeLogger.add("DATA");
     //       timeLogger.update("DATA");
-        
+
     //       if (snapOnceDataLoaded) {
     //         updateURL(evt);
     //       }
@@ -92,7 +92,7 @@ function setTool(tool, skipTransition) {
     //       'event_category': arg.hook
     //     });
     //   },
-    //   'load_error': function(evt, error) {            
+    //   'load_error': function(evt, error) {
     //     if (gtag) gtag('event', 'error', {
     //       'event_label': JSON.stringify(error).substring(0, 500), //500 characters is the limit of GA field
     //       'event_category': this._name
@@ -101,7 +101,7 @@ function setTool(tool, skipTransition) {
     //       'description': JSON.stringify(error).substr(0,150), //150 characters is the limit of GA field
     //       'fatal': true
     //     });
-        
+
     //     var totalTime = timeLogger.snapOnce("TOTAL");
     //     if (gtag && totalTime) gtag('event', 'timing_complete', {
     //       'name' : 'loadtotal',
@@ -109,7 +109,7 @@ function setTool(tool, skipTransition) {
     //       'event_category' : 'Time to error since vizabi object created'
     //     });
     //   },
-    //   'dataLoaded': function() {        
+    //   'dataLoaded': function() {
     //     var dataTime = timeLogger.snapOnce("DATA");
     //     if (gtag && dataTime) gtag('event', 'timing_complete', {
     //       'name' : 'gapfill',
@@ -143,7 +143,7 @@ function setTool(tool, skipTransition) {
     const transitionModel = (!skipTransition && viz) ? getTransitionModel(toolModelPrevious, toolConfigPrevious.transition, toolConfig.transition) : URLI.model;
     //viz = Vizabi(toolConfig.tool, document.getElementsByClassName('vzb-placeholder')[0], deepExtend({}, _VIZABI_MODEL, transitionModel, true));
 
-    let MODEL = deepExtend({}, _VIZABI_MODEL, transitionModel, true);
+    const MODEL = deepExtend({}, _VIZABI_MODEL, transitionModel, true);
 
     const model = MODEL.model.markers ?
       Vizabi(MODEL.model) :
@@ -163,11 +163,11 @@ function setTool(tool, skipTransition) {
     window.viz = viz;
 
     timeLogger.removeAll();
-    timeLogger.add("TOTAL")
-    timeLogger.add((viz.model.ui||{}).splash? "SPLASH" : "FULL");
-    if (gaEnabled && gtag) gtag('config', GAPMINDER_TOOLS_GA_ID_PROD, {'page_path': '/' + toolConfig.tool});
-    if (gtag) gtag('config', GAPMINDER_TOOLS_GA_ID_DEV, {'page_path': '/' + toolConfig.tool});
-  
+    timeLogger.add("TOTAL");
+    timeLogger.add((viz.model.ui || {}).splash ? "SPLASH" : "FULL");
+    if (gaEnabled && gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_PROD, { "page_path": "/" + toolConfig.tool });
+    if (gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_DEV, { "page_path": "/" + toolConfig.tool });
+
   }
 }
 

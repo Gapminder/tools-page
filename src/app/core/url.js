@@ -17,23 +17,23 @@ import {
   comparePlainObjects
 } from "./utils";
 
-var poppedModel = {};
-var URLI = {};
-var minModel;
+let poppedModel = {};
+let URLI = {};
+let minModel;
 
-var popStateLoopFlag = false;
-var resetPopStateLoopFlag = debounce(() => {
+let popStateLoopFlag = false;
+const resetPopStateLoopFlag = debounce(() => {
   popStateLoopFlag = false;
 }, 500);
 
-window.addEventListener('popstate', function(e) {
+window.addEventListener("popstate", e => {
   //console.log(e, diffObject());
   if (!e.state) {
     parseURL();
-    window.history.replaceState({ 
-      tool: URLI["chart-type"], 
-      model: deepExtend({}, URLI.model, true) 
-    }, 'Title');
+    window.history.replaceState({
+      tool: URLI["chart-type"],
+      model: deepExtend({}, URLI.model, true)
+    }, "Title");
     poppedModel = {};
     return;
   }
@@ -46,7 +46,7 @@ window.addEventListener('popstate', function(e) {
     dispatch.call("toolChanged", null, e.state.tool);
   } else {
     //FIX ME
-    //We have problem with possible infinite loop of 
+    //We have problem with possible infinite loop of
     //updating vizabi model - updating url - updating vizabi model and so on…
     //because hook.spaceRef is not model prop from init
     popStateLoopFlag = true;
@@ -67,44 +67,44 @@ function updateURL(event, replaceInsteadPush) {
     //popStateLoopFlag = false;
     return;
   }
-  
+
   poppedModel = viz.getModel();
 
-  var model;
-  if(typeof viz !== 'undefined') {
+  let model;
+  if (typeof viz !== "undefined") {
     minModel = viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL);
   }
 
-  var url = {};
-  if(minModel && Object.keys(minModel).length > 0) {
+  const url = {};
+  if (minModel && Object.keys(minModel).length > 0) {
     Object.assign(url, minModel);
   }
   url["chart-type"] = appState.tool;
 
-  console.log('pushing state', poppedModel, event);
-  window.history[replaceInsteadPush ? "replaceState" : "pushState"]({ 
-    tool: url["chart-type"], 
+  console.log("pushing state", poppedModel, event);
+  window.history[replaceInsteadPush ? "replaceState" : "pushState"]({
+    tool: url["chart-type"],
     model: poppedModel
-  //need to encode symbols like # in color codes because urlon can't handle them properly                                                                     
-  }, 'Title', "#" + urlon.stringify(url).replace(/=#/g, "=%23"))
+  //need to encode symbols like # in color codes because urlon can't handle them properly
+  }, "Title", "#" + urlon.stringify(url).replace(/=#/g, "=%23"));
 }
 
 function parseURL() {
-  var loc = window.location.toString();
-  var hash = null;
+  const loc = window.location.toString();
+  let hash = null;
   URLI = {
   };
-  if(loc.indexOf('#') >= 0) {
-    hash = loc.substring(loc.indexOf('#') + 1);
+  if (loc.indexOf("#") >= 0) {
+    hash = loc.substring(loc.indexOf("#") + 1);
 
-    if(hash) {
+    if (hash) {
       //need to decode symbols like # in color codes because urlon can't handle them properly
-      var parsedUrl = urlon.parse(hash.replace(/=%2523/g, "=%23").replace(/=%23/g, "=#"));
+      const parsedUrl = urlon.parse(hash.replace(/=%2523/g, "=%23").replace(/=%23/g, "=#"));
 
       URLI.model = parsedUrl || {};
       URLI["chart-type"] = parsedUrl["chart-type"];
       delete parsedUrl["chart-type"];
-      return;
+
     }
   }
 }
@@ -112,7 +112,7 @@ function parseURL() {
 function resetURL() {
   //var href = location.href + "#";
 
-  window.history.replaceState('Object', 'Title', "#");
+  window.history.replaceState("Object", "Title", "#");
   //location.href = href.substring(0, href.indexOf('#'));
 }
 

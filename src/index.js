@@ -26,7 +26,7 @@ window.d3 = window.d3 || d3;
 window.urlon = window.urlon || urlon;
 
 //DDFCSV reader integration
-var ddfReader = new DDFCsvReader.getDDFCsvReaderObject();
+const ddfReader = new DDFCsvReader.getDDFCsvReaderObject();
 Vizabi.stores.dataSources.createAndAddType("ddfcsv", ddfReader);
 
 //External CSV reader integration

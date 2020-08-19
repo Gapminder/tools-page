@@ -1,10 +1,10 @@
 
-var __data = {
+const __data = {
   modelType: "ddfcsv",
   path: "./data/ddf--jheeffer--mdtest"
 };
 
-var VIZABI_MODEL = {
+const VIZABI_MODEL = {
   model: {
     markers: {
       line: {
@@ -132,4 +132,4 @@ var VIZABI_MODEL = {
       }
     }
   }
-}
+};
