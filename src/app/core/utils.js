@@ -86,7 +86,7 @@ export function deepExtend(/*obj_1, [obj_2], [obj_N]*/) {
   // convert arguments to array and cut off target object
   const args = Array.prototype.slice.call(arguments, 1, (lastArgIsBool ? -1 : arguments.length));
 
-  let val, src, clone;
+  let val, src;
 
   forEach(args, obj => {
     // skip argument if it is array or isn't object
@@ -154,11 +154,107 @@ export function d3json(path, callback) {
  */
 export function comparePlainObjects(a, b) {
 
+
   //Returns the object's class, Array, Date, RegExp, Object are of interest to us
   const getClass = function(val) {
     return Object.prototype.toString.call(val)
       .match(/^\[object\s(.*)\]$/)[1];
   };
+
+  //Defines the type of the value, extended typeof
+  const whatis = function(val) {
+
+    if (val === undefined) {
+      return "undefined";
+    }
+    if (val === null) {
+      return "null";
+    }
+
+    let type = typeof val;
+
+    if (type === "object") {
+      type = getClass(val).toLowerCase();
+    }
+
+    if (type === "number") {
+      return val.toString().indexOf(".") > 0 ?
+        "float" :
+        "integer";
+    }
+
+    return type;
+  };
+
+  const compare = function(a, b) {
+    if (a === b) {
+      return true;
+    }
+    for (const i in a) {
+      if (b.hasOwnProperty(i)) {
+        if (!equal(a[i], b[i])) {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    for (const i in b) {
+      if (!a.hasOwnProperty(i)) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const compareArrays = function(a, b) {
+    if (a === b) {
+      return true;
+    }
+    if (a.length !== b.length) {
+      return false;
+    }
+    for (let i = 0; i < a.length; i++) {
+      if (!equal(a[i], b[i])) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const _equal = {};
+  _equal.array = compareArrays;
+  _equal.object = compare;
+  _equal.date = function(a, b) {
+    return a.getTime() === b.getTime();
+  };
+  _equal.regexp = function(a, b) {
+    return a.toString() === b.toString();
+  };
+
+  /**
+   * Are two values equal, deep compare for objects and arrays.
+   * @param a {any}
+   * @param b {any}
+   * @return {boolean} Are equal?
+   */
+  const equal = function(a, b) {
+    if (a !== b) {
+      const atype = whatis(a);
+      const btype = whatis(b);
+
+      if (atype === btype) {
+        return _equal.hasOwnProperty(atype) ? _equal[atype](a, b) : a == b;
+      }
+
+      return false;
+    }
+
+    return true;
+  };
+
+  return compare(a, b);
 }
 
 /*
@@ -248,6 +344,14 @@ function isSpecificValue(val) {
   ));
 }
 
+function cloneSpecificValue(val) {
+  if (val instanceof Date) {
+    return new Date(val.getTime());
+  } else if (val instanceof RegExp) {
+    return new RegExp(val);
+  }
+  throw new Error("Unexpected situation");
+}
 
 /**
  * Recursive cloning array.
@@ -269,3 +373,31 @@ function deepCloneArray(arr) {
   });
   return clone;
 }
+
+
+function isEmpty(obj) {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
+
+/*
+ * checks whether obj is a plain object {}
+ * @param {Object} obj
+ * @returns {Boolean}
+ */
+function isPlainObject(obj) {
+  return obj !== null && Object.prototype.toString.call(obj) === "[object Object]";
+}
+
+function deepArrayEquals(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) return false;
+  for (let i = 0; i < a.length; ++i) {
+    if (isPlainObject(a[i]) && isPlainObject(b[i])) {
+      if (!comparePlainObjects(a[i], b[i])) return false;
+    } else if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+

@@ -18,7 +18,7 @@ function setTool(tool, skipTransition) {
   if (!tool) tool = appState.tool;
   const toolConfig = toolsPage_toolset.filter(f => f.id === tool)[0];
   const toolConfigPrevious = toolsPage_toolset.filter(f => f.id === appState.tool)[0];
-  const toolModelPrevious = viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL) : {};
+  const toolModelPrevious = {} //TODO: missing from vizabi viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL) : {};
 
   //TODO: missing from vizabi reactive
   // Vizabi.clearInstances();

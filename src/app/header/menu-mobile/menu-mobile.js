@@ -1,4 +1,3 @@
-import * as utils from "../../core/utils";
 
 const MobileMenu = function(placeHolder, translator, dispatch, { menu }) {
 

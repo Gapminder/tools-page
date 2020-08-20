@@ -19,6 +19,7 @@ export default function BitlyService() {
           callback(response.link);
         })
         .catch(error => {
+          console.error(error);
           callback(window.location);
         });
     }

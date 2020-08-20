@@ -1,5 +1,3 @@
-import * as utils from "../../core/utils";
-
 const Message = function() {
 
   let placeHolder;
