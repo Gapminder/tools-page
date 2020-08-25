@@ -2,8 +2,8 @@ import './app/app.styl';
 
 import DDFCsvReader from 'vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader';
 import CsvReader from 'vizabi-csv-reader/dist/vizabi-csv-reader';
-//import 'vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader';
-//import 'vizabi-csv-reader/dist/vizabi-csv-reader';
+import 'vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader';
+import 'vizabi-csv-reader/dist/vizabi-csv-reader';
 import 'vizabi-ddfservice-reader/dist/vizabi-ddfservice-reader';
 import 'd3/dist/d3';
 import 'urlon/dist/urlon.umd';
