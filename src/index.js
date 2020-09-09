@@ -1,3 +1,4 @@
+import "regenerator-runtime/runtime.js";
 import "./app/app.styl";
 
 import DDFCsvReader from "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader";

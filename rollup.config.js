@@ -24,7 +24,7 @@ import autoprefixer from "autoprefixer";
 import postcssUrl from "postcss-url";
 import iife from "rollup-plugin-iife";
 import legacy from "@rollup/plugin-legacy";
-import htmlTemplate from "rollup-plugin-generate-html-template";
+import html from "rollup-plugin-html2";
 
 
 const copyright = `// ${meta.homepage} v${meta.version} Copyright ${(new Date).getFullYear()} ${meta.author.name}`;
@@ -164,7 +164,7 @@ jsAssets.push(
   "config/datasources.js",
   "config/conceptMapping.js",
   "config/entitysetMapping.js",
-  "toolspage.js"
+  //"toolspage.js"
 );
 
 const deployDir = "tools";
@@ -237,22 +237,36 @@ export default [
         copyOnce: true,
         verbose: true
       }),
-      htmlTemplateWrapper(
-        htmlTemplate({
-          template: "src/index.html",
-          target: "build/tools/index.html",
-        })
-      ),
+      html({
+        template: "src/index.html",
+        //modules: true,
+        externals: [
+          ...[
+            ...["vizabi-shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()
+            ].map(f => {
+              return "assets/css/" + path.basename(f);
+            }),
+            "styles.css",
+            ...jsAssets
+          ].map(file => {
+            return {
+              file,
+              pos: "before"
+            }
+          })
+        ]
+      }),
       (process.env.NODE_ENV === "production" && eslint()),
-      // babel({
-      //   exclude: "node_modules/**",
-      //   presets: [["@babel/preset-env", {
-      //     targets: {
-      //       "ie": "11"
-      //     },
-      //     modules: false,
-      //   }]]
-      // }),
+      babel({
+        babelHelpers: 'bundled',
+        exclude: "node_modules/**",
+        presets: [["@babel/preset-env", {
+          targets: {
+            "ie": "11"
+          },
+          modules: false,
+        }]]
+      }),
       iife(),
       jsonToJsEmitAssets(
         json({
