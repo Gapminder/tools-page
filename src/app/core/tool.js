@@ -151,8 +151,7 @@ function setTool(tool, skipTransition) {
 
     const ui = Vizabi.mobx.observable(MODEL.ui);
 
-    //TODO: how to do it without eval? we no longer have registry of all the tools, such as in old vizabi
-    const toolPrototype = eval(toolConfig.tool);
+    const toolPrototype = window[toolConfig.tool];
     viz = new toolPrototype({
       placeholder: document.getElementsByClassName("vzb-placeholder")[0],
       model,
