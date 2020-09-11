@@ -196,7 +196,7 @@ export default [
       runOnce: true
     })),
     virtual({
-      tools: generateToolInputEntries().map(entry => `import "${entry}";`).join("") + "export default '';"
+      "vizabi-tools": generateToolInputEntries().map(entry => `import "${entry}";`).join("") + "export default '';"
     }),
     resolve(),
     alias({
@@ -250,7 +250,6 @@ export default [
         modules: false,
       }]]
     }),
-    iife(),
     jsonToJsEmitAssets(
       json({
         include: /src\/config/,
@@ -314,6 +313,7 @@ export default [
       ENV: JSON.stringify(process.env.NODE_ENV || "development")
     }),
     (process.env.NODE_ENV === "production" && terser({output: {preamble: copyright}})),
+    iife(),
     (process.env.NODE_ENV === "devserver" && serve({
       contentBase: ["build"]
     }) ),

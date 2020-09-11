@@ -1,23 +1,21 @@
 import './app/app.styl';
 
-import DDFCsvReader from 'vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader';
-import CsvReader from 'vizabi-csv-reader/dist/vizabi-csv-reader';
-import 'vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader';
-import 'vizabi-csv-reader/dist/vizabi-csv-reader';
-import 'vizabi-ddfservice-reader/dist/vizabi-ddfservice-reader';
 import 'd3/dist/d3';
 import 'urlon/dist/urlon.umd';
+
+//'vizabi' should be imported at first because it fully polyfilled
 import 'vizabi/build/vizabi';
+import "vizabi-tools";
+import 'vizabi-ddfservice-reader/dist/vizabi-ddfservice-reader';
+import DDFCsvReader from 'vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader';
+import CsvReader from 'vizabi-csv-reader/dist/vizabi-csv-reader';
 
-import "tools";
-//import * as d3 from 'd3';
+import '../node_modules/vizabi-config-systema_globalis/dist/*.json';
 
-window.d3 = window.d3 || d3;
-window.urlon = window.urlon || urlon;
-// window.Vizabi = window.Vizabi || require('vizabi');
-// window.DDFCsvReader = window.DDFCsvReader || require('vizabi-ddfcsv-reader');
-// window.CsvReader = window.CsvReader || require('vizabi-csv-reader');
-// window.DDFServiceReader = window.DDFServiceReader || require('vizabi-ddfservice-reader');
+import "properties";
+import "toolset";
+import "datasources";
+import App from './app/app.js';
 
 // BW reader integration
 var bwReader = DDFServiceReader.getReader();
@@ -30,22 +28,6 @@ Vizabi.Reader.extend("csv", CsvReader.csvReaderObject);
 //Google spreadsheet CSV reader integration, same as normal csv 
 Vizabi.Reader.extend("google_csv", CsvReader.csvReaderObject);
 
-//require('vizabi/build/vizabi.css');
-//import 'vizabi/build/vizabi.css';
-
-//var requireChartConfigs = require.context('vizabi-config-systema_globalis/dist', false, /\.json$/);
-//requireChartConfigs.keys().forEach(requireChartConfigs);
-import '../node_modules/vizabi-config-systema_globalis/dist/*.json';
-
 window.VIZABI_PAGE_MODEL = null;
 
-import "properties";
-import "toolset";
-import "datasources";
-// window.toolsPage_properties = window.toolsPage_properties || require("properties");
-// window.toolsPage_toolset = window.toolsPage_toolset || require("toolset");
-// window.toolsPage_datasources = window.toolsPage_datasources || require("datasources");
-// window.toolsPage_conceptMapping = window.toolsPage_conceptMapping || require("conceptMapping");
-// window.toolsPage_entitysetMapping = window.toolsPage_entitysetMapping || require("entitysetMapping");
-
-import './app/app.js';
+App();
