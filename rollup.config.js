@@ -24,7 +24,7 @@ import autoprefixer from 'autoprefixer';
 import postcssUrl from 'postcss-url';
 import iife from "rollup-plugin-iife";
 import legacy from '@rollup/plugin-legacy';
-import htmlTemplate from 'rollup-plugin-generate-html-template';
+import html from 'rollup-plugin-html2';
 
 
 const copyright = `// ${meta.homepage} v${meta.version} Copyright ${(new Date).getFullYear()} ${meta.author.name}`;
@@ -99,21 +99,15 @@ function varNameWithFileName(prefix) {
   }
 }
 
-const htmlTemplateWrapper = (plugin, varNameFunc, emitFilePath, nameRegex) => {
-  const pluginGenerateBundle = plugin.generateBundle;
-
-  plugin.generateBundle = async function(outputOptions, bundleInfo) {
-    const _bundleInfo = [...jsAssets,
-      ...["vizabi/build/vizabi.css", ...getEntryToolsCssFilenames()].map(f => {
-          return "assets/css/" + path.basename(f);
-        }),
-      "styles.css"].reduce((res, asset) => {
-        res[asset] = bundleInfo[asset] || {}
-        return res;
-      }, {})
-    await pluginGenerateBundle(outputOptions, _bundleInfo);
-  }
-  return plugin;
+function getHtmlAssets() {
+  return [
+    ...["vizabi/build/vizabi.css", ...getEntryToolsCssFilenames()
+    ].map(f => {
+      return "assets/css/" + path.basename(f);
+    }),
+    "styles.css",
+    ...jsAssets
+  ]
 }
 
 const jsonToJsEmitAssets = (plugin, varNameFunc, emitFilePath, nameRegex) => {
@@ -164,7 +158,6 @@ jsAssets.push(
   'config/datasources.js',
   'config/conceptMapping.js',
   'config/entitysetMapping.js',
-  'toolspage.js'
 );
 
 const deployDir = "tools";
@@ -237,14 +230,18 @@ export default [
       copyOnce: true,
       verbose: true
     }),
-    htmlTemplateWrapper(
-      htmlTemplate({
-        template: 'src/index.html',
-        target: 'build/tools/index.html',
+    html({
+      template: "src/index.html",
+      externals: getHtmlAssets().map(file => {
+        return {
+          file,
+          pos: "before"
+        }
       })
-    ),
+    }),
     //(process.env.NODE_ENV === "production" && eslint()),
     babel({
+      babelHelpers: "bundled",
       exclude: "node_modules/**",
       presets: [["@babel/preset-env", {
         targets: {
