@@ -1,10 +1,10 @@
 
-const __data = {
+__data = {
   modelType: "ddfcsv",
   path: "./data/ddf--jheeffer--mdtest"
 };
 
-const VIZABI_MODEL = {
+VIZABI_MODEL = {
   model: {
     markers: {
       line: {
