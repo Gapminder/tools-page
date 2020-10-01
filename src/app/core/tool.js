@@ -21,7 +21,8 @@ function setTool(tool, skipTransition) {
   const toolModelPrevious = {} //TODO: missing from vizabi viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL) : {};
 
   //TODO: missing from vizabi reactive
-  // Vizabi.clearInstances();
+  if (viz) viz.deconstruct();
+  viz = void 0;
   d3.select(".vzb-placeholder").remove();
   d3.select("body").select(".column.main").select(".vizabi-placeholder")
     .append("div")

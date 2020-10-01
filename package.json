@@ -36,7 +36,7 @@
     "mobx": "^5.14.2",
     "vizabi-reactive": "../vizabi/vizabi-reactive",
     "vizabi-linechart": "3.0.1",
-    "vizabi-shared-components": "1.1.0",
+    "vizabi-shared-components": "1.2.1",
     "vizabi-barchart-ds": "2.2.1",
     "vizabi-barrankchart": "3.0.1",
     "vizabi-bubblechart": "3.0.1",
