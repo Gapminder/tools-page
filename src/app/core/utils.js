@@ -33,6 +33,7 @@ export function loadJS(url, implementationCode, location) {
   //to be called from the file, location is the location to
   //insert the <script> element
   const scriptTag = document.createElement("script");
+  scriptTag.classList.add("vzb-tool-config");
   scriptTag.src = url;
   scriptTag.onload = implementationCode;
   scriptTag.onreadystatechange = implementationCode;

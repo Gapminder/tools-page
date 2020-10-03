@@ -13,26 +13,34 @@ import timeLogger from "./timelogger";
 
 let viz;
 
+function cleanupExistingTool() {
+  if (viz) {
+    viz.deconstruct();
+    viz = void 0;
+  }
+  d3.selectAll(".vzb-tool-config")
+    .remove();
+  d3.select(".vzb-placeholder")
+    .remove();
+}
+
 function setTool(tool, skipTransition) {
   if (tool === appState.tool) return;
   if (!tool) tool = appState.tool;
   const toolConfig = toolsPage_toolset.filter(f => f.id === tool)[0];
   const toolConfigPrevious = toolsPage_toolset.filter(f => f.id === appState.tool)[0];
   const toolModelPrevious = {} //TODO: missing from vizabi viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL) : {};
-
-  //TODO: missing from vizabi reactive
-  if (viz) viz.deconstruct();
-  viz = void 0;
-  d3.select(".vzb-placeholder").remove();
-  d3.select("body").select(".column.main").select(".vizabi-placeholder")
-    .append("div")
-    .attr("class", "vzb-placeholder")
-    .attr("style", "width: 100%; height: 100%;");
-
   appState.tool = tool;
+
+  cleanupExistingTool();
+
   loadJS("config/toolconfigs/" + (toolConfig.config || toolConfig.tool) + ".js", loadTool, document.body);
 
   function loadTool() {
+    d3.select(".vizabi-placeholder")
+      .append("div")
+      .attr("class", "vzb-placeholder")
+      .attr("style", "width: 100%; height: 100%;");
 
     const dataSourcesId = toolConfig.dataSources || Object.keys(toolsPage_datasources);
     const dataSources = dataSourcesId.map(ds => toolsPage_datasources[ds]);
