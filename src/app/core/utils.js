@@ -28,16 +28,19 @@ export function translateNode(translator) {
   };
 }
 
-export function loadJS(url, implementationCode, location) {
+export function loadJS(url, location) {
   //url is URL of external file, implementationCode is the code
   //to be called from the file, location is the location to
   //insert the <script> element
-  const scriptTag = document.createElement("script");
-  scriptTag.classList.add("vzb-tool-config");
-  scriptTag.src = url;
-  scriptTag.onload = implementationCode;
-  scriptTag.onreadystatechange = implementationCode;
-  location.appendChild(scriptTag);
+  return new Promise((resolve, reject) => {
+    const scriptTag = document.createElement("script");
+    scriptTag.classList.add("vzb-tool-config");
+    scriptTag.src = url;
+    scriptTag.onerror = reject;
+    scriptTag.onload = resolve;
+    scriptTag.onreadystatechange = resolve;
+    location.appendChild(scriptTag);
+  });
 }
 
 
