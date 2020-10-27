@@ -99,22 +99,14 @@ function varNameWithFileName(prefix) {
   };
 }
 
-const htmlTemplateWrapper = (plugin, varNameFunc, emitFilePath, nameRegex) => {
-  const pluginGenerateBundle = plugin.generateBundle;
-
-  plugin.generateBundle = async function(outputOptions, bundleInfo) {
-    const _bundleInfo = [...jsAssets,
-      ...["vizabi-shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()].map(f => {
-        return "assets/css/" + path.basename(f);
-      }),
-      "styles.css"].reduce((res, asset) => {
-      res[asset] = bundleInfo[asset] || {};
-      return res;
-    }, {});
-    await pluginGenerateBundle(outputOptions, _bundleInfo);
-  };
-  return plugin;
-};
+function getHtmlAssets() {
+  return [
+    ...["vizabi-shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()]
+      .map(f => "assets/css/" + path.basename(f)),
+    "styles.css",
+    ...jsAssets
+  ];
+}  
 
 const jsonToJsEmitAssets = (plugin, varNameFunc, emitFilePath, nameRegex) => {
   const pluginTransform = plugin.transform;
@@ -140,31 +132,15 @@ const jsonToJsEmitAssets = (plugin, varNameFunc, emitFilePath, nameRegex) => {
 };
 
 const jsAssets = [];
-//["assets/vizabi.css",
-//  ...(__PROD__? inToolsetTools : allTools.tools).map(tool => "assets/" + /[^\/]+\.css$/.exec((allTools.paths[tool] || {}).css || [tool + ".css"])[0])
-//];
 
-//if(!__PROD__) 
 jsAssets.push(
-  // 'assets/vendor/js/d3/d3.js',
-  // 'assets/vendor/js/urlon/urlon.umd.js',
-  // 'assets/vendor/js/vizabi/vizabi.js',
-  // 'assets/vendor/js/vizabi-ws-reader/vizabi-ws-reader-web.js',
-  // 'assets/vendor/js/vizabi-csv-reader/vizabi-csv-reader.js',
-  // 'assets/vendor/js/vizabi-ddfcsv-reader/vizabi-ddfcsv-reader.js',
-  // 'assets/vendor/js/vizabi-ddfservice-reader/vizabi-ddfservice-reader.js',
-  // ...allTools.tools.map(tool => {
-  //   const toolName = allTools.paths[tool] && allTools.paths[tool].js || `vizabi-${tool}`;
-  //   return path.join("assets/vendor/js", (path.extname(toolName) === "" ? path.join(toolName, path.basename(require.resolve(toolName))) : path.join(path.basename(toolName, ".js"), path.basename(toolName))));
-  // }),
   "vendor.js",
   "tools.js",
   "config/properties.js",
   "config/toolset.js",
   "config/datasources.js",
   "config/conceptMapping.js",
-  "config/entitysetMapping.js",
-  //"toolspage.js"
+  "config/entitysetMapping.js"
 );
 
 const deployDir = "tools";
@@ -239,26 +215,16 @@ export default [
       }),
       html({
         template: "src/index.html",
-        //modules: true,
-        externals: [
-          ...[
-            ...["vizabi-shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()
-            ].map(f => {
-              return "assets/css/" + path.basename(f);
-            }),
-            "styles.css",
-            ...jsAssets
-          ].map(file => {
-            return {
-              file,
-              pos: "before"
-            }
-          })
-        ]
+        externals: getHtmlAssets().map(file => {
+          return {
+            file,
+            pos: "before"
+          };
+        })
       }),
       (process.env.NODE_ENV === "production" && eslint()),
       babel({
-        babelHelpers: 'bundled',
+        babelHelpers: "bundled",
         exclude: "node_modules/**",
         presets: [["@babel/preset-env", {
           targets: {
