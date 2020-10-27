@@ -11,7 +11,7 @@
   {
   "id": "barrank",
   "tool": "BarRankChart",
-  "config": "BarRankChart-reactive", 
+  "config": "BarRankChart-reactive",
   "dataSources": ["sg", "wdi", "fasttrack"],
   "transition": ["select","time"],
   "title": "ranks",

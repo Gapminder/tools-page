@@ -121,7 +121,10 @@ function setTool(tool, skipTransition) {
         VIZABI_DEFAULT_MODEL && updateURL(model);
       })
     })
-    .catch(() => console.error("coudl not load config file: " + pathToConfig));
+    .catch((err) => console.error(`Could not load config file: ${pathToConfig}
+      Message: ${err.message}
+      Stack: ${err.stack}`
+    ));
 }
 
 //find marker with encoding of type "frame"
