@@ -43,12 +43,12 @@
     "vizabi-ddfcsv-reader": "4.0.1",
     "vizabi-ddfservice-reader": "^0.7.0",
     "vizabi-extapimap": "2.3.0",
-    "vizabi-linechart": "3.0.1",
+    "vizabi-linechart": "3.0.2",
     "vizabi-mountainchart": "2.4.2",
     "vizabi-popbyage": "2.3.2",
     "vizabi-reactive": "../vizabi/vizabi-reactive",
     "vizabi-sankey": "2.0.1",
-    "vizabi-shared-components": "1.2.2",
+    "vizabi-shared-components": "1.2.3",
     "vizabi-spreadsheet": "2.2.0"
   },
   "devDependencies": {
