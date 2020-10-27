@@ -25,6 +25,7 @@ import postcssUrl from "postcss-url";
 import iife from "rollup-plugin-iife";
 import legacy from "@rollup/plugin-legacy";
 import html from "rollup-plugin-html2";
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
 
 const copyright = `// ${meta.homepage} v${meta.version} Copyright ${(new Date).getFullYear()} ${meta.author.name}`;
@@ -161,6 +162,12 @@ export default [
       //format: "cjs",
       banner: copyright,
       sourcemap: true,
+      // sourcemapPathTransform: sourcePath => {
+      //   console.log(sourcePath)  
+      //   return sourcePath.replace(
+			// 	new RegExp(`^..${path.sep}`),
+      //   '~/pkg-name/'
+      // )},
       manualChunks(id) {
         if (/vizabi/.test(id)) {
           return "tools";
@@ -223,8 +230,8 @@ export default [
         })
       }),
       (process.env.NODE_ENV === "production" && eslint()),
-      babel({
-        babelHelpers: "bundled",
+      (process.env.NODE_ENV === "production" && babel({
+        babelHelpers: 'bundled',
         exclude: "node_modules/**",
         presets: [["@babel/preset-env", {
           targets: {
@@ -232,7 +239,8 @@ export default [
           },
           modules: false,
         }]]
-      }),
+      })),
+      sourcemaps(),
       jsonToJsEmitAssets(
         json({
           include: /src\/config/,
