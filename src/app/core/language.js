@@ -28,8 +28,8 @@ function setLocale(arg) {
     .attr("lang", langId)
     .attr("class", langId);
 
-  if (!viz || !viz.model) return;
-  viz.model.locale.id = arg;
+  if (!viz || !viz.services) return;
+  viz.services.locale.id = arg;
   appState.language = arg;
 }
 
