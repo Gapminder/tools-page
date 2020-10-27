@@ -26,117 +26,122 @@ import LocationService from "./core/location.service";
 import RelatedItems from "./related-items/related-items";
 import Footer from "./footer/footer";
 
-Message.init(
-  d3.select(".app-message"),
-  translator,
-  dispatch
-);
+const App = function() {
 
-const url = location.href;
-const upgradedUrl = upgradeUrl(url);
-if (upgradedUrl !== url) {
-  location.replace(upgradedUrl);
-}
+  Message.init(
+    d3.select(".app-message"),
+    translator,
+    dispatch
+  );
 
-const embeddedMatch = /embedded=(true|false)/.exec(window.location.search);
-d3.select(".wrapper").classed("embedded-view", (embeddedMatch || [])[1] === "true");
+  const url = location.href;
+  const upgradedUrl = upgradeUrl(url);
+  if (upgradedUrl !== url) {
+    location.replace(upgradedUrl);
+  }
 
-const tools = toolsPage_toolset.filter(f => !!f.tool).map(m => m.id);
-parseURL();
-Object.assign(appState, {
-  tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
-  language: ((URLI.model || {}).locale || {}).id || "en"
-});
-window.history.replaceState({
-  tool: appState.tool,
-  model: deepExtend({}, URLI.model, true)
-}, "Title");
-setTool();
+  const embeddedMatch = /embedded=(true|false)/.exec(window.location.search);
+  d3.select(".wrapper").classed("embedded-view", (embeddedMatch || [])[1] === "true");
 
-
-const languageSwitcher = new LanguageSwitcher(
-  d3.select(".header .app-language-switcher"),
-  translator,
-  dispatch,
-  {
-    languages: getLanguages(),
-    selectedLanguage: appState.language,
-    onClick: d => setLanguage(d.key)
+  const tools = toolsPage_toolset.filter(f => !!f.tool).map(m => m.id);
+  parseURL();
+  Object.assign(appState, {
+    tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
+    language: ((URLI.model || {}).locale || {}).id || "en"
   });
+  window.history.replaceState({
+    tool: appState.tool,
+    model: deepExtend({}, URLI.model, true)
+  }, "Title");
+  setTool();
 
-const chartSwitcher = new ChartSwitcher(
-  d3.select(".header .app-chart-switcher"),
-  translator,
-  dispatch,
-  {
-    tools: toolsPage_toolset,
-    appState,
-    onClick: d => {
-      dispatch.call("toolChanged", null, d.id);
-      setTool(d.id);
-    }
-  });
 
-const menu = new Menu(
-  d3.select(".header .app-menu"),
-  translator,
-  dispatch,
-  {
-    menuItems: menuItems.children
-  });
+  const languageSwitcher = new LanguageSwitcher(
+    d3.select(".header .app-language-switcher"),
+    translator,
+    dispatch,
+    {
+      languages: getLanguages(),
+      selectedLanguage: appState.language,
+      onClick: d => setLanguage(d.key)
+    });
 
-const menuMobile = new MenuMobile(
-  d3.select(".header .menu-mobile"),
-  translator,
-  dispatch,
-  {
-    menu: d3.select(".header")
-  });
+  const chartSwitcher = new ChartSwitcher(
+    d3.select(".header .app-chart-switcher"),
+    translator,
+    dispatch,
+    {
+      tools: toolsPage_toolset,
+      appState,
+      onClick: d => {
+        dispatch.call("toolChanged", null, d.id);
+        setTool(d.id);
+      }
+    });
 
-const seeAlso = new SeeAlso(
-  d3.select(".app-see-also"),
-  translator,
-  dispatch,
-  {
-    tools: toolsPage_toolset,
-    selectedTool: appState.tool,
-    onClick: d => {
-      scrollTo({
-        element: d3.select(".wrapper").node(),
-        complete: () => {
-          dispatch.call("toolChanged", null, d.id);
-          setTool(d.id);
-        }
-      });
-    }
-  });
+  const menu = new Menu(
+    d3.select(".header .app-menu"),
+    translator,
+    dispatch,
+    {
+      menuItems: menuItems.children
+    });
 
-const socialButtons = new SocialButtons(
-  d3.select(".social-list .app-social-buttons"),
-  translator,
-  dispatch,
-  {
-    bitlyService: BitlyService(),
-    locationService: LocationService(),
-  });
+  const menuMobile = new MenuMobile(
+    d3.select(".header .menu-mobile"),
+    translator,
+    dispatch,
+    {
+      menu: d3.select(".header")
+    });
 
-const related = new RelatedItems(
-  d3.select(".app-related-items"),
-  translator,
-  dispatch,
-  {
-    relatedItems
-  });
+  const seeAlso = new SeeAlso(
+    d3.select(".app-see-also"),
+    translator,
+    dispatch,
+    {
+      tools: toolsPage_toolset,
+      selectedTool: appState.tool,
+      onClick: d => {
+        scrollTo({
+          element: d3.select(".wrapper").node(),
+          complete: () => {
+            dispatch.call("toolChanged", null, d.id);
+            setTool(d.id);
+          }
+        });
+      }
+    });
 
-const footer = new Footer(
-  d3.select(".app-footer"),
-  translator,
-  dispatch);
+  const socialButtons = new SocialButtons(
+    d3.select(".social-list .app-social-buttons"),
+    translator,
+    dispatch,
+    {
+      bitlyService: BitlyService(),
+      locationService: LocationService(),
+    });
 
-const dataEditor = new DataEditor(
-  d3.select(".header .data-editor"),
-  translator,
-  dispatch,
-  {});
+  const related = new RelatedItems(
+    d3.select(".app-related-items"),
+    translator,
+    dispatch,
+    {
+      relatedItems
+    });
 
-setLanguage(appState.language);
+  const footer = new Footer(
+    d3.select(".app-footer"),
+    translator,
+    dispatch);
+
+  const dataEditor = new DataEditor(
+    d3.select(".header .data-editor"),
+    translator,
+    dispatch,
+    {});
+
+  setLanguage(appState.language);
+};
+
+export default App;

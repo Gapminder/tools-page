@@ -179,7 +179,7 @@ export default [
         runOnce: true
       })),
       virtual({
-        tools: generateToolInputEntries().map(entry => `import "${entry}";`).join("") + "export default '';"
+        "vizabi-tools": generateToolInputEntries().map(entry => `import "${entry}";`).join("") + "export default '';"
       }),
       resolve(),
       alias({
@@ -233,7 +233,6 @@ export default [
           modules: false,
         }]]
       }),
-      iife(),
       jsonToJsEmitAssets(
         json({
           include: /src\/config/,
@@ -253,22 +252,6 @@ export default [
         () => "VIZABI_MODEL",
         "config/toolconfigs/"
       ),
-      // url({
-      //   limit: 0,
-      //   fileName: "vendor/[dirname][name][extname]",
-      //   include: [
-      //     ...getEntryToolsCssFilenames()
-      //   ],
-      //   destDir: "build/tools/assets"
-      // }),
-      // url({
-      //   limit: 0,
-      //   fileName: "vendor/js/[name]/[name][extname]",
-      //   include: [
-      //     /(d3|urlon\.umd|web|reader|vizabi)\.js$/,
-      //   ],
-      //   destDir: "build/tools/assets"
-      // }),
       url({
         limit: 0,
         fileName: "vendor/[dirname][name][extname]",
@@ -297,6 +280,7 @@ export default [
         ENV: JSON.stringify(process.env.NODE_ENV || "development")
       }),
       (process.env.NODE_ENV === "production" && terser({output: {preamble: copyright}})),
+      iife(),
       (process.env.NODE_ENV === "devserver" && serve({
         contentBase: ["build"],
         port: 4200,
