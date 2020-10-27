@@ -8,12 +8,13 @@ import {
 import {
   getTransitionModel
 } from "./chart-transition";
-import { loadJS, comparePlainObjects, deepExtend } from "./utils";
+import { loadJS, comparePlainObjects, deepExtend, diffObject } from "./utils";
 import timeLogger from "./timelogger";
-import { observable } from 'mobx';
+import { observable, autorun, toJS, when } from "mobx";
 
 let viz;
 let stateListener;
+let urlUpdateDisposer;
 
 //cleanup the existing tool
 function removeTool() {
@@ -31,6 +32,8 @@ function setTool(tool, skipTransition) {
   if (tool === appState.tool) return;
   if (!tool) tool = appState.tool;
 
+  urlUpdateDisposer && urlUpdateDisposer();
+  
   const toolsetEntry = toolsPage_toolset.find(f => f.id === tool);
   const toolsetEntryPrevious = toolsPage_toolset.find(f => f.id === appState.tool);
   const toolModelPrevious = {} //TODO: viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL_PREVIOUS) : {};
@@ -75,9 +78,14 @@ function setTool(tool, skipTransition) {
         return deepExtend({}, pageConfig, transitionModel, true); //true --> overwrite by empty
       }
 
+      window.VIZABI_PAGE_MODEL = deepExtend({}, VIZABI_MODEL);
       let pageConfig = VIZABI_MODEL;
       pageConfig = applyDataConfigs(pageConfig);
       pageConfig = applyTransitionConfigs(pageConfig);
+      if (URLI.model && URLI.model.model) {
+        VizabiSharedComponents.Utils.mergeInTarget(pageConfig.model, deepExtend(URLI.model.model));
+      }
+      window.VIZABI_UI_CONFIG = observable(deepExtend({}, URLI.model.ui));
 
       const toolPrototype = window[toolsetEntry.tool];
       viz = new toolPrototype({
@@ -87,19 +95,54 @@ function setTool(tool, skipTransition) {
           "id": appState.language,
           "path": "assets/translation/"
         },
-        ui: observable(pageConfig.ui)
+        ui: VIZABI_UI_CONFIG,
+        default_ui: VIZABI_PAGE_MODEL.ui
       });
 
       window.viz = viz;
+      const mainMarker = getMarkerNameWithFrame(viz.model);
+
+      window.VIZABI_DEFAULT_MODEL = null;
+      when(() => viz.model.stores.markers.getAll().every(marker => marker.state == "fulfilled"), 
+        () => window.VIZABI_DEFAULT_MODEL = diffObject(filterModel(toJS(viz.model.config, {recurseEverything:true}), mainMarker), URLI.model.model || {}));
 
 //      timeLogger.removeAll();
 //      timeLogger.add("TOTAL");
 //      timeLogger.add((viz.model.ui || {}).splash ? "SPLASH" : "FULL");
 //      if (gaEnabled && gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_PROD, { "page_path": "/" + toolsetEntry.tool });
 //      if (gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_DEV, { "page_path": "/" + toolsetEntry.tool });
+      
+      urlUpdateDisposer = autorun(()=>{
+        const model = {
+          model: VizabiSharedComponents.Utils.clearEmpties(diffObject(filterModel(toJS(viz.model.config, {recurseEverything:true}), mainMarker), VIZABI_DEFAULT_MODEL || {})),
+          ui: VizabiSharedComponents.Utils.clearEmpties(diffObject(toJS(VIZABI_UI_CONFIG, {recurseEverything:true}), VIZABI_MODEL.ui))
+        }
 
+        VIZABI_DEFAULT_MODEL && updateURL(model);
+      })
     })
     .catch(() => console.error("coudl not load config file: " + pathToConfig));
+}
+
+//find marker with encoding of type "frame"
+function getMarkerNameWithFrame(model) {
+  for (const [markerName, marker] of model.stores.markers.named) {
+    for (const [encName, encoding] of marker.encoding) {
+      if (encoding.config.modelType === "frame") return markerName;
+    };
+  };
+}
+
+function filterModel(model, mainMarker) {
+  const filteredEncodings = ["highlighted"];
+  
+  Object.keys(model.markers).forEach(marker => {
+    if (marker !== mainMarker) delete model.markers[marker];
+  });
+
+  filteredEncodings.forEach(enc => delete model.markers[mainMarker].encoding[enc]);
+
+  return model;
 }
 
 export {

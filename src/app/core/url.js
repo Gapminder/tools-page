@@ -16,6 +16,9 @@ import {
   diffObject,
   comparePlainObjects
 } from "./utils";
+import { runInAction } from "mobx";
+
+const URL_VERSION = "v1";
 
 let poppedModel = {};
 let URLI = {};
@@ -38,7 +41,7 @@ window.addEventListener("popstate", e => {
     return;
   }
 
-  console.log("model diff", diffObject(e.state.model, viz.getModel()));
+  //console.log("model diff", diffObject(e.state.model, viz.getModel()));
   poppedModel = e.state.model;
   if (e.state.tool !== appState.tool) {
     parseURL();
@@ -50,7 +53,11 @@ window.addEventListener("popstate", e => {
     //updating vizabi model - updating url - updating vizabi model and so on…
     //because hook.spaceRef is not model prop from init
     popStateLoopFlag = true;
-    viz.setModel(poppedModel);
+    //viz.setModel(poppedModel);
+    runInAction(() => {
+      VizabiSharedComponents.Utils.replaceProps(VIZABI_UI_CONFIG, e.state.model.ui || {});
+      VizabiSharedComponents.Utils.mergeInTarget(viz.model.config, e.state.model.model || {});
+    });
   }
 
   const localeId = ((poppedModel || {}).locale || {}).id || "en";
@@ -61,30 +68,37 @@ window.addEventListener("popstate", e => {
 });
 
 //grabs width, height, tabs open, and updates the url
-function updateURL(event, replaceInsteadPush) {
+function updateURL(model, event, replaceInsteadPush) {
   resetPopStateLoopFlag();
-  if (popStateLoopFlag || (poppedModel && comparePlainObjects(viz.getModel(), poppedModel))) {
-    //popStateLoopFlag = false;
-    return;
-  }
+  // if (popStateLoopFlag || (poppedModel && comparePlainObjects(viz.getModel(), poppedModel))) {
+  //   //popStateLoopFlag = false;
+  //   return;
+  // }
 
-  poppedModel = viz.getModel();
+  // poppedModel = viz.getModel();
+  poppedModel = model;
 
-  let model;
-  if (typeof viz !== "undefined") {
-    minModel = viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL);
-  }
+  // if (typeof viz !== "undefined") {
+  //   minModel = viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL);
+  // }
 
   const url = {};
-  if (minModel && Object.keys(minModel).length > 0) {
-    Object.assign(url, minModel);
+  if (poppedModel.ui && Object.keys(poppedModel.ui).length > 0) {
+    Object.assign(url, {ui: poppedModel.ui});
   }
+  if (poppedModel.model && Object.keys(poppedModel.model).length > 0) {
+    Object.assign(url, {model: poppedModel.model});
+  }
+  // if (minModel && Object.keys(minModel).length > 0) {
+  //   Object.assign(url, minModel);
+  // }
   url["chart-type"] = appState.tool;
+  url["url"] = URL_VERSION;
 
   console.log("pushing state", poppedModel, event);
   window.history[replaceInsteadPush ? "replaceState" : "pushState"]({
     tool: url["chart-type"],
-    model: poppedModel
+    model: deepExtend({}, poppedModel, true)
   //need to encode symbols like # in color codes because urlon can't handle them properly
   }, "Title", "#" + urlon.stringify(url).replace(/=#/g, "=%23"));
 }
