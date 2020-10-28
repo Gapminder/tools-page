@@ -85,7 +85,7 @@ function setTool(tool, skipTransition) {
       if (URLI.model && URLI.model.model) {
         VizabiSharedComponents.Utils.mergeInTarget(pageConfig.model, deepExtend(URLI.model.model));
       }
-      window.VIZABI_UI_CONFIG = observable(deepExtend({}, URLI.model.ui));
+      window.VIZABI_UI_CONFIG = observable((URLI.model && URLI.model.ui) ? deepExtend({}, URLI.model.ui) : {});
 
       const toolPrototype = window[toolsetEntry.tool];
       viz = new toolPrototype({
@@ -100,11 +100,10 @@ function setTool(tool, skipTransition) {
       });
 
       window.viz = viz;
-      const mainMarker = getMarkerNameWithFrame(viz.model);
 
       window.VIZABI_DEFAULT_MODEL = null;
       when(() => viz.model.stores.markers.getAll().every(marker => marker.state == "fulfilled"), 
-        () => window.VIZABI_DEFAULT_MODEL = diffObject(filterModel(toJS(viz.model.config, {recurseEverything:true}), mainMarker), URLI.model.model || {}));
+        () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything:true}), URLI.model.model || {}));
 
 //      timeLogger.removeAll();
 //      timeLogger.add("TOTAL");
@@ -114,7 +113,7 @@ function setTool(tool, skipTransition) {
       
       urlUpdateDisposer = autorun(()=>{
         const model = {
-          model: VizabiSharedComponents.Utils.clearEmpties(diffObject(filterModel(toJS(viz.model.config, {recurseEverything:true}), mainMarker), VIZABI_DEFAULT_MODEL || {})),
+          model: VizabiSharedComponents.Utils.clearEmpties(diffObject(toJS(viz.model.config, {recurseEverything:true}), VIZABI_DEFAULT_MODEL || {})),
           ui: VizabiSharedComponents.Utils.clearEmpties(diffObject(toJS(VIZABI_UI_CONFIG, {recurseEverything:true}), VIZABI_MODEL.ui))
         }
 
@@ -125,27 +124,6 @@ function setTool(tool, skipTransition) {
       Message: ${err.message}
       Stack: ${err.stack}`
     ));
-}
-
-//find marker with encoding of type "frame"
-function getMarkerNameWithFrame(model) {
-  for (const [markerName, marker] of model.stores.markers.named) {
-    for (const [encName, encoding] of marker.encoding) {
-      if (encoding.config.modelType === "frame") return markerName;
-    };
-  };
-}
-
-function filterModel(model, mainMarker) {
-  const filteredEncodings = ["highlighted"];
-  
-  Object.keys(model.markers).forEach(marker => {
-    if (marker !== mainMarker) delete model.markers[marker];
-  });
-
-  filteredEncodings.forEach(enc => delete model.markers[mainMarker].encoding[enc]);
-
-  return model;
 }
 
 export {
