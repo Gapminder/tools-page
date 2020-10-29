@@ -117,7 +117,7 @@ function setTool(tool, skipTransition) {
           ui: VizabiSharedComponents.Utils.clearEmpties(diffObject(toJS(VIZABI_UI_CONFIG, {recurseEverything:true}), VIZABI_MODEL.ui))
         }
 
-        VIZABI_DEFAULT_MODEL && updateURL(model);
+        VIZABI_DEFAULT_MODEL && updateURL(model, undefined, true);
       })
     })
     .catch((err) => console.error(`Could not load config file: ${pathToConfig}
