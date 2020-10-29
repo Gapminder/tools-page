@@ -120,7 +120,7 @@ function setTool(tool, skipTransition) {
         VIZABI_DEFAULT_MODEL && updateURL(model, undefined, true);
       })
     })
-    .catch((err) => console.error(`Could not load config file: ${pathToConfig}
+    .catch((err) => console.error(`Failed to set up tool id = ${tool} with config from ${pathToConfig}
       Message: ${err.message}
       Stack: ${err.stack}`
     ));
