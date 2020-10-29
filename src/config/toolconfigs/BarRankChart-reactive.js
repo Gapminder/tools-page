@@ -6,29 +6,6 @@ __data = {
 VIZABI_MODEL = {
   model: {
     markers: {
-      "legend": {
-        data: {
-          ref: {
-            transform: "entityConceptSkipFilter",
-            model: "markers.bar.encoding.color"
-          }
-        },
-        encoding: {
-          color: {
-            data: {
-              concept: { ref: "markers.bar.encoding.color.data.concept" },
-              constant: { ref: "markers.bar.encoding.color.data.constant" }
-            },
-            scale: {
-              modelType: "color",
-              palette: { ref: "markers.bar.encoding.color.scale.palette" }
-            }
-          },
-          name: { data: { concept: "name" } },
-          rank: { data: { concept: "rank" } },
-          map: { data: { concept: "shape_lores_svg" } }
-        }
-      },
       "bar": {
         data: {
           locale: "en",
@@ -86,7 +63,30 @@ VIZABI_MODEL = {
             }
           }
         }
-      }
+      },
+      "legend": {
+        data: {
+          ref: {
+            transform: "entityConceptSkipFilter",
+            model: "markers.bar.encoding.color"
+          }
+        },
+        encoding: {
+          color: {
+            data: {
+              concept: { ref: "markers.bar.encoding.color.data.concept" },
+              constant: { ref: "markers.bar.encoding.color.data.constant" }
+            },
+            scale: {
+              modelType: "color",
+              palette: { ref: "markers.bar.encoding.color.scale.palette" }
+            }
+          },
+          name: { data: { concept: "name" } },
+          rank: { data: { concept: "rank" } },
+          map: { data: { concept: "shape_lores_svg" } }
+        }
+      },
     }
   },
   ui: {
