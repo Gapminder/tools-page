@@ -38,6 +38,7 @@
   {
     "id": "map",
     "tool": "BubbleMap",
+    "config": "BubbleMap-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
     "title": "maps",

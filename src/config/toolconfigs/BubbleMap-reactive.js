@@ -1,71 +1,50 @@
 __data = {
-  "modelType": "ddfbw",
-  "service": "https://big-waffle.gapminder.org",
-  "dataset": "SG-develop",
-  "name": "SG-develop"
+  modelType: "ddfcsv",
+  path: "./data/ddf--jheeffer--mdtest/"
 };
 
 VIZABI_MODEL = {
   model: {
     markers: {
       bubble: {
-        modelType: "bubble",
         data: {
           locale: "en",
           source: __data,
-          space: ["country", "time"],
-          // filter: {
-          //   markers: {},
-          //   dimensions: {
-          //     geo: {
-          //       "geo.is--un_state": true
-          //     }
-          //   }
-          // }
+          space: {
+            autoconfig: {
+              concept: {
+                $nin: ["age"]
+              }
+            }
+          }
         },
-        requiredEncodings: ["x1", "y1", "size"],
         encoding: {
           "selected": {
-            modelType: "selection",
-            data: { ref: "markers.bubble.encoding.trail.data" }
+            modelType: "selection"
           },
           "highlighted": {
             modelType: "selection"
-          },
-          "order": {
-            modelType: "order",
-            data: {
-              ref: "markers.bubble.encoding.size.data",
-              direction: "desc"
-            }
           },
           "size": {
             data: {
               concept: "population_total"
             },
-            scale: {
-              //type: "log"
+          },
+          "lat": {
+            data: {
+              space: ["geo"],
+              concept: "latitude"
             }
           },
-          "y1": {
+          "lon": {
             data: {
-              concept: "life_expectancy_years",
-            },
-            scale: {
-              //domain: [20, 40]
-            }
-          },
-          "x1": {
-            data: {
-              concept: "income_per_person_gdppercapita_ppp_inflation_adjusted"
-            },
-            scale: {
-              type: "log"
+              space: ["geo"],
+              concept: "longitude"
             }
           },
           "color": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "world_4region"
             },
             scale: {
@@ -75,23 +54,13 @@ VIZABI_MODEL = {
           },
           "label": {
             data: {
-              //space: ["country"],
               modelType: "entityPropertyDataConfig",
               concept: "name"
             }
           },
-          "size_label": {
-            data: {
-              constant: "_default"
-            },
-            scale: {
-              modelType: "size"
-            }
-          },
-          frame: {
+          "frame": {
             modelType: "frame",
             speed: 200,
-            value: "2019",
             data: {
               concept: {
                 autoconfig: {
@@ -99,17 +68,9 @@ VIZABI_MODEL = {
                 }
               }
             }
-          },
-          "trail": {
-            modelType: "trail",
-            groupDim: "time"
-          },
-          "repeat": {
-            modelType: "repeat",
-            row: ["y1"],
-            column: ["x1"]
           }
-        }
+        },
+        requiredEncodings: ["lat", "lon", "size"]
       },
       "legend": {
         data: {
@@ -134,7 +95,7 @@ VIZABI_MODEL = {
           rank: { data: { concept: "rank" } },
           map: { data: { concept: "shape_lores_svg" } }
         }
-      },
+      }
     }
   },
   ui: {
@@ -145,7 +106,7 @@ VIZABI_MODEL = {
     "dialogs": {
       "dialogs": {
         "popup": ["colors", "find", "moreoptions"],
-        "sidebar": ["colors", "find", "size", "zoom"],
+        "sidebar": ["colors", "find", "size"],
         "moreoptions": [
           "opacity",
           "speed",
@@ -153,7 +114,6 @@ VIZABI_MODEL = {
           "size",
           "colors",
           "label",
-          "zoom",
           "technical",
           "presentation",
           "about"

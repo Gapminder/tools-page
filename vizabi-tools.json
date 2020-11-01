@@ -2,7 +2,8 @@
   "tools": [
     "linechart",
     "barrankchart",
-    "bubblechart"
+    "bubblechart",
+    "bubblemap"
   ],
   "paths": {
   }

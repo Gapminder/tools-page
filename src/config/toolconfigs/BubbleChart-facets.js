@@ -1,8 +1,6 @@
 __data = {
-  "modelType": "ddfbw",
-  "service": "https://big-waffle.gapminder.org",
-  "dataset": "SG-develop",
-  "name": "SG-develop"
+  modelType: "ddfcsv",
+  path: "./data/ddf--jheeffer--mdtest/"
 };
 
 VIZABI_MODEL = {
@@ -13,17 +11,15 @@ VIZABI_MODEL = {
         data: {
           locale: "en",
           source: __data,
-          space: ["country", "time"],
-          // filter: {
-          //   markers: {},
-          //   dimensions: {
-          //     geo: {
-          //       "geo.is--un_state": true
-          //     }
-          //   }
-          // }
+          space: {
+            autoconfig: {
+              concept: {
+                $nin: ["age"]
+              }
+            }
+          }
         },
-        requiredEncodings: ["x1", "y1", "size"],
+        requiredEncodings: ["a", "b", "c", "d", "size"],
         encoding: {
           "selected": {
             modelType: "selection",
@@ -44,23 +40,39 @@ VIZABI_MODEL = {
               concept: "population_total"
             },
             scale: {
-              //type: "log"
+              type: "log"
             }
           },
-          "y1": {
+          "a": {
             data: {
-              concept: "life_expectancy_years",
+              concept: "life_expectancy",
             },
             scale: {
               //domain: [20, 40]
             }
           },
-          "x1": {
+          "b": {
             data: {
               concept: "income_per_person_gdppercapita_ppp_inflation_adjusted"
             },
             scale: {
               type: "log"
+            }
+          },
+          "c": {
+            data: {
+              concept: "population_total"
+            },
+            scale: {
+              type: "log"
+            }
+          },
+          "d": {
+            data: {
+              concept: "u5mr"
+            },
+            scale: {
+              //type: "log"
             }
           },
           "color": {
@@ -91,7 +103,6 @@ VIZABI_MODEL = {
           frame: {
             modelType: "frame",
             speed: 200,
-            value: "2019",
             data: {
               concept: {
                 autoconfig: {
@@ -106,8 +117,8 @@ VIZABI_MODEL = {
           },
           "repeat": {
             modelType: "repeat",
-            row: ["y1"],
-            column: ["x1"]
+            row: ["a", "b"],
+            column: ["d"]//, "c"]
           }
         }
       },
