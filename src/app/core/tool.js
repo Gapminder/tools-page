@@ -103,7 +103,7 @@ function setTool(tool, skipTransition) {
 
       window.VIZABI_DEFAULT_MODEL = null;
       when(() => viz.model.stores.markers.getAll().every(marker => marker.state == "fulfilled"), 
-        () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything:true}), URLI.model.model || {}));
+        () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything:true}), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}));
 
 //      timeLogger.removeAll();
 //      timeLogger.add("TOTAL");
