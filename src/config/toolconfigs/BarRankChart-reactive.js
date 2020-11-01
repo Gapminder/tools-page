@@ -7,6 +7,7 @@ VIZABI_MODEL = {
   model: {
     markers: {
       "bar": {
+        requiredEncodings: ["x"],
         data: {
           locale: "en",
           source: __data,
