@@ -36,7 +36,7 @@
     "urlon": "3.0.1",
     "vizabi-barchart-ds": "2.2.1",
     "vizabi-barrankchart": "3.0.2",
-    "vizabi-bubblechart": "^3.0.2",
+    "vizabi-bubblechart": "^3.0.3",
     "vizabi-bubblemap": "2.3.2",
     "vizabi-config-systema_globalis": "2.9.3",
     "vizabi-csv-reader": "0.4.4",
@@ -48,7 +48,7 @@
     "vizabi-popbyage": "2.3.2",
     "vizabi-reactive": "../vizabi/vizabi-reactive",
     "vizabi-sankey": "2.0.1",
-    "vizabi-shared-components": "1.2.3",
+    "vizabi-shared-components": "1.2.4",
     "vizabi-spreadsheet": "2.2.0"
   },
   "devDependencies": {
