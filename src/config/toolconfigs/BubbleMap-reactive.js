@@ -10,13 +10,7 @@ VIZABI_MODEL = {
         data: {
           locale: "en",
           source: __data,
-          space: {
-            autoconfig: {
-              concept: {
-                $nin: ["age"]
-              }
-            }
-          }
+          space: ["country", "time"]
         },
         encoding: {
           "selected": {
@@ -29,22 +23,25 @@ VIZABI_MODEL = {
             data: {
               concept: "population_total"
             },
+            scale: {
+              modelType: "size"
+            }
           },
           "lat": {
             data: {
-              space: ["geo"],
+              space: ["country"],
               concept: "latitude"
             }
           },
           "lon": {
             data: {
-              space: ["geo"],
+              space: ["country"],
               concept: "longitude"
             }
           },
           "color": {
             data: {
-              space: ["geo"],
+              space: ["country"],
               concept: "world_4region"
             },
             scale: {
@@ -56,6 +53,14 @@ VIZABI_MODEL = {
             data: {
               modelType: "entityPropertyDataConfig",
               concept: "name"
+            }
+          },
+          "size_label": {
+            data: {
+              constant: "_default"
+            },
+            scale: {
+              modelType: "size"
             }
           },
           "frame": {
