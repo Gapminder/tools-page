@@ -1,6 +1,6 @@
 __data = {
   modelType: "ddfcsv",
-  path: "./data/ddf--jheeffer--mdtest/"
+  path: "./data/ddf--jheeffer--mdtest"
 };
 
 VIZABI_MODEL = {
