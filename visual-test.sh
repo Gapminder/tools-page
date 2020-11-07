@@ -13,7 +13,7 @@ done < <(curl -s -X GET \
 
 for name in "${!env_vars[@]}"; do
     #echo "$name is ${env_vars[$name]}"
-    if [ "$name" == "GOOGLE_PRIVATE_KEY" ]; then 
+    if [[ "$name" == "GOOGLE_PRIVATE_KEY" || "$name" == "PERCY_TOKEN" ]]; then
       continue; 
     else 
       export $name="${env_vars[$name]}"
