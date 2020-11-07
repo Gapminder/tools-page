@@ -1,8 +1,3 @@
-__data = {
-  modelType: "ddfcsv",
-  path: "./data/ddf--jheeffer--mdtest/"
-};
-
 VIZABI_MODEL = {
   model: {
     markers: {
@@ -10,7 +5,7 @@ VIZABI_MODEL = {
         modelType: "bubble",
         data: {
           locale: "en",
-          source: __data,
+          source: { ref: "datasources.mdtest" },
           space: {
             autoconfig: {
               concept: {

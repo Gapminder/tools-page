@@ -1,5 +1,15 @@
-{
+{      
+  "mdtest": {
+    "modelType": "ddfcsv",
+    "path": "./data/ddf--jheeffer--mdtest"
+  },
   "sg": {
+    "modelType": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "SG-develop",
+    "name": "SG-develop"
+  },
+  "sg_old": {
     "reader": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
     "dataset": "SG-develop",

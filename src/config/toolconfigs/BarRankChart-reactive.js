@@ -1,8 +1,3 @@
-__data = {
-  modelType: "ddfcsv",
-  path: "./data/ddf--jheeffer--mdtest"
-};
-
 VIZABI_MODEL = {
   model: {
     markers: {
@@ -10,7 +5,7 @@ VIZABI_MODEL = {
         requiredEncodings: ["x"],
         data: {
           locale: "en",
-          source: __data,
+          source: { ref: "datasources.sg" },
           space: {
             autoconfig: {
               concept: {
@@ -33,6 +28,7 @@ VIZABI_MODEL = {
           },
           "y": {
             data: {
+              space: ["country"],
               concept: "name"
             }
           },

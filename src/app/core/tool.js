@@ -48,27 +48,27 @@ function setTool(tool, skipTransition) {
         .append("div")
         .attr("class", "vzb-placeholder")
         .attr("style", "width: 100%; height: 100%;");
+        
 
-
+      // apply data models from configuration to pageConfig
       function applyDataConfigs(pageConfig) {
-        const dataSourcesId = toolsetEntry.dataSources || Object.keys(toolsPage_datasources);
-        const dataSources = dataSourcesId.map(ds => toolsPage_datasources[ds]);
-
+        if (!pageConfig.model.data) pageConfig.model.datasources = {};
         const urlDataConfig = (URLI.model || {}).data;
-        const skipPageConfig = urlDataConfig && !comparePlainObjects(urlDataConfig, dataSources[0]);
-        if (skipPageConfig) pageConfig = {};
 
-        // apply data models from configuration to pageConfig
-        const urlHasDataConfig = Object.keys(URLI.model || {}).some(f => f.includes("data"));
-        if (urlHasDataConfig) {
-          return Object.assign(pageConfig, dataSources.length > 1 ? 
-            dataSources.reduce((result, ds, index) => {
-              result["data" + (index ? "_" + dataSourcesId[index] : "")] = ds;
-              return result;
-            }, {})
-            : { data: dataSources[0] });
+        if (urlDataConfig) {
+          //TODO handle the case when preferred data config of a marker/encoding is no longer among the data condigs of the URL
+          pageConfig.model.datasources = urlDataConfig;
+        } else {
+          //bring data configs from a separate config file to the page config (those mentioned in toolset)
+
+          const dataSourcesId = toolsetEntry.dataSources || Object.keys(toolsPage_datasources);
+          dataSourcesId.forEach(ds => {
+            if (!toolsPage_datasources[ds]) 
+              console.warn(`Could not find data config with key ${ds} in datasources file`);
+            else
+              pageConfig.model.datasources[ds] = toolsPage_datasources[ds];
+          });
         }
-
         return pageConfig;
       }
 

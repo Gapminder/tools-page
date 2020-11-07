@@ -1,10 +1,3 @@
-__data = {
-  "modelType": "ddfbw",
-  "service": "https://big-waffle.gapminder.org",
-  "dataset": "SG-develop",
-  "name": "SG-develop"
-};
-
 VIZABI_MODEL = {
   model: {
     markers: {
@@ -12,7 +5,7 @@ VIZABI_MODEL = {
         modelType: "bubble",
         data: {
           locale: "en",
-          source: __data,
+          source: { ref: "datasources.sg" },
           space: ["country", "time"],
           // filter: {
           //   markers: {},

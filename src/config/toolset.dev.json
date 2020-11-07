@@ -39,7 +39,7 @@
     "id": "map",
     "tool": "BubbleMap",
     "config": "BubbleMap-reactive", 
-    "dataSources": ["sg", "wdi", "fasttrack"],
+    "dataSources": ["mdtest", "sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
     "title": "maps",
     "image": "/assets/images/chart/maps-chart.png"
