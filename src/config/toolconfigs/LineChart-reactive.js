@@ -16,7 +16,7 @@ VIZABI_MODEL = {
             }
           },
           locale: "en",
-          source: { ref: "datasources.sg" },
+          source: "sg",
           space: {
             autoconfig: {
               concept: {

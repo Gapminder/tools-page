@@ -5,7 +5,7 @@ VIZABI_MODEL = {
         requiredEncodings: ["x"],
         data: {
           locale: "en",
-          source: { ref: "datasources.sg" },
+          source: "sg",
           space: {
             autoconfig: {
               concept: {

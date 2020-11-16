@@ -21,14 +21,16 @@
     "dataset": "population-develop"
   },
   "wdi": {
-    "reader": "ddfbw",
+    "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "wdi-develop"
+    "dataset": "wdi-develop",
+    "name": "wdi-develop"
   },
   "fasttrack": {
-    "reader": "ddfbw",
+    "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "fasttrack"
+    "dataset": "fasttrack",
+    "name": "fasttrack"
   }
 }
 

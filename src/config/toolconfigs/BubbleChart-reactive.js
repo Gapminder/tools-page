@@ -5,7 +5,7 @@ VIZABI_MODEL = {
         modelType: "bubble",
         data: {
           locale: "en",
-          source: { ref: "datasources.sg" },
+          source: "sg",
           space: ["country", "time"],
           // filter: {
           //   markers: {},

@@ -52,12 +52,12 @@ function setTool(tool, skipTransition) {
 
       // apply data models from configuration to pageConfig
       function applyDataConfigs(pageConfig) {
-        if (!pageConfig.model.data) pageConfig.model.datasources = {};
+        if (!pageConfig.model.data) pageConfig.model.dataSources = {};
         const urlDataConfig = (URLI.model || {}).data;
 
         if (urlDataConfig) {
           //TODO handle the case when preferred data config of a marker/encoding is no longer among the data condigs of the URL
-          pageConfig.model.datasources = urlDataConfig;
+          pageConfig.model.dataSources = urlDataConfig;
         } else {
           //bring data configs from a separate config file to the page config (those mentioned in toolset)
 
@@ -66,7 +66,7 @@ function setTool(tool, skipTransition) {
             if (!toolsPage_datasources[ds]) 
               console.warn(`Could not find data config with key ${ds} in datasources file`);
             else
-              pageConfig.model.datasources[ds] = toolsPage_datasources[ds];
+              pageConfig.model.dataSources[ds] = toolsPage_datasources[ds];
           });
         }
         return pageConfig;
