@@ -3,7 +3,8 @@
     "linechart",
     "barrankchart",
     "bubblechart",
-    "bubblemap"
+    "bubblemap",
+    "mountainchart"
   ],
   "paths": {
   }
