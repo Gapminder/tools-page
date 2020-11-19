@@ -157,6 +157,13 @@ VIZABI_MODEL = {
       labels: {
         removeLabelBox: true
       }
-    }
+    },
+    "tree-menu": {
+      "folderStrategyByDataset": {
+        "sg": "spread",
+        "fasttrack": "spread",
+        "wdi": "folder:other_datasets"
+      }
+    },
   }
 };
