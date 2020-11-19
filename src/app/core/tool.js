@@ -102,7 +102,11 @@ function setTool(tool, skipTransition) {
       window.viz = viz;
 
       window.VIZABI_DEFAULT_MODEL = null;
-      when(() => viz.model.stores.markers.getAll().every(marker => marker.state == "fulfilled"), 
+      when(() => Object.keys(viz.model.config.markers)
+        .every(markerId => {
+          const marker = viz.model.stores.markers.get(markerId);
+          return marker && marker.state == "fulfilled";
+        }), 
         () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything:true}), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}));
 
 //      timeLogger.removeAll();
