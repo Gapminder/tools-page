@@ -108,6 +108,20 @@ VIZABI_MODEL = {
   },
   ui: {
     //ui
+    "chart": {
+      "decorations": {
+        "enabled": true,
+        "xAxisGroups": {
+          "income_per_person_gdppercapita_ppp_inflation_adjusted": [
+            {"min": null, "max": 2, "label": "incomegroups/level1", "label_short": "incomegroups/level1short"},
+            {"min": 2, "max": 8, "label": "incomegroups/level2", "label_short": "incomegroups/level2short"},
+            {"min": 8, "max": 32, "label": "incomegroups/level3", "label_short": "incomegroups/level3short"},
+            {"min": 32, "max": null, "label": "incomegroups/level4", "label_short": "incomegroups/level4short"}
+          ]
+        }
+      },
+      "showForecastOverlay": true
+    },
     "time-slider": {
       "show_value": false
     },
