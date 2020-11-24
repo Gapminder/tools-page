@@ -113,7 +113,7 @@ VIZABI_MODEL = {
           //"axes",
           "size",
           "colors",
-          "label",
+          //"label",
           "technical",
           "presentation",
           "about"
@@ -122,7 +122,7 @@ VIZABI_MODEL = {
     },
     "chart": {
       labels: {
-        removeLabelBox: true
+        removeLabelBox: false
       }
     }
   }
