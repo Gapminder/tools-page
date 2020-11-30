@@ -106,7 +106,7 @@ function setTool(tool, skipTransition) {
         .every(markerId => {
           const marker = viz.model.stores.markers.get(markerId);
           return marker && marker.state == "fulfilled";
-        }), 
+        }),
         () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything:true}), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}));
 
 //      timeLogger.removeAll();
@@ -114,15 +114,31 @@ function setTool(tool, skipTransition) {
 //      timeLogger.add((viz.model.ui || {}).splash ? "SPLASH" : "FULL");
 //      if (gaEnabled && gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_PROD, { "page_path": "/" + toolsetEntry.tool });
 //      if (gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_DEV, { "page_path": "/" + toolsetEntry.tool });
-      
-      urlUpdateDisposer = autorun(()=>{
+
+      const removeProperties = (obj, array) => {
+        Object.keys(obj).forEach(key => {
+          if (array.includes(key))
+            delete obj[key];
+          else
+            (obj[key] && typeof obj[key] === 'object') && removeProperties(obj[key], array);
+        });
+        return obj;
+      };
+
+      urlUpdateDisposer = autorun(() => {
+        let jsmodel = toJS(viz.model.config, { recurseEverything: true });
+        jsmodel = removeProperties(jsmodel, ["highlighted", "frame"]);
+
+        let jsui = toJS(VIZABI_UI_CONFIG, { recurseEverything: true} );
+        jsui = removeProperties(jsui, ["dragging"]);
+
         const model = {
-          model: VizabiSharedComponents.Utils.clearEmpties(diffObject(toJS(viz.model.config, {recurseEverything:true}), VIZABI_DEFAULT_MODEL || {})),
-          ui: VizabiSharedComponents.Utils.clearEmpties(diffObject(toJS(VIZABI_UI_CONFIG, {recurseEverything:true}), VIZABI_MODEL.ui))
-        }
+          model: VizabiSharedComponents.Utils.clearEmpties(diffObject(jsmodel, VIZABI_DEFAULT_MODEL || {})),
+          ui: VizabiSharedComponents.Utils.clearEmpties(diffObject(jsui, VIZABI_MODEL.ui))
+        };
 
         VIZABI_DEFAULT_MODEL && updateURL(model, undefined, true);
-      })
+      });
     })
     .catch((err) => console.error(`Failed to set up tool id = ${tool} with config from ${pathToConfig}
       Message: ${err.message}

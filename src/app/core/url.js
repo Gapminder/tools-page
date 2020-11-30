@@ -95,7 +95,7 @@ function updateURL(model, event, replaceInsteadPush) {
   url["chart-type"] = appState.tool;
   url["url"] = URL_VERSION;
 
-  console.log("pushing state", poppedModel, event);
+  //console.log("pushing state", poppedModel, event);
   window.history[replaceInsteadPush ? "replaceState" : "pushState"]({
     tool: url["chart-type"],
     model: deepExtend({}, poppedModel, true)
