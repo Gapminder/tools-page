@@ -102,7 +102,7 @@ VIZABI_MODEL = {
         "moreoptions": ["opacity", "speed", "colors", "presentation", "about"]
       },
       "find": {
-        "panelMode": "show",
+        "panelMode": "find",
         "showTabs": {
           "country": "open"
         }

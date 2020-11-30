@@ -5,9 +5,16 @@ VIZABI_MODEL = {
         data: {
           locale: "en",
           source: "sg",
-          space: ["country", "time"],
+          space: ["country", "time"]
         },
+        requiredEncodings: ["x", "y", "s"],
         encoding: {
+          "unstate": {
+            data: {
+              space: ["country"],
+              concept: "un_state"
+            }
+          },
           "selected": {
             modelType: "selection"
           },
@@ -69,6 +76,8 @@ VIZABI_MODEL = {
             }
           },
           frame: {
+            value: "2019",
+            endBeforeForecast: "2019",
             modelType: "frame",
             speed: 200,
             data: {
@@ -96,7 +105,11 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "color",
-              palette: { ref: "markers.mountain.encoding.color.scale.palette" }
+              palette: { ref: "markers.mountain.encoding.color.scale.palette" },
+              type: null,
+              domain: null,
+              range: null,
+              zoomed: null
             }
           },
           name: { data: { concept: "name" } },
@@ -120,7 +133,9 @@ VIZABI_MODEL = {
           ]
         }
       },
-      "showForecastOverlay": true
+      "showForecastOverlay": true,
+      "showForecast": true,
+      "pauseBeforeForecast": true,
     },
     "time-slider": {
       "show_value": false
@@ -135,7 +150,7 @@ VIZABI_MODEL = {
         "moreoptions": ["opacity", "speed", "colors", "presentation", "about"]
       },
       "find": {
-        "panelMode": "show",
+        "panelMode": "find",
         "showTabs": {
           "country": "open"
         }
