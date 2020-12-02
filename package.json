@@ -44,7 +44,7 @@
     "vizabi-ddfservice-reader": "^2.0.0",
     "vizabi-extapimap": "2.3.0",
     "vizabi-linechart": "3.0.2",
-    "vizabi-mountainchart": "3.0.3",
+    "vizabi-mountainchart": "3.0.4",
     "vizabi-popbyage": "2.3.2",
     "vizabi-reactive": "../vizabi/vizabi-reactive",
     "vizabi-sankey": "2.0.1",

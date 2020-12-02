@@ -59,7 +59,8 @@ VIZABI_MODEL = {
             data: {
               space: ["country"],
               constant: "all"
-            }
+            },
+            "merge": false
           },
           "group": {
             data: {
@@ -141,7 +142,7 @@ VIZABI_MODEL = {
       "show_value": false
     },
     "buttons": {
-      "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
+      "buttons": ["colors", "find", "stack", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
     },
     "dialogs": {
       "dialogs": {
