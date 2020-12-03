@@ -96,7 +96,10 @@ function setTool(tool, skipTransition) {
           "path": "assets/translation/"
         },
         ui: VIZABI_UI_CONFIG,
-        default_ui: VIZABI_PAGE_MODEL.ui
+        default_ui: VIZABI_PAGE_MODEL.ui,
+        options: {
+          showLoading: true
+        }
       });
 
       window.viz = viz;
