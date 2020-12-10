@@ -7,7 +7,7 @@ html, body
 
 body
   background-color white
-  font-family 'Bariol Regular', Arial, sans-serif
+  font-family $theme-font-regular
   min-width $body-min-width
   padding 0
   margin 0
@@ -42,7 +42,7 @@ body
 .heading-2
   margin 0
   margin-bottom 10px
-  font-family "Bariol Light","Helvetica Neue",Helvetica,Arial,sans-serif
+  font-family $theme-font-regular
   get-font-size(medium)
   line-height 1.4
   text-transform uppercase
@@ -78,10 +78,10 @@ body
     display block
 
 .vzb-tool
-  font-family 'Bariol Regular', "Lucida Sans Unicode", "Lucida Grande", sans-serif !important
+  font-family $theme-font-regular !important
 
   .vzb-dynamic-background
-    font-family $courier-prime-font-family
+    font-family $theme-font-monospace-regular
 
 .vzb-tool-buttonlist, .vzb-dialog-zoom-buttonlist, .vzb-tool-dialogs, .vzb-sidebar, .vzb-dialog-checkbox label:before
   background-color white !important
