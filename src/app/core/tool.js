@@ -95,6 +95,9 @@ function setTool(tool, skipTransition) {
           "id": appState.language,
           "path": "assets/translation/"
         },
+        layout: {
+          "projector": appState.projector
+        },
         ui: VIZABI_UI_CONFIG,
         default_ui: VIZABI_PAGE_MODEL.ui,
         options: {

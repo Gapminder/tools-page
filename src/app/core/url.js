@@ -60,10 +60,15 @@ window.addEventListener("popstate", e => {
     });
   }
 
-  const localeId = ((poppedModel || {}).locale || {}).id || "en";
-  if (localeId !== appState.language) {
+  const localeId = ((poppedModel || {}).locale || {}).id;
+  if (localeId && localeId !== appState.language) {
     setLanguage(localeId);
     dispatch.call("languageChanged", null, localeId);
+  }
+
+  const projector = (poppedModel || {}).projector;
+  if (projector && projector !== appState.projector) {
+    dispatch.call("projectorChanged", null, projector);
   }
 });
 
