@@ -32,7 +32,7 @@ const ddfReader = new DDFCsvReader.getDDFCsvReaderObject();
 Vizabi.stores.dataSources.createAndAddType("ddfcsv", ddfReader);
 
 //External CSV reader integration
-//Vizabi.stores.dataSources.createAndAddType("csv", CsvReader.csvReaderObject);
+Vizabi.stores.dataSources.createAndAddType("csv", CsvReader.csvReaderObject);
 
 //Excel reader integration
 //Vizabi.stores.dataSources.createAndAddType("excel", ExcelReader.excelReaderObject);
