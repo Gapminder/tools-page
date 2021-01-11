@@ -89,7 +89,8 @@ VIZABI_MODEL = {
           },
           "label": {
             data: {
-              space: ["product"],
+              //space: ["product"],
+              modelType: "entityPropertyDataConfig",
               concept: "name"
             }
           },
@@ -135,22 +136,26 @@ VIZABI_MODEL = {
       }
     }
   },
+
   ui: {
     "time-slider": {
       "show_value": true
     },
     "buttons": {
-      "buttons": ["presentation"]
+      "buttons": ["find", "colors", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
     },
     "dialogs": {
       "dialogs": {
-        "popup": [],
-        "sidebar": [],
-        "moreoptions": []
+        "popup": ["colors", "find", "moreoptions"],
+        "sidebar": ["colors", "find"],
+        "moreoptions": ["opacity", "colors", "speed", "axes", "presentation", "about"]
       },
       "find": {
         "panelMode": "show",
         "showTabs": {
+          "flow": "open",
+          "product": "open",
+          "geo": "open"
         }
       }
     }
