@@ -28,6 +28,30 @@ function removeTool() {
     .remove();
 }
 
+function splash(marker, splashFilter) {
+  let splashConfig = Vizabi.utils.deepclone(marker.config);
+  const filterMerge = { data: { filter: { dimensions: splashFilter } } };
+  splashConfig = Vizabi.utils.deepmerge(splashConfig, filterMerge);
+
+  const splashMarker = Vizabi.marker(splashConfig);
+
+  return new Proxy(marker, {
+    get: (target, prop, receiver) => {
+
+      if (marker.state == "fulfilled")
+        return target[prop];
+      else if (splashMarker.state == "fulfilled") {
+        //console.log('getting ' + prop + ' from splash');
+        return splashMarker[prop];
+      } else {
+        //console.log('Still loading, trying to get ' + prop + '. Returning from full marker');
+        return target[prop];
+      }
+
+    }
+  });
+}
+
 function setTool(tool, skipTransition) {
   if (tool === appState.tool) return;
   if (!tool) tool = appState.tool;
@@ -90,6 +114,7 @@ function setTool(tool, skipTransition) {
       const toolPrototype = window[toolsetEntry.tool];
       viz = new toolPrototype({
         placeholder: ".vzb-placeholder",
+        splash,
         model: Vizabi(pageConfig.model),
         locale: {
           "id": appState.language,
