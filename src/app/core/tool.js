@@ -28,7 +28,13 @@ function removeTool() {
     .remove();
 }
 
-function splash(marker, splashFilter) {
+function splash(marker) {
+  let splashDoneOnce = false;
+  const splashFrameValue = marker.config.encoding.frame.value;
+  const splashConcept = marker.config.encoding.frame.data.concept;
+  const splashFilter = {};
+  splashFilter[splashConcept] = {};
+  splashFilter[splashConcept][splashConcept] = splashFrameValue;
   let splashConfig = Vizabi.utils.deepclone(marker.config);
   const filterMerge = { data: { filter: { dimensions: splashFilter } } };
   splashConfig = Vizabi.utils.deepmerge(splashConfig, filterMerge);
@@ -36,18 +42,16 @@ function splash(marker, splashFilter) {
   const splashMarker = Vizabi.marker(splashConfig);
 
   return new Proxy(marker, {
-    get: (target, prop, receiver) => {
+    get: (target, prop) => {
 
-      if (marker.state == "fulfilled")
+      if (marker.state == "fulfilled") {
+        //splashDoneOnce prevents running splash load on subsequent changes in marker
+        splashDoneOnce = true;
         return target[prop];
-      else if (splashMarker.state == "fulfilled") {
-        //console.log('getting ' + prop + ' from splash');
+      } else if (!splashDoneOnce && splashMarker.state == "fulfilled") {
         return splashMarker[prop];
-      } else {
-        //console.log('Still loading, trying to get ' + prop + '. Returning from full marker');
-        return target[prop];
       }
-
+      return target[prop];
     }
   });
 }

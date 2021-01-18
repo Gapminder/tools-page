@@ -82,11 +82,7 @@ VIZABI_MODEL = {
             modelType: "frame",
             speed: 200,
             data: {
-              concept: {
-                autoconfig: {
-                  concept_type: "time"
-                }
-              }
+              concept: "time"
             }
           }
         }
