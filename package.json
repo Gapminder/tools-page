@@ -44,11 +44,11 @@
     "vizabi-ddfservice-reader": "^2.0.0",
     "vizabi-extapimap": "2.3.0",
     "vizabi-linechart": "3.0.2",
-    "vizabi-mountainchart": "3.0.7",
+    "vizabi-mountainchart": "3.0.8",
     "vizabi-popbyage": "2.3.2",
     "vizabi-reactive": "../vizabi/vizabi-reactive",
     "vizabi-sankey": "2.0.1",
-    "vizabi-shared-components": "1.2.9",
+    "vizabi-shared-components": "1.2.10",
     "vizabi-spreadsheet": "2.2.0"
   },
   "devDependencies": {
