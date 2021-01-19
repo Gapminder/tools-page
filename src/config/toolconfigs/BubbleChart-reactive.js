@@ -7,14 +7,9 @@ VIZABI_MODEL = {
           locale: "en",
           source: "sg",
           space: ["country", "time"],
-          // filter: {
-          //   markers: {},
-          //   dimensions: {
-          //     geo: {
-          //       "geo.is--un_state": true
-          //     }
-          //   }
-          // }
+          filter: {
+            dimensions: { "country": { "un_state": true } }
+          }
         },
         requiredEncodings: ["x1", "y1", "size"],
         encoding: {
