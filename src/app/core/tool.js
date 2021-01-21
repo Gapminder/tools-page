@@ -173,7 +173,7 @@ function setTool(tool, skipTransition) {
         };
 
         VIZABI_DEFAULT_MODEL && updateURL(model, undefined, true);
-      });
+      }, { name: "tool.js: update url" });
     })
     .catch((err) => console.error(`Failed to set up tool id = ${tool} with config from ${pathToConfig}
       Message: ${err.message}
