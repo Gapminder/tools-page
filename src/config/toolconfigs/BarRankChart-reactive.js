@@ -6,12 +6,9 @@ VIZABI_MODEL = {
         data: {
           locale: "en",
           source: "sg",
-          space: {
-            autoconfig: {
-              concept: {
-                $nin: ["age"]
-              }
-            }
+          space: ["country", "time"],
+          filter: {
+            dimensions: { "country": { "un_state": true } }
           }
         },
         encoding: {
@@ -52,12 +49,9 @@ VIZABI_MODEL = {
           frame: {
             modelType: "frame",
             speed: 200,
+            value: "2019",
             data: {
-              concept: {
-                autoconfig: {
-                  concept_type: "time"
-                }
-              }
+              concept: "time"
             }
           }
         }
