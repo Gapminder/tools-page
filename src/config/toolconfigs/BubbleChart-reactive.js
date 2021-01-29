@@ -20,13 +20,14 @@ VIZABI_MODEL = {
           "highlighted": {
             modelType: "selection"
           },
-          "order": {
-            modelType: "order",
-            data: {
-              ref: "markers.bubble.encoding.size.data",
-              direction: "desc"
-            }
-          },
+          //enabling order encoding results in chart not respecting splash load and waiting full data to render both splash and full picture
+          // "order": {
+          //   modelType: "order",
+          //   data: {
+          //     ref: "markers.bubble.encoding.size.data",
+          //     direction: "desc"
+          //   }
+          // },
           "size": {
             data: {
               concept: "population_total"
@@ -81,11 +82,7 @@ VIZABI_MODEL = {
             speed: 200,
             value: "2019",
             data: {
-              concept: {
-                autoconfig: {
-                  concept_type: "time"
-                }
-              }
+              concept: "time"
             }
           },
           "trail": {
