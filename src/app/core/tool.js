@@ -29,7 +29,7 @@ function removeTool() {
 }
 
 function splash(marker) {
-  let splashDoneOnce = false;
+  let splashDoneOnce = true;
   const splashFrameValue = marker.config.encoding.frame.value;
   const splashConcept = marker.config.encoding.frame.data.concept;
   const splashFilter = {};

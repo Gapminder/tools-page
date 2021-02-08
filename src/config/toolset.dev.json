@@ -2,8 +2,8 @@
   {
     "id": "bubbles",
     "tool": "BubbleChart",
-    "config": "BubbleChart-reactive", 
-    "dataSources": ["sg", "wdi", "fasttrack"],
+    "config": "BubbleChart-corona", 
+    "dataSources": ["csv1","csv2","corona"],
     "transition": ["select","time"],
     "title": "bubbles",
     "image": "/assets/images/chart/bubble-chart.png"

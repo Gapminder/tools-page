@@ -1,4 +1,19 @@
-{      
+{   
+  "csv1": {
+    "path": "https://docs.google.com/spreadsheets/d/1Th6bfbI55Lrimj2qyqUI4TeFmiNM3AHGbYJK4ZpBgRY/edit?usp=sharing",
+    "sheet": "data T1-T6",
+    "dtypes": { "week": "week" }
+  },   
+  "csv2": {
+    "path": "https://docs.google.com/spreadsheets/d/1Sz6me5mQe5yorsjy6A_2ILVRX76MUeNX9yqozsoGDRo",
+    "sheet": "data T7-T12",
+    "dtypes": { "week": "week" }
+  },  
+  "corona": {
+    "path": "https://docs.google.com/spreadsheets/d/15iXwX3UhUiY2MWxXC2MTKORsg1DLqOS7CKBizI61vL0/edit%23gid=2147279660",
+    "sheet": "corona",
+    "dtypes": { "week": "week" }
+  },  
   "mdtest": {
     "modelType": "ddfcsv",
     "path": "./data/ddf--jheeffer--mdtest"
