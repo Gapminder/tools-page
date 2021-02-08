@@ -5,16 +5,13 @@ VIZABI_MODEL = {
         data: {
           locale: "en",
           source: "sg",
-          space: ["country", "time"]
+          space: ["country", "time"],
+          filter: {
+            dimensions: { "country": { "un_state": true } }
+          }
         },
         requiredEncodings: ["x", "y", "s"],
         encoding: {
-          "unstate": {
-            data: {
-              space: ["country"],
-              concept: "un_state"
-            }
-          },
           "selected": {
             modelType: "selection"
           },
