@@ -18,45 +18,44 @@ VIZABI_MODEL = {
             modelType: "selection"
           },
           //enabling order encoding results in chart not respecting splash load and waiting full data to render both splash and full picture
-          // "order": {
-          //   modelType: "order",
-          //   data: {
-          //     ref: "markers.bubble.encoding.size.data",
-          //     direction: "desc"
-          //   }
-          // },
+          "order": {
+            modelType: "order",
+            data: {
+              ref: "markers.bubble.encoding.size.data",
+              direction: "desc"
+            }
+          },
           "size": {
             data: {
-              concept: "Befolkning Totalt",
-              source: "csv2"
-
-            },
-            scale: {
-              //type: "log"
+              concept: {
+                autoconfig: {
+                  concept_type: "measure"
+                }
+              }
             }
           },
           "y1": {
             data: {
-              concept: "cases_per_capita_2w5",
-              source: "corona"
-            },
-            scale: {
-              //domain: [20, 40]
+              concept: {
+                autoconfig: {
+                  concept_type: "measure"
+                }
+              }
             }
           },
           "x1": {
             data: {
-              concept: "Inkomst: Median",
-              source: "csv2"
-            },
-            scale: {
-              type: "linear"
+              concept: {
+                autoconfig: {
+                  concept_type: "measure"
+                }
+              }
             }
           },
           "color": {
             data: {
-              space: ["postnummer", "week"],
-              concept: "0 personbilar"
+              concept: "Genomsnittlig boarea per person",
+              source: "csv2"
             },
             scale: {
               modelType: "color",
@@ -81,7 +80,7 @@ VIZABI_MODEL = {
           frame: {
             modelType: "frame",
             speed: 200,
-            value: "2013",
+            value: "55",
             data: {
               concept: "week"
             }
