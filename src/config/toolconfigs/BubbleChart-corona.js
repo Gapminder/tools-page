@@ -26,29 +26,30 @@ VIZABI_MODEL = {
           },
           "size": {
             data: {
-              concept: {
-                autoconfig: {
-                  concept_type: "measure"
-                }
-              }
+              concept: "Befolkning Totalt",
+              source: "csv2"
+
+            },
+            scale: {
+              //type: "log"
             }
           },
           "y1": {
             data: {
-              concept: {
-                autoconfig: {
-                  concept_type: "measure"
-                }
-              }
+              concept: "cases_per_capita_2w5",
+              source: "corona"
+            },
+            scale: {
+              //domain: [20, 40]
             }
           },
           "x1": {
             data: {
-              concept: {
-                autoconfig: {
-                  concept_type: "measure"
-                }
-              }
+              concept: "Inkomst: Median",
+              source: "csv2"
+            },
+            scale: {
+              type: "linear"
             }
           },
           "color": {
