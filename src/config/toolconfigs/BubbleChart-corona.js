@@ -11,8 +11,7 @@ VIZABI_MODEL = {
         requiredEncodings: ["x1", "y1", "size"],
         encoding: {
           "selected": {
-            modelType: "selection",
-            data: { ref: "markers.bubble.encoding.trail.data" }
+            modelType: "selection"
           },
           "highlighted": {
             modelType: "selection"
