@@ -14,8 +14,7 @@ VIZABI_MODEL = {
         requiredEncodings: ["x1", "y1", "size"],
         encoding: {
           "selected": {
-            modelType: "selection",
-            data: { ref: "markers.bubble.encoding.trail.data" }
+            modelType: "selection"
           },
           "highlighted": {
             modelType: "selection"
@@ -41,7 +40,8 @@ VIZABI_MODEL = {
               concept: "life_expectancy_years",
             },
             scale: {
-              //domain: [20, 40]
+              domain: [0, 100],
+              zoomed: [19, 86]
             }
           },
           "x1": {
@@ -49,6 +49,8 @@ VIZABI_MODEL = {
               concept: "income_per_person_gdppercapita_ppp_inflation_adjusted"
             },
             scale: {
+              domain: [300, 180000],
+              zoomed: [400, 96000],
               type: "log"
             }
           },
@@ -64,7 +66,7 @@ VIZABI_MODEL = {
           },
           "label": {
             data: {
-              //space: ["country"],
+              space: ["country"],
               modelType: "entityPropertyDataConfig",
               concept: "name"
             }
