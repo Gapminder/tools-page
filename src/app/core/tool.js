@@ -147,8 +147,8 @@ function setTool(tool, skipTransition) {
 //      timeLogger.removeAll();
 //      timeLogger.add("TOTAL");
 //      timeLogger.add((viz.model.ui || {}).splash ? "SPLASH" : "FULL");
-//      if (gaEnabled && gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_PROD, { "page_path": "/" + toolsetEntry.tool });
-//      if (gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_DEV, { "page_path": "/" + toolsetEntry.tool });
+      if (gaEnabled && gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_PROD, { "page_path": "/" + toolsetEntry.tool });
+      if (gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_DEV, { "page_path": "/" + toolsetEntry.tool });
 
       const removeProperties = (obj, array) => {
         Object.keys(obj).forEach(key => {

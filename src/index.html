@@ -24,23 +24,18 @@
 </head>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67908993-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NEXSZTSH9V"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   
-  var GAPMINDER_TOOLS_GA_ID_DEV = 'UA-67908993-5';
-  var GAPMINDER_TOOLS_GA_ID_PROD = 'UA-67908993-1';
+  var GAPMINDER_TOOLS_GA_ID_DEV = 'G-VLLDJXB696';
+  var GAPMINDER_TOOLS_GA_ID_PROD = 'G-NEXSZTSH9V';
   
-  var gaEnabled = location.hostname.indexOf("gapminder.org") > -1;
+  var gaEnabled = location.hostname.includes("gapminder.org");
 </script>  
   
-<script>
-  //kill service worker if present
-  if ('serviceWorker' in navigator) navigator.serviceWorker.ready.then(function(registration) {registration.unregister();})
-</script>
-
 <body>
   <div class="wrapper">
 
