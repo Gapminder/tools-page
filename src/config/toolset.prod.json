@@ -1,6 +1,7 @@
 [
   {
     "id": "bubbles",
+    "url": "https://www.gapminder.org/tools/#$chart-type=bubbles",
     "tool": "BubbleChart",
     "config": "BubbleChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
@@ -19,6 +20,7 @@
   },
   {
     "id": "map",
+    "url": "https://www.gapminder.org/tools/#$chart-type=map",
     "tool": "BubbleMap",
     "config": "BubbleMap-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
@@ -28,6 +30,7 @@
   },
   {
     "id": "linechart",
+    "url": "https://www.gapminder.org/tools/#$chart-type=linechart",
     "tool": "LineChart",
     "config": "LineChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
@@ -36,17 +39,8 @@
     "image": "/assets/images/chart/trends-chart.png"
   },
   {
-    "id": "linechart-global",
-    "tool": "LineChart",
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["none"],
-    "title": "globaltrends",
-    "config": "LineChart-global",
-    "hideThumbnail": true,
-    "image": "/assets/images/chart/globaltrends-chart.png"
-  },
-  {
     "id": "barrank",
+    "url": "https://www.gapminder.org/tools/#$chart-type=barrank",
     "tool": "BarRankChart",
     "config": "BarRankChart-reactive",
     "dataSources": ["sg", "wdi", "fasttrack"],
@@ -56,11 +50,13 @@
   },
   {
     "id": "popbyage",
+    "url": "https://www.gapminder.org/tools/#$chart-type=popbyage",
     "title": "ages",
     "image": "/assets/images/chart/ages-chart.png"
   },
   {
     "id": "spreadsheet",
+    "url": "https://www.gapminder.org/tools/#$chart-type=spreadsheet",
     "title": "spreadsheet",
     "image": "/assets/images/chart/spreadsheet.png",
     "hideThumbnail": true
