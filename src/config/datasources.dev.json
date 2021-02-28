@@ -1,8 +1,4 @@
 {      
-  "mdtest": {
-    "modelType": "ddfcsv",
-    "path": "./data/ddf--jheeffer--mdtest"
-  },
   "sg": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
@@ -16,9 +12,10 @@
     "translateContributionLink": "https://crowdin.com/project/systema-globalis"
   },
   "pop": {
-    "reader": "ddfbw",
+    "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "population-develop"
+    "dataset": "population-develop",
+    "name": "population-develop"
   },
   "wdi": {
     "modelType": "ddfbw",
