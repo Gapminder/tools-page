@@ -287,7 +287,12 @@ export default [
       replace({
         ENV: JSON.stringify(process.env.NODE_ENV || "development")
       }),
-      (process.env.NODE_ENV === "production" && terser({output: {preamble: copyright}})),
+      (process.env.NODE_ENV === "production" && terser({
+        output: {
+          preamble: copyright,
+        },
+        keep_classnames: true
+      })),
       iife(),
       (process.env.NODE_ENV === "devserver" && serve({
         contentBase: ["build"],
