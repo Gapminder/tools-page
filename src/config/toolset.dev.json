@@ -62,18 +62,12 @@
   {
     "id": "popbyage",
     "url": "https://www.gapminder.org/tools/#$chart-type=popbyage",
-    "tool": "PopByAge",
-    "dataSources": ["pop"],
-    "transition": ["none"],
     "title": "ages",
     "image": "/assets/images/chart/ages-chart.png"
   },
   {
     "id": "spreadsheet",
     "url": "https://www.gapminder.org/tools/#$chart-type=spreadsheet",
-    "tool": "Spreadsheet",
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["none"],
     "title": "spreadsheet",
     "image": "/assets/images/chart/spreadsheet.png",
     "hideThumbnail": true

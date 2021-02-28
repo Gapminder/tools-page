@@ -45,11 +45,9 @@
     "vizabi-extapimap": "2.3.0",
     "vizabi-linechart": "3.0.2",
     "vizabi-mountainchart": "3.0.9",
-    "vizabi-popbyage": "2.3.2",
     "vizabi-reactive": "1.0.8",
     "vizabi-sankey": "2.0.1",
-    "vizabi-shared-components": "1.2.15",
-    "vizabi-spreadsheet": "2.2.0"
+    "vizabi-shared-components": "1.2.15"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
