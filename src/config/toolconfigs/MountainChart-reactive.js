@@ -103,7 +103,9 @@ VIZABI_MODEL = {
               type: null,
               domain: null,
               range: null,
-              zoomed: null
+              zoomed: null,
+              zeroBaseline: false,
+              clamp: false
             }
           },
           name: { data: { concept: "name" } },
