@@ -89,7 +89,8 @@ VIZABI_MODEL = {
           },
           "trail": {
             modelType: "trail",
-            groupDim: "time"
+            groupDim: "time",
+            show: true
           },
           "repeat": {
             modelType: "repeat",
@@ -113,7 +114,13 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "color",
-              palette: { ref: "markers.bubble.encoding.color.scale.palette" }
+              palette: { ref: "markers.bubble.encoding.color.scale.palette" },
+              domain: null,
+              range: null,
+              type: null,
+              zoomed: null,
+              zeroBaseline: false,
+              clamp: false
             }
             //scale: { ref: "markers.bubble.encoding.color.scale" }
           },
@@ -147,9 +154,56 @@ VIZABI_MODEL = {
         ]
       }
     },
+
+
     "chart": {
+      show_ticks: true,
+      showForecast: false,
+      showForecastOverlay: true,
+      pauseBeforeForecast: true,
+      opacityHighlight: 1.0,
+      opacitySelect: 1.0,
+      opacityHighlightDim: 0.1,
+      opacitySelectDim: 0.3,
+      opacityRegular: 0.8,
+      timeInBackground: true,
+      timeInTrails: true,
+      lockNonSelected: 0,
+      numberFormatSIPrefix: true,
+      panWithArrow: false,
+      adaptMinMaxZoom: false,
+      cursorMode: "arrow",
+      zoomOnScrolling: true,
+      superhighlightOnMinimapHover: true,
+      whenHovering: {
+        showProjectionLineX: true,
+        showProjectionLineY: true,
+        higlightValueX: true,
+        higlightValueY: true
+      },
       labels: {
-        removeLabelBox: true
+        enabled: true,
+        dragging: true,
+        removeLabelBox: false
+      },
+      margin: {
+        left: 0,
+        top: 0
+      },
+      datawarning: {
+        doubtDomain: [],
+        doubtRange: []
+      },
+      decorations: {
+        "enabled": true,
+        "xAxisGroups": {
+          "income_per_person_gdppercapita_ppp_inflation_adjusted": [
+            { "min": null, "max": 2650, "label": "incomegroups/level1", "label_short": "incomegroups/level1short" },
+            { "min": 2650, "max": 8000, "label": "incomegroups/level2", "label_short": "incomegroups/level2short" },
+            { "min": 8000, "max": 24200, "label": "incomegroups/level3", "label_short": "incomegroups/level3short" },
+            { "min": 24200, "max": null, "label": "incomegroups/level4", "label_short": "incomegroups/level4short" }
+          ]
+        }
       }
     },
     "tree-menu": {
