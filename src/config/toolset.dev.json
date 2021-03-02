@@ -31,7 +31,7 @@
     "id": "mountain",
     "tool": "MountainChart",
     "config": "MountainChart-reactive",
-    "dataSources": ["sg"],
+    "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
     "title": "income",
     "image": "/assets/images/chart/income-chart.png"

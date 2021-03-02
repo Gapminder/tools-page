@@ -151,6 +151,13 @@ VIZABI_MODEL = {
           "country": "open"
         }
       }
+    },
+    "tree-menu": {
+      "folderStrategyByDataset": {
+        "sg": "spread",
+        "fasttrack": "spread",
+        "wdi": "folder:other_datasets"
+      }
     }
   }
 };

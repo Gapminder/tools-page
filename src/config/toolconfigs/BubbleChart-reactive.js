@@ -212,6 +212,6 @@ VIZABI_MODEL = {
         "fasttrack": "spread",
         "wdi": "folder:other_datasets"
       }
-    },
+    }
   }
 };
