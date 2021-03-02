@@ -43,7 +43,8 @@
       captureUncaught: true,
       captureUnhandledRejections: true,
       payload: {
-          environment: location.hostname
+          environment: location.hostname,
+          context: ((location.href||"").split("chart-type=")||[0,"unknown"])[1].split("&")[0] //send tool name
       }
     };
     // Rollbar Snippet
