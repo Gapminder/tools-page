@@ -36,7 +36,7 @@
     "urlon": "3.0.1",
     "vizabi-barchart-ds": "2.2.1",
     "vizabi-barrankchart": "3.0.4",
-    "vizabi-bubblechart": "3.0.7",
+    "vizabi-bubblechart": "3.0.8",
     "vizabi-bubblemap": "3.0.2",
     "vizabi-config-systema_globalis": "2.9.3",
     "vizabi-csv-reader": "0.4.4",
@@ -47,7 +47,7 @@
     "vizabi-mountainchart": "3.0.9",
     "vizabi-reactive": "1.0.10",
     "vizabi-sankey": "2.0.1",
-    "vizabi-shared-components": "1.2.16"
+    "vizabi-shared-components": "1.2.17"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
