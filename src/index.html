@@ -44,7 +44,7 @@
       captureUnhandledRejections: true,
       payload: {
           environment: location.hostname,
-          context: ((location.href||"").split("chart-type=")||[0,"unknown"])[1].split("&")[0] //send tool name
+          context: location.href.includes("chart-type=") ? location.href.split("chart-type=")[1].split("&")[0] : "" //send tool name
       }
     };
     // Rollbar Snippet
