@@ -71,7 +71,13 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "color",
-              palette: { ref: "markers.bar.encoding.color.scale.palette" }
+              palette: { ref: "markers.bar.encoding.color.scale.palette" },
+              domain: null,
+              range: null,
+              type: null,
+              zoomed: null,
+              zeroBaseline: false,
+              clamp: false
             }
           },
           name: { data: { concept: "name" } },
@@ -83,6 +89,28 @@ VIZABI_MODEL = {
   },
   ui: {
     //ui
+    "chart": {
+      lilFrameDisplayAlwaysHidden: true,
+      showForecast: false,
+      showForecastOverlay: true,
+      pauseBeforeForecast: true,
+      opacityHighlight: 1.0,
+      opacitySelect: 1.0,
+      opacityHighlightDim: 0.3,
+      opacitySelectDim: 0.5,
+      opacityRegular: 1.0,
+      datawarning: {
+        doubtDomain: [],
+        doubtRange: []
+      }
+    },
+    "tree-menu": {
+      "folderStrategyByDataset": {
+        "sg": "spread",
+        "fasttrack": "spread",
+        "wdi": "folder:other_datasets"
+      }
+    },
     "time-slider": {
       "show_value": false
     },

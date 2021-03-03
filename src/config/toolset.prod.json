@@ -40,7 +40,6 @@
   },
   {
     "id": "barrank",
-    "url": "https://www.gapminder.org/tools/#$chart-type=barrank",
     "tool": "BarRankChart",
     "config": "BarRankChart-reactive",
     "dataSources": ["sg", "wdi", "fasttrack"],
