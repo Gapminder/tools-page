@@ -29,7 +29,7 @@ function removeTool() {
 }
 
 function splash(marker) {
-  let splashDoneOnce = false;
+  let fullMarkerLoadedOnce = false;
   const splashFrameValue = marker.config.encoding.frame.value;
   const splashConcept = marker.config.encoding.frame.data.concept;
   const splashFilter = {};
@@ -45,10 +45,28 @@ function splash(marker) {
     get: (target, prop) => {
 
       if (marker.state == "fulfilled") {
-        //splashDoneOnce prevents running splash load on subsequent changes in marker
-        splashDoneOnce = true;
+
+        const fullTime = timeLogger.snapOnce("FULL");
+        if (gtag && fullTime) gtag('event', 'timing_complete', {
+          "name": "Full load",
+          "value": fullTime,
+          "event_category": 'Page load',
+          "event_label": appState.tool
+        });
+
+        //fullMarkerLoadedOnce prevents running splash load on subsequent changes in marker
+        fullMarkerLoadedOnce = true;
         return target[prop];
-      } else if (!splashDoneOnce && splashMarker.state == "fulfilled") {
+      } else if (!fullMarkerLoadedOnce && splashMarker.state == "fulfilled") {
+
+        const splashTime = timeLogger.snapOnce("SPLASH");
+        if (gtag && splashTime) gtag("event", "timing_complete", {
+          "name": "Splash load",
+          "value": splashTime,
+          "event_category": "Page load",
+          "event_label": appState.tool
+        });
+
         return splashMarker[prop];
       }
       return target[prop];
@@ -61,7 +79,8 @@ function setTool(tool, skipTransition) {
   if (!tool) tool = appState.tool;
 
   //configure google analytics with the active tool, which would be counted as a "page view" of our single-page-application
-  
+  if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool });
+
   const toolsetEntry = toolsPage_toolset.find(f => f.id === tool);
   const toolsetEntryPrevious = toolsPage_toolset.find(f => f.id === appState.tool);
   const toolModelPrevious = {} //TODO: viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL_PREVIOUS) : {};
@@ -71,6 +90,10 @@ function setTool(tool, skipTransition) {
   if (urlUpdateDisposer) urlUpdateDisposer();
   removeTool();
 
+  timeLogger.removeAll();
+  timeLogger.add("SPLASH");
+  timeLogger.add("FULL");
+
   const pathToConfig = "config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
   loadJS(pathToConfig, document.body)
     .then(() => {
@@ -78,7 +101,6 @@ function setTool(tool, skipTransition) {
         .append("div")
         .attr("class", "vzb-placeholder")
         .attr("style", "width: 100%; height: 100%;");
-        
 
       // apply data models from configuration to pageConfig
       function applyDataConfigs(pageConfig) {
@@ -147,18 +169,12 @@ function setTool(tool, skipTransition) {
         () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything: true }), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {})
       );
 
-//      timeLogger.removeAll();
-//      timeLogger.add("TOTAL");
-//      timeLogger.add((viz.model.ui || {}).splash ? "SPLASH" : "FULL");
-      if (gaEnabled && gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_PROD, { "page_path": "/" + toolsetEntry.tool });
-      if (gtag) gtag("config", GAPMINDER_TOOLS_GA_ID_DEV, { "page_path": "/" + toolsetEntry.tool });
-
       const removeProperties = (obj, array) => {
         Object.keys(obj).forEach(key => {
           if (array.includes(key))
             delete obj[key];
           else
-            (obj[key] && typeof obj[key] === 'object') && removeProperties(obj[key], array);
+            (obj[key] && typeof obj[key] === "object") && removeProperties(obj[key], array);
         });
         return obj;
       };
@@ -194,28 +210,13 @@ export {
 
 
 
-
-
-
-
-
       //let snapOnceDataLoaded = false;
 
       // pageConfig.bind = {
       //   'ready': function(evt) {
-      //       var splashTime = timeLogger.snapOnce("SPLASH");
-      //       if (gtag && splashTime) gtag('event', 'timing_complete', {
-      //         'name' : 'splashload',
-      //         'value' : splashTime,
-      //         'event_category' : 'Splash data loading time'
-      //       });
 
-      //       var fullTime = timeLogger.snapOnce("FULL");
-      //       if (gtag && fullTime) gtag('event', 'timing_complete', {
-      //         'name' : 'allyearsload',
-      //         'value' : fullTime,
-      //         'event_category' : 'Complete data loading time'
-      //       });
+
+   
 
       //       if ((this.ui||{}).splash) timeLogger.add("FULL");
       //       timeLogger.add("DATA");
