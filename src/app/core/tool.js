@@ -60,13 +60,15 @@ function setTool(tool, skipTransition) {
   if (tool === appState.tool) return;
   if (!tool) tool = appState.tool;
 
-  urlUpdateDisposer && urlUpdateDisposer();
+  //configure google analytics with the active tool, which would be counted as a "page view" of our single-page-application
   
   const toolsetEntry = toolsPage_toolset.find(f => f.id === tool);
   const toolsetEntryPrevious = toolsPage_toolset.find(f => f.id === appState.tool);
   const toolModelPrevious = {} //TODO: viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL_PREVIOUS) : {};
   appState.tool = tool;
 
+  //kill old autorun listener
+  if (urlUpdateDisposer) urlUpdateDisposer();
   removeTool();
 
   const pathToConfig = "config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
@@ -142,7 +144,8 @@ function setTool(tool, skipTransition) {
           const marker = viz.model.stores.markers.get(markerId);
           return marker && marker.state == "fulfilled";
         }),
-        () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything:true}), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}));
+        () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything: true }), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {})
+      );
 
 //      timeLogger.removeAll();
 //      timeLogger.add("TOTAL");
