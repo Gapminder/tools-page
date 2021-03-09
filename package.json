@@ -44,10 +44,10 @@
     "vizabi-ddfservice-reader": "^2.1.0",
     "vizabi-extapimap": "2.3.0",
     "vizabi-linechart": "3.0.2",
-    "vizabi-mountainchart": "3.0.9",
+    "vizabi-mountainchart": "3.0.10",
     "vizabi-reactive": "1.0.10",
     "vizabi-sankey": "2.0.1",
-    "vizabi-shared-components": "1.2.18"
+    "vizabi-shared-components": "1.2.19"
   },
   "devDependencies": {
     "@babel/core": "^7.11.0",
