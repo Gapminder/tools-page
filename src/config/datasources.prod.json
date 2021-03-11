@@ -2,8 +2,8 @@
   "sg": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "SG-master",
-    "name": "SG-master"
+    "dataset": "sg-master",
+    "name": "sg-master"
   },
   "sg_old": {
     "reader": "ddfbw",
