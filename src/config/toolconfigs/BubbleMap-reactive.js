@@ -5,7 +5,10 @@ VIZABI_MODEL = {
         data: {
           locale: "en",
           source: "sg",
-          space: ["country", "time"]
+          space: ["country", "time"],
+          filter: {
+            dimensions: { "country": { "un_state": true } }
+          }
         },
         encoding: {
           "selected": {
@@ -46,6 +49,7 @@ VIZABI_MODEL = {
           },
           "label": {
             data: {
+              space: ["country"],
               modelType: "entityPropertyDataConfig",
               concept: "name"
             }
@@ -61,12 +65,9 @@ VIZABI_MODEL = {
           "frame": {
             modelType: "frame",
             speed: 200,
+            value: "2019",
             data: {
-              concept: {
-                autoconfig: {
-                  concept_type: "time"
-                }
-              }
+              concept: "time"
             }
           }
         },
@@ -87,7 +88,13 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "color",
-              palette: { ref: "markers.bubble.encoding.color.scale.palette" }
+              palette: { ref: "markers.bubble.encoding.color.scale.palette" },
+              domain: null,
+              range: null,
+              type: null,
+              zoomed: null,
+              zeroBaseline: false,
+              clamp: false
             }
             //scale: { ref: "markers.bubble.encoding.color.scale" }
           },
@@ -101,7 +108,7 @@ VIZABI_MODEL = {
   ui: {
     //ui
     "buttons": {
-      "buttons": ["colors", "find", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
@@ -113,7 +120,7 @@ VIZABI_MODEL = {
           //"axes",
           "size",
           "colors",
-          //"label",
+          "label",
           "technical",
           "presentation",
           "about"
@@ -121,8 +128,51 @@ VIZABI_MODEL = {
       }
     },
     "chart": {
+      showForecast: false,
+      showForecastOverlay: true,
+      pauseBeforeForecast: true,
+      opacityHighlight: 1.0,
+      opacitySelect: 1.0,
+      opacityHighlightDim: 0.1,
+      opacitySelectDim: 0.3,
+      opacityRegular: 0.8,
+      datawarning: {
+        doubtDomain: [],
+        doubtRange: []
+      },
       labels: {
+        enabled: true,
+        dragging: true,
         removeLabelBox: false
+      },
+      superhighlightOnMinimapHover: false,
+      map: {
+        path: null,
+        colorGeo: false,
+        preserveAspectRatio: false,
+        scale: 1.1,
+        offset: {
+          top: 0.05,
+          right: 0,
+          bottom: -0.2,
+          left: -0.15
+        },
+        projection: "geo" + "Aitoff",
+        topology: {
+          path: "assets/world-50m.json",
+          objects: {
+            geo: "land",
+            boundaries: "countries"
+          },
+          geoIdProperty: null,
+        }
+      }
+    },
+    "tree-menu": {
+      "folderStrategyByDataset": {
+        "sg": "spread",
+        "fasttrack": "spread",
+        "wdi": "folder:other_datasets"
       }
     }
   }
