@@ -6,7 +6,7 @@ VIZABI_MODEL = {
         data: {
           locale: "en",
           source: "csv1",
-          space: ["postnummer", "week"]
+          space: { autoconfig: true }
         },
         requiredEncodings: ["x1", "y1", "size"],
         encoding: {
@@ -26,8 +26,11 @@ VIZABI_MODEL = {
           },
           "size": {
             data: {
-              concept: "Befolkning Totalt",
-              source: "csv2"
+              concept: {
+                autoconfig: {
+                  concept_type: "measure"
+                }
+              }
 
             },
             scale: {
@@ -36,8 +39,11 @@ VIZABI_MODEL = {
           },
           "y1": {
             data: {
-              concept: "cases_per_capita_2w5",
-              source: "corona"
+              concept: {
+                autoconfig: {
+                  concept_type: "measure"
+                }
+              }
             },
             scale: {
               //domain: [20, 40]
@@ -45,8 +51,11 @@ VIZABI_MODEL = {
           },
           "x1": {
             data: {
-              concept: "Inkomst: Median",
-              source: "csv2"
+              concept: {
+                autoconfig: {
+                  concept_type: "measure"
+                }
+              }
             },
             scale: {
               type: "linear"
@@ -54,8 +63,11 @@ VIZABI_MODEL = {
           },
           "color": {
             data: {
-              concept: "Genomsnittlig boarea per person",
-              source: "csv2"
+              concept: {
+                autoconfig: {
+                  concept_type: "measure"
+                }
+              }
             },
             scale: {
               modelType: "color",
