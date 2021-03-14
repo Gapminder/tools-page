@@ -79,11 +79,15 @@ const ChartSwitcher = function(placeHolder, translator, dispatch, { tools, appSt
   function fillToolItem(item, _this) {
     const tool = item.datum();
     const a = item.select("a");
-    a.attr("href", getLink(tool.id))
-      .on("click", d => {
-        switchTools.call(_this);
-        onClick(d);
-      });
+    if (tool.url) {
+      a.attr("href", tool.url);
+    } else {
+      a.attr("href", getLink(tool.id))
+        .on("click", d => {
+          switchTools.call(_this);
+          onClick(d);
+        });
+    }
   }
 
 };
