@@ -20,7 +20,6 @@
   },
   {
     "id": "map",
-    "url": "https://www.gapminder.org/tools/#$chart-type=map",
     "tool": "BubbleMap",
     "config": "BubbleMap-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
