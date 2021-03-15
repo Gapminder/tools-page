@@ -231,11 +231,14 @@ export default [
       }),
       (process.env.NODE_ENV === "production" && eslint()),
       (process.env.NODE_ENV === "production" && babel({
-        babelHelpers: 'bundled',
-        exclude: "node_modules/**",
+        babelHelpers: "bundled",
+        include: [
+          "src/**",
+          "node_modules/vizabi-*/**"  
+        ],
         presets: [["@babel/preset-env", {
           targets: {
-            "ie": "11"
+            "edge": "12"
           },
           modules: false,
         }]]
