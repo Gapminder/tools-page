@@ -296,7 +296,8 @@ export default [
         output: {
           preamble: copyright,
         },
-        keep_classnames: true
+        keep_classnames: true,
+        keep_fnames: true
       })),
       iife(),
       (process.env.NODE_ENV === "devserver" && serve({
