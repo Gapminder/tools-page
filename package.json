@@ -42,7 +42,7 @@
     "vizabi-config-systema_globalis": "2.9.3",
     "vizabi-csv-reader": "0.4.4",
     "vizabi-ddfcsv-reader": "4.0.1",
-    "vizabi-ddfservice-reader": "^2.1.0",
+    "vizabi-ddfservice-reader": "^2.1.1",
     "vizabi-extapimap": "3.0.1",
     "vizabi-linechart": "3.0.2",
     "vizabi-mountainchart": "3.0.11",
