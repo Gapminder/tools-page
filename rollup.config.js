@@ -196,9 +196,9 @@ export default [
           { find: "datasources", replacement: path.resolve(__dirname, "src", "config", `datasources.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`) },
         ]
       }),
-      // commonjs({
-      //   include: 'node_modules/**',
-      // }),
+      commonjs({
+        include: 'node_modules/core-js/**',
+      }),
       globImport({
         format: "import"
       }),
@@ -241,6 +241,8 @@ export default [
             "edge": "12"
           },
           modules: false,
+          useBuiltIns: "entry",
+          corejs: { version: "3.9" }
         }]]
       })),
       sourcemaps(),
