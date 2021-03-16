@@ -19,6 +19,9 @@ VIZABI_MODEL = {
           "highlighted": {
             modelType: "selection"
           },
+          "superhighlighted": {
+            modelType: "selection"
+          },
           //enabling order encoding results in chart not respecting splash load and waiting full data to render both splash and full picture
           // "order": {
           //   modelType: "order",
