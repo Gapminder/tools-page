@@ -30,6 +30,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "core-js": "^3.9.1",
     "d3": "^5.8.2",
     "font-awesome": "^4.7.0",
     "mobx": "^5.14.2",
