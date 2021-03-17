@@ -38,5 +38,6 @@ Vizabi.stores.dataSources.createAndAddType("ddfcsv", ddfReader);
 Vizabi.stores.dataSources.createAndAddType("ddfbw", DDFServiceReader.getReader());
 
 
+window.js = mobx.toJS;
 window.VIZABI_PAGE_MODEL = null;
 App();
