@@ -10,22 +10,22 @@ VIZABI_MODEL = {
               "country": {
                 "country": {
                   $in: ["usa", "chn", "rus", "nga"]
-                },
-                //"country.un_state": true
+                }
               }
             }
           },
           locale: "en",
           source: "sg",
-          space: {
-            autoconfig: {
-              concept: {
-                $nin: ["age"]
-              }
-            }
-          }
+          space: ["country", "time"]
         },
         encoding: {
+          "unstate": {
+            data: {
+              space: ["country"],
+              modelType: "entityPropertyDataConfig",
+              concept: "un_state"
+            }
+          },
           "selected": {
             modelType: "selection"
           },
@@ -42,11 +42,7 @@ VIZABI_MODEL = {
           },
           "x": {
             data: {
-              concept: {
-                autoconfig: {
-                  concept_type: "time"
-                }
-              }
+              concept: "time"
             }
           },
           "color": {
@@ -61,7 +57,7 @@ VIZABI_MODEL = {
           },
           "label": {
             data: {
-              //space: ["country"],
+              space: ["country"],
               modelType: "entityPropertyDataConfig",
               concept: "name"
             }
@@ -69,12 +65,9 @@ VIZABI_MODEL = {
           frame: {
             modelType: "frame",
             speed: 200,
+            value: "2019",
             data: {
-              concept: {
-                autoconfig: {
-                  concept_type: "time"
-                }
-              }
+              concept: "time"
             }
           }
         }
@@ -94,7 +87,13 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "color",
-              palette: { ref: "markers.line.encoding.color.scale.palette" }
+              palette: { ref: "markers.line.encoding.color.scale.palette" },
+              domain: null,
+              range: null,
+              type: null,
+              zoomed: null,
+              zeroBaseline: false,
+              clamp: false
             }
             //scale: { ref: "markers.line.encoding.color.scale" }
           },
@@ -122,8 +121,42 @@ VIZABI_MODEL = {
       "find": {
         "panelMode": "show",
         "showTabs": {
-          "country": "open"
+          "country": "open fully"
         }
+      }
+    },
+    chart: {
+      showForecast: false,
+      showForecastOverlay: true,
+      pauseBeforeForecast: true,
+      opacityHighlight: 1.0,
+      opacitySelect: 1.0,
+      opacityHighlightDim: 0.1,
+      opacitySelectDim: 0.3,
+      opacityRegular: 0.8,
+      hideXAxisValue: false,
+      curve: "curveMonotoneX",
+      whenHovering: {
+        showTooltip: false,
+        hideVerticalNow: false,
+        showProjectionLineX: false,
+        showProjectionLineY: false,
+        higlightValueX: false,
+        higlightValueY: false
+      },
+      labels: {
+        min_number_of_entities_when_values_hide: 3,
+      },
+      datawarning: {
+        doubtDomain: [1800, 1950, 2015],
+        doubtRange: [1.0, 0.3, 0.2]
+      }
+    },
+    "tree-menu": {
+      "folderStrategyByDataset": {
+        "sg": "spread",
+        "fasttrack": "spread",
+        "wdi": "folder:other_datasets"
       }
     }
   }

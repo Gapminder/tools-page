@@ -29,7 +29,6 @@
   },
   {
     "id": "linechart",
-    "url": "https://www.gapminder.org/tools/#$chart-type=linechart",
     "tool": "LineChart",
     "config": "LineChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
