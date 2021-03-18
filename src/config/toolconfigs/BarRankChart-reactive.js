@@ -21,6 +21,9 @@ VIZABI_MODEL = {
           "x": {
             data: {
               concept: "population_total"
+            },
+            scale: {
+              allowedTypes: ["linear", "log", "genericLog", "pow"]
             }
           },
           "y": {
@@ -77,7 +80,8 @@ VIZABI_MODEL = {
               type: null,
               zoomed: null,
               zeroBaseline: false,
-              clamp: false
+              clamp: false,
+              allowedTypes: ["linear", "log", "genericLog", "time", "pow", "ordinal", "point"]
             }
           },
           name: { data: { concept: "name" } },

@@ -105,7 +105,8 @@ VIZABI_MODEL = {
               range: null,
               zoomed: null,
               zeroBaseline: false,
-              clamp: false
+              clamp: false,
+              allowedTypes: ["linear", "log", "genericLog", "time", "pow", "ordinal", "point"]
             }
           },
           name: { data: { concept: "name" } },

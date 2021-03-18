@@ -37,7 +37,8 @@ VIZABI_MODEL = {
               concept: "income_per_person_gdppercapita_ppp_inflation_adjusted"
             },
             scale: {
-              type: "log"
+              type: "log",
+              allowedTypes: ["linear", "log", "genericLog", "pow"]
             }
           },
           "x": {
@@ -93,7 +94,8 @@ VIZABI_MODEL = {
               type: null,
               zoomed: null,
               zeroBaseline: false,
-              clamp: false
+              clamp: false,
+              allowedTypes: ["linear", "log", "genericLog", "time", "pow", "ordinal", "point"]
             }
             //scale: { ref: "markers.line.encoding.color.scale" }
           },

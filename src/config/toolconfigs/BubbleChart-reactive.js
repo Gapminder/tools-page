@@ -35,7 +35,7 @@ VIZABI_MODEL = {
               concept: "population_total"
             },
             scale: {
-              //type: "log"
+              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
             }
           },
           "y": {
@@ -44,7 +44,8 @@ VIZABI_MODEL = {
             },
             scale: {
               domain: [0, 100],
-              zoomed: [19, 86]
+              zoomed: [19, 86],
+              allowedTypes: ["linear", "log", "genericLog", "pow"]
             }
           },
           "x": {
@@ -54,7 +55,8 @@ VIZABI_MODEL = {
             scale: {
               domain: [300, 180000],
               zoomed: [400, 96000],
-              type: "log"
+              type: "log",
+              allowedTypes: ["linear", "log", "genericLog", "pow"]
             }
           },
           "color": {
@@ -79,7 +81,8 @@ VIZABI_MODEL = {
               constant: "_default"
             },
             scale: {
-              modelType: "size"
+              modelType: "size",
+              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
             }
           },
           frame: {
@@ -123,7 +126,8 @@ VIZABI_MODEL = {
               type: null,
               zoomed: null,
               zeroBaseline: false,
-              clamp: false
+              clamp: false,
+              allowedTypes: ["linear", "log", "genericLog", "time", "pow", "ordinal", "point"]
             }
             //scale: { ref: "markers.bubble.encoding.color.scale" }
           },

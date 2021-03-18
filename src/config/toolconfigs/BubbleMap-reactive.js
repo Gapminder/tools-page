@@ -22,7 +22,8 @@ VIZABI_MODEL = {
               concept: "population_total"
             },
             scale: {
-              modelType: "size"
+              modelType: "size",
+              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
             }
           },
           "lat": {
@@ -49,7 +50,8 @@ VIZABI_MODEL = {
               range: null,
               zoomed: null,
               zeroBaseline: false,
-              clamp: false
+              clamp: false,
+              allowedTypes: ["linear", "log", "genericLog", "time", "pow", "ordinal", "point"]
             }
           },
           "label": {
@@ -99,7 +101,8 @@ VIZABI_MODEL = {
               type: null,
               zoomed: null,
               zeroBaseline: false,
-              clamp: false
+              clamp: false,
+              allowedTypes: ["linear", "log", "genericLog", "time", "pow", "ordinal", "point"]
             }
             //scale: { ref: "markers.bubble.encoding.color.scale" }
           },
