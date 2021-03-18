@@ -44,7 +44,12 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "color",
-              type: "ordinal"
+              type: "ordinal",
+              domain: null,
+              range: null,
+              zoomed: null,
+              zeroBaseline: false,
+              clamp: false
             }
           },
           "label": {
