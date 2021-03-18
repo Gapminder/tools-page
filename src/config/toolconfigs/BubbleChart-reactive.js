@@ -11,7 +11,7 @@ VIZABI_MODEL = {
             dimensions: { "country": { "un_state": true } }
           }
         },
-        requiredEncodings: ["x1", "y1", "size"],
+        requiredEncodings: ["x", "y", "size"],
         encoding: {
           "selected": {
             modelType: "selection"
@@ -38,7 +38,7 @@ VIZABI_MODEL = {
               //type: "log"
             }
           },
-          "y1": {
+          "y": {
             data: {
               concept: "life_expectancy_years",
             },
@@ -47,7 +47,7 @@ VIZABI_MODEL = {
               zoomed: [19, 86]
             }
           },
-          "x1": {
+          "x": {
             data: {
               concept: "income_per_person_gdppercapita_ppp_inflation_adjusted"
             },
@@ -97,8 +97,8 @@ VIZABI_MODEL = {
           },
           "repeat": {
             modelType: "repeat",
-            row: ["y1"],
-            column: ["x1"]
+            row: ["y"],
+            column: ["x"]
           }
         }
       },
