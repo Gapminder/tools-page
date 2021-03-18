@@ -16,15 +16,15 @@ const Footer = function(placeHolder, translator, dispatch) {
             </div>
             <div class="main-menu">
                 <ul class="nav">
-                    <li><a href="//gapminder.org/about-gapminder/" data-text="about"></a></li>
-                    <li><a href="//gapminder.org/about-gapminder/contact/" data-text="contact"></a></li>
+                    <li><a href="//gapminder.org/about/about/" data-text="about"></a></li>
+                    <li><a href="//gapminder.org/about/press-room/contact/" data-text="contact"></a></li>
                     <li><a href="//gapminder.org/news/" data-text="blog"></a></li>
                     <li><a href="//gapminder.org/donations/" data-text="donate"></a></li>
-                    <li><a href="//docs.google.com/a/gapminder.org/document/pub?id=1POd-pBMc5vDXAmxrpGjPLaCSDSWuxX6FLQgq5DhlUhM" data-text="terms"></a></li>
-                    <li><a href="//gapminder.org/about-gapminder/press-and-media/" data-text="media"></a></li>
+                    <li><a href="//gapminder.org/privacy/terms-of-use/" data-text="terms"></a></li>
+                    <li><a href="//gapminder.org/about/press-room/" data-text="media"></a></li>
                     <li><a href="//gapminder.org/faq_frequently_asked_questions/" data-text="help"></a></li>
                     <li><a href="//vizabi.org/tutorials/" data-text="labs"></a></li>
-                    <li><a href="//getsatisfaction.com/gapminder/#problem" data-text="report_problem"></a></li>
+                    <li><a href="//github.com/Gapminder/tools-page/issues" data-text="report_problem"></a></li>
                 </ul>
             </div>
         </div>
