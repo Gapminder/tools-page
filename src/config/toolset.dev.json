@@ -1,4 +1,13 @@
-[  
+[   
+  {
+    "id": "combo",
+    "tool": "Combo",
+    "config": "Combo-corona", 
+    "dataSources": ["csv1","csv2","corona"],
+    "transition": ["select","time"],
+    "title": "combo",
+    "image": "/assets/images/chart/maps-chart.png"
+  }, 
   {
     "id": "bubbles",
     "tool": "BubbleChart",
@@ -7,79 +16,5 @@
     "transition": ["select","time"],
     "title": "bubbles",
     "image": "/assets/images/chart/bubble-chart.png"
-  },
-  {
-    "id": "combo",
-    "tool": "Combo",
-    "config": "Combo-corona", 
-    "dataSources": ["csv1","csv2","corona"],
-    "transition": ["select","time"],
-    "title": "combo",
-    "image": "/assets/images/chart/bubble-chart.png",
-    "hideThumbnail": true
-  },
-  {
-  "id": "barrank",
-  "tool": "BarRankChart",
-  "config": "BarRankChart-reactive",
-  "dataSources": ["sg", "wdi", "fasttrack"],
-  "transition": ["select","time"],
-  "title": "ranks",
-  "image": "/assets/images/chart/ranks-chart.png"
-  },
-  {
-    "id": "linechart",
-    "tool": "LineChart",
-    "config": "LineChart-reactive", 
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["show","time"],
-    "title": "trends",
-    "image": "/assets/images/chart/trends-chart.png"
-  },
-
-  {
-    "id": "mountain",
-    "tool": "MountainChart",
-    "config": "MountainChart-reactive",
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["select","time"],
-    "title": "income",
-    "image": "/assets/images/chart/income-chart.png"
-  },
-  {
-    "id": "map",
-    "tool": "BubbleMap",
-    "config": "BubbleMap-reactive", 
-    "dataSources": ["mdtest", "sg", "wdi", "fasttrack"],
-    "transition": ["select","time"],
-    "title": "maps",
-    "image": "/assets/images/chart/maps-chart.png"
-  },
-  {
-    "id": "linechart-global",
-    "tool": "LineChart",
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["none"],
-    "title": "globaltrends",
-    "config": "LineChart-global",
-    "hideThumbnail": true,
-    "image": "/assets/images/chart/globaltrends-chart.png"
-  },
-  {
-    "id": "popbyage",
-    "title": "ages",
-    "image": "/assets/images/chart/ages-chart.png"
-  },
-  {
-    "id": "spreadsheet",
-    "title": "spreadsheet",
-    "image": "/assets/images/chart/spreadsheet.png",
-    "hideThumbnail": true
-  },
-  {
-    "id": "dollar-street",
-    "url": "http://www.gapminder.org/dollar-street",
-    "image": "/assets/images/chart/dollar-street.png",
-    "title": "dollar_street"
   }
 ]
