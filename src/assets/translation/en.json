@@ -93,6 +93,7 @@
         "scaletype/log": "log",
         "indicator/_default/axis": "Constant",
         "indicator/_default/size": "One size",
+        "indicator/_default/size_label": "One size",
         "indicator/_default/color": "Single color",
         "indicator/_default/side": "One side",
         "description/_default/color": "All markers would have the same color",
