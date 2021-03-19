@@ -127,7 +127,7 @@ VIZABI_MODEL = {
               zoomed: null,
               zeroBaseline: false,
               clamp: false,
-              allowedTypes: ["linear", "log", "genericLog", "time", "pow", "ordinal", "point"]
+              allowedTypes: null
             }
             //scale: { ref: "markers.bubble.encoding.color.scale" }
           },

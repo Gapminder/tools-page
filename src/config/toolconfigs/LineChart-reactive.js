@@ -53,7 +53,8 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "color",
-              type: "ordinal"
+              type: "ordinal",
+              allowedTypes: ["ordinal", "point"]
             }
           },
           "label": {
@@ -95,7 +96,7 @@ VIZABI_MODEL = {
               zoomed: null,
               zeroBaseline: false,
               clamp: false,
-              allowedTypes: ["linear", "log", "genericLog", "time", "pow", "ordinal", "point"]
+              allowedTypes: null
             }
             //scale: { ref: "markers.line.encoding.color.scale" }
           },

@@ -51,7 +51,7 @@ VIZABI_MODEL = {
               zoomed: null,
               zeroBaseline: false,
               clamp: false,
-              allowedTypes: ["linear", "log", "genericLog", "time", "pow", "ordinal", "point"]
+              allowedTypes: null
             }
           },
           "label": {
@@ -101,8 +101,7 @@ VIZABI_MODEL = {
               type: null,
               zoomed: null,
               zeroBaseline: false,
-              clamp: false,
-              allowedTypes: ["linear", "log", "genericLog", "time", "pow", "ordinal", "point"]
+              clamp: false
             }
             //scale: { ref: "markers.bubble.encoding.color.scale" }
           },
