@@ -1,7 +1,9 @@
 [
   {
     "id": "bubbles",
+    "url": "https://www.gapminder.org/tools/#$chart-type=bubbles",
     "tool": "BubbleChart",
+    "config": "BubbleChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
     "title": "bubbles",
@@ -10,6 +12,7 @@
   {
     "id": "mountain",
     "tool": "MountainChart",
+    "config": "MountainChart-reactive",
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
     "title": "income",
@@ -18,6 +21,7 @@
   {
     "id": "map",
     "tool": "BubbleMap",
+    "config": "BubbleMap-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
     "title": "maps",
@@ -26,24 +30,16 @@
   {
     "id": "linechart",
     "tool": "LineChart",
+    "config": "LineChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["show","time"],
     "title": "trends",
     "image": "/assets/images/chart/trends-chart.png"
   },
   {
-    "id": "linechart-global",
-    "tool": "LineChart",
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["none"],
-    "title": "globaltrends",
-    "config": "LineChart-global",
-    "hideThumbnail": true,
-    "image": "/assets/images/chart/globaltrends-chart.png"
-  },
-  {
     "id": "barrank",
     "tool": "BarRankChart",
+    "config": "BarRankChart-reactive",
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
     "title": "ranks",
@@ -51,17 +47,13 @@
   },
   {
     "id": "popbyage",
-    "tool": "PopByAge",
-    "dataSources": ["pop"],
-    "transition": ["none"],
+    "url": "https://www.gapminder.org/tools/#$chart-type=popbyage",
     "title": "ages",
     "image": "/assets/images/chart/ages-chart.png"
   },
   {
     "id": "spreadsheet",
-    "tool": "Spreadsheet",
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["none"],
+    "url": "https://www.gapminder.org/tools/#$chart-type=spreadsheet",
     "title": "spreadsheet",
     "image": "/assets/images/chart/spreadsheet.png",
     "hideThumbnail": true

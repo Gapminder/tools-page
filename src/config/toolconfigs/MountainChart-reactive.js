@@ -103,7 +103,10 @@ VIZABI_MODEL = {
               type: null,
               domain: null,
               range: null,
-              zoomed: null
+              zoomed: null,
+              zeroBaseline: false,
+              clamp: false,
+              allowedTypes: null
             }
           },
           name: { data: { concept: "name" } },
@@ -148,6 +151,13 @@ VIZABI_MODEL = {
         "showTabs": {
           "country": "open"
         }
+      }
+    },
+    "tree-menu": {
+      "folderStrategyByDataset": {
+        "sg": "spread",
+        "fasttrack": "spread",
+        "wdi": "folder:other_datasets"
       }
     }
   }

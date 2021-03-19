@@ -108,6 +108,8 @@ function updateURL(model, event, replaceInsteadPush) {
   }, "Title", "#" + urlon.stringify(url).replace(/=#/g, "=%23"));
 }
 
+const debouncedUpdateUrl = debounce(updateURL, 310);
+
 function parseURL() {
   const loc = window.location.toString();
   let hash = null;
@@ -137,7 +139,7 @@ function resetURL() {
 
 export {
   URLI,
-  updateURL,
+  debouncedUpdateUrl as updateURL,
   parseURL,
   resetURL
 };

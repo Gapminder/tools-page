@@ -202,15 +202,14 @@ export default [
           { find: "datasources", replacement: path.resolve(__dirname, "src", "config", `datasources.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`) },
         ]
       }),
-      // commonjs({
-      //   include: 'node_modules/**',
-      // }),
+      commonjs({
+        include: 'node_modules/core-js/**',
+      }),
       globImport({
         format: "import"
       }),
       legacy({
-        [require.resolve("vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader")]: "DDFCsvReader",
-        [require.resolve("vizabi-csv-reader/dist/vizabi-csv-reader")]: "CsvReader"
+        [require.resolve("vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader")]: "DDFCsvReader"
       }),
       copy({
         targets: [
@@ -237,13 +236,18 @@ export default [
       }),
       (process.env.NODE_ENV === "production" && eslint()),
       (process.env.NODE_ENV === "production" && babel({
-        babelHelpers: 'bundled',
-        exclude: "node_modules/**",
+        babelHelpers: "bundled",
+        include: [
+          "src/**",
+          "node_modules/vizabi-*/**"  
+        ],
         presets: [["@babel/preset-env", {
           targets: {
-            "ie": "11"
+            "edge": "12"
           },
           modules: false,
+          useBuiltIns: "entry",
+          corejs: { version: "3.9" }
         }]]
       })),
       sourcemaps(),
@@ -293,7 +297,13 @@ export default [
       replace({
         ENV: JSON.stringify(process.env.NODE_ENV || "development")
       }),
-      (process.env.NODE_ENV === "production" && terser({output: {preamble: copyright}})),
+      (process.env.NODE_ENV === "production" && terser({
+        output: {
+          preamble: copyright,
+        },
+        keep_classnames: true,
+        keep_fnames: true
+      })),
       iife(),
       (process.env.NODE_ENV === "devserver" && serve({
         contentBase: ["build"],

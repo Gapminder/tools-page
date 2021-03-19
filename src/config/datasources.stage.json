@@ -1,23 +1,33 @@
-{
+{      
   "sg": {
+    "modelType": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "SG-stage",
+    "name": "SG-stage"
+  },
+  "sg_old": {
     "reader": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
     "dataset": "SG-stage",
     "translateContributionLink": "https://crowdin.com/project/systema-globalis"
   },
   "pop": {
-    "reader": "ddfbw",
+    "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "population-stage"
+    "dataset": "population-stage",
+    "name": "population-stage"
   },
   "wdi": {
-    "reader": "ddfbw",
+    "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "wdi-master"
+    "dataset": "wdi-master",
+    "name": "wdi-master"
   },
   "fasttrack": {
-    "reader": "ddfbw",
+    "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "fasttrack"
+    "dataset": "fasttrack",
+    "name": "fasttrack"
   }
 }
+

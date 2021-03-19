@@ -33,7 +33,7 @@ export default {
           "node_id": null,
           "menu_label": "massive_ignorance",
           "caption": "beware_the_shocking_results",
-          "url": "http://www.gapminder.org/ignorance",
+          "url": "https://www.gapminder.org/news/the-worldview-upgrader-gapminder-launches-a-groundbreaking-new-service-to-fight-misconceptions/",
           "icon_url": "/images/icons/menu/igmo.png",
           "$$hashKey": "object:10"
         },
@@ -57,7 +57,7 @@ export default {
           "node_id": null,
           "menu_label": "teachers",
           "caption": "see_how_teachers_use_Gapminder",
-          "url": "http://www.gapminder.org/for-teachers",
+          "url": "https://www.gapminder.org/teaching/materials/",
           "icon_url": "/images/icons/menu/teach.png",
           "$$hashKey": "object:21"
         },
@@ -65,7 +65,7 @@ export default {
           "node_id": null,
           "menu_label": "slideshows",
           "caption": "download_and_edit_our_modular_slides",
-          "url": "http://www.gapminder.org/presentations",
+          "url": "https://drive.google.com/drive/folders/0B9jWD65HiLUnTTJNQ3Bna2w2blU",
           "icon_url": "/images/icons/menu/slides.png",
           "$$hashKey": "object:22"
         },
@@ -97,7 +97,7 @@ export default {
           "node_id": null,
           "menu_label": "our_organization",
           "caption": "read_about_the_Gapminder_Foundation",
-          "url": "http://www.gapminder.org/about-gapminder",
+          "url": "https://www.gapminder.org/about/",
           "icon_url": "/images/icons/menu/gapminder.png",
           "$$hashKey": "object:34"
         },

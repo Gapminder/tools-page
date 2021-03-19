@@ -11,13 +11,15 @@ VIZABI_MODEL = {
             dimensions: { "country": { "un_state": true } }
           }
         },
-        requiredEncodings: ["x1", "y1", "size"],
+        requiredEncodings: ["x", "y", "size"],
         encoding: {
           "selected": {
-            modelType: "selection",
-            data: { ref: "markers.bubble.encoding.trail.data" }
+            modelType: "selection"
           },
           "highlighted": {
+            modelType: "selection"
+          },
+          "superhighlighted": {
             modelType: "selection"
           },
           //enabling order encoding results in chart not respecting splash load and waiting full data to render both splash and full picture
@@ -33,23 +35,28 @@ VIZABI_MODEL = {
               concept: "population_total"
             },
             scale: {
-              //type: "log"
+              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
             }
           },
-          "y1": {
+          "y": {
             data: {
               concept: "life_expectancy_years",
             },
             scale: {
-              //domain: [20, 40]
+              domain: [0, 100],
+              zoomed: [19, 86],
+              allowedTypes: ["linear", "log", "genericLog", "pow"]
             }
           },
-          "x1": {
+          "x": {
             data: {
               concept: "income_per_person_gdppercapita_ppp_inflation_adjusted"
             },
             scale: {
-              type: "log"
+              domain: [300, 180000],
+              zoomed: [400, 96000],
+              type: "log",
+              allowedTypes: ["linear", "log", "genericLog", "pow"]
             }
           },
           "color": {
@@ -64,7 +71,7 @@ VIZABI_MODEL = {
           },
           "label": {
             data: {
-              //space: ["country"],
+              space: ["country"],
               modelType: "entityPropertyDataConfig",
               concept: "name"
             }
@@ -74,7 +81,8 @@ VIZABI_MODEL = {
               constant: "_default"
             },
             scale: {
-              modelType: "size"
+              modelType: "size",
+              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
             }
           },
           frame: {
@@ -87,12 +95,13 @@ VIZABI_MODEL = {
           },
           "trail": {
             modelType: "trail",
-            groupDim: "time"
+            groupDim: "time",
+            show: true
           },
           "repeat": {
             modelType: "repeat",
-            row: ["y1"],
-            column: ["x1"]
+            row: ["y"],
+            column: ["x"]
           }
         }
       },
@@ -111,7 +120,14 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "color",
-              palette: { ref: "markers.bubble.encoding.color.scale.palette" }
+              palette: { ref: "markers.bubble.encoding.color.scale.palette" },
+              domain: null,
+              range: null,
+              type: null,
+              zoomed: null,
+              zeroBaseline: false,
+              clamp: false,
+              allowedTypes: null
             }
             //scale: { ref: "markers.bubble.encoding.color.scale" }
           },
@@ -145,9 +161,56 @@ VIZABI_MODEL = {
         ]
       }
     },
+
+
     "chart": {
+      show_ticks: true,
+      showForecast: false,
+      showForecastOverlay: true,
+      pauseBeforeForecast: true,
+      opacityHighlight: 1.0,
+      opacitySelect: 1.0,
+      opacityHighlightDim: 0.1,
+      opacitySelectDim: 0.3,
+      opacityRegular: 0.8,
+      timeInBackground: true,
+      timeInTrails: true,
+      lockNonSelected: 0,
+      numberFormatSIPrefix: true,
+      panWithArrow: false,
+      adaptMinMaxZoom: false,
+      cursorMode: "arrow",
+      zoomOnScrolling: true,
+      superhighlightOnMinimapHover: true,
+      whenHovering: {
+        showProjectionLineX: true,
+        showProjectionLineY: true,
+        higlightValueX: true,
+        higlightValueY: true
+      },
       labels: {
-        removeLabelBox: true
+        enabled: true,
+        dragging: true,
+        removeLabelBox: false
+      },
+      margin: {
+        left: 0,
+        top: 0
+      },
+      datawarning: {
+        doubtDomain: [],
+        doubtRange: []
+      },
+      decorations: {
+        "enabled": true,
+        "xAxisGroups": {
+          "income_per_person_gdppercapita_ppp_inflation_adjusted": [
+            { "min": null, "max": 2650, "label": "incomegroups/level1", "label_short": "incomegroups/level1short" },
+            { "min": 2650, "max": 8000, "label": "incomegroups/level2", "label_short": "incomegroups/level2short" },
+            { "min": 8000, "max": 24200, "label": "incomegroups/level3", "label_short": "incomegroups/level3short" },
+            { "min": 24200, "max": null, "label": "incomegroups/level4", "label_short": "incomegroups/level4short" }
+          ]
+        }
       }
     },
     "tree-menu": {
@@ -156,6 +219,6 @@ VIZABI_MODEL = {
         "fasttrack": "spread",
         "wdi": "folder:other_datasets"
       }
-    },
+    }
   }
 };
