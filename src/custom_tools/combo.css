@@ -1,5 +1,18 @@
+.vzb-tool.vzb-tool-combo.vzb-split-vertical {
+  grid-template-rows: 1fr 1fr;
+}
+
 .vzb-tool.vzb-tool-combo.vzb-split-vertical
-  .vzb-tool-stage {
+  .vzb-animationcontrols {
+    grid-row-start: -1;
+    grid-row-end: -1;
+  }
+
+
+
+
+
+.vzb-tool-stage {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
     flex-direction: row;

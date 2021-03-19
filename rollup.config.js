@@ -168,6 +168,11 @@ export default [
 			// 	new RegExp(`^..${path.sep}`),
       //   '~/pkg-name/'
       // )},
+      globals: {
+        "mobx": "mobx",
+        "Vizabi": "Vizabi",
+        "VizabiSharedComponents": "VizabiSharedComponents"
+      },
       manualChunks(id) {
         if (/vizabi/.test(id)) {
           return "tools";
@@ -179,6 +184,7 @@ export default [
     },
     //treeshake: process.env.NODE_ENV === "production" ? {} : false,
     context: "window",
+    external: ["mobx", "Vizabi", "VizabiSharedComponents"],
     plugins: [
     //(process.env.NODE_ENV === "production" &&
       (trash({

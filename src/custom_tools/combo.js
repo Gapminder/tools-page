@@ -1,26 +1,32 @@
 import { 
-    BaseComponent,
-    TimeSlider,
-    DataNotes,
-    DataWarning,
-    LocaleService,
-    LayoutService,
-    TreeMenu,
-    SteppedSlider,
-    Dialogs,
-    ButtonList
-  } from "VizabiSharedComponents";
-
-import { VizabiExtApiMap } from "vizabi-extapimap";
+  BaseComponent,
+  Chart,
+  TimeSlider,
+  DataNotes,
+  DataWarning,
+  LocaleService,
+  LayoutService,
+  TreeMenu,
+  SteppedSlider,
+  Dialogs,
+  ButtonList
+} from "VizabiSharedComponents";
+import { observable } from "mobx";
 
 export default class Combo extends BaseComponent {
   constructor(config){
     const marker = config.model.stores.markers.get("bubble");
 
-    config.name = "extapimap";
+    config.name = "combo";
 
     config.subcomponents = [{
-      type: VizabiExtApiMap,
+      type: Chart.get("bubblechart"),
+      placeholder: ".vzb-bubblechart",
+      model: marker,
+      name: "chart",
+      state: { alias: { x:"x", y:"y"}}
+    },{
+      type: Chart.get("extapimap"),
       placeholder: ".vzb-extapimap",
       model: marker,
       name: "chart"
@@ -61,7 +67,8 @@ export default class Combo extends BaseComponent {
     }];
 
     config.template = `
-    <div class="vzb-extapimap"></div>
+    <div class="vzb-chart vzb-bubblechart"></div>
+    <div class="vzb-chart vzb-extapimap"></div>
     <div class="vzb-animationcontrols">
       <div class="vzb-timeslider"></div>
       <div class="vzb-speedslider"></div>
@@ -86,12 +93,33 @@ export default class Combo extends BaseComponent {
       });
 
     super(config);
+
+    this.root.element.classed("vzb-tool-combo", true);
+    this.root.element.classed("vzb-split-vertical", true);
   } 
 }
 
+Combo.DEFAULT_UI = {
+  chart: {
+    map: {
+      "showBubbles": true,
+      "showAreas": false,
+      "showMap": true,
+      "mapEngine": "mapbox",
+      "mapStyle": "mapbox://styles/mapbox/light-v9",    
+      overflowBottom: 50,
+      skipShapesLoading: true
+    },
+    opacitySelectDim: 0.3,
+    opacityRegular: 0.5,
+    cursorMode: "arrow",
+    panWithArrow: true,
+    adaptMinMaxZoom: false,
+    zoomOnScrolling: true,
+  }
+}
 
-
-
+window.Combo = Combo;
 
 
 

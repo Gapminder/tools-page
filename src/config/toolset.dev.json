@@ -9,6 +9,16 @@
     "image": "/assets/images/chart/bubble-chart.png"
   },
   {
+    "id": "combo",
+    "tool": "Combo",
+    "config": "Combo-corona", 
+    "dataSources": ["csv1","csv2","corona"],
+    "transition": ["select","time"],
+    "title": "combo",
+    "image": "/assets/images/chart/bubble-chart.png",
+    "hideThumbnail": true
+  },
+  {
   "id": "barrank",
   "tool": "BarRankChart",
   "config": "BarRankChart-reactive",
