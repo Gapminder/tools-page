@@ -74,10 +74,6 @@ window.addEventListener("popstate", e => {
 
 //grabs width, height, tabs open, and updates the url
 function updateURL(model, event, replaceInsteadPush) {
-  debouncedUpdateUrl(model, event, replaceInsteadPush);
-}
-
-const debouncedUpdateUrl = debounce((model, event, replaceInsteadPush) => {
   resetPopStateLoopFlag();
   // if (popStateLoopFlag || (poppedModel && comparePlainObjects(viz.getModel(), poppedModel))) {
   //   //popStateLoopFlag = false;
@@ -110,7 +106,9 @@ const debouncedUpdateUrl = debounce((model, event, replaceInsteadPush) => {
     model: deepExtend({}, poppedModel, true)
   //need to encode symbols like # in color codes because urlon can't handle them properly
   }, "Title", "#" + urlon.stringify(url).replace(/=#/g, "=%23"));
-}, 400);
+}
+
+const debouncedUpdateUrl = debounce(updateURL, 310);
 
 function parseURL() {
   const loc = window.location.toString();
@@ -141,7 +139,7 @@ function resetURL() {
 
 export {
   URLI,
-  updateURL,
+  debouncedUpdateUrl as updateURL,
   parseURL,
   resetURL
 };
