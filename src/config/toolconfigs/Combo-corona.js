@@ -40,6 +40,7 @@ VIZABI_MODEL = {
             },
             scale: {
               //domain: [20, 40]
+              zoomed: [0, 2000]
             }
           },
           "x": {
@@ -48,7 +49,8 @@ VIZABI_MODEL = {
               source: "csv2"
             },
             scale: {
-              type: "linear"
+              type: "linear",
+              zoomed: [100000, 400000]
             }
           },
           "color": {
@@ -300,6 +302,14 @@ VIZABI_MODEL = {
     "chart": {
       labels: {
         removeLabelBox: true
+      },
+      map: {
+        "bounds": {
+          east: 19.112445806405134,
+          north: 60.347818924358506,
+          south: 59.302883091355994,
+          west: 15.997682099723221
+        }
       }
     },
     "tree-menu": {
