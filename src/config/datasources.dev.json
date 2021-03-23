@@ -1,16 +1,16 @@
 {   
   "csv1": {
-    "path": "https://docs.google.com/spreadsheets/d/1Th6bfbI55Lrimj2qyqUI4TeFmiNM3AHGbYJK4ZpBgRY",
+    "path": "https://raw.githubusercontent.com/vizabi/vizabi-preview/master/src/data/csv/1Th6bfbI55Lrimj2qyqUI4TeFmiNM3AHGbYJK4ZpBgRY.csv",
     "sheet": "data T1-T6",
     "keyConcepts": ["postnummer", "week"]
   },   
   "csv2": {
-    "path": "https://docs.google.com/spreadsheets/d/1Sz6me5mQe5yorsjy6A_2ILVRX76MUeNX9yqozsoGDRo",
+    "path": "https://raw.githubusercontent.com/vizabi/vizabi-preview/master/src/data/csv/1Sz6me5mQe5yorsjy6A_2ILVRX76MUeNX9yqozsoGDRo.csv",
     "sheet": "data T7-T12",
     "keyConcepts": ["postnummer", "week"]
   },  
   "corona": {
-    "path": "https://docs.google.com/spreadsheets/d/15iXwX3UhUiY2MWxXC2MTKORsg1DLqOS7CKBizI61vL0",
+    "path": "https://raw.githubusercontent.com/vizabi/vizabi-preview/master/src/data/csv/15iXwX3UhUiY2MWxXC2MTKORsg1DLqOS7CKBizI61vL0.csv",
     "sheet": "corona",
     "keyConcepts": ["postnummer", "week"]
   },  
