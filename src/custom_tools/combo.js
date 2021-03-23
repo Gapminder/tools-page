@@ -14,8 +14,8 @@ import {
 import { observable } from "mobx";
 
 export default class Combo extends BaseComponent {
-  constructor(config){
-    const marker = config.model.stores.markers.get("bubble");
+  constructor(config) {
+    const marker = config.splash(config.model.stores.markers.get("bubble"));
 
     config.name = "combo";
 
@@ -89,8 +89,8 @@ export default class Combo extends BaseComponent {
 
     //register locale service in the marker model
     config.model.config.markers.bubble.data.locale = observable({
-        get id() { return config.services.locale.id; }
-      });
+      get id() { return config.services.locale.id; }
+    });
 
     super(config);
 
