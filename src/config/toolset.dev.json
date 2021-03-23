@@ -20,8 +20,8 @@
   {
     "id": "linechart",
     "tool": "LineChart",
-    "config": "LineChart-reactive", 
-    "dataSources": ["sg", "wdi", "fasttrack"],
+    "config": "LineChart-reports", 
+    "dataSources": ["csv"],
     "transition": ["show","time"],
     "title": "trends",
     "image": "/assets/images/chart/trends-chart.png"

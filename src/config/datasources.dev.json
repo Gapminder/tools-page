@@ -1,4 +1,8 @@
-{      
+{ 
+  "csv": {
+    "path": "https://raw.githubusercontent.com/vizabi/vizabi-preview/master/src/data/csv/timeformat-day-reports-progress-data.csv",
+    "keyConcepts": ["day", "country"]
+  },     
   "sg": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
