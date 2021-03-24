@@ -73,6 +73,7 @@
         "datawarning/body/cartogram": "Countries on a lower income level have lower data quality in general, as less resources are available for compiling statistics. Historic estimates before 1950 are generally also more rough.",
         "datawarning/body/linechart": "Countries on a lower income level have lower data quality in general, as less resources are available for compiling statistics. Historic estimates before 1950 are generally also more rough.",
         "datawarning/body/barrankchart": "Countries on a lower income level have lower data quality in general, as less resources are available for compiling statistics. Historic estimates before 1950 are generally also more rough.",    
+        "hints/no-data-available": "¯\\_(ツ)_/¯ No data is found for the selected indicator and filter",
         "hints/speed": "Play speed",
         "hints/forecastoptions": "Forecast options:",
         "hints/endbeforeforecast": "Forecast starts after:",
