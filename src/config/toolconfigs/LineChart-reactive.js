@@ -44,6 +44,10 @@ VIZABI_MODEL = {
           "x": {
             data: {
               concept: "time"
+            },
+            scale: {
+              type: "time",
+              allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
             }
           },
           "color": {
