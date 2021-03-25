@@ -35,7 +35,7 @@
     "font-awesome": "^4.7.0",
     "mobx": "^5.14.2",
     "urlon": "3.0.1",
-    "vizabi-barrankchart": "3.2.0",
+    "vizabi-barrankchart": "3.2.1",
     "vizabi-bubblechart": "3.3.0",
     "vizabi-bubblemap": "3.2.1",
     "vizabi-config-systema_globalis": "2.9.3",
@@ -45,7 +45,7 @@
     "vizabi-linechart": "3.3.0",
     "vizabi-mountainchart": "3.2.0",
     "vizabi-reactive": "1.2.1",
-    "vizabi-shared-components": "1.5.2"
+    "vizabi-shared-components": "1.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
