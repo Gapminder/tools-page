@@ -4,7 +4,8 @@
     "barrankchart",
     "bubblechart",
     "bubblemap",
-    "mountainchart"
+    "mountainchart",
+    "popbyage"
   ],
   "paths": {
   }
