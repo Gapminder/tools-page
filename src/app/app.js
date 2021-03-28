@@ -47,8 +47,8 @@ const App = function() {
   parseURL();
   Object.assign(appState, {
     tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
-    language: ((URLI.model || {}).locale || {}).id || "en",
-    projector: ((URLI.model || {}).projector === "true") || false
+    language: URLI.model?.ui?.locale || "en",
+    projector: (URLI.model?.ui?.projector === "true") || false
   });
   window.history.replaceState({
     tool: appState.tool,

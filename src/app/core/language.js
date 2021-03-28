@@ -28,9 +28,10 @@ function setLocale(arg) {
     .attr("lang", langId)
     .attr("class", langId);
 
+  appState.language = arg;
+
   if (!viz || !viz.services) return;
   viz.services.locale.id = arg;
-  appState.language = arg;
 }
 
 function loadTranslation(language) {
