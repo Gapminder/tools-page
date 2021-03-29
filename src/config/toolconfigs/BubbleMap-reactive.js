@@ -101,7 +101,8 @@ VIZABI_MODEL = {
               type: null,
               zoomed: null,
               zeroBaseline: false,
-              clamp: false
+              clamp: false,
+              allowedTypes: null
             }
             //scale: { ref: "markers.bubble.encoding.color.scale" }
           },
@@ -113,6 +114,9 @@ VIZABI_MODEL = {
     }
   },
   ui: {
+    locale: { id: "en" },
+    layout: { projector: false },
+
     //ui
     "buttons": {
       "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]

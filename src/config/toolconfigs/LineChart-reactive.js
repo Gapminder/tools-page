@@ -44,6 +44,10 @@ VIZABI_MODEL = {
           "x": {
             data: {
               concept: "time"
+            },
+            scale: {
+              type: "time",
+              allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
             }
           },
           "color": {
@@ -108,6 +112,9 @@ VIZABI_MODEL = {
     }
   },
   ui: {
+    locale: { id: "en" },
+    layout: { projector: false },
+
     //ui
     "time-slider": {
       "show_value": true

@@ -1,10 +1,13 @@
 import {
-  appState
+  appState, dispatch
 } from "./global";
 import {
   URLI,
   updateURL
 } from "./url";
+import {
+  setLanguage,
+} from "./language";
 import {
   getTransitionModel
 } from "./chart-transition";
@@ -130,7 +133,19 @@ function setTool(tool, skipTransition) {
         return deepExtend({}, pageConfig, transitionModel, true); //true --> overwrite by empty
       }
 
-      window.VIZABI_PAGE_MODEL = deepExtend({}, VIZABI_MODEL);
+      const PLACEHOLDER = ".vzb-placeholder";
+
+      window.VIZABI_PAGE_MODEL = deepExtend({
+        ui: {
+          layout: deepExtend({}, VizabiSharedComponents.LayoutService.DEFAULTS, { 
+            placeholder: PLACEHOLDER 
+          }),
+          locale: deepExtend({}, VizabiSharedComponents.LocaleService.DEFAULTS, { 
+            placeholder: PLACEHOLDER,
+            path: "assets/translation/"
+          })
+        }
+      }, VIZABI_MODEL);
       let pageConfig = VIZABI_MODEL;
       pageConfig = applyDataConfigs(pageConfig);
       pageConfig = applyTransitionConfigs(pageConfig);
@@ -139,18 +154,22 @@ function setTool(tool, skipTransition) {
       }
       window.VIZABI_UI_CONFIG = observable((URLI.model && URLI.model.ui) ? deepExtend({}, URLI.model.ui) : {});
 
+      window.VIZABI_LOCALE = observable(VIZABI_PAGE_MODEL.ui.locale);
+      if (VIZABI_UI_CONFIG.locale !== undefined) VIZABI_LOCALE.id = VIZABI_UI_CONFIG.locale;
+      window.VIZABI_LAYOUT = observable(VIZABI_PAGE_MODEL.ui.layout);
+      if (VIZABI_UI_CONFIG.projector !== undefined) VIZABI_LAYOUT.projector = VIZABI_UI_CONFIG.projector;
+
+      setLanguage(VIZABI_LOCALE.id);
+      dispatch.call("languageChanged", null, VIZABI_LOCALE.id);  
+      appState.projector = VIZABI_LAYOUT.projector;
+
       const toolPrototype = window[toolsetEntry.tool];
       viz = new toolPrototype({
-        placeholder: ".vzb-placeholder",
+        placeholder: PLACEHOLDER,
         splash,
         model: Vizabi(pageConfig.model),
-        locale: {
-          "id": appState.language,
-          "path": "assets/translation/"
-        },
-        layout: {
-          "projector": appState.projector
-        },
+        locale: VIZABI_LOCALE,
+        layout: VIZABI_LAYOUT,
         ui: VIZABI_UI_CONFIG,
         default_ui: VIZABI_PAGE_MODEL.ui,
         options: {
@@ -190,6 +209,10 @@ function setTool(tool, skipTransition) {
           model: VizabiSharedComponents.Utils.clearEmpties(diffObject(jsmodel, VIZABI_DEFAULT_MODEL || {})),
           ui: VizabiSharedComponents.Utils.clearEmpties(diffObject(jsui, VIZABI_MODEL.ui))
         };
+        if (VIZABI_PAGE_MODEL.ui.locale.id !== VIZABI_LOCALE.id) model.ui.locale = VIZABI_LOCALE.id
+          else delete model.ui.locale;
+        if (VIZABI_PAGE_MODEL.ui.layout.projector !== VIZABI_LAYOUT.projector) model.ui.projector = VIZABI_LAYOUT.projector
+          else delete model.ui.projector;
 
         VIZABI_DEFAULT_MODEL && updateURL(model, undefined, true);
       }, { name: "tool.js: update url" });

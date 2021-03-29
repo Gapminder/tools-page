@@ -92,6 +92,9 @@ VIZABI_MODEL = {
     }
   },
   ui: {
+    locale: { id: "en" },
+    layout: { projector: false },
+
     //ui
     "chart": {
       lilFrameDisplayAlwaysHidden: true,

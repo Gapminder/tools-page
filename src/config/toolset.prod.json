@@ -1,7 +1,6 @@
 [
   {
     "id": "bubbles",
-    "url": "https://www.gapminder.org/tools/#$chart-type=bubbles",
     "tool": "BubbleChart",
     "config": "BubbleChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
