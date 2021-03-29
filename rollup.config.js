@@ -248,7 +248,8 @@ export default [
           modules: false,
           useBuiltIns: "entry",
           corejs: { version: "3.9" }
-        }]]
+        }]],
+        plugins: ["@babel/plugin-proposal-class-properties"]
       })),
       sourcemaps(),
       jsonToJsEmitAssets(
