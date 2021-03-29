@@ -114,6 +114,9 @@ VIZABI_MODEL = {
     }
   },
   ui: {
+    locale: { id: "en" },
+    layout: { projector: false },
+
     //ui
     "buttons": {
       "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
