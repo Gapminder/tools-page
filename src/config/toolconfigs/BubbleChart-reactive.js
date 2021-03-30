@@ -201,8 +201,8 @@ VIZABI_MODEL = {
         top: 0
       },
       datawarning: {
-        doubtDomain: [],
-        doubtRange: []
+        doubtDomain: [1800, 1950, 2015],
+        doubtRange: [1.0, 0.3, 0.2]
       },
       decorations: {
         "enabled": true,
