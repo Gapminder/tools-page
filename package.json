@@ -36,7 +36,7 @@
     "mobx": "^5.14.2",
     "urlon": "3.0.1",
     "vizabi-barrankchart": "3.2.3",
-    "vizabi-bubblechart": "3.3.4",
+    "vizabi-bubblechart": "3.3.5",
     "vizabi-bubblemap": "3.2.3",
     "vizabi-config-systema_globalis": "2.9.3",
     "vizabi-ddfcsv-reader": "4.0.1",
@@ -44,8 +44,8 @@
     "vizabi-ddfservice-reader": "^2.1.1",
     "vizabi-linechart": "3.3.2",
     "vizabi-mountainchart": "3.2.1",
-    "vizabi-reactive": "1.3.1",
-    "vizabi-shared-components": "1.6.1"
+    "vizabi-reactive": "1.3.2",
+    "vizabi-shared-components": "1.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",

@@ -22,6 +22,7 @@ let urlUpdateDisposer;
 //cleanup the existing tool
 function removeTool() {
   if (viz) {
+    viz.model.stores.markers.getAll().forEach(m => m.destruct());
     viz.deconstruct();
     viz = void 0;
   }
@@ -83,7 +84,7 @@ function setTool(tool, skipTransition) {
   if (!tool) tool = appState.tool;
 
   //configure google analytics with the active tool, which would be counted as a "page view" of our single-page-application
-  if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool });
+  if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool, "page_path": "/" + tool });
 
   const toolsetEntry = toolsPage_toolset.find(f => f.id === tool);
   const toolsetEntryPrevious = toolsPage_toolset.find(f => f.id === appState.tool);
