@@ -41,7 +41,7 @@ function splash(marker) {
   let splashConfig = Vizabi.utils.deepclone(marker.config);
   const filterMerge = { data: { filter: { dimensions: splashFilter } } };
   splashConfig = Vizabi.utils.deepmerge(splashConfig, filterMerge);
-  splashConfig.encoding.trail.show = false;
+  if (splashConfig.encoding.trail) splashConfig.encoding.trail.show = false;
 
   const splashMarker = Vizabi.marker(splashConfig);
 
