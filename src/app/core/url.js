@@ -105,7 +105,7 @@ function updateURL(model, event, replaceInsteadPush) {
     tool: url["chart-type"],
     model: deepExtend({}, poppedModel, true)
   //need to encode symbols like # in color codes because urlon can't handle them properly
-  }, "Title", "#" + urlon.stringify(url).replace(/=#/g, "=%23"));
+  }, "Title", "#" + encodeUrlHash(urlon.stringify(url)));
 }
 
 const debouncedUpdateUrl = debounce(updateURL, 310);
@@ -119,8 +119,8 @@ function parseURL() {
     hash = loc.substring(loc.indexOf("#") + 1);
 
     if (hash) {
-      //need to decode symbols like # in color codes because urlon can't handle them properly
-      const parsedUrl = urlon.parse(hash.replace(/=%2523/g, "=%23").replace(/=%23/g, "=#"));
+
+      const parsedUrl = urlon.parse(decodeUrlHash(hash));
 
       URLI.model = parsedUrl || {};
       URLI["chart-type"] = parsedUrl["chart-type"];
@@ -128,6 +128,16 @@ function parseURL() {
 
     }
   }
+}
+
+function encodeUrlHash(hash) {
+  return hash.replace(/=#/g, "=%23");
+}
+
+function decodeUrlHash(hash) {
+  //need to decode symbols like # in color codes because urlon can't handle them properly
+  //also replace %24 in cases like http://localhost:4200/tools/#%24chart-type=bubbles&url=v1
+  return hash.replace(/=%2523/g, "=%23").replace(/=%23/g, "=#").replace(/%24/g, "$");
 }
 
 function resetURL() {
@@ -140,6 +150,8 @@ function resetURL() {
 export {
   URLI,
   debouncedUpdateUrl as updateURL,
+  encodeUrlHash,
+  decodeUrlHash,
   parseURL,
   resetURL
 };
