@@ -31,6 +31,7 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 const copyright = `// ${meta.homepage} v${meta.version} Copyright ${(new Date).getFullYear()} ${meta.author.name}`;
 const __PROD__ = process.env.NODE_ENV === "production";
 const __STAGE__ = process.env.STAGE;
+const __DEVSERVER__ = process.env.NODE_ENV === "devserver";
 
 const allTools = require(path.resolve(__dirname, "vizabi-tools.json"));
 const toolset = require(path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`));
@@ -135,8 +136,8 @@ const jsonToJsEmitAssets = (plugin, varNameFunc, emitFilePath, nameRegex) => {
 const jsAssets = [];
 
 jsAssets.push(
-  "vendor.js",
-  "tools.js",
+  `vendor${__PROD__ ? ".min" : ""}.js`,
+  `tools${__PROD__ ? ".min" : ""}.js`,
   "config/properties.js",
   "config/toolset.js",
   "config/datasources.js",
@@ -157,8 +158,8 @@ export default [
     },
     output: {
       dir: "build/" + deployDir,
-
-      chunkFileNames: "[name].js",
+      entryFileNames: `[name]${__PROD__ ? ".min" : ""}.js`,
+      chunkFileNames: `[name]${__PROD__ ? ".min" : ""}.js`,
       //format: "cjs",
       banner: copyright,
       sourcemap: true,
@@ -182,15 +183,15 @@ export default [
         }
       }
     },
-    //treeshake: process.env.NODE_ENV === "production" ? {} : false,
+    //treeshake: __PROD__ ? {} : false,
     context: "window",
     external: ["mobx", "Vizabi", "VizabiSharedComponents"],
     plugins: [
-    //(process.env.NODE_ENV === "production" &&
-      (trash({
+    //__PROD__ &&
+      trash({
         targets: ["build/*"],
         runOnce: true
-      })),
+      }),
       virtual({
         "vizabi-tools": generateToolInputEntries().map(entry => `import "${entry}";`).join("") + "export default '';"
       }),
@@ -234,8 +235,8 @@ export default [
           };
         })
       }),
-      (process.env.NODE_ENV === "production" && eslint()),
-      (process.env.NODE_ENV === "production" && babel({
+      __PROD__ && eslint(),
+      __PROD__ && babel({
         babelHelpers: "bundled",
         include: [
           "src/**",
@@ -250,7 +251,7 @@ export default [
           corejs: { version: "3.9" }
         }]],
         plugins: ["@babel/plugin-proposal-class-properties"]
-      })),
+      }),
       sourcemaps(),
       jsonToJsEmitAssets(
         json({
@@ -298,20 +299,20 @@ export default [
       replace({
         ENV: JSON.stringify(process.env.NODE_ENV || "development")
       }),
-      (process.env.NODE_ENV === "production" && terser({
+      __PROD__ && terser({
         output: {
           preamble: copyright,
         },
         keep_classnames: true,
         keep_fnames: true
-      })),
+      }),
       iife(),
-      (process.env.NODE_ENV === "devserver" && serve({
+      __DEVSERVER__ && serve({
         contentBase: ["build"],
         port: 4200,
         verbose: true
-      }) ),
-      (process.env.NODE_ENV === "devserver" && livereload("build/")),
+      }),
+      __DEVSERVER__ && livereload("build/"),
       visualizer({
         filename: "./build/stats.html"
       }),
