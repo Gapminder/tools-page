@@ -182,7 +182,7 @@ function setTool(tool, skipTransition) {
       window.viz = viz;
 
       window.VIZABI_DEFAULT_MODEL = null;
-      when(() => Object.keys(viz.model.config.markers)
+      when(() => viz && Object.keys(viz.model.config.markers)
         .every(markerId => {
           const marker = viz.model.stores.markers.get(markerId);
           return marker && marker.state == "fulfilled";
