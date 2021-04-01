@@ -144,7 +144,7 @@ VIZABI_MODEL = {
 
     //ui
     "buttons": {
-      "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["colors", "find", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
