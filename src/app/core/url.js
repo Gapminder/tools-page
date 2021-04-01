@@ -136,8 +136,12 @@ function encodeUrlHash(hash) {
 
 function decodeUrlHash(hash) {
   //need to decode symbols like # in color codes because urlon can't handle them properly
-  //also replace %24 in cases like http://localhost:4200/tools/#%24chart-type=bubbles&url=v1
-  return hash.replace(/=%2523/g, "=%23").replace(/=%23/g, "=#").replace(/%24/g, "$");
+  //also replace %24 and %3B in cases like http://localhost:4200/tools/#%24chart-type=bubbles&url=v1
+  return hash
+    .replace(/%24/g, "$")
+    .replace(/%3B/g, ";")
+    .replace(/=%2523/g, "=%23")
+    .replace(/=%23/g, "=#");
 }
 
 function resetURL() {
