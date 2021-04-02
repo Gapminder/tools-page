@@ -202,7 +202,7 @@ function setTool(tool, skipTransition) {
 
       urlUpdateDisposer = autorun(() => {
         let jsmodel = toJS(viz.model.config, { recurseEverything: true });
-        jsmodel = removeProperties(jsmodel, ["highlighted", "frame"]);
+        jsmodel = removeProperties(jsmodel, ["highlighted"]);
 
         let jsui = toJS(VIZABI_UI_CONFIG, { recurseEverything: true} );
         jsui = removeProperties(jsui, ["dragging"]);
