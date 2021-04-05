@@ -22,7 +22,6 @@ let urlUpdateDisposer;
 //cleanup the existing tool
 function removeTool() {
   if (viz) {
-    viz.model.stores.markers.getAll().forEach(m => m.destruct());
     viz.deconstruct();
     viz = void 0;
   }

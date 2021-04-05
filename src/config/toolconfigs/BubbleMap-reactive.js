@@ -23,7 +23,7 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "size",
-              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
+              allowedTypes: ["linear", "log", "genericLog", "pow"]
             }
           },
           "lat": {
@@ -78,11 +78,11 @@ VIZABI_MODEL = {
             }
           },
           "order": {
-              modelType: "order",
-              data: {
-                ref: "markers.bubble.encoding.size.data",
-                direction: "desc"
-              }
+            modelType: "order",
+            data: {
+              ref: "markers.bubble.encoding.size.data",
+              direction: "desc"
+            }
           },
         },
         requiredEncodings: ["lat", "lon", "size"]
