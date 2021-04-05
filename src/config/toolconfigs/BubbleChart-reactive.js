@@ -27,14 +27,13 @@ VIZABI_MODEL = {
           "superhighlighted": {
             modelType: "selection"
           },
-          //enabling order encoding results in chart not respecting splash load and waiting full data to render both splash and full picture
-          // "order": {
-          //   modelType: "order",
-          //   data: {
-          //     ref: "markers.bubble.encoding.size.data",
-          //     direction: "desc"
-          //   }
-          // },
+          "order": {
+            modelType: "order",
+            data: {
+              ref: "markers.bubble.encoding.size.data",
+              direction: "desc"
+            }
+          },
           "size": {
             data: {
               concept: "population_total"

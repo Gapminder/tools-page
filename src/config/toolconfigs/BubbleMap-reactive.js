@@ -76,7 +76,14 @@ VIZABI_MODEL = {
             data: {
               concept: "time"
             }
-          }
+          },
+          "order": {
+              modelType: "order",
+              data: {
+                ref: "markers.bubble.encoding.size.data",
+                direction: "desc"
+              }
+          },
         },
         requiredEncodings: ["lat", "lon", "size"]
       },
