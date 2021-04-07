@@ -3,7 +3,6 @@ VIZABI_MODEL = {
     markers: {
       "mountain": {
         data: {
-          locale: "en",
           source: "sg",
           space: ["country", "time"],
           filter: {

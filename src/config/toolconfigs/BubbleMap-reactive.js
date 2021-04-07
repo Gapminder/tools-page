@@ -3,7 +3,6 @@ VIZABI_MODEL = {
     markers: {
       bubble: {
         data: {
-          locale: "en",
           source: "sg",
           space: ["country", "time"],
           filter: {

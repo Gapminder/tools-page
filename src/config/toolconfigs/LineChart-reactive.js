@@ -14,7 +14,6 @@ VIZABI_MODEL = {
               }
             }
           },
-          locale: "en",
           source: "sg",
           space: ["country", "time"]
         },

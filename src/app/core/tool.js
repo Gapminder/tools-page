@@ -122,6 +122,7 @@ function setTool(tool, skipTransition) {
               console.warn(`Could not find data config with key ${ds} in datasources file`);
             else
               pageConfig.model.dataSources[ds] = toolsPage_datasources[ds];
+              pageConfig.model.dataSources[ds].locale = URLI.model?.ui?.locale || pageConfig.ui.locale;
           });
         }
         return pageConfig;
@@ -200,7 +201,7 @@ function setTool(tool, skipTransition) {
 
       urlUpdateDisposer = autorun(() => {
         let jsmodel = toJS(viz.model.config, { recurseEverything: true });
-        jsmodel = removeProperties(jsmodel, ["highlighted", "superhighlighted"]);
+        jsmodel = removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale"]);
 
         let jsui = toJS(VIZABI_UI_CONFIG, { recurseEverything: true} );
         jsui = removeProperties(jsui, ["dragging"]);
