@@ -4,7 +4,6 @@ VIZABI_MODEL = {
       bubble: {
         modelType: "bubble",
         data: {
-          locale: "en",
           source: "sg",
           space: ["country", "time"],
           filter: {
@@ -14,7 +13,12 @@ VIZABI_MODEL = {
         requiredEncodings: ["x", "y", "size"],
         encoding: {
           "selected": {
-            modelType: "selection"
+            modelType: "selection",
+            data: { 
+              filter: { 
+                ref: "markers.bubble.encoding.trail.data.filter"
+              }
+            }
           },
           "highlighted": {
             modelType: "selection"
@@ -22,14 +26,13 @@ VIZABI_MODEL = {
           "superhighlighted": {
             modelType: "selection"
           },
-          //enabling order encoding results in chart not respecting splash load and waiting full data to render both splash and full picture
-          // "order": {
-          //   modelType: "order",
-          //   data: {
-          //     ref: "markers.bubble.encoding.size.data",
-          //     direction: "desc"
-          //   }
-          // },
+          "order": {
+            modelType: "order",
+            data: {
+              ref: "markers.bubble.encoding.size.data",
+              direction: "desc"
+            }
+          },
           "size": {
             data: {
               concept: "population_total"
@@ -201,8 +204,8 @@ VIZABI_MODEL = {
         top: 0
       },
       datawarning: {
-        doubtDomain: [],
-        doubtRange: []
+        doubtDomain: [1800, 1950, 2015],
+        doubtRange: [1.0, 0.3, 0.2]
       },
       decorations: {
         "enabled": true,

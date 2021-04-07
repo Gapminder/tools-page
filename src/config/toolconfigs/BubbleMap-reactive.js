@@ -3,7 +3,6 @@ VIZABI_MODEL = {
     markers: {
       bubble: {
         data: {
-          locale: "en",
           source: "sg",
           space: ["country", "time"],
           filter: {
@@ -23,7 +22,7 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "size",
-              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
+              allowedTypes: ["linear", "log", "genericLog", "pow"]
             }
           },
           "lat": {
@@ -76,7 +75,14 @@ VIZABI_MODEL = {
             data: {
               concept: "time"
             }
-          }
+          },
+          "order": {
+            modelType: "order",
+            data: {
+              ref: "markers.bubble.encoding.size.data",
+              direction: "desc"
+            }
+          },
         },
         requiredEncodings: ["lat", "lon", "size"]
       },

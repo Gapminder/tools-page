@@ -187,7 +187,7 @@ const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
     _this.selectedMenuItem = d.menu_label === _this.selectedMenuItem ? null : d.menu_label;
     if (_this.selectedMenuItem) dispatch.call("menuOpen", null, d);
     placeHolder.selectAll(".nav-expandable-item a.menu-item")
-      .classed("active", d => _this.selectedMenuItem === d.menu_label);
+      .classed("active", d => _this.selectedMenuItem === d?.menu_label);
   }
 
   function fillMenuItem(item) {

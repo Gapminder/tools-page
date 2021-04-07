@@ -82,7 +82,7 @@ function setTool(tool, skipTransition) {
   if (!tool) tool = appState.tool;
 
   //configure google analytics with the active tool, which would be counted as a "page view" of our single-page-application
-  if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool });
+  if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool, "page_path": "/" + tool });
 
   const toolsetEntry = toolsPage_toolset.find(f => f.id === tool);
   const toolsetEntryPrevious = toolsPage_toolset.find(f => f.id === appState.tool);
@@ -122,6 +122,7 @@ function setTool(tool, skipTransition) {
               console.warn(`Could not find data config with key ${ds} in datasources file`);
             else
               pageConfig.model.dataSources[ds] = toolsPage_datasources[ds];
+              pageConfig.model.dataSources[ds].locale = URLI.model?.ui?.locale || pageConfig.ui.locale;
           });
         }
         return pageConfig;
@@ -180,9 +181,9 @@ function setTool(tool, skipTransition) {
       window.viz = viz;
 
       window.VIZABI_DEFAULT_MODEL = null;
-      when(() => Object.keys(viz.model.config.markers)
+      when(() => viz && Object.keys(viz.model.config.markers)
         .every(markerId => {
-          const marker = viz.model.stores.markers.get(markerId);
+          const marker = viz.model.markers[markerId];
           return marker && marker.state == "fulfilled";
         }),
         () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything: true }), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {})
@@ -200,7 +201,7 @@ function setTool(tool, skipTransition) {
 
       urlUpdateDisposer = autorun(() => {
         let jsmodel = toJS(viz.model.config, { recurseEverything: true });
-        jsmodel = removeProperties(jsmodel, ["highlighted", "frame"]);
+        jsmodel = removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale"]);
 
         let jsui = toJS(VIZABI_UI_CONFIG, { recurseEverything: true} );
         jsui = removeProperties(jsui, ["dragging"]);

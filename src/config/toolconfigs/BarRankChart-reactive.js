@@ -4,7 +4,6 @@ VIZABI_MODEL = {
       "bar": {
         requiredEncodings: ["x"],
         data: {
-          locale: "en",
           source: "sg",
           space: ["country", "time"],
           filter: {

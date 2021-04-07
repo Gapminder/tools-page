@@ -4,7 +4,6 @@ VIZABI_MODEL = {
       bubble: {
         modelType: "bubble",
         data: {
-          locale: "en",
           source: "mdtest",
           space: {
             autoconfig: {

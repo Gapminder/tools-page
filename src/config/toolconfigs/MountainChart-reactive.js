@@ -3,7 +3,6 @@ VIZABI_MODEL = {
     markers: {
       "mountain": {
         data: {
-          locale: "en",
           source: "sg",
           space: ["country", "time"],
           filter: {
@@ -136,6 +135,15 @@ VIZABI_MODEL = {
       "showForecastOverlay": true,
       "showForecast": true,
       "pauseBeforeForecast": true,
+      "opacityHighlight": 1.0,
+      "opacitySelect": 1.0,
+      "opacityHighlightDim": 0.1,
+      "opacitySelectDim": 0.3,
+      "opacityRegular": 0.8,
+      "datawarning": {
+        "doubtDomain": [],
+        "doubtRange": []
+      }
     },
     "time-slider": {
       "show_value": false
