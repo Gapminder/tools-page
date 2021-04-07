@@ -182,7 +182,7 @@ function setTool(tool, skipTransition) {
       window.VIZABI_DEFAULT_MODEL = null;
       when(() => viz && Object.keys(viz.model.config.markers)
         .every(markerId => {
-          const marker = viz.model.stores.markers.get(markerId);
+          const marker = viz.model.markers[markerId];
           return marker && marker.state == "fulfilled";
         }),
         () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything: true }), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {})
