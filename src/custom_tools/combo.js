@@ -15,7 +15,7 @@ import { observable } from "mobx";
 
 export default class Combo extends BaseComponent {
   constructor(config) {
-    const marker = config.splash(config.model.stores.markers.get("bubble"));
+    const marker = config.splash(config.model.markers.bubble);
 
     config.name = "combo";
 
