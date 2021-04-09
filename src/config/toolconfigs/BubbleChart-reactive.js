@@ -2,7 +2,7 @@ VIZABI_MODEL = {
   model: {
     markers: {
       bubble: {
-        modelType: "bubble",
+        requiredEncodings: ["x", "y", "size"],
         data: {
           source: "sg",
           space: ["country", "time"],
@@ -38,6 +38,7 @@ VIZABI_MODEL = {
               concept: "population_total"
             },
             scale: {
+              modelType: "size",
               allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
             }
           },
