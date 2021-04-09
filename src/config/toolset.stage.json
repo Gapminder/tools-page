@@ -37,11 +37,8 @@
   },
   {
     "id": "linechart-global",
-    "tool": "LineChart",
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["none"],
+    "url": "https://www.tools-legacy.gapminder.org/tools/#$chart-type=linechart-global",
     "title": "globaltrends",
-    "config": "LineChart-global",
     "hideThumbnail": true,
     "image": "/assets/images/chart/globaltrends-chart.png"
   },
@@ -56,11 +53,13 @@
   },
   {
     "id": "popbyage",
+    "url": "https://www.tools-legacy.gapminder.org/tools/#$chart-type=popbyage",
     "title": "ages",
     "image": "/assets/images/chart/ages-chart.png"
   },
   {
     "id": "spreadsheet",
+    "url": "https://www.tools-legacy.gapminder.org/tools/#$chart-type=spreadsheet",
     "title": "spreadsheet",
     "image": "/assets/images/chart/spreadsheet.png",
     "hideThumbnail": true
