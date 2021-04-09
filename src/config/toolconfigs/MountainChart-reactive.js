@@ -77,6 +77,9 @@ VIZABI_MODEL = {
             endBeforeForecast: "2019",
             modelType: "frame",
             speed: 200,
+            splash: {
+              show: true
+            },
             data: {
               concept: "time"
             }

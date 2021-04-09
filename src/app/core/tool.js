@@ -31,24 +31,13 @@ function removeTool() {
     .remove();
 }
 
-function splash(marker) {
-  let fullMarkerLoadedOnce = false;
-  const splashFrameValue = marker.config.encoding.frame.value;
-  const splashConcept = marker.config.encoding.frame.data.concept;
-  const splashFilter = {};
-  splashFilter[splashConcept] = {};
-  splashFilter[splashConcept][splashConcept] = splashFrameValue;
-  let splashConfig = Vizabi.utils.deepclone(marker.config);
-  const filterMerge = { data: { filter: { dimensions: splashFilter } } };
-  splashConfig = Vizabi.utils.deepmerge(splashConfig, filterMerge);
 
-  const splashMarker = Vizabi.marker(splashConfig);
-
-  return new Proxy(marker, {
-    get: (target, prop) => {
-
-      if (marker.state == "fulfilled") {
-
+function googleAnalyticsSplash(marker) {
+  if (marker.encoding.frame) {
+    const splashMarker = marker.encoding.frame.splash.currentValueMarker;
+    when(
+      () => marker.state == 'fulfilled',
+      () => {
         const fullTime = timeLogger.snapOnce("FULL");
         if (gtag && fullTime) gtag('event', 'timing_complete', {
           "name": "Full load",
@@ -56,12 +45,11 @@ function splash(marker) {
           "event_category": 'Page load',
           "event_label": appState.tool
         });
-
-        //fullMarkerLoadedOnce prevents running splash load on subsequent changes in marker
-        fullMarkerLoadedOnce = true;
-        return target[prop];
-      } else if (!fullMarkerLoadedOnce && splashMarker.state == "fulfilled") {
-
+      }
+    );
+    when(
+      () => splashMarker.state == 'fulfilled',
+      () => {
         const splashTime = timeLogger.snapOnce("SPLASH");
         if (gtag && splashTime) gtag("event", "timing_complete", {
           "name": "Splash load",
@@ -69,12 +57,12 @@ function splash(marker) {
           "event_category": "Page load",
           "event_label": appState.tool
         });
-
-        return splashMarker[prop];
       }
-      return target[prop];
-    }
-  });
+    );
+    return marker.encoding.frame.splash.marker;
+  } else {
+    return marker;
+  }
 }
 
 function setTool(tool, skipTransition) {
@@ -165,10 +153,14 @@ function setTool(tool, skipTransition) {
       appState.projector = VIZABI_LAYOUT.projector;
 
       const toolPrototype = window[toolsetEntry.tool];
+      const model = Vizabi(pageConfig.model);
+      const markerId = ['bubble','line','bar','mountain'].find(id => model.markers[id])
+      const frame = model.markers[markerId].encoding.frame;
+      model.markers[markerId] = frame ? model.markers[markerId].encoding.frame.splash.marker : model.markers[markerId];
       viz = new toolPrototype({
         placeholder: PLACEHOLDER,
-        splash,
-        model: Vizabi(pageConfig.model),
+        splash: googleAnalyticsSplash,
+        model: model,
         locale: VIZABI_LOCALE,
         layout: VIZABI_LAYOUT,
         ui: VIZABI_UI_CONFIG,
@@ -181,7 +173,7 @@ function setTool(tool, skipTransition) {
       window.viz = viz;
 
       window.VIZABI_DEFAULT_MODEL = null;
-      when(() => viz && Object.keys(viz.model.config.markers)
+      when(() => viz && Object.keys(viz.model.markers)
         .every(markerId => {
           const marker = viz.model.markers[markerId];
           return marker && marker.state == "fulfilled";
