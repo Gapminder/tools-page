@@ -25,12 +25,6 @@ VIZABI_MODEL = {
               allowedTypes: ["linear", "log", "genericLog", "pow"]
             }
           },
-          "y": {
-            data: {
-              space: ["country"],
-              concept: "name"
-            }
-          },
           "color": {
             data: {
               space: ["country"],
