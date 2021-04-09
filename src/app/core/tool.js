@@ -152,7 +152,6 @@ function setTool(tool, skipTransition) {
       const toolPrototype = window[toolsetEntry.tool];
       const model = Vizabi(pageConfig.model);
       const markerId = ['bubble','line','bar','mountain'].find(id => model.markers[id])
-      googleAnalyticsLoadEvents(model.markers[markerId])
 
       viz = new toolPrototype({
         placeholder: PLACEHOLDER,
@@ -165,6 +164,8 @@ function setTool(tool, skipTransition) {
           showLoading: true
         }
       });
+      
+      googleAnalyticsLoadEvents(model.markers[markerId])
 
       window.viz = viz;
 
