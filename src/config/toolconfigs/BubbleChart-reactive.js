@@ -75,7 +75,6 @@ VIZABI_MODEL = {
           },
           "label": {
             data: {
-              space: ["country"],
               modelType: "entityPropertyDataConfig",
               concept: "name"
             }
