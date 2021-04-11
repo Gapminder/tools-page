@@ -37,7 +37,7 @@
   },
   {
     "id": "linechart-global",
-    "url": "https://www.tools-legacy.gapminder.org/tools/#$chart-type=linechart-global",
+    "url": "https://tools-legacy.gapminder.org/tools/#$chart-type=linechart-global",
     "title": "globaltrends",
     "hideThumbnail": true,
     "image": "/assets/images/chart/globaltrends-chart.png"
@@ -53,13 +53,13 @@
   },
   {
     "id": "popbyage",
-    "url": "https://www.tools-legacy.gapminder.org/tools/#$chart-type=popbyage",
+    "url": "https://tools-legacy.gapminder.org/tools/#$chart-type=popbyage",
     "title": "ages",
     "image": "/assets/images/chart/ages-chart.png"
   },
   {
     "id": "spreadsheet",
-    "url": "https://www.tools-legacy.gapminder.org/tools/#$chart-type=spreadsheet",
+    "url": "https://tools-legacy.gapminder.org/tools/#$chart-type=spreadsheet",
     "title": "spreadsheet",
     "image": "/assets/images/chart/spreadsheet.png",
     "hideThumbnail": true

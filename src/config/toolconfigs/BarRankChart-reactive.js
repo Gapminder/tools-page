@@ -99,6 +99,7 @@ VIZABI_MODEL = {
       lilFrameDisplayAlwaysHidden: true,
       showForecast: false,
       showForecastOverlay: true,
+      endBeforeForecast: "2019",
       pauseBeforeForecast: true,
       opacityHighlight: 1.0,
       opacitySelect: 1.0,

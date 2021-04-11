@@ -74,7 +74,6 @@ VIZABI_MODEL = {
           },
           frame: {
             value: "2019",
-            endBeforeForecast: "2019",
             modelType: "frame",
             speed: 200,
             data: {
@@ -135,6 +134,7 @@ VIZABI_MODEL = {
       "showForecastOverlay": true,
       "showForecast": true,
       "pauseBeforeForecast": true,
+      "endBeforeForecast": "2019",
       "opacityHighlight": 1.0,
       "opacitySelect": 1.0,
       "opacityHighlightDim": 0.1,
