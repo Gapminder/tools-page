@@ -33,11 +33,11 @@
   var GAPMINDER_TOOLS_GA_ID_DEV = 'UA-67908993-7';
   var GAPMINDER_TOOLS_GA_ID_PROD = 'UA-67908993-6';
   
-  var poduction = location.hostname.includes("gapminder.org");
+  var poduction = location.hostname.indexOf("gapminder.org") > -1;
 </script>  
 
 <script>
-  if (!location.hostname.includes("localhost")) {
+  if (location.hostname.indexOf("localhost") == -1) {
     var _rollbarConfig = {
       accessToken: "d2def197af124ab48e8da738bcdab847",
       captureUncaught: true,
@@ -56,7 +56,7 @@
               guess_uncaught_frames: true
             }
           },
-          context: location.href.includes("chart-type=") ? location.href.split("chart-type=")[1].split("&")[0] : "" //send tool name
+          context: location.href.indexOf("chart-type=") > -1 ? location.href.split("chart-type=")[1].split("&")[0] : "" //send tool name
       }
     };
     // Rollbar Snippet
