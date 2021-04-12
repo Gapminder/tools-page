@@ -18,13 +18,6 @@ VIZABI_MODEL = {
           space: ["country", "time"]
         },
         encoding: {
-          "unstate": {
-            data: {
-              space: ["country"],
-              modelType: "entityPropertyDataConfig",
-              concept: "un_state"
-            }
-          },
           "selected": {
             modelType: "selection"
           },
