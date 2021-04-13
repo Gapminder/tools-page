@@ -51,7 +51,7 @@ const App = function() {
     projector: (URLI.model?.ui?.projector === "true") || false
   });
 
-  const LEGACY_TOOLS_PAGE = "https://legacy.gapminder.org/tools/";
+  const LEGACY_TOOLS_PAGE = "https://tools-legacy.gapminder.org/tools/";
   if (URLI["chart-type"] === "popbyage"
     || URLI["chart-type"] === "spreadsheet"
     || URLI["chart-type"] === "linechart-global"
@@ -62,14 +62,13 @@ const App = function() {
     || !!navigator.userAgent.match(/Edge\/1\d\./)) { //older Edge: 10, 11, 12, 13 ... 19
     console.log("Unsupported browser or URL has old state or unsupported charts: redirecting to a legacy tools page " + LEGACY_TOOLS_PAGE);
     window.location.replace(LEGACY_TOOLS_PAGE + window.location.href.split("/tools/")[1]);
+  } else {
+    window.history.replaceState({
+      tool: appState.tool,
+      model: deepExtend({}, URLI.model, true)
+    }, "Title");
+    setTool();
   }
-
-  window.history.replaceState({
-    tool: appState.tool,
-    model: deepExtend({}, URLI.model, true)
-  }, "Title");
-  setTool();
-
 
   const languageSwitcher = new LanguageSwitcher(
     d3.select(".header .app-language-switcher"),

@@ -6,7 +6,7 @@ const rule = {
     if (hashIndex == -1) return false;
 
     const hash = url.substr(hashIndex + 1);
-    const state = urlon.parse(decodeUrlHash(hash));
+    const state = urlon.parse(decodeUrlHash(hash) || "$;");
 
     return findInState(state, toolsPage_conceptMapping);
   },
@@ -16,7 +16,7 @@ const rule = {
     const hashPrefix = url.substr(0, hashIndex);
     const hash = url.substr(hashIndex + 1);
 
-    const state = urlon.parse(decodeUrlHash(hash));
+    const state = urlon.parse(decodeUrlHash(hash) || "$;");
     const newState = replaceInState(state, toolsPage_conceptMapping);
 
     return hashPrefix + "#" + encodeUrlHash(urlon.stringify(newState));

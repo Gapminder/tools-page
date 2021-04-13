@@ -177,6 +177,7 @@ VIZABI_MODEL = {
       showForecast: false,
       showForecastOverlay: true,
       pauseBeforeForecast: true,
+      endBeforeForecast: "2019",
       opacityHighlight: 1.0,
       opacitySelect: 1.0,
       opacityHighlightDim: 0.1,
