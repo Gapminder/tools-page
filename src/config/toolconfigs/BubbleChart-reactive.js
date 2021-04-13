@@ -10,7 +10,6 @@ VIZABI_MODEL = {
             dimensions: { "country": { "un_state": true } }
           }
         },
-        requiredEncodings: ["x", "y", "size"],
         encoding: {
           "selected": {
             modelType: "selection",
