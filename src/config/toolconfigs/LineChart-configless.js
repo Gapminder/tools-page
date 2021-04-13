@@ -5,12 +5,6 @@ VIZABI_MODEL = {
       line: {
         requiredEncodings: ["x", "y"],
         data: {
-          filter: {
-            dimensions: {
-              "country": {
-              }
-            }
-          },
           source: "sg"
         },
         encoding: {
@@ -37,16 +31,17 @@ VIZABI_MODEL = {
           },
           "color": {
             data: {
-              space: { },
-              concept: {
-                filter: { 
-                  concept_type: { $in: ['entity_set', 'entity_domain'] } 
+              allow: {
+                space: {
+                  filter: {
+                    concept_type: { $ne: "time" }
+                  }
                 }
-              }
+              },
+              space: { }
             },
             scale: {
-              modelType: "color",
-              allowedTypes: ["ordinal", "point"]
+              modelType: "color"
             }
           },
           "label": {

@@ -44,13 +44,19 @@ VIZABI_MODEL = {
           },
           "color": {
             data: {
+              allow: {
+                space: {
+                  filter: {
+                    concept_type: { $ne: "time" }
+                  }
+                }
+              },
               space: ["country"],
               concept: "world_4region"
             },
             scale: {
               modelType: "color",
-              type: "ordinal",
-              allowedTypes: ["ordinal", "point"]
+              type: "ordinal"
             }
           },
           "label": {
