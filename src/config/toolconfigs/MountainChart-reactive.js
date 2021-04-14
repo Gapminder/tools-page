@@ -53,7 +53,6 @@ VIZABI_MODEL = {
           },
           "stack": {
             data: {
-              space: ["country"],
               constant: "all"
             },
             "merge": false
@@ -67,7 +66,6 @@ VIZABI_MODEL = {
           },
           "label": {
             data: {
-              space: ["country"],
               modelType: "entityPropertyDataConfig",
               concept: "name"
             }
@@ -135,7 +133,7 @@ VIZABI_MODEL = {
         }
       },
       "showForecastOverlay": true,
-      "showForecast": true,
+      "showForecast": false,
       "pauseBeforeForecast": true,
       "endBeforeForecast": "2019",
       "opacityHighlight": 1.0,
