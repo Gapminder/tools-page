@@ -52,10 +52,10 @@ export default [
     "_id": "5600aedc188967b26265a73e",
     "_relatedTo": [
     ],
-    "link": "//www.gapminder.org/downloads/updated-gapminder-world-poster-2015/",
+    "link": "//www.gapminder.org/fw/world-health-chart/",
     "image": "assets/images/answers/gapminder_world_2013_v5.jpg",
-    "subtitle": "This chart compares Life Expectancy & GDP per capita of 182 nations",
-    "title": "Gapminder World Poster 2015",
+    "subtitle": "This chart compares Life Expectancy & GDP per capita of all nations",
+    "title": "Gapminder World Poster",
     "__v": 0
   },
   {
