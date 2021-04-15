@@ -48,7 +48,7 @@ VIZABI_MODEL = {
             scale: {
               domain: [0, 100],
               zoomed: [19, 86],
-              allowedTypes: ["linear", "log", "genericLog", "pow"]
+              allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
             }
           },
           "x": {
@@ -59,7 +59,7 @@ VIZABI_MODEL = {
               domain: [300, 180000],
               zoomed: [400, 96000],
               type: "log",
-              allowedTypes: ["linear", "log", "genericLog", "pow"]
+              allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
             }
           },
           "color": {
