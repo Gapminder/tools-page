@@ -189,7 +189,7 @@ VIZABI_MODEL = {
       panWithArrow: false,
       adaptMinMaxZoom: false,
       cursorMode: "arrow",
-      zoomOnScrolling: true,
+      zoomOnScrolling: false,
       superhighlightOnMinimapHover: true,
       whenHovering: {
         showProjectionLineX: true,
