@@ -102,10 +102,10 @@ VIZABI_MODEL = {
       opacityHighlightDim: 0.3,
       opacitySelectDim: 0.5,
       opacityRegular: 1.0,
-      datawarning: {
-        doubtDomain: [],
-        doubtRange: []
-      }
+    },
+    "data-warning": {
+      doubtDomain: [1800, 1950, 2015],
+      doubtRange: [1.0, 0.3, 0.2]
     },
     "tree-menu": {
       "folderStrategyByDataset": {

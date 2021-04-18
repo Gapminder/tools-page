@@ -125,10 +125,10 @@ VIZABI_MODEL = {
         "enabled": true,
         "xAxisGroups": {
           "income_per_person_gdppercapita_ppp_inflation_adjusted": [
-            {"min": null, "max": 2, "label": "incomegroups/level1", "label_short": "incomegroups/level1short"},
-            {"min": 2, "max": 8, "label": "incomegroups/level2", "label_short": "incomegroups/level2short"},
-            {"min": 8, "max": 32, "label": "incomegroups/level3", "label_short": "incomegroups/level3short"},
-            {"min": 32, "max": null, "label": "incomegroups/level4", "label_short": "incomegroups/level4short"}
+            { "min": null, "max": 2, "label": "incomegroups/level1", "label_short": "incomegroups/level1short" },
+            { "min": 2, "max": 8, "label": "incomegroups/level2", "label_short": "incomegroups/level2short" },
+            { "min": 8, "max": 32, "label": "incomegroups/level3", "label_short": "incomegroups/level3short" },
+            { "min": 32, "max": null, "label": "incomegroups/level4", "label_short": "incomegroups/level4short" }
           ]
         }
       },
@@ -140,11 +140,11 @@ VIZABI_MODEL = {
       "opacitySelect": 1.0,
       "opacityHighlightDim": 0.1,
       "opacitySelectDim": 0.3,
-      "opacityRegular": 0.8,
-      "datawarning": {
-        "doubtDomain": [],
-        "doubtRange": []
-      }
+      "opacityRegular": 0.8
+    },
+    "data-warning": {
+      doubtDomain: [1800, 1950, 2015],
+      doubtRange: [1.0, 0.3, 0.2]
     },
     "time-slider": {
       "show_value": false

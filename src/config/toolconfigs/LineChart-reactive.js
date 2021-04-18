@@ -161,11 +161,11 @@ VIZABI_MODEL = {
       },
       labels: {
         min_number_of_entities_when_values_hide: 3,
-      },
-      datawarning: {
-        doubtDomain: [1800, 1950, 2015],
-        doubtRange: [1.0, 0.3, 0.2]
       }
+    },
+    "data-warning": {
+      doubtDomain: [1800, 1950, 2015],
+      doubtRange: [1.0, 0.3, 0.2]
     },
     "tree-menu": {
       "folderStrategyByDataset": {

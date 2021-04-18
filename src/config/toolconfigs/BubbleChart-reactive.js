@@ -206,10 +206,6 @@ VIZABI_MODEL = {
         left: 0,
         top: 0
       },
-      datawarning: {
-        doubtDomain: [1800, 1950, 2015],
-        doubtRange: [1.0, 0.3, 0.2]
-      },
       decorations: {
         "enabled": true,
         "xAxisGroups": {
@@ -221,6 +217,10 @@ VIZABI_MODEL = {
           ]
         }
       }
+    },
+    "data-warning": {
+      doubtDomain: [1800, 1950, 2015],
+      doubtRange: [1.0, 0.3, 0.2]
     },
     "tree-menu": {
       "folderStrategyByDataset": {

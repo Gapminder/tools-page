@@ -157,10 +157,6 @@ VIZABI_MODEL = {
       opacityHighlightDim: 0.1,
       opacitySelectDim: 0.3,
       opacityRegular: 0.8,
-      datawarning: {
-        doubtDomain: [],
-        doubtRange: []
-      },
       labels: {
         enabled: true,
         dragging: true,
@@ -175,7 +171,7 @@ VIZABI_MODEL = {
         offset: {
           top: 0.05,
           right: 0,
-          bottom: -0.2,
+          bottom: -0.07,
           left: -0.15
         },
         projection: "geo" + "Aitoff",
@@ -188,6 +184,10 @@ VIZABI_MODEL = {
           geoIdProperty: null,
         }
       }
+    },
+    "data-warning": {
+      doubtDomain: [1800, 1950, 2015],
+      doubtRange: [1.0, 0.3, 0.2]
     },
     "tree-menu": {
       "folderStrategyByDataset": {
