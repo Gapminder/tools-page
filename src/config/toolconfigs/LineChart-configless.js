@@ -3,55 +3,8 @@ VIZABI_MODEL = {
   model: {
     markers: {
       line: {
-        requiredEncodings: ["x", "y"],
         data: {
           source: "sg"
-        },
-        encoding: {
-          "selected": {
-            modelType: "selection"
-          },
-          "highlighted": {
-            modelType: "selection"
-          },
-          "y": {
-            scale: {
-              allowedTypes: ["linear", "log", "genericLog", "pow"]
-            }
-          },
-          "x": {
-            data: {
-              concept: { 
-                ref: "markers.line.encoding.frame.data.concept"
-              }
-            },
-            scale: {
-              allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
-            }
-          },
-          "color": {
-            data: {
-              allow: {
-                space: {
-                  filter: {
-                    concept_type: { $ne: "time" }
-                  }
-                }
-              },
-              space: { }
-            },
-            scale: {
-              modelType: "color"
-            }
-          },
-          "label": {
-            data: {
-              modelType: "entityPropertyDataConfig",
-            }
-          },
-          frame: {
-            modelType: "frame"
-          }
         }
       },
       "legend": {

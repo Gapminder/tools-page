@@ -74,9 +74,7 @@ VIZABI_MODEL = {
             value: "2019",
             modelType: "frame",
             speed: 200,
-            splash: {
-              show: true
-            },
+            splash: true,
             data: {
               concept: "time"
             }

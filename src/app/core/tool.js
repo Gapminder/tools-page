@@ -18,12 +18,18 @@ import { observable, autorun, toJS, when } from "mobx";
 let viz;
 let stateListener;
 let urlUpdateDisposer;
+let disposers = [];
 
 //cleanup the existing tool
 function removeTool() {
   if (viz) {
     viz.deconstruct();
     viz = void 0;
+    let dispose;
+    while (dispose = disposers.pop()) {
+      dispose();
+    }
+    Vizabi.stores.markers.disposeAll();
   }
   d3.selectAll(".vzb-tool-config")
     .remove();
@@ -32,34 +38,33 @@ function removeTool() {
 }
 
 
-function googleAnalyticsLoadEvents(marker) {
-  if (marker.encoding.frame) {
-    const splashMarker = marker.encoding.frame.splash.currentValueMarker;
-    when(
-      () => splashMarker.state == 'fulfilled',
+function googleAnalyticsLoadEvents(viz) {
+  const markers = viz.model.markers;
+  const markerId = ['bubble','line','bar','mountain'].find(id => markers[id])
+  const marker = markers[markerId];
+  const splashMarker = viz.splashMarker;
+  
+  if (splashMarker) {
+    registerLoadFinish(splashMarker, "SPLASH")
+  }
+  registerLoadFinish(marker, "FULL")
+
+  function registerLoadFinish(loadMarker, id) {
+    const dispose = when(
+      () => loadMarker.state == 'fulfilled',
       () => {
-        const splashTime = timeLogger.snapOnce("SPLASH");
-        if (gtag && splashTime) gtag("event", "timing_complete", {
-          "name": "Splash load",
-          "value": splashTime,
+        const time = timeLogger.snapOnce(id);
+        if (gtag && time) gtag("event", "timing_complete", {
+          "name": id + " load",
+          "value": time,
           "event_category": "Page load",
           "event_label": appState.tool
         });
-      }
+      }, 
+      { name: id + ' google load registration'}
     );
-  } 
-  when(
-    () => marker.state == 'fulfilled',
-    () => {
-      const fullTime = timeLogger.snapOnce("FULL");
-      if (gtag && fullTime) gtag('event', 'timing_complete', {
-        "name": "Full load",
-        "value": fullTime,
-        "event_category": 'Page load',
-        "event_label": appState.tool
-      });
-    }
-  );
+    disposers.push(dispose);
+  }
 }
 
 function setTool(tool, skipTransition) {
@@ -151,7 +156,6 @@ function setTool(tool, skipTransition) {
 
       const toolPrototype = window[toolsetEntry.tool];
       const model = Vizabi(pageConfig.model);
-      const markerId = ['bubble','line','bar','mountain'].find(id => model.markers[id])
 
       viz = new toolPrototype({
         placeholder: PLACEHOLDER,
@@ -165,18 +169,20 @@ function setTool(tool, skipTransition) {
         }
       });
       
-      googleAnalyticsLoadEvents(model.markers[markerId])
+      googleAnalyticsLoadEvents(viz)
 
       window.viz = viz;
 
       window.VIZABI_DEFAULT_MODEL = null;
-      when(() => viz && Object.keys(viz.model.markers)
+      const dispose = when(() => viz && Object.keys(viz.model.markers)
         .every(markerId => {
           const marker = viz.model.markers[markerId];
           return marker && marker.state == "fulfilled";
         }),
-        () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything: true }), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {})
+        () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything: true }), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}),
+        { name: 'default model constructor'}
       );
+      disposers.push(dispose);
 
       const removeProperties = (obj, array) => {
         Object.keys(obj).forEach(key => {
