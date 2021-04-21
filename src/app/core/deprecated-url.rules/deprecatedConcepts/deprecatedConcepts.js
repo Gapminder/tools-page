@@ -6,7 +6,14 @@ const rule = {
     if (hashIndex == -1) return false;
 
     const hash = url.substr(hashIndex + 1);
-    const state = urlon.parse(decodeUrlHash(hash) || "$;");
+    let state = {};
+    try {
+      state = urlon.parse(decodeUrlHash(hash) || "$;");
+    }
+    catch {
+      console.warn("Unable to decode and parse the hash:", hash);
+      return false;
+    }
 
     return findInState(state, toolsPage_conceptMapping);
   },

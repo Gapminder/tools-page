@@ -71,6 +71,7 @@
     || href.indexOf("spreadsheet") > -1 //unsupported tools
     || href.indexOf("linechart-global") > -1 //unsupported tools
     || href.indexOf("$state$") > -1 && window.location.href.indexOf("url=v") == -1 //old versions of URL state
+    || href.indexOf("$majorMode") > -1 || href.indexOf("from=world") > -1 //redirect from gapminder world
     || window.document.documentMode //IE11
     || !!navigator.userAgent.match(/Trident.*rv:11\./) //IE11
     || window.navigator.userAgent.indexOf("MSIE") > -1 //older IE

@@ -13,7 +13,7 @@ const rule = {
     const hashPrefix = url.substr(0, hashIndex);
     const hash = url.substr(hashIndex);
 
-  	const gwHash = parseHash(hash);
+    const gwHash = parseHash(hash);
     const gtHash = createToolsHash(gwHash);
 
     return hashPrefix + "#" + urlon.stringify(gtHash);

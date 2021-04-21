@@ -120,9 +120,15 @@ function parseURL() {
 
     if (hash) {
 
-      const parsedUrl = urlon.parse(decodeUrlHash(hash) || "$;");
+      let parsedUrl = {};
+      try {
+        parsedUrl = urlon.parse(decodeUrlHash(hash) || "$;");
+      }
+      catch {
+        console.warn("Failed to decode and parse this hash:", hash);
+      }
 
-      URLI.model = parsedUrl || {};
+      URLI.model = parsedUrl;
       URLI["chart-type"] = parsedUrl["chart-type"];
       delete parsedUrl["chart-type"];
 
