@@ -64,14 +64,15 @@
         // to the Rollbar API
         // return true to ignore the payload
         if (!payload || !payload.body || !payload.body.trace) return false;
-        return 
-          payload.body.trace.frames && payload.body.trace.frames[0] && payload.body.trace.frames
+        return !!(
+          payload.body.trace.frames && payload.body.trace.frames
             //exclude errors caused by honey safari extension
-            && payload.body.trace.frames.reduce(function(result,m){ return result += m.filename}, "").match(/Honey.safariextension/)
+            && payload.body.trace.frames.reduce(function(result,m){ return result += m && m.filename}, "").match(/Honey.safariextension/)
             
           || payload.body.trace.exception && payload.body.trace.exception.message
             //exclude errors caused by lavad.ru virus and similar crap (possibly mail.ru default page)
             && payload.body.trace.exception.message.match(/Failed to execute 'send' on 'XMLHttpRequest': Failed to load 'https:.*.ru/)
+        );
       }
     };
     // Rollbar Snippet
