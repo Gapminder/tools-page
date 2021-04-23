@@ -67,7 +67,10 @@
         return !!(
           payload.body.trace.frames && payload.body.trace.frames
             //exclude errors caused by honey safari extension
-            && payload.body.trace.frames.reduce(function(result,m){ return result += m && m.filename}, "").match(/Honey.safariextension/)
+            && (
+              payload.body.trace.frames.reduce(function(result,m){ return result += m && m.filename}, "").match(/Honey.safariextension/)
+              || payload.body.trace.frames.reduce(function(result,m){ return result += m && m.filename}, "").match(/chrome-extension/)
+            )
             
           || payload.body.trace.exception && payload.body.trace.exception.message
             //exclude errors caused by lavad.ru virus and similar crap (possibly mail.ru default page)
