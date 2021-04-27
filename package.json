@@ -27,8 +27,30 @@
     "url": "git+https://github.com/gapminder/tools-page.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Gapminder Foundation",
+    "url": "https://www.gapminder.org",
+    "email": "info@gapminder.org"
+  },
+  "contributors": [
+    {
+      "name": "Angie",
+      "url": "https://github.com/angieskazka"
+    },
+    {
+      "name": "Jasper",
+      "url": "https://github.com/jheeffer"
+    },
+    {
+      "name": "Dima",
+      "url": "https://github.com/dab2000"
+    },
+    {
+      "name": "Ola",
+      "url": "https://github.com/olarosling"
+    }
+  ],
+  "license": "CC-BY-4.0",
   "dependencies": {
     "core-js": "^3.9.1",
     "d3": "^5.8.2",
@@ -43,8 +65,8 @@
     "vizabi-ddfservice-reader": "^2.1.1",
     "vizabi-linechart": "3.4.5",
     "vizabi-mountainchart": "3.3.10",
-    "vizabi-reactive": "1.7.10",
-    "vizabi-shared-components": "1.8.5"
+    "vizabi-reactive": "1.7.11",
+    "vizabi-shared-components": "1.8.6"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",
