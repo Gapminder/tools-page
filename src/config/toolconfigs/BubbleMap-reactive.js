@@ -80,7 +80,7 @@ VIZABI_MODEL = {
           "order": {
             modelType: "order",
             data: {
-              ref: "markers.bubble.encoding.size.data",
+              ref: "markers.bubble.config.encoding.size.data",
               direction: "desc"
             }
           },

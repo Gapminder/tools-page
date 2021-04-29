@@ -50,9 +50,11 @@ function googleAnalyticsLoadEvents(viz) {
   registerLoadFinish(marker, "FULL")
 
   function registerLoadFinish(loadMarker, id) {
+    console.time(id);
     const dispose = when(
       () => loadMarker.state == 'fulfilled',
       () => {
+        console.timeEnd(id);
         const time = timeLogger.snapOnce(id);
         if (gtag && time) gtag("event", "timing_complete", {
           "name": id + " load",
