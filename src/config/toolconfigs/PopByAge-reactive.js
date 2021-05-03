@@ -4,12 +4,12 @@ VIZABI_MODEL = {
       "popbyage": {
         data: {
           source: "pop",
-          space: ['geo','year','age', 'gender'],
+          space: ['geo','year','age'],
           filter: {
             dimensions: { 
               "geo": { 
                 "geo": {
-                  "$in": ["usa", "swe", "nga"]
+                  "$in": ["world"]
                 }
               }
             }
@@ -23,9 +23,23 @@ VIZABI_MODEL = {
           "highlighted": {
             modelType: "selection"
           },
-          x: { data: { concept: 'population' } },
+          x: { 
+            data: { 
+              concept: 'population',
+              //space: ['geo','year','age', 'gender'],
+              space: ['geo','year','age'],
+              // space: {
+              //   filter: {
+              //     concept: { '$eq': ["geo", "year", "age", "gender"] }
+              //   }
+              // }
+            } 
+          },
           y: { 
-            data: { concept: 'age' },
+            data: { 
+              concept: 'age',
+              space: ['age'],
+            },
             scale: { type: "linear" }
           },
           label: { 
@@ -38,7 +52,11 @@ VIZABI_MODEL = {
           },
           frame: {
             modelType: 'frame', 
-            data: { concept: 'year' } 
+            data: {
+              concept: 'year',
+              space: ['geo','year','age'],
+            },
+            //interpolate: false
           },
           color: {
             data: {
@@ -50,10 +68,24 @@ VIZABI_MODEL = {
               type: "ordinal"
             }
           },
-          side: { data: { concept: 'gender' } },
+          // row: { 
+          //   data: { 
+          //     space: ['geo'],
+          //     concept: 'geo' }
+          //   },
+          side: { 
+            data: { 
+              //space: ['gender'],
+              //concept: 'gender'
+              constant: "true",
+            }
+          },
           facet: { 
             modelType: 'grouping', 
-            data: { concept: 'geo' } 
+            //modelType: 'facet',
+            data: { concept: 'geo' },
+            rowEncoding: 'side',
+            columnEncoding: 'row' 
           }
         }
       },
@@ -86,12 +118,17 @@ VIZABI_MODEL = {
   ui: {
     //ui
     chart: {
-      //mode: "smallMultiples",
+      mode: "smallMultiples",
       stacked: true,
       inpercent: false,
       flipSides: true,
       lockActive: true,
-      lockNonSelected: 0
+      lockNonSelected: 0,
+
+      showForecast: true,
+      showForecastOverlay: false,
+      pauseBeforeForecast: false,
+
     },
     "buttons": {
       "buttons": ["colors", "find", "lock", /*"side",*/ "inpercent", "moreoptions", "sidebarcollapse", "fullscreen"]
