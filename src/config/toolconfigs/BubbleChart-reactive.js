@@ -104,7 +104,8 @@ VIZABI_MODEL = {
           "repeat": {
             modelType: "repeat",
             row: ["y"],
-            column: ["x"]
+            column: ["x"],
+            allowEnc: ["y", "x"]
           }
         }
       },

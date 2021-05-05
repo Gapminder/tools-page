@@ -84,6 +84,10 @@ VIZABI_MODEL = {
               direction: "desc"
             }
           },
+          "repeat": {
+            modelType: "repeat",
+            allowEnc: ["size"]
+          }
         },
         requiredEncodings: ["lat", "lon", "size"]
       },
