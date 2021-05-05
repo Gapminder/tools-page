@@ -21,7 +21,6 @@ VIZABI_MODEL = {
           "unstate": {
             data: {
               space: ["country"],
-              modelType: "entityPropertyDataConfig",
               concept: "un_state"
             }
           },
