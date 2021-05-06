@@ -69,9 +69,9 @@
     "vizabi-shared-components": "1.8.6"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.10",
+    "@babel/core": "^7.14.0",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
-    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-env": "^7.14.1",
     "@rollup/plugin-alias": "^3.1.1",
     "@rollup/plugin-babel": "^5.3.0",
     "@rollup/plugin-commonjs": "^15.0.0",
@@ -83,7 +83,7 @@
     "@rollup/plugin-virtual": "^2.0.3",
     "@types/jasmine": "^2.8.8",
     "autoprefixer": "^9.0.0",
-    "babel-eslint": "^10.0.3",
+    "babel-eslint": "^10.1.0",
     "cross-env": "^5.1.1",
     "eslint": "^6.6.0",
     "http-server": "0.12.3",
