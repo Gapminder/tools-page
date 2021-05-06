@@ -198,25 +198,38 @@ function setTool(tool, skipTransition) {
       };
 
       urlUpdateDisposer = autorun(() => {
-        let jsmodel = toJS(viz.model.config, { recurseEverything: true });
-        jsmodel = removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale"]);
+        const Utils = VizabiSharedComponents.Utils;
+        const UI_CONFIG = VIZABI_UI_CONFIG;
+        const DEFAULT_MODEL = VIZABI_DEFAULT_MODEL;
+        const MODEL = VIZABI_MODEL;
+        const LOCALE = VIZABI_LOCALE;
+        const LAYOUT = VIZABI_LAYOUT;
+        const PAGE_MODEL = VIZABI_PAGE_MODEL;
 
-        let jsui = toJS(VIZABI_UI_CONFIG, { recurseEverything: true} );
-        jsui = removeProperties(jsui, ["dragging"]);
+        let jsmodel = toJS(viz.model.config, { recurseEverything: true });
+        let jsui = toJS(UI_CONFIG, { recurseEverything: true });
+
+        jsmodel = diffObject(jsmodel, DEFAULT_MODEL || {});
+        jsui = diffObject(jsui, MODEL.ui);
 
         const model = {
-          model: VizabiSharedComponents.Utils.clearEmpties(diffObject(jsmodel, VIZABI_DEFAULT_MODEL || {})),
-          ui: VizabiSharedComponents.Utils.clearEmpties(diffObject(jsui, VIZABI_MODEL.ui))
+          model: Utils.clearEmpties(removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale", "range"])),
+          ui: Utils.clearEmpties(removeProperties(jsui, ["dragging"]))
         };
-        if (VIZABI_PAGE_MODEL.ui.locale.id !== VIZABI_LOCALE.id) model.ui.locale = VIZABI_LOCALE.id
-          else delete model.ui.locale;
-        if (VIZABI_PAGE_MODEL.ui.layout.projector !== VIZABI_LAYOUT.projector) model.ui.projector = VIZABI_LAYOUT.projector
-          else delete model.ui.projector;
 
-        VIZABI_DEFAULT_MODEL && updateURL(model, undefined, true);
+        if (PAGE_MODEL.ui.locale.id !== LOCALE.id)
+          model.ui.locale = LOCALE.id;
+        else
+          delete model.ui.locale;
+        if (PAGE_MODEL.ui.layout.projector !== LAYOUT.projector)
+          model.ui.projector = LAYOUT.projector;
+        else
+          delete model.ui.projector;
+
+        DEFAULT_MODEL && updateURL(model, undefined, true);
       }, { name: "tool.js: update url" });
     })
-    .catch((err) => console.error(`Failed to set up tool id = ${tool} with config from ${pathToConfig}
+    .catch(err => console.error(`Failed to set up tool id = ${tool} with config from ${pathToConfig}
       Message: ${err.message}
       Stack: ${err.stack}`
     ));
