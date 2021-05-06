@@ -33,7 +33,7 @@ export default {
           "node_id": null,
           "menu_label": "massive_ignorance",
           "caption": "beware_the_shocking_results",
-          "url": "https://www.gapminder.org/news/the-worldview-upgrader-gapminder-launches-a-groundbreaking-new-service-to-fight-misconceptions/",
+          "url": "https://upgrader.gapminder.org/",
           "icon_url": "/images/icons/menu/igmo.png",
           "$$hashKey": "object:10"
         },
