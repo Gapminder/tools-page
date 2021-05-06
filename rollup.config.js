@@ -11,7 +11,7 @@ import {terser} from "rollup-plugin-terser";
 import serve from "rollup-plugin-serve";
 import livereload from "rollup-plugin-livereload";
 import json from "@rollup/plugin-json";
-import visualizer from "rollup-plugin-visualizer";
+import {visualizer} from "rollup-plugin-visualizer";
 import trash from "rollup-plugin-delete";
 import copy from "rollup-plugin-copy";
 import url from "@rollup/plugin-url";
@@ -25,7 +25,7 @@ import postcssUrl from "postcss-url";
 import iife from "rollup-plugin-iife";
 import legacy from "@rollup/plugin-legacy";
 import html from "rollup-plugin-html2";
-import sourcemaps from 'rollup-plugin-sourcemaps';
+import sourcemaps from "rollup-plugin-sourcemaps";
 
 
 const copyright = `// ${meta.homepage} v${meta.version} Copyright ${(new Date).getFullYear()} ${meta.author.name}`;
@@ -313,7 +313,7 @@ export default [
         verbose: true
       }),
       __DEVSERVER__ && livereload("build/"),
-      visualizer({
+      __PROD__ && visualizer({
         filename: "./build/stats.html"
       }),
     ]

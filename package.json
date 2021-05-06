@@ -107,7 +107,7 @@
     "rollup-plugin-sourcemaps": "^0.6.2",
     "rollup-plugin-stylus-compiler": "^1.0.1",
     "rollup-plugin-terser": "^7.0.0",
-    "rollup-plugin-visualizer": "^4.1.1",
+    "rollup-plugin-visualizer": "^5.5.0",
     "shelljs": "^0.8.1",
     "stylus": ">=0.52.4",
     "ts-node": "6.0.2",
