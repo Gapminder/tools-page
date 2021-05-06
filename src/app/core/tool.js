@@ -160,6 +160,7 @@ function setTool(tool, skipTransition) {
       const model = Vizabi(pageConfig.model);
 
       viz = new toolPrototype({
+        Vizabi,
         placeholder: PLACEHOLDER,
         model: model,
         locale: VIZABI_LOCALE,
