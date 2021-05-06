@@ -1,4 +1,4 @@
-import "core-js/stage/3";
+import "core-js";
 import "regenerator-runtime/runtime.js";
 import "./app/app.styl";
 
