@@ -108,7 +108,7 @@ const DataEditor = function(placeHolder, translator, dispatch, { languages, sele
     .on("click", () => {
       const haveDataName = data.map(d => d.data[0]).filter(d => d === "data")[0];
       if (!haveDataName) data[0].data[0] = "data";
-      const dataModel = data.reduce((result, d, i) => {
+      const dataModel = data.reduce((result, d) => {
         const dataObj = {};
         const selectedReader = d.data[propIndexInData["reader"]];
         const allowProps = getCurrentAllowProp(["reader", ...readersSchema[selectedReader].props], d.data);

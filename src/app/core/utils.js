@@ -1,3 +1,5 @@
+/* eslint no-prototype-builtins: "off" */
+
 export function scrollTo({ durationLeft = 200, element, complete }) {
   const positionFrom = element.scrollTop;
   const positionTo = 0 - positionFrom;

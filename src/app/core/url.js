@@ -13,8 +13,6 @@ import {
 import {
   debounce,
   deepExtend,
-  diffObject,
-  comparePlainObjects
 } from "./utils";
 import { runInAction } from "mobx";
 
@@ -22,7 +20,6 @@ const URL_VERSION = "v1";
 
 let poppedModel = {};
 let URLI = {};
-let minModel;
 
 let popStateLoopFlag = false;
 const resetPopStateLoopFlag = debounce(() => {

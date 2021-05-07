@@ -166,7 +166,7 @@ export default [
       // sourcemapPathTransform: sourcePath => {
       //   console.log(sourcePath)  
       //   return sourcePath.replace(
-			// 	new RegExp(`^..${path.sep}`),
+      // 	new RegExp(`^..${path.sep}`),
       //   '~/pkg-name/'
       // )},
       globals: {
@@ -204,7 +204,7 @@ export default [
         ]
       }),
       commonjs({
-        include: 'node_modules/core-js/**',
+        include: "node_modules/core-js/**",
       }),
       globImport({
         format: "import"
@@ -261,7 +261,7 @@ export default [
         }),
         varNameWithFileName("toolsPage_"),
         "config/",
-        /\/([\w-]+)[\w\.-]+json$/
+        /\/([\w-]+)[\w.-]+json$/
       ),
       jsonToJsEmitAssets(
         json({

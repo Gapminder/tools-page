@@ -11,12 +11,11 @@ import {
 import {
   getTransitionModel
 } from "./chart-transition";
-import { loadJS, comparePlainObjects, deepExtend, diffObject } from "./utils";
+import { loadJS, deepExtend, diffObject } from "./utils";
 import timeLogger from "./timelogger";
 import { observable, autorun, toJS, when } from "mobx";
 
 let viz;
-let stateListener;
 let urlUpdateDisposer;
 const disposers = [];
 
@@ -70,14 +69,17 @@ function googleAnalyticsLoadEvents(viz) {
 }
 
 function setTool(tool, skipTransition) {
+  const toolset = toolsPage_toolset;
+  const datasources = toolsPage_datasources;
+
   if (tool === appState.tool) return;
   if (!tool) tool = appState.tool;
 
   //configure google analytics with the active tool, which would be counted as a "page view" of our single-page-application
   if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool, "page_path": "/" + tool });
 
-  const toolsetEntry = toolsPage_toolset.find(f => f.id === tool);
-  const toolsetEntryPrevious = toolsPage_toolset.find(f => f.id === appState.tool);
+  const toolsetEntry = toolset.find(f => f.id === tool);
+  const toolsetEntryPrevious = toolset.find(f => f.id === appState.tool);
   const toolModelPrevious = {}; //TODO: viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL_PREVIOUS) : {};
   appState.tool = tool;
 
@@ -108,12 +110,12 @@ function setTool(tool, skipTransition) {
         } else {
           //bring data configs from a separate config file to the page config (those mentioned in toolset)
 
-          const dataSourcesId = toolsetEntry.dataSources || Object.keys(toolsPage_datasources);
+          const dataSourcesId = toolsetEntry.dataSources || Object.keys(datasources);
           dataSourcesId.forEach(ds => {
-            if (!toolsPage_datasources[ds])
+            if (!datasources[ds])
               console.warn(`Could not find data config with key ${ds} in datasources file`);
             else
-              pageConfig.model.dataSources[ds] = toolsPage_datasources[ds];
+              pageConfig.model.dataSources[ds] = datasources[ds];
             pageConfig.model.dataSources[ds].locale = URLI.model?.ui?.locale || pageConfig.ui.locale;
           });
         }

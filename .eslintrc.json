@@ -7,13 +7,12 @@
     "extends": "eslint:recommended",
     "globals": {
         "d3": true,
-        "vega": true,
-        "vizabi": true,
-        "DDFCsvReader": true,
-        "vegaEmbed": true,
-        "ENV": true,
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
+        "Vizabi": true,
+        "mobx": true,
+        "urlon": true,
+        "gtag": true,
+        "VizabiSharedComponents": true,
+        "ENV": true
     },
     "parserOptions": {
         "ecmaVersion": 2018,
