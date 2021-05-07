@@ -1,4 +1,4 @@
-import {encodeUrlHash, decodeUrlHash} from "../../url.js";
+import { encodeUrlHash, decodeUrlHash } from "../../url.js";
 
 const rule = {
   test(url) {

@@ -13,8 +13,8 @@ VIZABI_MODEL = {
         encoding: {
           "selected": {
             modelType: "selection",
-            data: { 
-              filter: { 
+            data: {
+              filter: {
                 ref: "markers.bubble.encoding.trail.data.filter"
               }
             }

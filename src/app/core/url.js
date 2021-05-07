@@ -89,10 +89,10 @@ function updateURL(model, event, replaceInsteadPush) {
 
   const url = {};
   if (poppedModel.ui && Object.keys(poppedModel.ui).length > 0) {
-    Object.assign(url, {ui: poppedModel.ui});
+    Object.assign(url, { ui: poppedModel.ui });
   }
   if (poppedModel.model && Object.keys(poppedModel.model).length > 0) {
-    Object.assign(url, {model: poppedModel.model});
+    Object.assign(url, { model: poppedModel.model });
   }
   // if (minModel && Object.keys(minModel).length > 0) {
   //   Object.assign(url, minModel);

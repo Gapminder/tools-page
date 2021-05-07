@@ -18,7 +18,7 @@ import { observable, autorun, toJS, when } from "mobx";
 let viz;
 let stateListener;
 let urlUpdateDisposer;
-let disposers = [];
+const disposers = [];
 
 //cleanup the existing tool
 function removeTool() {
@@ -40,19 +40,19 @@ function removeTool() {
 
 function googleAnalyticsLoadEvents(viz) {
   const markers = viz.model.markers;
-  const markerId = ['bubble','line','bar','mountain','popbyage'].find(id => markers[id])
+  const markerId = ["bubble", "line", "bar", "mountain", "popbyage"].find(id => markers[id]);
   const marker = markers[markerId];
   const splashMarker = viz.splashMarker;
-  
+
   if (splashMarker) {
-    registerLoadFinish(splashMarker, "SPLASH")
+    registerLoadFinish(splashMarker, "SPLASH");
   }
-  registerLoadFinish(marker, "FULL")
+  registerLoadFinish(marker, "FULL");
 
   function registerLoadFinish(loadMarker, id) {
     console.time(id);
     const dispose = when(
-      () => loadMarker.state == 'fulfilled',
+      () => loadMarker.state == "fulfilled",
       () => {
         console.timeEnd(id);
         const time = timeLogger.snapOnce(id);
@@ -62,8 +62,8 @@ function googleAnalyticsLoadEvents(viz) {
           "event_category": "Page load",
           "event_label": appState.tool
         });
-      }, 
-      { name: id + ' google load registration'}
+      },
+      { name: id + " google load registration" }
     );
     disposers.push(dispose);
   }
@@ -78,7 +78,7 @@ function setTool(tool, skipTransition) {
 
   const toolsetEntry = toolsPage_toolset.find(f => f.id === tool);
   const toolsetEntryPrevious = toolsPage_toolset.find(f => f.id === appState.tool);
-  const toolModelPrevious = {} //TODO: viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL_PREVIOUS) : {};
+  const toolModelPrevious = {}; //TODO: viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL_PREVIOUS) : {};
   appState.tool = tool;
 
   //kill old autorun listener
@@ -110,11 +110,11 @@ function setTool(tool, skipTransition) {
 
           const dataSourcesId = toolsetEntry.dataSources || Object.keys(toolsPage_datasources);
           dataSourcesId.forEach(ds => {
-            if (!toolsPage_datasources[ds]) 
+            if (!toolsPage_datasources[ds])
               console.warn(`Could not find data config with key ${ds} in datasources file`);
             else
               pageConfig.model.dataSources[ds] = toolsPage_datasources[ds];
-              pageConfig.model.dataSources[ds].locale = URLI.model?.ui?.locale || pageConfig.ui.locale;
+            pageConfig.model.dataSources[ds].locale = URLI.model?.ui?.locale || pageConfig.ui.locale;
           });
         }
         return pageConfig;
@@ -130,10 +130,10 @@ function setTool(tool, skipTransition) {
 
       window.VIZABI_PAGE_MODEL = deepExtend({
         ui: {
-          layout: deepExtend({}, VizabiSharedComponents.LayoutService.DEFAULTS, { 
-            placeholder: PLACEHOLDER 
+          layout: deepExtend({}, VizabiSharedComponents.LayoutService.DEFAULTS, {
+            placeholder: PLACEHOLDER
           }),
-          locale: deepExtend({}, VizabiSharedComponents.LocaleService.DEFAULTS, { 
+          locale: deepExtend({}, VizabiSharedComponents.LocaleService.DEFAULTS, {
             placeholder: PLACEHOLDER,
             path: "assets/translation/"
           })
@@ -153,7 +153,7 @@ function setTool(tool, skipTransition) {
       if (VIZABI_UI_CONFIG.projector !== undefined) VIZABI_LAYOUT.projector = VIZABI_UI_CONFIG.projector;
 
       setLanguage(VIZABI_LOCALE.id);
-      dispatch.call("languageChanged", null, VIZABI_LOCALE.id);  
+      dispatch.call("languageChanged", null, VIZABI_LOCALE.id);
       appState.projector = VIZABI_LAYOUT.projector;
 
       const toolPrototype = window[toolsetEntry.tool];
@@ -162,7 +162,7 @@ function setTool(tool, skipTransition) {
       viz = new toolPrototype({
         Vizabi,
         placeholder: PLACEHOLDER,
-        model: model,
+        model,
         locale: VIZABI_LOCALE,
         layout: VIZABI_LAYOUT,
         ui: VIZABI_UI_CONFIG,
@@ -171,8 +171,8 @@ function setTool(tool, skipTransition) {
           showLoading: true
         }
       });
-      
-      googleAnalyticsLoadEvents(viz)
+
+      googleAnalyticsLoadEvents(viz);
 
       window.viz = viz;
 
@@ -182,8 +182,8 @@ function setTool(tool, skipTransition) {
           const marker = viz.model.markers[markerId];
           return marker && marker.state == "fulfilled";
         }),
-        () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, {recurseEverything: true }), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}),
-        { name: 'default model constructor'}
+      () => window.VIZABI_DEFAULT_MODEL = diffObject(toJS(viz.model.config, { recurseEverything: true }), (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}),
+      { name: "default model constructor" }
       );
       disposers.push(dispose);
 
