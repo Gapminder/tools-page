@@ -4,10 +4,10 @@ VIZABI_MODEL = {
       "popbyage": {
         data: {
           source: "pop",
-          space: ['geo','year','age'],
+          space: ["geo", "year", "age"],
           filter: {
-            dimensions: { 
-              "geo": { 
+            dimensions: {
+              "geo": {
                 "geo": {
                   "$in": ["world"]
                 }
@@ -23,38 +23,38 @@ VIZABI_MODEL = {
           "highlighted": {
             modelType: "selection"
           },
-          x: { 
-            data: { 
-              concept: 'population',
+          x: {
+            data: {
+              concept: "population",
               //space: ['geo','year','age', 'gender'],
-              space: ['geo','year','age'],
+              space: ["geo", "year", "age"],
               // space: {
               //   filter: {
               //     concept: { '$eq': ["geo", "year", "age", "gender"] }
               //   }
               // }
-            } 
+            }
           },
-          y: { 
-            data: { 
-              concept: 'age',
-              space: ['age'],
+          y: {
+            data: {
+              concept: "age",
+              space: ["age"],
             },
             scale: { type: "linear" }
           },
-          label: { 
+          label: {
 
-            data: { 
-     
-              modelType: 'entityPropertyDataConfig',
-              concept: 'name' 
+            data: {
+
+              modelType: "entityPropertyDataConfig",
+              concept: "name"
             }
           },
           frame: {
-            modelType: 'frame', 
+            modelType: "frame",
             data: {
-              concept: 'year',
-              space: ['geo','year','age'],
+              concept: "year",
+              space: ["geo", "year", "age"],
             },
             //interpolate: false
           },
@@ -68,53 +68,53 @@ VIZABI_MODEL = {
               type: "ordinal"
             }
           },
-          // row: { 
-          //   data: { 
+          // row: {
+          //   data: {
           //     space: ['geo'],
           //     concept: 'geo' }
           //   },
-          side: { 
-            data: { 
+          side: {
+            data: {
               //space: ['gender'],
               //concept: 'gender'
               constant: "true",
             }
           },
-          facet: { 
-            modelType: 'grouping', 
+          facet: {
+            modelType: "grouping",
             //modelType: 'facet',
-            data: { concept: 'geo' },
-            rowEncoding: 'side',
-            columnEncoding: 'row' 
+            data: { concept: "geo" },
+            rowEncoding: "side",
+            columnEncoding: "row"
           }
         }
       },
       "legend": {
-          data: {
-            ref: {
-              transform: "entityConceptSkipFilter",
-              model: "markers.popbyage.encoding.color"
-            }
-          },
-          encoding: {
-            color: {
-              data: {
-                concept: { ref: "markers.popbyage.encoding.color.data.concept" },
-                constant: { ref: "markers.popbyage.encoding.color.data.constant" }
-              },
-              scale: {
-                modelType: "color",
-                palette: { ref: "markers.popbyage.encoding.color.scale.palette" }
-              }
-              //scale: { ref: "markers.bubble.encoding.color.scale" }
-            },
-            name: { data: { concept: "name" } },
-            rank: { data: { concept: "rank" } },
-            map: { data: { concept: "shape_lores_svg" } }
+        data: {
+          ref: {
+            transform: "entityConceptSkipFilter",
+            model: "markers.popbyage.encoding.color"
           }
         },
-      }
-    },
+        encoding: {
+          color: {
+            data: {
+              concept: { ref: "markers.popbyage.encoding.color.data.concept" },
+              constant: { ref: "markers.popbyage.encoding.color.data.constant" }
+            },
+            scale: {
+              modelType: "color",
+              palette: { ref: "markers.popbyage.encoding.color.scale.palette" }
+            }
+            //scale: { ref: "markers.bubble.encoding.color.scale" }
+          },
+          name: { data: { concept: "name" } },
+          rank: { data: { concept: "rank" } },
+          map: { data: { concept: "shape_lores_svg" } }
+        }
+      },
+    }
+  },
   ui: {
     //ui
     chart: {
@@ -145,7 +145,7 @@ VIZABI_MODEL = {
           "country": "open"
         },
         enablePicker: false
-      }      
+      }
     },
     presentation: false
   }
