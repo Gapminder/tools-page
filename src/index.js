@@ -1,4 +1,5 @@
-import "core-js";
+import "core-js/stage/3";
+import "core-js/es/array/flat-map";
 import "regenerator-runtime/runtime.js";
 import "./app/app.styl";
 
