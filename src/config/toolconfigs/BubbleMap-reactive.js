@@ -144,6 +144,7 @@ VIZABI_MODEL = {
           "colors",
           "label",
           "technical",
+          "repeat",
           "presentation",
           "about"
         ]

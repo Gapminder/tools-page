@@ -163,6 +163,7 @@ VIZABI_MODEL = {
           "label",
           "zoom",
           "technical",
+          "repeat",
           "presentation",
           "about"
         ]
