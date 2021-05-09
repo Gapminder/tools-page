@@ -9,7 +9,7 @@ VIZABI_MODEL = {
             dimensions: { "country": { "un_state": true } }
           }
         },
-        requiredEncodings: ["x", "y", "s"],
+        requiredEncodings: ["mu", "norm", "sigma"],
         encoding: {
           "selected": {
             modelType: "selection"
@@ -17,7 +17,7 @@ VIZABI_MODEL = {
           "highlighted": {
             modelType: "selection"
           },
-          "x": {
+          "mu": {
             data: {
               concept: "income_per_person_gdppercapita_ppp_inflation_adjusted"
             },
@@ -31,12 +31,12 @@ VIZABI_MODEL = {
             "xScaleFactor": 1.039781626,
             "xScaleShift": -1.127066411
           },
-          "y": {
+          "norm": {
             data: {
               concept: "population_total"
             }
           },
-          "s": {
+          "sigma": {
             data: {
               concept: "gapminder_gini"
             }
