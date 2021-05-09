@@ -49,6 +49,10 @@ VIZABI_MODEL = {
             data: {
               concept: "time"
             }
+          },
+          "repeat": {
+            modelType: "repeat",
+            allowEnc: ["x"]
           }
         }
       },
@@ -122,7 +126,7 @@ VIZABI_MODEL = {
       "dialogs": {
         "popup": ["timedisplay", "colors", "find", "moreoptions"],
         "sidebar": ["timedisplay", "colors", "find"],
-        "moreoptions": ["opacity", "speed", "colors", "presentation", "about"]
+        "moreoptions": ["opacity", "speed", "colors", "repeat", "presentation", "about"]
       },
       "find": {
         "panelMode": "find",

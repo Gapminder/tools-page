@@ -78,6 +78,10 @@ VIZABI_MODEL = {
             data: {
               concept: "time"
             }
+          },
+          "repeat": {
+            modelType: "repeat",
+            allowEnc: ["mu", "norm", "sigma", "color"]
           }
         }
       },
