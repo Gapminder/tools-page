@@ -66,7 +66,7 @@
     "vizabi-linechart": "3.6.0",
     "vizabi-popbyage": "3.0.2",
     "vizabi-mountainchart": "3.5.0",
-    "vizabi-reactive": "1.8.1",
+    "vizabi-reactive": "1.8.2",
     "vizabi-shared-components": "1.10.2"
   },
   "devDependencies": {
