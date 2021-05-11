@@ -53,9 +53,11 @@
   },
   {
     "id": "popbyage",
-    "url": "https://tools-legacy.gapminder.org/tools/#$chart-type=popbyage",
     "title": "ages",
-    "image": "/assets/images/chart/ages-chart.png"
+    "image": "/assets/images/chart/ages-chart.png",
+    "tool": "PopByAge",
+    "config": "PopByAge-reactive",
+    "dataSources": ["pop"]
   },
   {
     "id": "spreadsheet",
