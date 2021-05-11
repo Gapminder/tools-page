@@ -136,6 +136,7 @@ VIZABI_MODEL = {
       showForecast: true,
       showForecastOverlay: false,
       pauseBeforeForecast: false,
+      endBeforeForecast: "2020",
 
     },
     "buttons": {
