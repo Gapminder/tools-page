@@ -133,6 +133,7 @@
         "hint/repeat/addremovecharts": "Add or remove charts",
         "hint/repeat/issharedacrossrows": "is shared across rows",
         "hint/repeat/issharedacroscolumns": "is shared across columns",
+        "popbyage/yearOlds": "-year olds",
         "incomegroups/level1": "Income level 1",
         "incomegroups/level2": "Level 2",
         "incomegroups/level3": "Level 3",

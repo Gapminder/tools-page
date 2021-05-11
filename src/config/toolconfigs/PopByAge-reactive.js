@@ -104,9 +104,15 @@ VIZABI_MODEL = {
             },
             scale: {
               modelType: "color",
-              palette: { ref: "markers.popbyage.encoding.color.scale.palette" }
+              palette: { ref: "markers.popbyage.encoding.color.scale.palette" },
+              domain: null,
+              range: null,
+              type: null,
+              zoomed: null,
+              zeroBaseline: false,
+              clamp: false,
+              allowedTypes: null
             }
-            //scale: { ref: "markers.bubble.encoding.color.scale" }
           },
           name: { data: { concept: "name" } },
           rank: { data: { concept: "rank" } },
@@ -142,7 +148,7 @@ VIZABI_MODEL = {
       "find": {
         "panelMode": "show",
         "showTabs": {
-          "country": "open"
+          "geo": "open fully"
         },
         enablePicker: false
       }
