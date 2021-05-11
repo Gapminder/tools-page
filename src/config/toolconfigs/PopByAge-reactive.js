@@ -1,7 +1,7 @@
 VIZABI_MODEL = {
   model: {
     markers: {
-      "popbyage": {
+      "pyramid": {
         data: {
           source: "pop",
           space: ["geo", "year", "age"],
@@ -52,6 +52,8 @@ VIZABI_MODEL = {
           },
           frame: {
             modelType: "frame",
+            value: "2019",
+            splash: true,
             data: {
               concept: "year",
               space: ["geo", "year", "age"],
@@ -93,18 +95,18 @@ VIZABI_MODEL = {
         data: {
           ref: {
             transform: "entityConceptSkipFilter",
-            model: "markers.popbyage.encoding.color"
+            model: "markers.pyramid.encoding.color"
           }
         },
         encoding: {
           color: {
             data: {
-              concept: { ref: "markers.popbyage.encoding.color.data.concept" },
-              constant: { ref: "markers.popbyage.encoding.color.data.constant" }
+              concept: { ref: "markers.pyramid.encoding.color.data.concept" },
+              constant: { ref: "markers.pyramid.encoding.color.data.constant" }
             },
             scale: {
               modelType: "color",
-              palette: { ref: "markers.popbyage.encoding.color.scale.palette" },
+              palette: { ref: "markers.pyramid.encoding.color.scale.palette" },
               domain: null,
               range: null,
               type: null,
