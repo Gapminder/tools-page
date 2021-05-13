@@ -1,4 +1,8 @@
 {      
+  "mdtest": {
+    "modelType": "ddfcsv",
+    "path": "./data/ddf--jheeffer--mdtest/"
+  },
   "sg": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
