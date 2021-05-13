@@ -42,6 +42,13 @@ VIZABI_MODEL = {
             },
             scale: { type: "linear" }
           },
+          "order": {
+            modelType: "order",
+            data: {
+              ref: "markers.pyramid.config.encoding.y.data",
+              direction: "desc"
+            }
+          },
           label: {
 
             data: {
