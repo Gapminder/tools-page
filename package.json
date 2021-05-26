@@ -66,8 +66,8 @@
     "vizabi-linechart": "3.6.1",
     "vizabi-popbyage": "3.0.5",
     "vizabi-mountainchart": "3.5.2",
-    "vizabi-reactive": "1.8.3",
-    "vizabi-shared-components": "1.10.3"
+    "vizabi-reactive": "1.9.0",
+    "vizabi-shared-components": "1.11.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
