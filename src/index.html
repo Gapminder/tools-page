@@ -86,8 +86,7 @@
 <script>
   const href = decodeURIComponent(window.location.href);
   const LEGACY_TOOLS_PAGE = "https://tools-legacy.gapminder.org/tools/";
-  if (href.indexOf("popbyage") > -1 //unsupported tools
-    || href.indexOf("spreadsheet") > -1 //unsupported tools
+  if (href.indexOf("spreadsheet") > -1 //unsupported tools
     || href.indexOf("linechart-global") > -1 //unsupported tools
     || href.indexOf("$state$") > -1 && window.location.href.indexOf("url=v") == -1 //old versions of URL state
     || href.indexOf("$majorMode") > -1 //redirect from gapminder world
