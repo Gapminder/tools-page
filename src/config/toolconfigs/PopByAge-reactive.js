@@ -53,7 +53,7 @@ VIZABI_MODEL = {
             measures: ["x"],
             grouping: {
               age: {
-                grouping: 5
+                grouping: 1
               }
             }
           },
