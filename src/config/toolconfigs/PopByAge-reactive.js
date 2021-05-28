@@ -40,7 +40,22 @@ VIZABI_MODEL = {
               concept: "age",
               space: ["age"],
             },
-            scale: { type: "linear" }
+            scale: { 
+              type: "linear",
+              domain: [0,100]}
+          },
+          "aggregate": {
+            modelType: "aggregate",
+            data: {
+              concept: "population",
+              space: ["geo", "year", "age"]
+            },
+            measures: ["x"],
+            grouping: {
+              age: {
+                grouping: 5
+              }
+            }
           },
           "order": {
             modelType: "order",
@@ -50,9 +65,7 @@ VIZABI_MODEL = {
             }
           },
           label: {
-
             data: {
-
               modelType: "entityPropertyDataConfig",
               concept: "name"
             }
@@ -152,8 +165,8 @@ VIZABI_MODEL = {
     "dialogs": {
       "dialogs": {
         "popup": ["timedisplay", "colors", "find", /*"side",*/ "moreoptions"],
-        "sidebar": ["timedisplay", "colors", "find"/*, "grouping"*/],
-        "moreoptions": ["opacity", "speed", /*"grouping",*/ "colors", /*"side",*/ "presentation", "about"],
+        "sidebar": ["timedisplay", "colors", "find", "grouping"],
+        "moreoptions": ["opacity", "speed", "grouping", "colors", /*"side",*/ "presentation", "about"],
       },
       "find": {
         "panelMode": "show",
