@@ -2,7 +2,6 @@ VIZABI_MODEL = {
   model: {
     markers: {
       "bar": {
-        requiredEncodings: ["x"],
         data: {
           source: "sg",
           space: ["country", "time"],
