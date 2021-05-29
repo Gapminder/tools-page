@@ -59,9 +59,9 @@ VIZABI_MODEL = {
           },
           "order": {
             modelType: "order",
+            direction: "desc",
             data: {
-              ref: "markers.pyramid.config.encoding.y.data",
-              direction: "desc"
+              ref: "markers.pyramid.config.encoding.y.data"
             }
           },
           label: {

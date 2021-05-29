@@ -24,9 +24,9 @@ VIZABI_MODEL = {
           },
           "order": {
             modelType: "order",
+            direction: "desc",
             data: {
-              ref: "markers.bubble.encoding.size.data",
-              direction: "desc"
+              ref: "markers.bubble.encoding.size.data"
             }
           },
           "size": {
