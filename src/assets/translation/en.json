@@ -119,7 +119,7 @@
         "mount/people": "people",
         "mount/title": "Number of people by income",
         "mount/extremepoverty": "extreme poverty",
-        "hints/sparcedata": "Sparce data",
+        "hints/sparsedata": "Sparse data",
         "hints/extendDataNSteps": "Extend data up to {n} steps",
         "hints/dontExtendData": "Don't extend data",
         "hints/extrapolation": "Extrapolate time series by copying the nearest available number",
