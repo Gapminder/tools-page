@@ -178,31 +178,17 @@ function setTool(tool, skipTransition) {
 
       window.viz = viz;
 
-      window.VIZABI_DEFAULT_MODEL = null;
-      // const dispose = when(
-      //   () => viz && Object.keys(viz.model.markers)
-      //     .every(markerId => {
-      //       const marker = viz.model.markers[markerId];
-      //       return marker && marker.state == "fulfilled";
-      //     }),
-      //   () => window.VIZABI_DEFAULT_MODEL = diffObject(
-      //     toJS(viz.model.config, { recurseEverything: true }),
-      //     (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}
-      //   ),
-      //   { name: "default model constructor" }
-      // );
       window.VIZABI_DEFAULT_MODEL = diffObject(
         toJS(viz.model.config, { recurseEverything: true }),
         (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}
       );
-      //disposers.push(dispose);
 
-      const removeProperties = (obj, array) => {
+      const removeProperties = (obj, array, keyStack = "") => {
         Object.keys(obj).forEach(key => {
-          if (array.includes(key))
+          if (array.some(s => (keyStack + "." + key).endsWith(s)))
             delete obj[key];
           else
-            (obj[key] && typeof obj[key] === "object") && removeProperties(obj[key], array);
+            (obj[key] && typeof obj[key] === "object") && removeProperties(obj[key], array, keyStack + "." + key);
         });
         return obj;
       };
@@ -223,7 +209,7 @@ function setTool(tool, skipTransition) {
         jsui = diffObject(jsui, MODEL.ui);
 
         const model = {
-          model: Utils.clearEmpties(removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale", "range"])),
+          model: Utils.clearEmpties(removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain"])),
           ui: Utils.clearEmpties(removeProperties(jsui, ["dragging"]))
         };
 
