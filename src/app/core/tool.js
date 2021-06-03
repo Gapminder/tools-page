@@ -210,7 +210,7 @@ function setTool(tool, skipTransition) {
 
         const model = {
           model: Utils.clearEmpties(removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain"])),
-          ui: Utils.clearEmpties(removeProperties(jsui, ["dragging"]))
+          ui: Utils.clearEmpties(removeProperties(jsui, ["dragging", "opened"]))
         };
 
         if (PAGE_MODEL.ui.locale.id !== LOCALE.id)
