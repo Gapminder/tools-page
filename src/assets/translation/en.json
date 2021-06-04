@@ -52,7 +52,7 @@
         "check/adaptMinMaxZoom": "Fit bubbles, zoom out as they go",
         "check/presentation": "Increase text size for presentation",
         "check/projector": "Increase text size for presentation",
-        "check/decorations": "Chart decorations",
+        "check/decorations/enabled": "Chart decorations",
         "check/enableSelectShowSwitch": "Unlock Select & Show options",
         "check/removeLabelBox": "Remove label boxes",
         "check/zoomOnScrolling": "Zoom with mouse wheel",
