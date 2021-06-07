@@ -67,6 +67,9 @@
     "id": "spreadsheet",
     "title": "spreadsheet",
     "image": "/assets/images/chart/spreadsheet.png",
+    "dataSources": ["sg", "wdi", "fasttrack"],
+    "tool": "Spreadsheet",
+    "config": "Spreadsheet-reactive",
     "hideThumbnail": true
   },
   {

@@ -39,7 +39,7 @@ function removeTool() {
 
 function googleAnalyticsLoadEvents(viz) {
   const markers = viz.model.markers;
-  const markerId = ["bubble", "line", "bar", "mountain", "pyramid"].find(id => markers[id]);
+  const markerId = ["bubble", "line", "bar", "mountain", "pyramid", "spreadsheet"].find(id => markers[id]);
   const marker = markers[markerId];
   const splashMarker = viz.splashMarker;
 
