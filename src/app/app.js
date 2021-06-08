@@ -76,7 +76,13 @@ const App = function() {
       appState,
       onClick: d => {
         dispatch.call("toolChanged", null, d.id);
-        setTool(d.id);
+        if (appState.tool == d.id) {
+          //switch to same tool: reset state, discard chart transition
+          URLI.model = {};
+          setTool(null, true);
+        } else {
+          setTool(d.id);
+        }
       }
     });
 

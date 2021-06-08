@@ -20,7 +20,7 @@ const ChartSwitcher = function(placeHolder, translator, dispatch, { tools, appSt
   for (const tool of onlyChartTools) {
     itemTemplate.clone(true)
       .datum(tool)
-      .attr("hidden", tool.id === appState.tool ? true : null)
+      .classed("selected", tool.id === appState.tool)
       .raise()
       .call(fillToolItem, this);
   }
@@ -64,7 +64,7 @@ const ChartSwitcher = function(placeHolder, translator, dispatch, { tools, appSt
     placeHolder.select(".chart-switcher-button")
       .text(translator(tool.title || tool.id));
     placeHolder.selectAll(".chart-switcher-options div")
-      .attr("hidden", _d => _d.id === tool.id ? true : null);
+      .classed("selected", _d => _d.id === tool.id);
   }
 
   function switchTools(force) {
