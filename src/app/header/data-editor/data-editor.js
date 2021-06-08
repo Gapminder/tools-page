@@ -8,125 +8,129 @@ import {
 } from "../../core/url";
 
 const readersSchema = {
-  "ddf": {
-    props: ["path"]
+  "ddfcsv": ["path"],
+  "csv": ["path", "timeInColumns", "hasNameColumn", "nameColumnIndex"],
+  "google_csv": ["path", "sheet", "timeInColumns", "hasNameColumn", "nameColumnIndex"],
+  "ddfbw": ["service", "name", "version", "translateContributionLink"]
+};
+
+const defaultValues = {
+  "reader": "ddfbw",
+  "nameColumnIndex": 1,
+  "service": "https://big-waffle.gapminder.org"
+};
+const propDependency = {
+  "nameColumnIndex": {
+    "hasNameColumn": true
+  }
+};
+const propTypes = {
+  "reader": {
+    "type": "dropdown",
+    "options": Object.keys(readersSchema)
   },
-  "csv": {
-    props: ["path", "timeInColumns", "hasNameColumn", "nameColumnIndex"]
+  "timeInColumns": {
+    "type": "checkbox"
   },
-  "google_csv": {
-    props: ["path", "sheet", "timeInColumns", "hasNameColumn", "nameColumnIndex"]
-  },
-  "ddfbw": {
-    props: ["service", "dataset", "version", "translateContributionLink"]
+  "hasNameColumn": {
+    "type": "checkbox"
   }
 };
 
 const DataEditor = function(placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
-  const propNames = ["reader", "path", "sheet", "dataset", "timeInColumns", "hasNameColumn", "nameColumnIndex", "translateContributionLink", "service", "version"];
-  const defaultValues = {
-    "reader": "ddfbw",
-    "nameColumnIndex": 1
-  };
-  const propDependency = {
-    "nameColumnIndex": {
-      "hasNameColumn": true
-    }
-  };
-  const propTypes = {
-    "reader": {
-      "type": "dropdown",
-      "data": Object.keys(readersSchema)
-    },
-    "timeInColumns": {
-      "type": "checkbox"
-    },
-    "hasNameColumn": {
-      "type": "checkbox"
-    }
-  };
-
   let data;
 
-  const propIndexInData = ["name"].concat(propNames)
-    .reduce((prev, v, i) => {
-      prev[v] = i;
-      return prev;
-    }, {});
+  dispatch.on("menuOpen.dataEditor", d => {
+    if (d.menu_label !== "data_editor") return;
+    makeData();
+    updateTable();
+  });
 
-  const table = Table()
-    .on("edit", d => update(d))
-    .on("remove", (d, i) => {
-      data.splice(i, 1);
-      updateTable([data, ["name"].concat(propNames), propTypes]);
-    })
-    .on("prop_change", () => {
-      filterDataRows();
+  function makeData() {
+    const datasources = viz.model.dataSources;
+    data = Object.keys(datasources).map(id => {
+      const reader = datasources[id].config.modelType;
+      return {
+        id,
+        reader,
+        ...readersSchema[reader].reduce((obj, prop) => {
+          obj[prop] = datasources[id].config[prop] || "";
+          return obj;
+        }, {})
+      };
     });
-
-  function updateTable(_data) {
-    placeHolder.select(".table")
-      .datum(_data)
-      .call(table);
-    filterDataRows();
   }
 
-  function filterDataRows() {
+  const table = Table()
+    .on("remove", (d, i) => {
+      data.splice(i, 1);
+      updateTable();
+    })
+    .on("prop_change", () => {
+      updateDataWhenReaderChanges();
+      updateTable();
+    });
+
+  function updateTable(rowdata = data) {
+    placeHolder.select(".table")
+      .datum({ rowdata, propTypes })
+      .call(table);
+    showhideTableRows();
+  }
+
+  function updateDataWhenReaderChanges() {
+    data = data.map(ds => {
+      //delete properties that are not applicable for the selected reader
+      Object.keys(ds).forEach(f => {
+        if (f !== "id" && f !== "reader" && !readersSchema[ds.reader].includes(f)) delete ds[f];
+      });
+      //add properties that are missing for the selected reader
+      readersSchema[ds.reader].forEach(f => {
+        if (!ds[f]) ds[f] = defaultValues[f] || "";
+      });
+      return ds;
+    });
+  }
+
+  function showhideTableRows() {
     placeHolder.select(".table")
       .selectAll(".row")
-      .selectAll(".row-data")
-      .each(function(d, i) {
-        const el = d3.select(this);
-        const allPropNames = ["name"].concat(propNames);
-        const selectedReader = d.data[propIndexInData["reader"]];
-        const allowProps = getCurrentAllowProp(["name", "reader", ...readersSchema[selectedReader].props], d.data);
-        el.style("display", allowProps.includes(allPropNames[i]) ? null : "none");
+      .each(function(props) {
+        const allowedProps = getCurrentAllowProp(props);
+        d3.select(this)
+          .selectAll(".row-data")
+          .style("display", d => {
+            return allowedProps.includes(d.key) ? null : "none";
+          });
       });
   }
 
-  function getCurrentAllowProp(props, data) {
-    return props.filter(prop =>
-      !propDependency[prop] ? true :
-        Object.keys(propDependency[prop]).every(
-          depProp => propDependency[prop][depProp] === data[propIndexInData[depProp]]
+  function getCurrentAllowProp(ds) {
+    return Object.keys(ds).filter(key =>
+      !propDependency[key] ? true :
+        Object.keys(propDependency[key]).every(
+          depProp => propDependency[key][depProp] === ds[depProp]
         )
     );
   }
 
   placeHolder.select(".add-row")
     .on("click", () => {
-      const newIndex = data[data.length - 1] ? data[data.length - 1].index + 1 : 0;
-      const newData = {
-        data: ["data_", ...propNames.map(name => defaultValues[name] || "")],
-        index: newIndex
-      };
-      data.push(newData);
-      updateTable([data, ["name"].concat(propNames), propTypes]);
-    });
-
-  placeHolder.select(".de-apply")
-    .on("click", () => {
-      const haveDataName = data.map(d => d.data[0]).filter(d => d === "data")[0];
-      if (!haveDataName) data[0].data[0] = "data";
-      const dataModel = data.reduce((result, d) => {
-        const dataObj = {};
-        const selectedReader = d.data[propIndexInData["reader"]];
-        const allowProps = getCurrentAllowProp(["reader", ...readersSchema[selectedReader].props], d.data);
-        propNames.forEach((name, i) => {
-          if (allowProps.includes(name) && d.data[i + 1]) dataObj[name] = d.data[i + 1];
-        });
-        result[d.data[0]] = dataObj;
-        return result;
-      }, {});
-
-      URLI.model = dataModel;
-      setTool(null, true);
-      dispatch.call("menuClose");
+      data.push({
+        id: "data" + (data.length + 1),
+        reader: defaultValues.reader,
+        ...readersSchema[defaultValues.reader].reduce((obj, prop) => {
+          obj[prop] = defaultValues[prop] || "";
+          return obj;
+        }, {})
+      });
+      updateTable();
     });
 
   placeHolder.select(".de-reload")
     .on("click", () => {
-      createTable();
+      makeData();
+      updateTable();
     });
 
   placeHolder.select(".de-reset")
@@ -136,26 +140,24 @@ const DataEditor = function(placeHolder, translator, dispatch, { languages, sele
       dispatch.call("menuClose");
     });
 
-  function createTable() {
-    const model = viz.getModel();
-    const dataSourcesIds = Object.keys(model).filter(m => /^data/.test(m));
-    data = dataSourcesIds.reduce((result, id, index) => {
-      result.push({
-        data: [id, ...propNames.map(name => model[id][name] || "")],
-        index
-      });
-      return result;
-    }, []);
-    updateTable([[], ["name"].concat(propNames), propTypes]);
-    updateTable([data, ["name"].concat(propNames), propTypes]);
-  }
+  placeHolder.select(".de-apply")
+    .on("click", () => {
+      const dataModel = data.reduce((result, ds) => {
+        const dataObj = {};
+        const allowedProps = getCurrentAllowProp(ds).filter(f => f !== "id" && f !== "reader");
+        allowedProps.forEach(prop => {
+          dataObj[prop] = ds[prop];
+        });
+        dataObj["modelType"] = ds.reader;
+        dataObj["locale"] = viz.ui.locale.id;
+        result[ds.id] = dataObj;
+        return result;
+      }, {});
 
-  dispatch.on("menuOpen.dataEditor", d => {
-    if (d.menu_label !== "data_editor") return;
-
-    createTable();
-  });
-
+      URLI.model = { model: { dataSources: dataModel } };
+      setTool(null, true);
+      dispatch.call("menuClose");
+    });
 };
 
 export default DataEditor;

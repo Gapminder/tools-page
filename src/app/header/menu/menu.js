@@ -66,8 +66,8 @@ const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
               <p class="data-editor-buttons nav-faq-help-links">
                 <a class="add-row">+</a>
                 <a class="de-reload">Discard changes</a>
+                <a class="de-reset">Reset everything and reload</a>
                 <a class="de-apply">Apply and reload</a>
-                <a class="de-reset">Reset to default</a>
               </p>
             </div>    
           </div>

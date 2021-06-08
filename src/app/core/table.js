@@ -1,125 +1,118 @@
-const Table = function module() {
+export default function Table() {
   const dispatch = d3.dispatch("edit", "remove", "prop_change");
 
   function exports(_selection) {
-    _selection.each(function(_dataset) {
+    _selection.each(function({ rowdata, propTypes }) {
 
-      //________________________________________________
-      // Data
-      //________________________________________________
-      const data = _dataset[0];
-      const columnNames = _dataset[1];
-      const columnTypes = _dataset[2];
+      /*
+        example
+        rowdata = {id: "sg", reader: "ddfbw", service: "https://bw.gapminder.org", dataset: "sg-master"}
+      */
 
-      //________________________________________________
-      // Table
-      //________________________________________________
+      const view = d3.select(this);
+      const table = view.select("table").node() ? view.select("table") : view.append("table");
 
-      let table = d3.select(this).selectAll("table").data([0]);
-      table = table.enter().append("table").merge(table);
-
-      const dataRows = table.selectAll("tr.row").data(data, d => d.index);
-      dataRows.exit().remove();
-
-      const newDataRows = dataRows.enter()
+      let subtables = table.selectAll("tr.row").data(rowdata, d => d.id);
+      subtables.exit().remove();
+      subtables = subtables.enter()
         .append("tr")
-        .attr("class", "row");
+        .attr("class", "row")
+        .each(function() {
+          d3.select(this)
+            .append("th")
+            .attr("class", "edit")
+            .append("a")
+            .text("×");
+        })
+        .merge(subtables);
 
-      newDataRows.append("th")
-        .attr("class", "edit")
-        .append("a")
-        .text("×");
+      let rows = subtables.selectAll("tr.row-data").data(ds => Object.keys(ds).map(key => ({ ds, key, value: ds[key] })), d => d.key);
+      rows.exit().remove();
+      rows = rows.enter().append("tr")
+        .attr("class", "row-data")
+        .each(function(d) {
+          d3.select(this)
+            .append("th")
+            .attr("class", "header .no-select")
+            .text(d.key);
+        })
+        .merge(rows);
 
-      const rows = newDataRows.selectAll("tr.row-data").data(d => d.data.map(_d => ({
-        value: _d,
-        data: d.data
-      })), d => d.value)
-        .enter().append("tr")
-        .attr("class", "row-data");
+      rows.each(function(d) {
+        const row = d3.select(this);
+        row.select(".cell").remove();
 
-      rows
-        .append("th")
-        .attr("class", "header .no-select")
-        .text((d, i) => columnNames[i]);
+        if (propTypes[d.key]) {
 
-      rows
-        .each(function(_d, i) {
-          const el = d3.select(this);
-          if (columnTypes[columnNames[i]]) {
-            if (columnTypes[columnNames[i]].type === "checkbox") {
-              const checkboxEl = el.append("td")
-                .attr("class", "cell checkbox");
-              checkboxEl.append("div")
-                .attr("data-checked", d => d.value)
-                .on("click", d => {
-                  d.data[i] = d.value = !d.value;
-                  checkboxEl.select("div")
-                    .attr("data-checked", d.value);
-                  dispatch.call("prop_change");
-                });
-            }
-            if (columnTypes[columnNames[i]].type === "dropdown") {
-              const dropDownEl = el.append("td")
-                .attr("class", "cell dropdown");
-              dropDownEl.append("div")
-                .text(d => d.value)
-                .on("click", () => {
-                  const listEl = dropDownEl.select("ul");
-                  listEl.style("display", listEl.style("display") === "none" ? null : "none");
-                });
-              dropDownEl.append("ul")
-                .style("display", "none")
-                .selectAll("li").data(columnTypes[columnNames[i]].data)
-                .enter()
-                .append("li")
-                .style("display", d => d === _d.value ? "none" : null)
-                .text(d => d)
-                .on("click", d => {
-                  d3.event.stopPropagation();
-                  dropDownEl.select("div")
-                    .text(d);
-                  _d.data[i] = _d.value = d;
-                  dropDownEl.selectAll("li")
-                    .style("display", d => d === _d.value ? "none" : null);
-                  dropDownEl.select("ul")
-                    .style("display", "none");
-                  dispatch.call("prop_change");
-                });
-            }
-          } else {
-            el.append("td")
-              .attr("class", "cell")
-              .attr("contenteditable", true)
-              .text(d => d.value)
-              .on("keyup", function(d) {
-                d.data[i] = d.value = d3.select(this).text();
-                // var newData = [];
-                // d3.select(".table").selectAll("tr.row").selectAll("td")
-                //     .each(function(d, i, pI){
-                //         var text = d3.select(this).text();
-                //         if (typeof newData[pI] == "undefined") newData[pI] = [];
-                //         newData[pI].push(text)
-                //     });
-                //dispatch.call("edit", null, newData);
-              })
-              .on("paste", function(d) {
-                d3.event.preventDefault();
-                d3.event.stopPropagation();
-
-                const selection = window.getSelection();
-                if (!selection.rangeCount) return false;
-
-                const paste = (d3.event.clipboardData || window.clipboardData).getData("text").trim();
-                const range = selection.getRangeAt(0);
-                range.deleteContents();
-                range.insertNode(document.createTextNode(paste));
-                selection.collapseToEnd();
-                selection.focusNode.normalize();
-
-                d.data[i] = d.value = d3.select(this).text();
+          if (propTypes[d.key].type === "checkbox") {
+            row.append("td")
+              .attr("class", "cell checkbox")
+              .append("div")
+              .attr("data-checked", d.value)
+              .on("click", function() {
+                d.ds[d.key] = d.value = !d.value;
+                d3.select(this).attr("data-checked", d.value);
+                dispatch.call("prop_change");
               });
           }
-        });
+
+          if (propTypes[d.key].type === "dropdown") {
+            const dropDownEl = row.append("td")
+              .attr("class", "cell dropdown");
+            dropDownEl.append("div")
+              .text(d.value)
+              .on("click", () => {
+                const listEl = dropDownEl.select("ul");
+                listEl.style("display", listEl.style("display") === "none" ? null : "none");
+              });
+            dropDownEl.append("ul")
+              .style("display", "none")
+              .selectAll("li").data(propTypes[d.key].options)
+              .enter()
+              .append("li")
+              .style("display", option => option === d.value ? "none" : null)
+              .text(option => option)
+              .on("click", option => {
+                d3.event.stopPropagation();
+                dropDownEl.select("div")
+                  .text(option);
+                d.ds[d.key] = d.value = option;
+                dropDownEl.selectAll("li")
+                  .style("display", option => option === d.value ? "none" : null);
+                dropDownEl.select("ul")
+                  .style("display", "none");
+                dispatch.call("prop_change");
+              });
+          }
+
+        } else {
+
+          row.append("td")
+            .attr("class", "cell")
+            .attr("contenteditable", true)
+            .text(d.value)
+            .on("keyup", function() {
+              d.ds[d.key] = d.value = d3.select(this).text();
+            })
+            .on("paste", function() {
+              d3.event.preventDefault();
+              d3.event.stopPropagation();
+
+              const selection = window.getSelection();
+              if (!selection.rangeCount) return false;
+
+              const paste = (d3.event.clipboardData || window.clipboardData).getData("text").trim();
+              const range = selection.getRangeAt(0);
+              range.deleteContents();
+              range.insertNode(document.createTextNode(paste));
+              selection.collapseToEnd();
+              selection.focusNode.normalize();
+
+              d.ds[d.key] = d.value = d3.select(this).text();
+            });
+
+        }
+      });
 
       table
         .selectAll(".edit")
@@ -132,6 +125,4 @@ const Table = function module() {
   d3.rebind(exports, dispatch, "on");
 
   return exports;
-};
-
-export default Table;
+}

@@ -101,11 +101,10 @@ function setTool(tool, skipTransition) {
 
       // apply data models from configuration to pageConfig
       function applyDataConfigs(pageConfig) {
-        if (!pageConfig.model.data) pageConfig.model.dataSources = {};
-        const urlDataConfig = (URLI.model || {}).data;
+        if (!pageConfig.model.dataSources) pageConfig.model.dataSources = {};
+        const urlDataConfig = URLI.model?.model?.dataSources;
 
         if (urlDataConfig) {
-          //TODO handle the case when preferred data config of a marker/encoding is no longer among the data condigs of the URL
           pageConfig.model.dataSources = urlDataConfig;
         } else {
           //bring data configs from a separate config file to the page config (those mentioned in toolset)
@@ -119,6 +118,15 @@ function setTool(tool, skipTransition) {
             pageConfig.model.dataSources[ds].locale = URLI.model?.ui?.locale || pageConfig.ui.locale;
           });
         }
+
+        //check if marker datasource is no longer among the configured datasources and kill marker config in that case
+        //TODO: go deeper in encoding config and make it more granular
+        const markers = pageConfig.model.markers;
+        const markerId = ["bubble", "line", "bar", "mountain", "pyramid", "spreadsheet"].find(id => markers[id]);
+        const datasourceIDs = Object.keys(pageConfig.model.dataSources);
+        if (!datasourceIDs.includes(pageConfig.model.markers[markerId].data.source))
+          pageConfig.model.markers = { [markerId]: { data: { source: datasourceIDs[0] } } };
+
         return pageConfig;
       }
 
