@@ -61,9 +61,11 @@
   },
   {
     "id": "spreadsheet",
-    "url": "https://tools-legacy.gapminder.org/tools/#$chart-type=spreadsheet",
     "title": "spreadsheet",
     "image": "/assets/images/chart/spreadsheet.png",
+    "dataSources": ["sg", "wdi", "fasttrack"],
+    "tool": "Spreadsheet",
+    "config": "Spreadsheet-reactive",
     "hideThumbnail": true
   },
   {
