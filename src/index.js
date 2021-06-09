@@ -3,12 +3,11 @@ import "core-js/es/array/flat-map";
 import "regenerator-runtime/runtime.js";
 import "./app/app.styl";
 
-import "d3/dist/d3";
+import "d3/dist/d3.min";
+import "mobx/lib/mobx.umd.min";
 import "urlon/dist/urlon.umd";
 
-//'vizabi' should be imported at first because it fully polyfilled TODO: does it apply to new vizabi?
 import "vizabi-reactive/dist/Vizabi.js";
-import "mobx/lib/mobx.umd";
 import "vizabi-shared-components/build/VizabiSharedComponents.js";
 
 import "vizabi-tools";
