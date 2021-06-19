@@ -167,6 +167,10 @@ VIZABI_MODEL = {
           "presentation",
           "about"
         ]
+      },
+      "find": {
+        enableSelectShowSwitch: false,
+        enableMarkerSpaceOptions: false,
       }
     },
 
