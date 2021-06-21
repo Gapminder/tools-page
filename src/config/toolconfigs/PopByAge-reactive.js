@@ -115,7 +115,7 @@ VIZABI_MODEL = {
         data: {
           ref: {
             transform: "entityConceptSkipFilter",
-            model: "markers.pyramid.encoding.color"
+            path: "markers.pyramid.encoding.color"
           }
         },
         encoding: {
