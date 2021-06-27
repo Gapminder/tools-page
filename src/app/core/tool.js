@@ -62,7 +62,9 @@ function googleAnalyticsLoadEvents(viz) {
           "event_label": appState.tool
         });
       },
-      { name: id + " google load registration" }
+      { name: id + " google load registration",
+        onError: console.log
+      }
     );
     disposers.push(dispose);
   }
