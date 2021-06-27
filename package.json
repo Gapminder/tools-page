@@ -59,16 +59,16 @@
     "urlon": "3.0.1",
     "vizabi-barrankchart": "3.6.0",
     "vizabi-bubblechart": "3.10.0",
-    "vizabi-bubblemap": "3.5.3",
+    "vizabi-bubblemap": "3.5.4",
     "vizabi-config-systema_globalis": "2.10.2",
     "vizabi-ddfcsv-reader": "4.0.1",
     "vizabi-ddfservice-reader": "^2.2.0",
     "vizabi-linechart": "3.6.1",
     "vizabi-popbyage": "3.1.0",
     "vizabi-mountainchart": "3.5.4",
-    "vizabi-reactive": "1.14.0",
+    "vizabi-reactive": "1.14.1",
     "vizabi-shared-components": "1.16.0",
-    "vizabi-spreadsheet": "3.0.4"
+    "vizabi-spreadsheet": "3.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
