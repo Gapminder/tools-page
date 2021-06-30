@@ -1,4 +1,5 @@
 import "core-js/stage/3";
+import "core-js/es/array/flat";
 import "core-js/es/array/flat-map";
 import "core-js/es/object/from-entries";
 import "regenerator-runtime/runtime.js";
