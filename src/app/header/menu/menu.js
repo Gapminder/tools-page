@@ -97,7 +97,7 @@ const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
   this.howToMobileContent = template.select(".howToMobileContent");
   template.select(".how-to-button")
     .datum({ menu_label: "how_to_use" })
-    .on("click", d => {
+    .on("click", (event, d) => {
       selectMenuItem(d);
       switchHowTo.call(this);
     });
@@ -109,7 +109,7 @@ const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
 
   template.select(".data-editor-button")
     .datum({ menu_label: "data_editor" })
-    .on("click", d => {
+    .on("click", (evemt, d) => {
       selectMenuItem(d);
       switchHowTo.call(this);
     });
@@ -193,7 +193,7 @@ const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
   function fillMenuItem(item) {
     const menuItem = item.datum();
     const a = item.select("a.menu-item");
-    a.on("click", d => selectMenuItem(d));
+    a.on("click", (event, d) => selectMenuItem(d));
     const itemTemplate = item.select(".expanded-column-item");
     for (const item of menuItem.children) {
       itemTemplate.clone(true)

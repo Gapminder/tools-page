@@ -16,7 +16,7 @@ const LanguageSwitcher = function(placeHolder, translator, dispatch, { languages
     itemTemplate.clone(true)
       .datum(language)
       .raise()
-      .on("click", d => {
+      .on("click", (event, d) => {
         switcher.text(d.text);
         switchLanguage.call(this);
         onClick(d);
@@ -43,8 +43,7 @@ const LanguageSwitcher = function(placeHolder, translator, dispatch, { languages
   }
 
   d3.select(window).on("resize.languageSwitcher", () => switchLanguage.call(this, false));
-  d3.select(window).on("click.languageSwitcher", () => {
-    const event = d3.event;
+  d3.select(window).on("click.languageSwitcher", event => {
     if (this.isLanguageSwitcherVisible && event.target && (event.target !== switcher.node())) {
       switchLanguage.call(this, false);
     }

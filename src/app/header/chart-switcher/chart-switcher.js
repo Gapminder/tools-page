@@ -45,8 +45,7 @@ const ChartSwitcher = function(placeHolder, translator, dispatch, { tools, appSt
   });
 
   d3.select(window).on("resize.chartSwitcher", () => switchTools.call(this, false));
-  d3.select(window).on("click.chartSwitcher", () => {
-    const event = d3.event;
+  d3.select(window).on("click.chartSwitcher", event => {
     if (this.areToolsOpen && event.target && (event.target !== switcher.node())) {
       switchTools.call(this, false);
     }
@@ -83,7 +82,7 @@ const ChartSwitcher = function(placeHolder, translator, dispatch, { tools, appSt
       a.attr("href", tool.url);
     } else {
       a.attr("href", getLink(tool.id))
-        .on("click", d => {
+        .on("click", (event, d) => {
           switchTools.call(_this);
           onClick(d);
         });

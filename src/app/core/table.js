@@ -72,8 +72,8 @@ export default function Table() {
               .append("li")
               .style("display", option => option === d.value ? "none" : null)
               .text(option => option)
-              .on("click", option => {
-                d3.event.stopPropagation();
+              .on("click", (event, option) => {
+                event.stopPropagation();
                 dropDownEl.select("div")
                   .text(option);
                 d.ds[d.key] = d.value = option;
@@ -94,14 +94,14 @@ export default function Table() {
             .on("keyup", function() {
               d.ds[d.key] = d.value = d3.select(this).text();
             })
-            .on("paste", function() {
-              d3.event.preventDefault();
-              d3.event.stopPropagation();
+            .on("paste", function(event) {
+              event.preventDefault();
+              event.stopPropagation();
 
               const selection = window.getSelection();
               if (!selection.rangeCount) return false;
 
-              const paste = (d3.event.clipboardData || window.clipboardData).getData("text").trim();
+              const paste = (event.clipboardData || window.clipboardData).getData("text").trim();
               const range = selection.getRangeAt(0);
               range.deleteContents();
               range.insertNode(document.createTextNode(paste));
@@ -116,7 +116,8 @@ export default function Table() {
 
       table
         .selectAll(".edit")
-        .on("click", (d, i) => {
+        .on("click", (event, d) => {
+          const i = rowdata.indexOf(d);
           dispatch.call("remove", null, d, i);
         });
     });

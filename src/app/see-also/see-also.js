@@ -69,7 +69,7 @@ const SeeAlso = function(placeHolder, translator, dispatch, { tools, selectedToo
       a.attr("href", tool.url);
     } else {
       a.attr("href", getLink(tool.id))
-        .on("click", d => {
+        .on("click", (event, d) => {
           onClick(d);
         });
     }
