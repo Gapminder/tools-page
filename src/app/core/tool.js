@@ -63,7 +63,10 @@ function googleAnalyticsLoadEvents(viz) {
         });
       },
       { name: id + " google load registration",
-        onError: console.log
+        onError: (err) => {
+          console.log(err);
+          window.Rollbar && Rollbar.critical(err);
+        }
       }
     );
     disposers.push(dispose);
