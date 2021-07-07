@@ -21,17 +21,15 @@ fi
 echo && echo 🗂 $PWD && echo "👉 git pull, set versions of all vizabi tools and readers to 'latest', npm i"
 git pull origin development 
 # npm view vizabi versions | sed "s/'/\"/g" | json -- -1
-json -I -f package.json -e 'this.dependencies["vizabi"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-bubblechart"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-bubblemap"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-linechart"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-mountainchart"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-popbyage"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-barrankchart"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-spreadsheet"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-config-systema_globalis"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/core"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/bubblechart"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/bubblemap"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/linechart"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/mountainchart"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/popbyage"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/barrank"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/spreadsheet"]="latest"'
 json -I -f package.json -e 'this.dependencies["vizabi-ddfcsv-reader"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-csv-reader"]="latest"'
 json -I -f package.json -e 'this.dependencies["vizabi-ddfservice-reader"]="latest"'
 npm i --quiet --depth 0 --unsafe-perm
   

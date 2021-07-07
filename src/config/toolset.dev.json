@@ -10,8 +10,8 @@
   },
   {
   "id": "barrank",
-  "tool": "BarRankChart",
-  "config": "BarRankChart-reactive",
+  "tool": "BarRank",
+  "config": "BarRank-reactive",
   "dataSources": ["sg", "wdi", "fasttrack"],
   "transition": ["select","time"],
   "title": "ranks",

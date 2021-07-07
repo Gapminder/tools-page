@@ -26,7 +26,7 @@ echo && echo 🗂 $PWD && echo "👉 npm run build:prod"
 npm run build:prod && echo "✅ Tools page build done. Blue prod is served from /home/tools-page/build/tools/"
 
 echo && echo 🗂 $PWD && echo "👉 copy build output into a special folder for this version"
-VERSION="$(json -f package.json dependencies.vizabi-reactive)"
+VERSION="$(json -f package.json dependencies.@vizabi/core)"
 COMMIT_ID="$(git rev-parse --verify HEAD)"
 cd /home 
 rm -rf "v${VERSION}" && mkdir "v${VERSION}" && cp -r tools-page/build/tools/* "v${VERSION}" \

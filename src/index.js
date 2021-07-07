@@ -9,8 +9,8 @@ import "d3/dist/d3.min";
 import "mobx/lib/mobx.umd.min";
 import "urlon/dist/urlon.umd";
 
-import "vizabi-reactive/dist/Vizabi.js";
-import "vizabi-shared-components/build/VizabiSharedComponents.js";
+import "@vizabi/core/dist/Vizabi.js";
+import "@vizabi/shared-components/build/VizabiSharedComponents.js";
 
 import "vizabi-tools";
 import "vizabi-ddfservice-reader/dist/vizabi-ddfservice-reader";

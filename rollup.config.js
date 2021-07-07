@@ -44,7 +44,7 @@ const inToolsetTools = Object.keys(toolset.reduce((result, { tool }) => {
 function generateToolInputEntries() {
   return (__PROD__ ? inToolsetTools : allTools.tools).reduce((result, tool) => {
     //js
-    result.push(allTools.paths[tool] && allTools.paths[tool].js || `vizabi-${tool}`);
+    result.push(allTools.paths[tool] && allTools.paths[tool].js || `@vizabi/${tool}`);
     return result;
   }, []);
 }
@@ -52,7 +52,7 @@ function generateToolInputEntries() {
 function getEntryToolsCssFilenames() {
   return (__PROD__ ? inToolsetTools : allTools.tools).reduce((result, tool) => {
     //css
-    result.push(allTools.paths[tool] && allTools.paths[tool].css || `vizabi-${tool}/build/${tool}.css`);
+    result.push(allTools.paths[tool] && allTools.paths[tool].css || `@vizabi/${tool}/build/${tool}.css`);
     return result;
   }, []);
 }
@@ -103,7 +103,7 @@ function varNameWithFileName(prefix) {
 
 function getHtmlAssets() {
   return [
-    ...["vizabi-shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()]
+    ...["@vizabi/shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()]
       .map(f => "assets/css/" + path.basename(f)),
     "styles.css",
     ...jsAssets
@@ -220,7 +220,7 @@ export default [
           { src: "src/config/conceptMapping.js", dest: "build/tools/config" },
           { src: "src/config/entitysetMapping.js", dest: "build/tools/config" },
           { src: "src/favicon.ico", dest: "build/tools" },
-          { src: [ "vizabi-shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()].map(css=>require.resolve(css))
+          { src: [ "@vizabi/shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()].map(css=>require.resolve(css))
             , dest: "build/tools/assets/css" }
         ],
         copyOnce: true,
@@ -240,7 +240,7 @@ export default [
         babelHelpers: "bundled",
         include: [
           "src/**",
-          "node_modules/vizabi-*/**"  
+          "node_modules/@vizabi/**"  
         ],
         presets: [["@babel/preset-env", {
           targets: {
