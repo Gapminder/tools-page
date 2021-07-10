@@ -29,8 +29,8 @@ json -I -f package.json -e 'this.dependencies["@vizabi/mountainchart"]="latest"'
 json -I -f package.json -e 'this.dependencies["@vizabi/popbyage"]="latest"'
 json -I -f package.json -e 'this.dependencies["@vizabi/barrank"]="latest"'
 json -I -f package.json -e 'this.dependencies["@vizabi/spreadsheet"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-ddfcsv-reader"]="latest"'
-json -I -f package.json -e 'this.dependencies["vizabi-ddfservice-reader"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/reader-ddfcsv"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/reader-ddfservice"]="latest"'
 npm i --quiet --depth 0 --unsafe-perm
   
 echo && echo 🗂 $PWD && echo "👉 npm run build"

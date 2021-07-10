@@ -13,8 +13,8 @@ import "@vizabi/core/dist/Vizabi.js";
 import "@vizabi/shared-components/build/VizabiSharedComponents.js";
 
 import "vizabi-tools";
-import "vizabi-ddfservice-reader/dist/vizabi-ddfservice-reader";
-import DDFCsvReader from "vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader";
+import "@vizabi/reader-ddfservice/dist/reader-ddfservice.js";
+import DDFCsvReader from "@vizabi/reader-ddfcsv/dist/reader-ddfcsv.js";
 
 import "../node_modules/vizabi-config-systema_globalis/dist/*.json";
 

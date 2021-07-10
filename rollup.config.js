@@ -210,7 +210,7 @@ export default [
         format: "import"
       }),
       legacy({
-        [require.resolve("vizabi-ddfcsv-reader/dist/vizabi-ddfcsv-reader")]: "DDFCsvReader"
+        [require.resolve("@vizabi/reader-ddfcsv/dist/reader-ddfcsv")]: "DDFCsvReader"
       }),
       copy({
         targets: [
