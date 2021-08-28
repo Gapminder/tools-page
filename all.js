@@ -23,5 +23,5 @@ if (command.startsWith('git clone')) {
   shell.cd('..');
   packages.forEach((pkg) => execAsync(`${command} https://github.com/vizabi/${pkg}.git ${pkg}`));
 } else {
-  packages.forEach((pkg) => execAsync(`cd ../vizabi/${pkg} && ${command}`));
+  packages.forEach((pkg) => execAsync(`cd ../../vizabi/${pkg} && ${command}`));
 }
