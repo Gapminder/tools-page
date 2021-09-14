@@ -11,6 +11,7 @@ VIZABI_MODEL = {
   ui: {
     chart: {},
     "tree-menu": {
+      "showDataSources": false,
       "folderStrategyByDataset": {
         "sg": "spread",
         "fasttrack": "spread",

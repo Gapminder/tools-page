@@ -55,6 +55,7 @@
         "check/decorations/enabled": "Chart decorations",
         "check/enableSelectShowSwitch": "Unlock Select & Show options",
         "check/enableMarkerSpaceOptions": "Unlock marker space options",
+        "check/showDataSources": "Show data sources in tree menu",
         "check/removeLabelBox": "Remove label boxes",
         "check/zoomOnScrolling": "Zoom with mouse wheel",
         "check/flipSides": "Flip sides",

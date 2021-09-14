@@ -193,6 +193,7 @@ VIZABI_MODEL = {
       doubtRange: [1.0, 0.3, 0.2]
     },
     "tree-menu": {
+      "showDataSources": false,
       "folderStrategyByDataset": {
         "sg": "spread",
         "fasttrack": "spread",

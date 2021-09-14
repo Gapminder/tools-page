@@ -168,6 +168,7 @@ VIZABI_MODEL = {
       }
     },
     "tree-menu": {
+      "showDataSources": false,
       "folderStrategyByDataset": {
         "sg": "spread",
         "fasttrack": "spread",
