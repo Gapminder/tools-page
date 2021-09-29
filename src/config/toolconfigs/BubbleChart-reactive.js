@@ -157,7 +157,7 @@ VIZABI_MODEL = {
         "moreoptions": [
           "opacity",
           "speed",
-          //"axes",
+          "axes",
           "size",
           "colors",
           "label",
