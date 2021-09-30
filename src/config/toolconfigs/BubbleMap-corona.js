@@ -1,0 +1,204 @@
+VIZABI_MODEL = {
+    model: {
+      markers: {
+        bubble: {
+          requiredEncodings: ["size"],
+          data: {
+            source: "yearly",
+            space: ["country", "time"],
+            filter: {
+              dimensions: { "country": { "un_state": true } }
+            }
+          },
+          encoding: {
+            "selected": {
+              modelType: "selection"
+            },
+            "highlighted": {
+              modelType: "selection"
+            },
+            "size": {
+              data: {
+                source: "covid_spread",
+                concept: "last_seven_days_deaths",
+              },
+              scale: {
+                modelType: "size",
+                allowedTypes: ["linear", "log", "genericLog", "pow"]
+              }
+            },
+            "lat": {
+              data: {
+                space: ["country"],
+                concept: "latitude"
+              }
+            },
+            "lon": {
+              data: {
+                space: ["country"],
+                concept: "longitude"
+              }
+            },
+            "color": {
+              data: {
+                space: ["country", "time"],
+                source: "covid_spread",
+                concept: "week_growth_rate"
+              },
+              scale: {
+                modelType: "color",
+                type: "linear"
+              }
+            },
+            "label": {
+              data: {
+                space: ["country"],
+                modelType: "entityPropertyDataConfig",
+                concept: "name"
+              }
+            },
+            "size_label": {
+              data: {
+                constant: "_default"
+              },
+              scale: {
+                modelType: "size"
+              }
+            },
+            "frame": {
+              modelType: "frame",
+              speed: 200,
+              splash: false,
+              interval: "day",
+              value: "2020-12-01",
+              data: {
+                concept: "time"
+              }
+            },
+            "order": {
+              modelType: "order",
+              direction: "desc",
+              data: {
+                ref: "markers.bubble.config.encoding.size.data"
+              }
+            },
+            "repeat": {
+              modelType: "repeat",
+              allowEnc: ["size"]
+            }
+          },
+          requiredEncodings: ["lat", "lon", "size"]
+        },
+        "legend": {
+          data: {
+            ref: {
+              transform: "entityConceptSkipFilter",
+              path: "markers.bubble.encoding.color"
+            }
+          },
+          encoding: {
+            color: {
+              data: {
+                concept: { ref: "markers.bubble.encoding.color.data.concept" },
+                constant: { ref: "markers.bubble.encoding.color.data.constant" }
+              },
+              scale: {
+                modelType: "color",
+                palette: { ref: "markers.bubble.encoding.color.scale.palette" },
+                domain: null,
+                range: null,
+                type: null,
+                zoomed: null,
+                zeroBaseline: false,
+                clamp: false,
+                allowedTypes: null
+              }
+              //scale: { ref: "markers.bubble.encoding.color.scale" }
+            },
+            name: { data: { concept: "name" } },
+            rank: { data: { concept: "rank" } },
+            map: { data: { concept: "shape_lores_svg" } }
+          }
+        }
+      }
+    },
+    ui: {
+      locale: { id: "en" },
+      layout: { projector: false },
+  
+      //ui
+      "buttons": {
+        "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      },
+      "dialogs": {
+        "dialogs": {
+          "popup": ["colors", "find", "moreoptions"],
+          "sidebar": ["colors", "find", "size"],
+          "moreoptions": [
+            "opacity",
+            "speed",
+            //"axes",
+            "size",
+            "colors",
+            "label",
+            "technical",
+            "repeat",
+            "presentation",
+            "about"
+          ]
+        }
+      },
+      "chart": {
+        showForecast: false,
+        showForecastOverlay: true,
+        pauseBeforeForecast: true,
+        endBeforeForecast: "2022",
+        opacityHighlight: 1.0,
+        opacitySelect: 1.0,
+        opacityHighlightDim: 0.1,
+        opacitySelectDim: 0.3,
+        opacityRegular: 0.8,
+        labels: {
+          enabled: true,
+          dragging: true,
+          removeLabelBox: false
+        },
+        superhighlightOnMinimapHover: false,
+        map: {
+          path: null,
+          colorGeo: false,
+          preserveAspectRatio: false,
+          scale: 1.1,
+          offset: {
+            top: 0.05,
+            right: 0,
+            bottom: -0.07,
+            left: -0.15
+          },
+          projection: "geo" + "Aitoff",
+          topology: {
+            path: "assets/world-50m.json",
+            objects: {
+              geo: "land",
+              boundaries: "countries"
+            },
+            geoIdProperty: null,
+          }
+        }
+      },
+      "data-warning": {
+        doubtDomain: [1800, 1950, 2015],
+        doubtRange: [1.0, 0.3, 0.2]
+      },
+      "tree-menu": {
+        "showDataSources": false,
+        "folderStrategyByDataset": {
+          "yearly": "spread",
+          "covid_spread": "spread",
+          "covid_response": "root",
+          "covid_csv": "spread"
+        }
+      }
+    }
+  };
+  
