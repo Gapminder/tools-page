@@ -63,7 +63,7 @@
     "@vizabi/bubblemap": "3.6.3",
     "vizabi-config-systema_globalis": "2.10.2",
     "@vizabi/reader-ddfcsv": "4.0.1",
-    "@vizabi/reader-ddfservice": "^2.2.1",
+    "@vizabi/reader-ddfservice": "^2.2.3",
     "@vizabi/linechart": "3.7.3",
     "@vizabi/popbyage": "3.2.4",
     "@vizabi/mountainchart": "3.6.6",
