@@ -16,7 +16,7 @@ const Footer = function(placeHolder, translator, dispatch) {
             </div>
             <div class="main-menu">
                 <ul class="nav">
-                    <li><a href="//gapminder.org/about/about/" data-text="about"></a></li>
+                    <li><a href="//gapminder.org/about/" data-text="about"></a></li>
                     <li><a href="//gapminder.org/about/press-room/contact/" data-text="contact"></a></li>
                     <li><a href="//gapminder.org/news/" data-text="blog"></a></li>
                     <li><a href="//gapminder.org/donations/" data-text="donate"></a></li>
