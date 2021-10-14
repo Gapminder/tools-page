@@ -133,7 +133,7 @@ VIZABI_MODEL = {
       "dialogs": {
         "popup": ["colors", "find", "moreoptions"],
         "sidebar": ["colors", "find"],
-        "moreoptions": ["opacity", "speed", "colors", "axes", "repeat", "presentation", "about"]
+        "moreoptions": ["opacity", "speed", "colors", "axes", "technical", "repeat", "presentation", "about"]
       },
       "find": {
         "panelMode": "show",
