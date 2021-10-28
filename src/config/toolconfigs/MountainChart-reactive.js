@@ -6,7 +6,13 @@ VIZABI_MODEL = {
           source: "sg",
           space: ["country", "time"],
           filter: {
-            dimensions: { "country": { "un_state": true } }
+            dimensions: {
+              "country": {
+                "country": {
+                  $in: ["usa", "afg", "rus", "nga"]
+                }
+              }
+            }
           }
         },
         requiredEncodings: ["mu", "norm", "sigma"],
@@ -82,6 +88,10 @@ VIZABI_MODEL = {
           "repeat": {
             modelType: "repeat",
             allowEnc: ["mu", "norm", "sigma", "color"]
+          },
+          "facet": {
+            modelType: "facet",
+            row: "country"
           }
         }
       },
@@ -158,7 +168,7 @@ VIZABI_MODEL = {
       "dialogs": {
         "popup": ["colors", "find", "stack", "moreoptions"],
         "sidebar": ["colors", "find", "stack"],
-        "moreoptions": ["opacity", "speed", "colors", "stack", "presentation", "about"]
+        "moreoptions": ["opacity", "speed", "colors", "stack", "technical", "presentation", "about"]
       },
       "find": {
         "panelMode": "find",
