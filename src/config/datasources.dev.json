@@ -1,4 +1,10 @@
 {      
+  "povcalnet": {
+    "modelType": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "povcalnet",
+    "name": "povcalnet"
+  },
   "sg": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
