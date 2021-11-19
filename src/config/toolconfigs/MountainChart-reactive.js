@@ -3,13 +3,13 @@ VIZABI_MODEL = {
     markers: {
       "mountain": {
         data: {
-          source: "sg",
-          space: ["country", "time"],
+          source: "povcalnet",
+          space: ["country", "year"],
           filter: {
             dimensions: { "country": { "un_state": true } }
           }
         },
-        requiredEncodings: ["mu", "norm", "sigma"],
+        requiredEncodings: ["shapedata"],
         encoding: {
           "selected": {
             modelType: "selection"
@@ -17,9 +17,14 @@ VIZABI_MODEL = {
           "highlighted": {
             modelType: "selection"
           },
+          "shapedata": { 
+            data: { 
+              concept: "income_mountain_50bracket_shape_for_log" 
+            } 
+          }, 
           "mu": {
             data: {
-              concept: "income_per_person_gdppercapita_ppp_inflation_adjusted"
+              constant: 0
             },
             scale: {
               type: "log",
@@ -28,21 +33,18 @@ VIZABI_MODEL = {
             "tailFatX": 1.85,
             "tailCutX": 0.2,
             "tailFade": 0.7,
-            "xScaleFactor": 1.039781626,
-            "xScaleShift": -1.127066411
-          },
-          "norm": {
-            data: {
-              concept: "population_total"
-            }
-          },
-          "sigma": {
-            data: {
-              concept: "gapminder_gini"
-            }
+            "xScaleFactor": 1,
+            "xScaleShift": 0
           },
           "color": {
             data: {
+              allow: {
+                space: {
+                  filter: {
+                    concept_type: { $in: ["entity_domain", "entity_set"] }
+                  }
+                }
+              },
               space: ["country"],
               concept: "world_4region"
             },
@@ -71,17 +73,21 @@ VIZABI_MODEL = {
             }
           },
           frame: {
-            value: "2019",
+            value: "2021",
             modelType: "frame",
             speed: 200,
             splash: true,
             data: {
-              concept: "time"
+              concept: "year"
             }
           },
           "repeat": {
             modelType: "repeat",
-            allowEnc: ["mu", "norm", "sigma", "color"]
+            allowEnc: ["shapedata"]
+          },
+          "facet": {
+            modelType: "facet",
+            row: null
           }
         }
       },
@@ -126,7 +132,7 @@ VIZABI_MODEL = {
       "decorations": {
         "enabled": true,
         "xAxisGroups": {
-          "income_per_person_gdppercapita_ppp_inflation_adjusted": [
+          "any": [
             { "min": null, "max": 2, "label": "incomegroups/level1", "label_short": "incomegroups/level1short" },
             { "min": 2, "max": 8, "label": "incomegroups/level2", "label_short": "incomegroups/level2short" },
             { "min": 8, "max": 32, "label": "incomegroups/level3", "label_short": "incomegroups/level3short" },
@@ -135,17 +141,18 @@ VIZABI_MODEL = {
         }
       },
       "showForecastOverlay": true,
-      "showForecast": false,
+      "showForecast": true,
       "pauseBeforeForecast": true,
-      "endBeforeForecast": "2019",
+      "endBeforeForecast": "2021",
       "opacityHighlight": 1.0,
       "opacitySelect": 1.0,
       "opacityHighlightDim": 0.1,
       "opacitySelectDim": 0.3,
-      "opacityRegular": 0.8
+      "opacityRegular": 0.8, 
+      "yMaxMethod": 1 
     },
     "data-warning": {
-      doubtDomain: [1800, 1950, 2015],
+      doubtDomain: [1800, 1950, 2020],
       doubtRange: [1.0, 0.3, 0.2]
     },
     "time-slider": {
@@ -158,7 +165,7 @@ VIZABI_MODEL = {
       "dialogs": {
         "popup": ["colors", "find", "stack", "moreoptions"],
         "sidebar": ["colors", "find", "stack"],
-        "moreoptions": ["opacity", "speed", "colors", "stack", "presentation", "about"]
+        "moreoptions": ["opacity", "speed", "colors", "stack", "technical", "presentation", "about"]
       },
       "find": {
         "panelMode": "find",
