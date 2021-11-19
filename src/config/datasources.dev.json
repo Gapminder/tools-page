@@ -2,8 +2,8 @@
   "povcalnet": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "povcalnet",
-    "name": "povcalnet"
+    "dataset": "povcalnet-develop",
+    "name": "povcalnet-develop"
   },
   "sg": {
     "modelType": "ddfbw",
@@ -32,8 +32,8 @@
   "fasttrack": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "fasttrack",
-    "name": "fasttrack"
+    "dataset": "fasttrackQA",
+    "name": "fasttrackQA"
   }
 }
 
