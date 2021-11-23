@@ -140,6 +140,7 @@ VIZABI_MODEL = {
           ]
         }
       },
+      "curve": "curveBasis",
       "showForecastOverlay": true,
       "showForecast": true,
       "pauseBeforeForecast": true,
