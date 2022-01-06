@@ -60,7 +60,7 @@
     "urlon": "3.0.1",
     "@vizabi/barrank": "3.9.0",
     "@vizabi/bubblechart": "3.13.0",
-    "@vizabi/bubblemap": "3.8.0",
+    "@vizabi/bubblemap": "3.9.0",
     "vizabi-config-systema_globalis": "2.10.2",
     "@vizabi/reader-ddfcsv": "4.0.1",
     "@vizabi/reader-ddfservice": "^2.2.3",
@@ -68,7 +68,7 @@
     "@vizabi/popbyage": "3.3.1",
     "@vizabi/mountainchart": "4.0.1",
     "@vizabi/core": "1.22.0",
-    "@vizabi/shared-components": "1.20.0",
+    "@vizabi/shared-components": "1.20.1",
     "@vizabi/spreadsheet": "3.0.11"
   },
   "devDependencies": {
