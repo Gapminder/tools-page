@@ -4,7 +4,7 @@ VIZABI_MODEL = {
         bubble: {
           requiredEncodings: ["size"],
           data: {
-            source: "yearly",
+            source: "owid-covid",
             space: ["country", "time"],
             filter: {
               dimensions: { "country": { "un_state": true } }
@@ -19,8 +19,7 @@ VIZABI_MODEL = {
             },
             "size": {
               data: {
-                source: "covid_spread",
-                concept: "last_seven_days_deaths",
+                concept: "new_cases_smoothed_per_million",
               },
               scale: {
                 modelType: "size",
@@ -42,8 +41,7 @@ VIZABI_MODEL = {
             "color": {
               data: {
                 space: ["country", "time"],
-                source: "covid_spread",
-                concept: "week_growth_rate"
+                concept: "reproduction_rate"
               },
               scale: {
                 modelType: "color",
@@ -70,7 +68,6 @@ VIZABI_MODEL = {
               speed: 200,
               splash: false,
               interval: "day",
-              value: "2020-12-01",
               data: {
                 concept: "time"
               }
@@ -152,7 +149,7 @@ VIZABI_MODEL = {
         showForecast: false,
         showForecastOverlay: true,
         pauseBeforeForecast: true,
-        endBeforeForecast: "2022",
+        endBeforeForecast: null,
         opacityHighlight: 1.0,
         opacitySelect: 1.0,
         opacityHighlightDim: 0.1,

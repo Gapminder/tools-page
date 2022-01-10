@@ -4,7 +4,7 @@ VIZABI_MODEL = {
       bubble: {
         requiredEncodings: ["x", "y", "size"],
         data: {
-          source: "yearly",
+          source: "owid-covid",
           space: ["country", "time"],
           filter: {
             dimensions: { "country": { "un_state": true } }
@@ -34,8 +34,7 @@ VIZABI_MODEL = {
           },
           "size": {
             data: {
-              source: "yearly",
-              concept: "population_total"
+              concept: "population"
             },
             scale: {
               modelType: "size",
@@ -44,8 +43,7 @@ VIZABI_MODEL = {
           },
           "y": {
             data: {
-              source: "covid_spread",
-              concept: "last_seven_days_deaths",
+              concept: "new_cases_smoothed_per_million",
             },
             scale: {
               allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
@@ -53,8 +51,7 @@ VIZABI_MODEL = {
           },
           "x": {
             data: {
-              source: "yearly",
-              concept: "population_aged_65plus_years_both_sexes_percent"
+              concept: "gdp_per_capita"
             },
             scale: {
               type: "linear",
@@ -63,13 +60,12 @@ VIZABI_MODEL = {
           },
           "color": {
             data: {
-              space: ["country", "time"],
-              source: "covid_spread",
-              concept: "week_growth_rate"
+              space: ["country"],
+              concept: "world_4region"
             },
             scale: {
               modelType: "color",
-              type: "linear"
+              type: "ordinal"
             }
           },
           "label": {
@@ -92,7 +88,6 @@ VIZABI_MODEL = {
             speed: 200,
             splash: false,
             interval: "day",
-            value: "2020-12-01",
             data: {
               concept: "time"
             }
@@ -181,7 +176,7 @@ VIZABI_MODEL = {
       showForecast: false,
       showForecastOverlay: true,
       pauseBeforeForecast: true,
-      endBeforeForecast: "2022",
+      endBeforeForecast: null,
       opacityHighlight: 1.0,
       opacitySelect: 1.0,
       opacityHighlightDim: 0.1,

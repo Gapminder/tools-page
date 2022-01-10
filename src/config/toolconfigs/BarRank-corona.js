@@ -4,7 +4,7 @@ VIZABI_MODEL = {
         "bar": {
           requiredEncodings: ["x"],
           data: {
-            source: "yearly",
+            source: "owid-covid",
             space: ["country", "time"],
             filter: {
               dimensions: { "country": { "un_state": true } }
@@ -19,8 +19,7 @@ VIZABI_MODEL = {
             },
             "x": {
               data: {
-                source: "covid_spread",
-                concept: "last_seven_days_deaths",
+                concept: "new_cases_smoothed_per_million",
               },
               scale: {
                 allowedTypes: ["linear", "log", "genericLog", "pow"]
@@ -47,7 +46,6 @@ VIZABI_MODEL = {
               speed: 200,
               splash: false,
               interval: "day",
-              value: "2020-12-01",
               data: {
                 concept: "time"
               }
@@ -99,7 +97,7 @@ VIZABI_MODEL = {
         lilFrameDisplayAlwaysHidden: true,
         showForecast: false,
         showForecastOverlay: true,
-        endBeforeForecast: "2022",
+        endBeforeForecast: null,
         pauseBeforeForecast: true,
         opacityHighlight: 1.0,
         opacitySelect: 1.0,

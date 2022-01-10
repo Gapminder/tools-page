@@ -1,28 +1,9 @@
 {
-  "yearly": {
+  "owid-covid": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "yearly-data-as-daily",
-    "name": "yearly-data-as-daily"
-  },
-  "covid_csv": {
-    "modelType": "google_csv",
-    "path": "https://docs.google.com/spreadsheets/d/1y38xe0iLAdJy9GEB-BgUjtW53hOeOQRGCMf33-kVwu4",
-    "sheet": "data-for-countries-etc-by-day",
-    "hasNameColumn": true,
-    "nameColumnIndex": 1
-  },
-  "covid_spread": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "covid-spread",
-    "name": "covid-spread"
-  },
-  "covid_response": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "covid-response",
-    "name": "covid-response"
+    "dataset": "owid-covid-master",
+    "name": "owid-covid-master"
   },
   "sg": {
     "modelType": "ddfbw",
