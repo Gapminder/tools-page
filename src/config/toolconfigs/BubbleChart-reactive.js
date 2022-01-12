@@ -90,7 +90,7 @@ VIZABI_MODEL = {
           frame: {
             modelType: "frame",
             speed: 200,
-            value: "2019",
+            value: "2021",
             splash: true,
             data: {
               concept: "time"
@@ -180,7 +180,7 @@ VIZABI_MODEL = {
       showForecast: false,
       showForecastOverlay: true,
       pauseBeforeForecast: true,
-      endBeforeForecast: "2019",
+      endBeforeForecast: "2021",
       opacityHighlight: 1.0,
       opacitySelect: 1.0,
       opacityHighlightDim: 0.1,

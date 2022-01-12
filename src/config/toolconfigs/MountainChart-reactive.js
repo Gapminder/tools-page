@@ -142,7 +142,7 @@ VIZABI_MODEL = {
       },
       "curve": "curveBasis",
       "showForecastOverlay": true,
-      "showForecast": true,
+      "showForecast": false,
       "pauseBeforeForecast": true,
       "endBeforeForecast": "2021",
       "opacityHighlight": 1.0,

@@ -72,7 +72,7 @@ VIZABI_MODEL = {
           },
           frame: {
             modelType: "frame",
-            value: "2019",
+            value: "2021",
             splash: true,
             data: {
               concept: "year",
@@ -156,7 +156,7 @@ VIZABI_MODEL = {
       showForecast: true,
       showForecastOverlay: false,
       pauseBeforeForecast: false,
-      endBeforeForecast: "2020",
+      endBeforeForecast: "2021",
 
     },
     "buttons": {
