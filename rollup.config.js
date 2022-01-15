@@ -175,7 +175,7 @@ export default [
         "VizabiSharedComponents": "VizabiSharedComponents"
       },
       manualChunks(id) {
-        if (/vizabi/.test(id)) {
+        if (/Vizabi|vizabi/.test(id)) {
           return "tools";
         }
         if (/d3|mobx.umd|urlon.umd/.test(id)) {
@@ -198,6 +198,8 @@ export default [
       resolve(),
       alias({
         entries: [
+          { find: "~d3", replacement: `d3/dist/d3${__PROD__ ? ".min" : ""}`},
+          { find: "~mobx", replacement: `mobx/lib/mobx.umd${__PROD__ ? ".min" : ""}`},
           { find: "properties", replacement: path.resolve(__dirname, "src", "config", `properties.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`) },
           { find: "toolset", replacement: path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`) },
           { find: "datasources", replacement: path.resolve(__dirname, "src", "config", `datasources.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`) },

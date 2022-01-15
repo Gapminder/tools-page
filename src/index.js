@@ -5,8 +5,8 @@ import "core-js/es/object/from-entries"; //safari11
 import "regenerator-runtime/runtime.js";
 import "./app/app.styl";
 
-import "d3/dist/d3.min";
-import "mobx/lib/mobx.umd.min";
+import "~d3";
+import "~mobx";
 import "urlon/dist/urlon.umd";
 
 import "@vizabi/core/dist/Vizabi.js";
