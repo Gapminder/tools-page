@@ -103,6 +103,7 @@ VIZABI_MODEL = {
           },
           "repeat": {
             modelType: "repeat",
+            useConnectedRowsAndColumns: true,
             row: ["y"],
             column: ["x"],
             allowEnc: ["y", "x"]
