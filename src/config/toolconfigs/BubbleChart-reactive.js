@@ -232,6 +232,7 @@ VIZABI_MODEL = {
       "folderStrategyByDataset": {
         "sg": "spread",
         "fasttrack": "spread",
+        "country_flags": "spread",
         "wdi": "folder:other_datasets"
       }
     }

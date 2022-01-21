@@ -3,7 +3,7 @@
     "id": "bubbles",
     "tool": "BubbleChart",
     "config": "BubbleChart-reactive", 
-    "dataSources": ["sg", "wdi", "fasttrack"],
+    "dataSources": ["sg", "wdi", "fasttrack", "country_flags"],
     "transition": ["select","time"],
     "title": "bubbles",
     "image": "/assets/images/chart/bubble-chart.png"
