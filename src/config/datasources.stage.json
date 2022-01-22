@@ -34,6 +34,12 @@
     "service": "https://big-waffle.gapminder.org",
     "dataset": "fasttrack",
     "name": "fasttrack"
+  },
+  "country_flags": {
+    "modelType": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "country_flag_svg_simpl",
+    "name": "country_flag_svg_simpl"
   }
 }
 
