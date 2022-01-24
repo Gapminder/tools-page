@@ -31,7 +31,7 @@
     "id": "mountain",
     "tool": "MountainChart",
     "config": "MountainChart-reactive",
-    "dataSources": ["povcalnet"],
+    "dataSources": ["povcalnet", "sg", "fasttrack"],
     "transition": ["select","time"],
     "title": "income",
     "image": "/assets/images/chart/income-chart.png"

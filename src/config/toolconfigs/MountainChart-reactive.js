@@ -4,7 +4,7 @@ VIZABI_MODEL = {
       "mountain": {
         data: {
           source: "povcalnet",
-          space: ["country", "year"],
+          space: ["country", "time"],
           filter: {
             dimensions: { "country": { "un_state": true } }
           }
@@ -38,19 +38,13 @@ VIZABI_MODEL = {
           },
           "color": {
             data: {
-              allow: {
-                space: {
-                  filter: {
-                    concept_type: { $in: ["entity_domain", "entity_set"] }
-                  }
-                }
-              },
               space: ["country"],
               concept: "world_4region"
             },
             "scale": {
               modelType: "color",
-              type: "ordinal"
+              type: "ordinal",
+              allowedTypes: ["ordinal"]
             }
           },
           "stack": {
@@ -64,7 +58,8 @@ VIZABI_MODEL = {
               space: ["country"],
               concept: "world_4region"
             },
-            "merge": false
+            "merge": false,
+            "manualSorting": []
           },
           "label": {
             data: {
@@ -78,7 +73,7 @@ VIZABI_MODEL = {
             speed: 200,
             splash: true,
             data: {
-              concept: "year"
+              concept: "time"
             }
           },
           "repeat": {
