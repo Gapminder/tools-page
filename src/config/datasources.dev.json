@@ -38,8 +38,8 @@
   "country_flags": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "country_flag_svg_simpl",
-    "name": "country_flag_svg_simpl"
+    "dataset": "country-flags",
+    "name": "country-flags"
   }
 }
 
