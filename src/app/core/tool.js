@@ -171,7 +171,7 @@ function setTool(tool, skipTransition) {
       dispatch.call("languageChanged", null, VIZABI_LOCALE.id);
       appState.projector = VIZABI_LAYOUT.projector;
 
-      const toolPrototype = window[toolsetEntry.tool];
+      const toolPrototype =toolsetEntry.tool.includes(".")? window[toolsetEntry.tool.split(".")[0]][toolsetEntry.tool.split(".")[1]] : window[toolsetEntry.tool];
       const model = Vizabi(pageConfig.model);
 
       viz = new toolPrototype({
