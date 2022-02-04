@@ -32,8 +32,8 @@
   "fasttrack": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
-    "dataset": "fasttrack",
-    "name": "fasttrack"
+    "dataset": "fasttrackQA",
+    "name": "fasttrackQA"
   },
   "country_flags": {
     "modelType": "ddfbw",
