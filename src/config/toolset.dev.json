@@ -20,7 +20,7 @@
   {
     "id": "clickmap",
     "tool": "BubbleMap.ClickMap",
-    "config": "Clickmap",
+    "config": "Click-to-navigate-map",
     "dataSources": ["sg","fasttrack"],
     "transition": ["select","time"],
     "title": "clickmap",
