@@ -149,7 +149,7 @@ VIZABI_MODEL = {
     },
     "data-warning": {
       doubtDomain: [1800, 1950, 2020],
-      doubtRange: [1.0, 0.3, 0.2]
+      doubtRange: [0, 0, 0]
     },
     "time-slider": {
       "show_value": false

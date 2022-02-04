@@ -225,7 +225,7 @@ VIZABI_MODEL = {
     },
     "data-warning": {
       doubtDomain: [1800, 1950, 2015],
-      doubtRange: [1.0, 0.3, 0.2]
+      doubtRange: [0, 0, 0]
     },
     "tree-menu": {
       "showDataSources": false,
