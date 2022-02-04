@@ -151,6 +151,7 @@ VIZABI_MODEL = {
       }
     },
     "chart": {
+      timeInBackground: true,
       showForecast: false,
       showForecastOverlay: true,
       pauseBeforeForecast: true,
