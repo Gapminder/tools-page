@@ -18,8 +18,18 @@
     "image": "/assets/images/chart/income-chart.png"
   },
   {
+    "id": "clickmap",
+    "tool": "BubbleMap.ClickMap",
+    "config": "Clickmap",
+    "dataSources": ["sg","fasttrack"],
+    "transition": ["select","time"],
+    "title": "clickmap",
+    "hideThumbnail": true,
+    "image": "/assets/images/chart/maps-chart.png"
+  },
+  {
     "id": "map",
-    "tool": "BubbleMap",
+    "tool": "BubbleMap.BubbleMap",
     "config": "BubbleMap-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
