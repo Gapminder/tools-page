@@ -19,7 +19,8 @@
   },
   {
     "id": "clickmap",
-    "tool": "BubbleMap.ClickMap",
+    "tool": "BubbleMap",
+    "toolVariation": "ClickMap",
     "config": "Click-to-navigate-map",
     "dataSources": ["sg","fasttrack"],
     "transition": ["select","time"],
@@ -48,7 +49,8 @@
   },
   {
     "id": "map",
-    "tool": "BubbleMap.BubbleMap",
+    "tool": "BubbleMap",
+    "toolVariation": "Base",
     "config": "BubbleMap-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],

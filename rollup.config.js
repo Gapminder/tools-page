@@ -36,7 +36,7 @@ const __DEVSERVER__ = process.env.NODE_ENV === "devserver";
 const allTools = require(path.resolve(__dirname, "vizabi-tools.json"));
 const toolset = require(path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`));
 const inToolsetTools = Object.keys(toolset.reduce((result, { tool }) => {
-  tool && (result[tool.toLowerCase().split(".")[0]] = true);
+  tool && (result[tool.toLowerCase()] = true);
   return result;
 }, {}));
 
