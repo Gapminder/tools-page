@@ -20,7 +20,7 @@ VIZABI_MODEL = {
           "shapedata": { 
             data: { 
               concept: "income_mountain_50bracket_shape_for_log" 
-            } 
+            }
           }, 
           "mu": {
             data: {
@@ -80,10 +80,19 @@ VIZABI_MODEL = {
             modelType: "repeat",
             allowEnc: ["shapedata"]
           },
-          "facet": {
+          "facet_row": {
             modelType: "facet",
-            row: null
+            data: {
+              constant: "none"
+            }
+          },
+          "maxheight": {
+            data: {
+              space: ["country"],
+              concept: "income_mountain_50bracket_max_height_for_log"
+            }
           }
+          
         }
       },
       "legend": {
