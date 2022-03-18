@@ -4,12 +4,15 @@ VIZABI_MODEL = {
       "mountain": {
         data: {
           source: "povcalnet",
-          space: ["country", "time"],
+          space: ["geo", "time"],
           filter: {
-            dimensions: { "country": { "un_state": true } }
+            dimensions: { 
+              "geo": { "geo": {"$in": ["asia", "africa", "chn"]}},
+              //"time": {"time": "2021"}
+            }
           }
         },
-        requiredEncodings: ["shapedata"],
+        requiredEncodings: ["shapedata", "facet_row"],
         encoding: {
           "selected": {
             modelType: "selection"
@@ -38,7 +41,7 @@ VIZABI_MODEL = {
           },
           "color": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "world_4region"
             },
             "scale": {
@@ -55,7 +58,7 @@ VIZABI_MODEL = {
           },
           "group": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "world_4region"
             },
             "merge": false,
@@ -81,14 +84,19 @@ VIZABI_MODEL = {
             allowEnc: ["shapedata"]
           },
           "facet_row": {
-            modelType: "facet",
             data: {
-              constant: "none"
+              //set space and concept
+              //or constant="none" or magic concept="is--" with possible exceptions
+              modelType: "entityMembershipDataConfig",
+              space: ["geo"],
+              concept: "is--",
+              exceptions: {"is--country": "geo"},
             }
           },
           "maxheight": {
+            limit: 966980928,
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "income_mountain_50bracket_max_height_for_log"
             }
           }
@@ -175,7 +183,7 @@ VIZABI_MODEL = {
       "find": {
         "panelMode": "find",
         "showTabs": {
-          "country": "open"
+          "geo": "open"
         }
       }
     },
