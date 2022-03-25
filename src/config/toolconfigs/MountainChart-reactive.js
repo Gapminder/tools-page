@@ -99,8 +99,12 @@ VIZABI_MODEL = {
               space: ["geo"],
               concept: "income_mountain_50bracket_max_height_for_log"
             }
+          },
+          "povertyline": {
+            data: {
+              concept: "poverty_line"
+            }
           }
-          
         }
       },
       "legend": {
@@ -162,7 +166,16 @@ VIZABI_MODEL = {
       "opacityHighlightDim": 0.1,
       "opacitySelectDim": 0.3,
       "opacityRegular": 0.8, 
-      "yMaxMethod": 1 
+      "yMaxMethod": 1,
+      probeX: 1.85,
+      probeXCustom: 4,
+      probeXType: "extreme",
+      probeXDetails: {
+        belowProc: true,
+        belowCount: false,
+        aboveProc: false,
+        aboveCount: false
+      },
     },
     "data-warning": {
       doubtDomain: [1800, 1950, 2020],
@@ -178,7 +191,7 @@ VIZABI_MODEL = {
       "dialogs": {
         "popup": ["colors", "find", "stack", "moreoptions"],
         "sidebar": ["colors", "find", "stack"],
-        "moreoptions": ["opacity", "speed", "colors", "stack", "technical", "presentation", "about"]
+        "moreoptions": ["opacity", "speed", "colors", "stack", "povertyline", "technical", "presentation", "about"]
       },
       "find": {
         "panelMode": "find",
