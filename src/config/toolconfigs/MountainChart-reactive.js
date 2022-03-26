@@ -7,7 +7,8 @@ VIZABI_MODEL = {
           space: ["geo", "time"],
           filter: {
             dimensions: { 
-              "geo": { "geo": {"$in": ["asia", "africa", "chn"]}},
+              "geo": { "is--world_4region": true }
+              //"geo": { "geo": {"$in": ["asia", "africa", "chn"]}},
               //"time": {"time": "2021"}
             }
           }
@@ -89,8 +90,9 @@ VIZABI_MODEL = {
               //or constant="none" or magic concept="is--" with possible exceptions
               modelType: "entityMembershipDataConfig",
               space: ["geo"],
-              concept: "is--",
-              exceptions: {"is--country": "geo"},
+              concept: "world_4region"
+              //concept: "is--",
+              //exceptions: {"is--country": "geo"},
             }
           },
           "maxheight": {
@@ -176,8 +178,8 @@ VIZABI_MODEL = {
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["colors", "find", "stack", "moreoptions"],
-        "sidebar": ["colors", "find", "stack"],
+        "popup": ["presets", "colors", "find", "stack", "moreoptions"],
+        "sidebar": ["presets", "colors", "find", "stack"],
         "moreoptions": ["opacity", "speed", "colors", "stack", "technical", "presentation", "about"]
       },
       "find": {
