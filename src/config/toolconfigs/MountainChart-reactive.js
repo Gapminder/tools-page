@@ -7,7 +7,15 @@ VIZABI_MODEL = {
           space: ["geo", "time"],
           filter: {
             dimensions: { 
-              "geo": { "is--world_4region": true }
+             // "geo": { "is--world_4region": true },
+             // "geo": { "is--country": true },
+             "geo": { "un_state": true }
+              // "geo": { "$or": [
+              //   { "is--world_4region": true },
+              //   { "is--west_and_rest": true },
+              //   { "un_state": true },
+              //   { "is--global": true }
+              // ]}
               //"geo": { "geo": {"$in": ["asia", "africa", "chn"]}},
               //"time": {"time": "2021"}
             }
@@ -90,7 +98,8 @@ VIZABI_MODEL = {
               //or constant="none" or magic concept="is--" with possible exceptions
               modelType: "entityMembershipDataConfig",
               space: ["geo"],
-              concept: "world_4region"
+              constant: "none"
+              //concept: "world_4region"
               //concept: "is--",
               //exceptions: {"is--country": "geo"},
             }
@@ -183,6 +192,7 @@ VIZABI_MODEL = {
         "moreoptions": ["opacity", "speed", "colors", "stack", "technical", "presentation", "about"]
       },
       "find": {
+        "enableSelectShowSwitch": true,
         "panelMode": "find",
         "showTabs": {
           "geo": "open"
