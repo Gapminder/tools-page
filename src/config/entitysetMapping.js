@@ -1,5 +1,5 @@
 const toolsPage_entitysetMapping = {
-  "chartTypes": ["bubbles", "mountain", "map", "linechart", "barrank", "spreadsheet"],
+  "chartTypes": ["bubbles", "map", "linechart", "barrank", "spreadsheet"],
   "entitySets": {
     "geo": "country"
   }
