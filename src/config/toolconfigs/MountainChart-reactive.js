@@ -178,6 +178,7 @@ VIZABI_MODEL = {
       "opacitySelectDim": 0.3,
       "opacityRegular": 0.8, 
       "yMaxMethod": 1,
+      showProbeX: true,
       probeX: 1.85,
       probeXCustom: 4,
       probeXType: "extreme",
