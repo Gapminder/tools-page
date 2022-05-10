@@ -197,12 +197,12 @@ VIZABI_MODEL = {
       "show_value": false
     },
     "buttons": {
-      "buttons": ["colors", "find", "stack", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
+      "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["presets", "colors", "find", "stack", "moreoptions"],
-        "sidebar": ["presets", "colors", "find", "stack"],
+        "popup": ["presets", "colors", "find", "moreoptions"],
+        "sidebar": ["presets", "colors", "find"],
         "moreoptions": ["opacity", "speed", "colors", "stack", "povertyline", "technical", "presentation", "about"]
       },
       "find": {
