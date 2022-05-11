@@ -61,7 +61,9 @@ VIZABI_MODEL = {
           },
           "stack": {
             data: {
-              constant: "all"
+              constant: "all",
+              space: null,
+              concept: null
             },
             "merge": false
           },
@@ -98,7 +100,9 @@ VIZABI_MODEL = {
               //or constant="none" or magic concept="is--" with possible exceptions
               modelType: "entityMembershipDataConfig",
               space: ["geo"],
-              constant: "none"
+              constant: "none",
+              concept: null,
+              exceptions: null
               //concept: "world_4region"
               //concept: "is--",
               //exceptions: {"is--country": "geo"},
