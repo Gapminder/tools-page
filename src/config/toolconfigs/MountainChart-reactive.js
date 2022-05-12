@@ -137,13 +137,13 @@ VIZABI_MODEL = {
             dimensions: { 
              // "geo": { "is--world_4region": true },
              // "geo": { "is--country": true },
-             "geo": { "un_state": true }
-              // "geo": { "$or": [
-              //   { "is--world_4region": true },
+             //"geo": { "un_state": true }
+              "geo": { "$or": [
+                { "is--world_4region": true }
               //   { "is--west_and_rest": true },
               //   { "un_state": true },
               //   { "is--global": true }
-              // ]}
+              ]}
               //"geo": { "geo": {"$in": ["asia", "africa", "chn"]}},
               //"time": {"time": "2021"}
             }
@@ -228,12 +228,10 @@ VIZABI_MODEL = {
               //or constant="none" or magic concept="is--" with possible exceptions
               modelType: "entityMembershipDataConfig",
               space: ["geo"],
-              constant: "none",
-              concept: null,
-              exceptions: null
+              constant: null,
               //concept: "world_4region"
-              //concept: "is--",
-              //exceptions: {"is--country": "geo"},
+              concept: "is--",
+              exceptions: {"is--country": "geo"}
             }
           },
           "maxheight": {
@@ -338,7 +336,7 @@ VIZABI_MODEL = {
         "moreoptions": ["opacity", "speed", "colors", "stack", "povertyline", "technical", "presentation", "about"]
       },
       "find": {
-        "enableSelectShowSwitch": true,
+        "enableSelectShowSwitch": false,
         "panelMode": "find",
         "showTabs": {
           "geo": "open"
