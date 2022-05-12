@@ -222,7 +222,7 @@ function setTool(tool, skipTransition) {
         jsui = diffObject(jsui, MODEL.ui);
 
         const model = {
-          model: Utils.clearEmpties(removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain"])),
+          model: Utils.clearEmpties(removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain", "presets"])),
           ui: Utils.clearEmpties(removeProperties(jsui, ["dragging", "opened"]))
         };
 
