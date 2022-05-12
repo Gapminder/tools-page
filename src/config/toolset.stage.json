@@ -11,6 +11,7 @@
   {
     "id": "mountain",
     "tool": "MountainChart",
+    "toolVariation": "Base",
     "config": "MountainChart-reactive",
     "dataSources": ["povcalnet", "sg", "fasttrack"],
     "transition": ["select","time"],
