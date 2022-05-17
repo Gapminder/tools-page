@@ -33,7 +33,6 @@ VIZABI_MODEL = {
         config: {
           data: {
             filter: {dimensions: { "geo": { "is--world_4region": true } }}
-            //filter: {dimensions: {"geo": {"geo": {$in: ["americas", "europe", "africa", "asia"]}}}}
           },
           encoding: {
             stack: {data: {constant:"none"}},
@@ -62,7 +61,6 @@ VIZABI_MODEL = {
         config: {
           data: {
             filter: {dimensions: { "geo": { "is--world_4region": true } }}
-            //filter: {dimensions: {"geo": {"geo": {$in: ["americas", "europe", "africa", "asia"]}}}}
           },
           encoding: {
             stack: {data: {constant:"all"}},
@@ -75,7 +73,6 @@ VIZABI_MODEL = {
         config: {
           data: {
             filter: {dimensions: { "geo": { "is--global": true } }}
-            //filter: {dimensions: {"geo": {"geo": {$in: ["world"]}}}}
           },
           encoding: {
             stack: {data: {constant:"all"}},
@@ -93,8 +90,6 @@ VIZABI_MODEL = {
         config: {
           data: {
             filter: {dimensions: { "geo": { "$or": [{"is--world_4region": true}] } }}
-            //filter: {dimensions: { "geo": { "$or": [{"is--world_4region": true}, {"geo": {"$in": ["chn"]}}] } }}
-            //filter: {dimensions: {"geo": {"geo": {$in: ["americas", "europe", "africa", "asia", "chn"]}}}}
           },
           encoding: {
             stack: {data: {constant:"all"}},
@@ -108,7 +103,6 @@ VIZABI_MODEL = {
         config: {
           data: {
             filter: {dimensions: { "geo": { "is--world_4region": true } }}
-            //filter: {dimensions: {"geo": {"geo": {$in: ["americas", "europe", "africa", "asia"]}}}}
           },
           encoding: {
             stack: {data: {constant:"all"}},
