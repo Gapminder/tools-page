@@ -10,7 +10,7 @@ VIZABI_MODEL = {
             filter: {dimensions: {"geo": {"geo": {$in: ["usa", "chn", "rus", "nga"]}}}}
           },
           encoding: {
-            stack: {data: {constant:"none", space: null, concept: null}},
+            stack: {data: {constant:"none"}},
             facet_row: {data: {constant: "none", concept: null, exceptions: null}}
           }
         }
@@ -22,7 +22,7 @@ VIZABI_MODEL = {
             filter: {dimensions: { "geo": { "un_state": true } }}
           },
           encoding: {
-            stack: {data: {constant:null, space: ["geo"], concept: "world_4region"}},
+            stack: {data: {ref: "markers.mountain.config.encoding.color.data"}},
             facet_row: {data: {constant: "none", concept: null, exceptions: null}}
           }
         }
@@ -36,7 +36,7 @@ VIZABI_MODEL = {
             //filter: {dimensions: {"geo": {"geo": {$in: ["americas", "europe", "africa", "asia"]}}}}
           },
           encoding: {
-            stack: {data: {constant:"none", space: null, concept: null}},
+            stack: {data: {constant:"none"}},
             facet_row: {data: {constant: "none", concept: null, exceptions: null}}
           }
         }
@@ -51,7 +51,7 @@ VIZABI_MODEL = {
             filter: {dimensions: { "geo": { "un_state": true } }}
           },
           encoding: {
-            stack: {data: {constant:"all", space: null, concept: null}},
+            stack: {data: {constant:"all"}},
             facet_row: {data: {constant: "none", concept: null, exceptions: null}}
           }
         }
@@ -65,7 +65,7 @@ VIZABI_MODEL = {
             //filter: {dimensions: {"geo": {"geo": {$in: ["americas", "europe", "africa", "asia"]}}}}
           },
           encoding: {
-            stack: {data: {constant:"all", space: null, concept: null}},
+            stack: {data: {constant:"all"}},
             facet_row: {data: {constant: "none", concept: null, exceptions: null}}
           }
         }
@@ -78,7 +78,7 @@ VIZABI_MODEL = {
             //filter: {dimensions: {"geo": {"geo": {$in: ["world"]}}}}
           },
           encoding: {
-            stack: {data: {constant:"all", space: null, concept: null}},
+            stack: {data: {constant:"all"}},
             facet_row: {data: {constant: "none", concept: null, exceptions: null}}
           }
         }
@@ -96,7 +96,7 @@ VIZABI_MODEL = {
             //filter: {dimensions: {"geo": {"geo": {$in: ["americas", "europe", "africa", "asia", "chn"]}}}}
           },
           encoding: {
-            stack: {data: {constant:"all", space: null, concept: null}},
+            stack: {data: {constant:"all"}},
             facet_row: {data: {constant: null, concept: "is--", exceptions: {"is--country": "geo"}}}
           }
         }
@@ -110,7 +110,7 @@ VIZABI_MODEL = {
             //filter: {dimensions: {"geo": {"geo": {$in: ["americas", "europe", "africa", "asia"]}}}}
           },
           encoding: {
-            stack: {data: {constant:"all", space: null, concept: null}},
+            stack: {data: {constant:"all"}},
             facet_row: {data: {constant: null, concept: "world_4region", exceptions: null}}
           }
         }
@@ -122,7 +122,7 @@ VIZABI_MODEL = {
             filter: {dimensions: { "geo": { "un_state": true } }}
           },
           encoding: {
-            stack: {data: {constant:"all", space: null, concept: null}},
+            stack: {data: {constant:"all"}},
             facet_row: {data: {constant: null, concept: "world_4region", exceptions: null}}
           }
         }
