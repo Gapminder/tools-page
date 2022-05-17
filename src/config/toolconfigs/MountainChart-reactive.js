@@ -196,10 +196,7 @@ VIZABI_MODEL = {
             "merge": false
           },
           "group": {
-            data: {
-              space: ["geo"],
-              concept: "world_4region"
-            },
+            data: { ref: "markers.mountain.config.encoding.color.data" },
             "merge": false,
             "manualSorting": []
           },
