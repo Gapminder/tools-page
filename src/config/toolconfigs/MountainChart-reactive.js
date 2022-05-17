@@ -92,7 +92,8 @@ VIZABI_MODEL = {
         loosePath: ["geo", "$or", 1, "geo", "$in"],
         config: {
           data: {
-            filter: {dimensions: { "geo": { "$or": [{"is--world_4region": true}, {"geo": {"$in": ["chn"]}}] } }}
+            filter: {dimensions: { "geo": { "$or": [{"is--world_4region": true}] } }}
+            //filter: {dimensions: { "geo": { "$or": [{"is--world_4region": true}, {"geo": {"$in": ["chn"]}}] } }}
             //filter: {dimensions: {"geo": {"geo": {$in: ["americas", "europe", "africa", "asia", "chn"]}}}}
           },
           encoding: {
