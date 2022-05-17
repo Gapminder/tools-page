@@ -18,10 +18,10 @@ VIZABI_MODEL = {
           space: ["country", "time"]
         },
         encoding: {
-          "unstate": {
+          "show": {
+            modelType: "selection",
             data: {
-              space: ["country"],
-              concept: "un_state"
+              filter: {dimensions: {"country": {"un_state": 1}}}
             }
           },
           "selected": {

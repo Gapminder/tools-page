@@ -146,6 +146,12 @@ VIZABI_MODEL = {
         },
         requiredEncodings: ["shapedata", "facet_row"],
         encoding: {
+          "show": {
+            modelType: "selection",
+            data: {
+              filter: {dimensions: {"geo": {"$not": {"is--country": 1, "un_state": 0}}}}
+            }
+          },
           "selected": {
             modelType: "selection"
           },
