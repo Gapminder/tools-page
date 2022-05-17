@@ -11,7 +11,7 @@ VIZABI_MODEL = {
           },
           encoding: {
             stack: {data: {constant:"none"}},
-            facet_row: {data: {constant: "none", concept: null, exceptions: null}}
+            facet_row: {data: {constant: "none"}}
           }
         }
       },{
@@ -23,7 +23,7 @@ VIZABI_MODEL = {
           },
           encoding: {
             stack: {data: {ref: "markers.mountain.config.encoding.color.data"}},
-            facet_row: {data: {constant: "none", concept: null, exceptions: null}}
+            facet_row: {data: {constant: "none"}}
           }
         }
       },{
@@ -37,7 +37,7 @@ VIZABI_MODEL = {
           },
           encoding: {
             stack: {data: {constant:"none"}},
-            facet_row: {data: {constant: "none", concept: null, exceptions: null}}
+            facet_row: {data: {constant: "none"}}
           }
         }
       }],
@@ -52,7 +52,7 @@ VIZABI_MODEL = {
           },
           encoding: {
             stack: {data: {constant:"all"}},
-            facet_row: {data: {constant: "none", concept: null, exceptions: null}}
+            facet_row: {data: {constant: "none"}}
           }
         }
       },{
@@ -66,7 +66,7 @@ VIZABI_MODEL = {
           },
           encoding: {
             stack: {data: {constant:"all"}},
-            facet_row: {data: {constant: "none", concept: null, exceptions: null}}
+            facet_row: {data: {constant: "none"}}
           }
         }
       },{
@@ -79,7 +79,7 @@ VIZABI_MODEL = {
           },
           encoding: {
             stack: {data: {constant:"all"}},
-            facet_row: {data: {constant: "none", concept: null, exceptions: null}}
+            facet_row: {data: {constant: "none"}}
           }
         }
       }],
@@ -98,7 +98,7 @@ VIZABI_MODEL = {
           },
           encoding: {
             stack: {data: {constant:"all"}},
-            facet_row: {data: {constant: null, concept: "is--", exceptions: {"is--country": "geo"}}}
+            facet_row: {data: {concept: "is--", exceptions: {"is--country": "geo"}, space: ["geo"]}}
           }
         }
       },{
@@ -112,7 +112,7 @@ VIZABI_MODEL = {
           },
           encoding: {
             stack: {data: {constant:"all"}},
-            facet_row: {data: {constant: null, concept: "world_4region", exceptions: null}}
+            facet_row: {data: {ref: "markers.mountain.config.encoding.color.data"}}
           }
         }
       },{
@@ -124,7 +124,7 @@ VIZABI_MODEL = {
           },
           encoding: {
             stack: {data: {constant:"all"}},
-            facet_row: {data: {constant: null, concept: "world_4region", exceptions: null}}
+            facet_row: {data: {ref: "markers.mountain.config.encoding.color.data"}}
           }
         }
       }],
