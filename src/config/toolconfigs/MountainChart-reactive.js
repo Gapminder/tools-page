@@ -1,16 +1,157 @@
 VIZABI_MODEL = {
   model: {
+    presets: [
+      [{
+        icon: "show_countries--stack_none--facet_none",
+        mode: "show",
+        loosePath: ["geo", "geo", "$in"],
+        config: {
+          data: {
+            filter: {dimensions: {"geo": {"geo": {$in: ["usa", "chn", "rus", "nga"]}}}}
+          },
+          encoding: {
+            stack: {data: {constant:"none"}},
+            facet_row: {data: {constant: "none"}}
+          }
+        }
+      },{
+        icon: "show_countries--stack_region--facet_none",
+        mode: "select",
+        config: {
+          data: {
+            filter: {dimensions: { "geo": { "un_state": true } }}
+          },
+          encoding: {
+            stack: {data: {ref: "markers.mountain.config.encoding.color.data"}},
+            facet_row: {data: {constant: "none"}}
+          }
+        }
+      },{
+        icon: "show_regions--stack_none--facet_none",
+        mode: "none",
+        groupPath: ["geo"],
+        config: {
+          data: {
+            filter: {dimensions: { "geo": { "is--world_4region": true } }}
+          },
+          encoding: {
+            stack: {data: {constant:"none"}},
+            facet_row: {data: {constant: "none"}}
+          }
+        }
+      }],
+    
+    
+      [{
+        icon: "show_countries--stack_all--facet_none",
+        mode: "select",
+        config: {
+          data: {
+            filter: {dimensions: { "geo": { "un_state": true } }}
+          },
+          encoding: {
+            stack: {data: {constant:"all"}},
+            facet_row: {data: {constant: "none"}}
+          }
+        }
+      },{
+        icon: "show_regions--stack_all--facet_none",
+        mode: "none",
+        groupPath: ["geo"],
+        config: {
+          data: {
+            filter: {dimensions: { "geo": { "is--world_4region": true } }}
+          },
+          encoding: {
+            stack: {data: {constant:"all"}},
+            facet_row: {data: {constant: "none"}}
+          }
+        }
+      },{
+        icon: "show_world--stack_all--facet_none",
+        mode: "none",
+        config: {
+          data: {
+            filter: {dimensions: { "geo": { "is--global": true } }}
+          },
+          encoding: {
+            stack: {data: {constant:"all"}},
+            facet_row: {data: {constant: "none"}}
+          }
+        }
+      }],
+    
+    
+      [{
+        icon: "show_geo--stack_all--facet_isness",
+        mode: "show",
+        groupPath: ["geo", "$or", 0],
+        loosePath: ["geo", "$or", 1, "geo", "$in"],
+        config: {
+          data: {
+            filter: {dimensions: { "geo": { "$or": [{"is--world_4region": true}] } }}
+          },
+          encoding: {
+            stack: {data: {constant:"all"}},
+            facet_row: {data: {concept: "is--", exceptions: {"is--country": "geo"}, space: ["geo"]}}
+          }
+        }
+      },{
+        icon: "show_regions--stack_all--facet_regions",
+        mode: "none",
+        groupPath: ["geo"],
+        config: {
+          data: {
+            filter: {dimensions: { "geo": { "is--world_4region": true } }}
+          },
+          encoding: {
+            stack: {data: {constant:"all"}},
+            facet_row: {data: {ref: "markers.mountain.config.encoding.color.data"}}
+          }
+        }
+      },{
+        icon: "show_countries--stack_all--facet_regions",
+        mode: "select",
+        config: {
+          data: {
+            filter: {dimensions: { "geo": { "un_state": true } }}
+          },
+          encoding: {
+            stack: {data: {constant:"all"}},
+            facet_row: {data: {ref: "markers.mountain.config.encoding.color.data"}}
+          }
+        }
+      }],
+    ],
     markers: {
       "mountain": {
         data: {
           source: "povcalnet",
-          space: ["country", "time"],
+          space: ["geo", "time"],
           filter: {
-            dimensions: { "country": { "un_state": true } }
+            dimensions: { 
+             // "geo": { "is--world_4region": true },
+             // "geo": { "is--country": true },
+             //"geo": { "un_state": true }
+              "geo": { "$or": [
+                { "is--world_4region": true }
+              //   { "is--west_and_rest": true },
+              //   { "un_state": true },
+              //   { "is--global": true }
+              ]}
+              //"geo": { "geo": {"$in": ["asia", "africa", "chn"]}},
+              //"time": {"time": "2021"}
+            }
           }
         },
-        requiredEncodings: ["shapedata"],
+        requiredEncodings: ["shapedata", "facet_row"],
         encoding: {
+          "show": {
+            modelType: "selection",
+            data: {
+              filter: {dimensions: {"geo": {"$not": {"is--country": 1, "un_state": 0}}}}
+            }
+          },
           "selected": {
             modelType: "selection"
           },
@@ -38,7 +179,7 @@ VIZABI_MODEL = {
           },
           "color": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "world_4region"
             },
             "scale": {
@@ -49,15 +190,14 @@ VIZABI_MODEL = {
           },
           "stack": {
             data: {
-              constant: "all"
+              constant: "all",
+              space: null,
+              concept: null
             },
             "merge": false
           },
           "group": {
-            data: {
-              space: ["country"],
-              concept: "world_4region"
-            },
+            data: { ref: "markers.mountain.config.encoding.color.data" },
             "merge": false,
             "manualSorting": []
           },
@@ -81,18 +221,29 @@ VIZABI_MODEL = {
             allowEnc: ["shapedata"]
           },
           "facet_row": {
-            modelType: "facet",
             data: {
-              constant: "none"
+              //set space and concept
+              //or constant="none" or magic concept="is--" with possible exceptions
+              modelType: "entityMembershipDataConfig",
+              space: ["geo"],
+              constant: null,
+              //concept: "world_4region"
+              concept: "is--",
+              exceptions: {"is--country": "geo"}
             }
           },
           "maxheight": {
+            limit: 966980928,
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "income_mountain_50bracket_max_height_for_log"
             }
+          },
+          "povertyline": {
+            data: {
+              concept: "poverty_line"
+            }
           }
-          
         }
       },
       "legend": {
@@ -154,7 +305,17 @@ VIZABI_MODEL = {
       "opacityHighlightDim": 0.1,
       "opacitySelectDim": 0.3,
       "opacityRegular": 0.8, 
-      "yMaxMethod": 1 
+      "yMaxMethod": 1,
+      showProbeX: true,
+      probeX: 1.85,
+      probeXCustom: 4,
+      probeXType: "extreme",
+      probeXDetails: {
+        belowProc: true,
+        belowCount: false,
+        aboveProc: false,
+        aboveCount: false
+      },
     },
     "data-warning": {
       doubtDomain: [1800, 1950, 2020],
@@ -164,18 +325,19 @@ VIZABI_MODEL = {
       "show_value": false
     },
     "buttons": {
-      "buttons": ["colors", "find", "stack", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
+      "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["colors", "find", "stack", "moreoptions"],
-        "sidebar": ["colors", "find", "stack"],
-        "moreoptions": ["opacity", "speed", "colors", "stack", "technical", "presentation", "about"]
+        "popup": ["presets", "colors", "find", "moreoptions"],
+        "sidebar": ["presets", "colors", "find"],
+        "moreoptions": ["opacity", "speed", "colors", "stack", "povertyline", "technical", "presentation", "about"]
       },
       "find": {
+        "enableSelectShowSwitch": false,
         "panelMode": "find",
         "showTabs": {
-          "country": "open"
+          "geo": "open"
         }
       }
     },

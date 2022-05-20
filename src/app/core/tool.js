@@ -158,7 +158,7 @@ function setTool(tool, skipTransition) {
       pageConfig = applyDataConfigs(pageConfig);
       pageConfig = applyTransitionConfigs(pageConfig);
       if (URLI.model && URLI.model.model) {
-        VizabiSharedComponents.Utils.mergeInTarget(pageConfig.model, deepExtend(URLI.model.model));
+        VizabiSharedComponents.Utils.mergeInTarget(pageConfig.model, deepExtend(URLI.model.model), /*treat as blocks:*/ ["data.filter"]);
       }
       window.VIZABI_UI_CONFIG = observable((URLI.model && URLI.model.ui) ? deepExtend({}, URLI.model.ui) : {});
 
@@ -222,7 +222,7 @@ function setTool(tool, skipTransition) {
         jsui = diffObject(jsui, MODEL.ui);
 
         const model = {
-          model: Utils.clearEmpties(removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain"])),
+          model: Utils.clearEmpties(removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain", "presets"])),
           ui: Utils.clearEmpties(removeProperties(jsui, ["dragging", "opened"]))
         };
 
