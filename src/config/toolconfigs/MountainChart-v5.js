@@ -295,6 +295,7 @@ VIZABI_MODEL = {
           ]
         }
       },
+      "inpercent": false,
       "curve": "curveBasis",
       "showForecastOverlay": true,
       "showForecast": false,
@@ -325,7 +326,7 @@ VIZABI_MODEL = {
       "show_value": false
     },
     "buttons": {
-      "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
+      "buttons": ["colors", "find", "inpercent", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
     },
     "dialogs": {
       "dialogs": {
