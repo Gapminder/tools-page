@@ -243,6 +243,9 @@ VIZABI_MODEL = {
             data: {
               concept: "poverty_line"
             }
+          },
+          "trail": {
+            modelType: "trail"
           }
         }
       },
