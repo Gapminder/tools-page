@@ -238,14 +238,6 @@ VIZABI_MODEL = {
               space: ["geo"],
               concept: "income_mountain_50bracket_max_height_for_log"
             }
-          },
-          "povertyline": {
-            data: {
-              concept: "poverty_line"
-            }
-          },
-          "trail": {
-            modelType: "trail"
           }
         }
       },
@@ -279,6 +271,18 @@ VIZABI_MODEL = {
           map: { data: { concept: "shape_lores_svg" } }
         }
       },
+      povertyline: {
+        data: {
+          ref: "markers.mountain.config.data"
+        },
+        encoding: {
+          povertyline: {
+            data: {
+              concept: "poverty_line"
+            }
+          }
+        }
+      }
     }
   },
   ui: {
