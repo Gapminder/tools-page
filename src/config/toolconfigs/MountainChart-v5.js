@@ -302,7 +302,8 @@ VIZABI_MODEL = {
           ]
         }
       },
-      "inpercent": false,
+      "inpercent": true,
+      "timeInBackground": true,
       "curve": "curveBasis",
       "showForecastOverlay": true,
       "showForecast": false,
