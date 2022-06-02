@@ -51,7 +51,7 @@
     "urlon": "3.0.1",
     "@vizabi/barrank": "3.9.2",
     "@vizabi/bubblechart": "3.14.2",
-    "@vizabi/bubblemap": "4.0.2",
+    "@vizabi/bubblemap": "4.0.3",
     "vizabi-config-systema_globalis": "2.10.2",
     "@vizabi/reader-ddfcsv": "4.0.1",
     "@vizabi/reader-ddfservice": "^2.2.3",
