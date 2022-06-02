@@ -1,6 +1,7 @@
 import * as utils from "../../core/utils";
+import { saveSvg } from "../../core/download-utils.js";
 
-const SocialButtons = function(placeHolder, translator, dispatch, { bitlyService, locationService }) {
+const SocialButtons = function(placeHolder, translator, appState, dispatch, { bitlyService, locationService }) {
   const templateHtml = `
     <li>
       <div class="share-text-box" data-text="share"></div>
@@ -106,12 +107,13 @@ const SocialButtons = function(placeHolder, translator, dispatch, { bitlyService
   }
 
   function download() {
-    const e = document.createElement("script");
-    e.setAttribute("src", "assets/js/svg-crowbar-2.js");
-    e.setAttribute("class", "svg-crowbar");
-    e.setAttribute("data-svg-select", "div>svg.vzb-export");
-    e.setAttribute("data-exclude-element-select", ".vzb-noexport");
-    document.body.appendChild(e);
+    d3.selectAll(".vzb-export").each(function(_, i){
+      const filename = d3.timeFormat("%Y-%m-%d at %H.%M.%S")(new Date()) 
+        + " - " + toolsPage_toolset.find(f => f.id == appState.tool).title
+        + " - " + (i + 1);
+
+      saveSvg(d3.select(this), filename + ".svg");
+    })
   }
 
   function getEmbeddedUrl() {

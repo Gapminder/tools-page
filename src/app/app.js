@@ -123,6 +123,7 @@ const App = function() {
   const socialButtons = new SocialButtons(
     d3.select(".social-list .app-social-buttons"),
     translator,
+    appState,
     dispatch,
     {
       bitlyService: BitlyService(),
