@@ -169,7 +169,7 @@ VIZABI_MODEL = {
             },
             scale: {
               type: "log",
-              domain: [0.11, 500]
+              domain: [0.11, 100000000]
             },
             "tailFatX": 1.85,
             "tailCutX": 0.2,
@@ -279,6 +279,46 @@ VIZABI_MODEL = {
           povertyline: {
             data: {
               concept: "poverty_line"
+            }
+          }
+        }
+      },
+      ultrarich: {
+        data: {
+          space: ["person", "time"],
+          source: "billy"
+        },
+        requiredEncodings: ["x"],
+        encoding: {
+          "order": {
+            modelType: "order",
+            direction: "desc",
+            data: {
+              ref: "markers.ultrarich.config.encoding.x.data"
+            }
+          },
+          x: {
+            data: {
+              concept: "daily_income"
+            }
+          },
+          name: {
+            data: {
+              space: ["person"],
+              concept: "name"
+            }
+          },
+          geo: {
+            data: {
+              space: ["person"],
+              concept: "geo"
+            }
+          },
+          frame: {
+            value: {ref: "markers.mountain.encoding.frame.config.value"},
+            modelType: "frame",
+            data: {
+              ref: "markers.mountain.encoding.frame.config.data"
             }
           }
         }

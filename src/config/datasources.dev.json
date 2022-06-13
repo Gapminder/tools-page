@@ -1,4 +1,10 @@
-{      
+{   
+  "billy": {
+    "modelType": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "billy-develop",
+    "name": "billy-develop"
+  },   
   "povcalnet": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",

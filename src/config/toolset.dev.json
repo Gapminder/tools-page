@@ -43,7 +43,7 @@
     "tool": "MountainChart",
     "toolVariation": "Base",
     "config": "MountainChart-v5",
-    "dataSources": ["povcalnet", "sg", "fasttrack"],
+    "dataSources": ["povcalnet", "sg", "fasttrack", "billy"],
     "transition": ["select","time"],
     "title": "income",
     "image": "/assets/images/chart/income-chart.png"
