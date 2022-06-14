@@ -114,7 +114,23 @@ VIZABI_MODEL = {
             data: { concept: "geo" },
             rowEncoding: "side",
             columnEncoding: "row"
-          }
+          },
+          "repeat": {
+            modelType: "repeat",
+            allowEnc: ["x"]
+          },
+          "facet_column": {
+            data: {
+              //set space and concept
+              //or constant="none" or magic concept="is--" with possible exceptions
+              modelType: "entityMembershipDataConfig",
+              space: ["geo"],
+              constant: null,
+              //concept: "world_4region"
+              concept: "geo",
+              //exceptions: {"is--country": "geo"}
+            }
+          },
         }
       },
       "legend": {
