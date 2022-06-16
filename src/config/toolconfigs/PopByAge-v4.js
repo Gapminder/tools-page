@@ -96,11 +96,6 @@ VIZABI_MODEL = {
               type: "ordinal"
             }
           },
-          // row: {
-          //   data: {
-          //     space: ['geo'],
-          //     concept: 'geo' }
-          //   },
           side: {
             data: {
               //space: ['gender'],
@@ -108,12 +103,11 @@ VIZABI_MODEL = {
               constant: "true",
             }
           },
-          facet: {
-            modelType: "grouping",
-            //modelType: 'facet',
-            data: { concept: "geo" },
-            rowEncoding: "side",
-            columnEncoding: "row"
+          stack: {
+            data: { 
+              //concept: "education_level" or whatever 
+              constant: "true",
+            }
           },
           "repeat": {
             modelType: "repeat",

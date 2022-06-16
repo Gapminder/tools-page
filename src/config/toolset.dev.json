@@ -73,7 +73,8 @@
     "title": "ages",
     "image": "/assets/images/chart/ages-chart.png",
     "tool": "PopByAge",
-    "config": "PopByAge-reactive",
+    "toolVariation": "Base",
+    "config": "PopByAge-v4",
     "dataSources": ["pop"]
   },
   {
