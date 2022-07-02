@@ -308,10 +308,10 @@ VIZABI_MODEL = {
               concept: "name"
             }
           },
-          geo: {
+          geos: {
             data: {
               space: ["person"],
-              concept: "geo"
+              concept: "countries"
             }
           },
           frame: {
