@@ -72,6 +72,8 @@
         "check/belowCount": "Count below",
         "check/aboveProc": "% above",
         "check/aboveCount": "Count above",
+        "buttons/billy": "Billionaires",
+        "check/showBilly": "Show richest",
         "dialogs/color/select-all": "Select all in that group",
         "dialogs/color/remove-else": "Remove everything else",
         "dialogs/color/edit-color": "Edit color",

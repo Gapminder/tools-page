@@ -342,6 +342,8 @@ VIZABI_MODEL = {
           ]
         }
       },
+      "showBilly": true,
+      "howManyBilly": 10,
       "inpercent": true,
       "timeInBackground": true,
       "curve": "curveBasis",
@@ -378,9 +380,9 @@ VIZABI_MODEL = {
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["presets", "colors", "find", "moreoptions"],
-        "sidebar": ["presets", "colors", "find"],
-        "moreoptions": ["opacity", "speed", "colors", "stack", "povertyline", "technical", "presentation", "about"]
+        "popup": ["presets", "colors", "find", "billy", "moreoptions"],
+        "sidebar": ["presets", "colors", "find", "billy"],
+        "moreoptions": ["opacity", "speed", "colors", "stack", "billy", "povertyline", "technical", "presentation", "about"]
       },
       "find": {
         "enableSelectShowSwitch": false,
