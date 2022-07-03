@@ -169,7 +169,7 @@ VIZABI_MODEL = {
             },
             scale: {
               type: "log",
-              domain: [0.11, 100000000]
+              domain: [0.11, 500]
             },
             "tailFatX": 1.85,
             "tailCutX": 0.2,
@@ -282,46 +282,6 @@ VIZABI_MODEL = {
             }
           }
         }
-      },
-      ultrarich: {
-        data: {
-          space: ["person", "time"],
-          source: "billy"
-        },
-        requiredEncodings: ["x"],
-        encoding: {
-          "order": {
-            modelType: "order",
-            direction: "desc",
-            data: {
-              ref: "markers.ultrarich.config.encoding.x.data"
-            }
-          },
-          x: {
-            data: {
-              concept: "daily_income"
-            }
-          },
-          name: {
-            data: {
-              space: ["person"],
-              concept: "name"
-            }
-          },
-          geos: {
-            data: {
-              space: ["person"],
-              concept: "countries"
-            }
-          },
-          frame: {
-            value: {ref: "markers.mountain.encoding.frame.config.value"},
-            modelType: "frame",
-            data: {
-              ref: "markers.mountain.encoding.frame.config.data"
-            }
-          }
-        }
       }
     }
   },
@@ -342,8 +302,6 @@ VIZABI_MODEL = {
           ]
         }
       },
-      "showBilly": true,
-      "howManyBilly": 10,
       "inpercent": true,
       "timeInBackground": true,
       "curve": "curveBasis",
@@ -380,9 +338,9 @@ VIZABI_MODEL = {
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["presets", "colors", "find", "billy", "moreoptions"],
-        "sidebar": ["presets", "colors", "find", "billy"],
-        "moreoptions": ["opacity", "speed", "colors", "stack", "billy", "povertyline", "technical", "presentation", "about"]
+        "popup": ["presets", "colors", "find", "moreoptions"],
+        "sidebar": ["presets", "colors", "find"],
+        "moreoptions": ["opacity", "speed", "colors", "stack", "povertyline", "technical", "presentation", "about"]
       },
       "find": {
         "enableSelectShowSwitch": false,
