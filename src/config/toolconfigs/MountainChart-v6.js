@@ -315,10 +315,14 @@ VIZABI_MODEL = {
               }
             },
             frame: {
-              value: {ref: "markers.mountain.encoding.frame.config.value"},
+              value: "2021",
               modelType: "frame",
+              loop: false,
               data: {
-                ref: "markers.mountain.encoding.frame.config.data"
+                concept: "time"
+              },
+              scale: {
+                clampDomainToData: true
               }
             }
           }
@@ -343,6 +347,7 @@ VIZABI_MODEL = {
           }
         },
         "showBilly": false,
+        "billyFaces": false,
         "howManyBilly": 10,
         "inpercent": true,
         "timeInBackground": true,
