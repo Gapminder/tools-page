@@ -299,19 +299,23 @@ VIZABI_MODEL = {
             },
             x: {
               data: {
-                concept: "daily_income"
+                space: ["person", "time"],
+                concept: null,
+                stash: "daily_income"
               }
             },
             name: {
               data: {
                 space: ["person"],
-                concept: "name"
+                concept: null,
+                stash: "name"
               }
             },
             slices: {
               data: {
                 space: ["person"],
-                concept: "countries"
+                concept: null,
+                stash: "countries"
               }
             },
             frame: {
