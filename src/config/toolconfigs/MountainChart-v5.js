@@ -7,81 +7,81 @@ VIZABI_MODEL = {
         loosePath: ["geo", "geo", "$in"],
         config: {
           data: {
-            filter: {dimensions: {"geo": {"geo": {$in: ["usa", "chn", "rus", "nga"]}}}}
+            filter: { dimensions: { "geo": { "geo": { $in: ["usa", "chn", "rus", "nga"] } } } }
           },
           encoding: {
-            stack: {data: {constant:"none"}},
-            facet_row: {data: {constant: "none"}}
+            stack: { data: { constant: "none" } },
+            facet_row: { data: { constant: "none" } }
           }
         }
-      },{
+      }, {
         icon: "show_countries--stack_region--facet_none",
         mode: "select",
         config: {
           data: {
-            filter: {dimensions: { "geo": { "un_state": true } }}
+            filter: { dimensions: { "geo": { "un_state": true } } }
           },
           encoding: {
-            stack: {data: {ref: "markers.mountain.config.encoding.color.data"}},
-            facet_row: {data: {constant: "none"}}
+            stack: { data: { ref: "markers.mountain.config.encoding.color.data" } },
+            facet_row: { data: { constant: "none" } }
           }
         }
-      },{
+      }, {
         icon: "show_regions--stack_none--facet_none",
         mode: "none",
         groupPath: ["geo"],
         config: {
           data: {
-            filter: {dimensions: { "geo": { "is--world_4region": true } }}
+            filter: { dimensions: { "geo": { "is--world_4region": true } } }
           },
           encoding: {
-            stack: {data: {constant:"none"}},
-            facet_row: {data: {constant: "none"}}
+            stack: { data: { constant: "none" } },
+            facet_row: { data: { constant: "none" } }
           }
         }
       }],
-    
-    
+
+
       [{
         icon: "show_countries--stack_all--facet_none",
         mode: "select",
         config: {
           data: {
-            filter: {dimensions: { "geo": { "un_state": true } }}
+            filter: { dimensions: { "geo": { "un_state": true } } }
           },
           encoding: {
-            stack: {data: {constant:"all"}},
-            facet_row: {data: {constant: "none"}}
+            stack: { data: { constant: "all" } },
+            facet_row: { data: { constant: "none" } }
           }
         }
-      },{
+      }, {
         icon: "show_regions--stack_all--facet_none",
         mode: "none",
         groupPath: ["geo"],
         config: {
           data: {
-            filter: {dimensions: { "geo": { "is--world_4region": true } }}
+            filter: { dimensions: { "geo": { "is--world_4region": true } } }
           },
           encoding: {
-            stack: {data: {constant:"all"}},
-            facet_row: {data: {constant: "none"}}
+            stack: { data: { constant: "all" } },
+            facet_row: { data: { constant: "none" } }
           }
         }
-      },{
+      }, {
         icon: "show_world--stack_all--facet_none",
         mode: "none",
         config: {
           data: {
-            filter: {dimensions: { "geo": { "is--global": true } }}
+            filter: { dimensions: { "geo": { "is--global": true } } }
           },
           encoding: {
-            stack: {data: {constant:"all"}},
-            facet_row: {data: {constant: "none"}}
+            stack: { data: { constant: "all" } },
+            facet_row: { data: { constant: "none" } }
           }
         }
       }],
-    
-    
+
+
       [{
         icon: "show_geo--stack_all--facet_isness",
         mode: "show",
@@ -89,36 +89,36 @@ VIZABI_MODEL = {
         loosePath: ["geo", "$or", 1, "geo", "$in"],
         config: {
           data: {
-            filter: {dimensions: { "geo": { "$or": [{"is--world_4region": true}] } }}
+            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }] } } }
           },
           encoding: {
-            stack: {data: {constant:"all"}},
-            facet_row: {data: {concept: "is--", exceptions: {"is--country": "geo"}, space: ["geo"]}}
+            stack: { data: { constant: "all" } },
+            facet_row: { data: { concept: "is--", exceptions: { "is--country": "geo" }, space: ["geo"] } }
           }
         }
-      },{
+      }, {
         icon: "show_regions--stack_all--facet_regions",
         mode: "none",
         groupPath: ["geo"],
         config: {
           data: {
-            filter: {dimensions: { "geo": { "is--world_4region": true } }}
+            filter: { dimensions: { "geo": { "is--world_4region": true } } }
           },
           encoding: {
-            stack: {data: {constant:"all"}},
-            facet_row: {data: {ref: "markers.mountain.config.encoding.color.data"}}
+            stack: { data: { constant: "all" } },
+            facet_row: { data: { ref: "markers.mountain.config.encoding.color.data" } }
           }
         }
-      },{
+      }, {
         icon: "show_countries--stack_all--facet_regions",
         mode: "select",
         config: {
           data: {
-            filter: {dimensions: { "geo": { "un_state": true } }}
+            filter: { dimensions: { "geo": { "un_state": true } } }
           },
           encoding: {
-            stack: {data: {constant:"all"}},
-            facet_row: {data: {ref: "markers.mountain.config.encoding.color.data"}}
+            stack: { data: { constant: "all" } },
+            facet_row: { data: { ref: "markers.mountain.config.encoding.color.data" } }
           }
         }
       }],
@@ -129,16 +129,16 @@ VIZABI_MODEL = {
           source: "povcalnet",
           space: ["geo", "time"],
           filter: {
-            dimensions: { 
-             // "geo": { "is--world_4region": true },
-             // "geo": { "is--country": true },
-             //"geo": { "un_state": true }
+            dimensions: {
+              // "geo": { "is--world_4region": true },
+              // "geo": { "is--country": true },
+              //"geo": { "un_state": true }
               "geo": { "$or": [
                 { "is--world_4region": true }
               //   { "is--west_and_rest": true },
               //   { "un_state": true },
               //   { "is--global": true }
-              ]}
+              ] }
               //"geo": { "geo": {"$in": ["asia", "africa", "chn"]}},
               //"time": {"time": "2021"}
             }
@@ -149,7 +149,7 @@ VIZABI_MODEL = {
           "show": {
             modelType: "selection",
             data: {
-              filter: {dimensions: {"geo": {"$not": {"is--country": 1, "un_state": 0}}}}
+              filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
             }
           },
           "selected": {
@@ -158,11 +158,11 @@ VIZABI_MODEL = {
           "highlighted": {
             modelType: "selection"
           },
-          "shapedata": { 
-            data: { 
-              concept: "income_mountain_50bracket_shape_for_log" 
+          "shapedata": {
+            data: {
+              concept: "income_mountain_50bracket_shape_for_log"
             }
-          }, 
+          },
           "mu": {
             data: {
               constant: 0
@@ -229,7 +229,7 @@ VIZABI_MODEL = {
               constant: null,
               //concept: "world_4region"
               concept: "is--",
-              exceptions: {"is--country": "geo"}
+              exceptions: { "is--country": "geo" }
             }
           },
           "maxheight": {
@@ -313,7 +313,7 @@ VIZABI_MODEL = {
       "opacitySelect": 1.0,
       "opacityHighlightDim": 0.1,
       "opacitySelectDim": 0.3,
-      "opacityRegular": 0.8, 
+      "opacityRegular": 0.8,
       "yMaxMethod": 1,
       showProbeX: true,
       probeX: 1.85,

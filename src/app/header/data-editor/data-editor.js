@@ -99,9 +99,7 @@ const DataEditor = function(placeHolder, translator, dispatch, { languages, sele
         const allowedProps = getCurrentAllowProp(props);
         d3.select(this)
           .selectAll(".row-data")
-          .style("display", d => {
-            return allowedProps.includes(d.key) ? null : "none";
-          });
+          .style("display", d => allowedProps.includes(d.key) ? null : "none");
       });
   }
 

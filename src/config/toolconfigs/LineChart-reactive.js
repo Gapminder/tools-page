@@ -21,7 +21,7 @@ VIZABI_MODEL = {
           "show": {
             modelType: "selection",
             data: {
-              filter: {dimensions: {"country": {"un_state": 1}}}
+              filter: { dimensions: { "country": { "un_state": 1 } } }
             }
           },
           "selected": {

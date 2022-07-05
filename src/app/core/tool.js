@@ -63,7 +63,7 @@ function googleAnalyticsLoadEvents(viz) {
         });
       },
       { name: id + " google load registration",
-        onError: (err) => {
+        onError: err => {
           console.log(err);
           window.Rollbar && Rollbar.critical(err);
         }
@@ -171,7 +171,7 @@ function setTool(tool, skipTransition) {
       dispatch.call("languageChanged", null, VIZABI_LOCALE.id);
       appState.projector = VIZABI_LAYOUT.projector;
 
-      const toolPrototype =toolsetEntry.toolVariation? window[toolsetEntry.tool][toolsetEntry.toolVariation] : window[toolsetEntry.tool];
+      const toolPrototype = toolsetEntry.toolVariation ? window[toolsetEntry.tool][toolsetEntry.toolVariation] : window[toolsetEntry.tool];
       const model = Vizabi(pageConfig.model);
 
       viz = new toolPrototype({

@@ -20,7 +20,7 @@ VIZABI_MODEL = {
           "show": {
             modelType: "selection",
             data: {
-              filter: {dimensions: {"geo": {"$not": {"is--country": 1, "un_state": 0}}}}
+              filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
             }
           },
           "selected": {
@@ -46,9 +46,9 @@ VIZABI_MODEL = {
               concept: "age",
               space: ["age"],
             },
-            scale: { 
+            scale: {
               type: "linear",
-              domain: [0,100]}
+              domain: [0, 100] }
           },
           "aggregate": {
             modelType: "aggregate",
@@ -105,8 +105,8 @@ VIZABI_MODEL = {
             }
           },
           stack: {
-            data: { 
-              //concept: "education_level" or whatever 
+            data: {
+              //concept: "education_level" or whatever
               constant: "true",
             }
           },

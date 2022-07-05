@@ -107,13 +107,13 @@ const SocialButtons = function(placeHolder, translator, appState, dispatch, { bi
   }
 
   function download() {
-    d3.selectAll(".vzb-export").each(function(_, i){
-      const filename = d3.timeFormat("%Y-%m-%d at %H.%M.%S")(new Date()) 
+    d3.selectAll(".vzb-export").each(function(_, i) {
+      const filename = d3.timeFormat("%Y-%m-%d at %H.%M.%S")(new Date())
         + " - " + toolsPage_toolset.find(f => f.id == appState.tool).title
         + " - " + (i + 1);
 
       saveSvg(d3.select(this), filename + ".svg");
-    })
+    });
   }
 
   function getEmbeddedUrl() {
