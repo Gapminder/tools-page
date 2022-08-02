@@ -208,7 +208,7 @@ VIZABI_MODEL = {
             }
           },
           frame: {
-            value: "2021",
+            value: "2022",
             modelType: "frame",
             speed: 200,
             splash: true,
@@ -319,7 +319,7 @@ VIZABI_MODEL = {
             }
           },
           frame: {
-            value: "2021",
+            value: "2022",
             modelType: "frame",
             loop: false,
             data: {
@@ -350,6 +350,9 @@ VIZABI_MODEL = {
           ]
         }
       },
+      "dollarstreet": true,
+      "dsHowManyHomes": 10,
+      "dsTopic": "families",
       "showBilly": false,
       "billyFaces": false,
       "howManyBilly": 10,
@@ -359,7 +362,7 @@ VIZABI_MODEL = {
       "showForecastOverlay": true,
       "showForecast": false,
       "pauseBeforeForecast": true,
-      "endBeforeForecast": "2021",
+      "endBeforeForecast": "2022",
       "opacityHighlight": 1.0,
       "opacitySelect": 1.0,
       "opacityHighlightDim": 0.1,
@@ -389,9 +392,9 @@ VIZABI_MODEL = {
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["presets", "colors", "find", "billy", "moreoptions"],
+        "popup": ["presets", "colors", "find", "billy", "dollarstreet", "moreoptions"],
         "sidebar": ["presets", "colors", "find"],
-        "moreoptions": ["opacity", "speed", "colors", "stack", "billy", "povertyline", "technical", "presentation", "about"]
+        "moreoptions": ["opacity", "speed", "colors", "stack", "billy", "dollarstreet", "povertyline", "technical", "presentation", "about"]
       },
       "find": {
         "enableSelectShowSwitch": false,
