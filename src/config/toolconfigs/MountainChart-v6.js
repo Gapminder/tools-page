@@ -346,7 +346,16 @@ VIZABI_MODEL = {
             { "min": null, "max": 2, "label": "incomegroups/level1", "label_short": "incomegroups/level1short" },
             { "min": 2, "max": 8, "label": "incomegroups/level2", "label_short": "incomegroups/level2short" },
             { "min": 8, "max": 32, "label": "incomegroups/level3", "label_short": "incomegroups/level3short" },
-            { "min": 32, "max": null, "label": "incomegroups/level4", "label_short": "incomegroups/level4short" }
+            { "min": 32, "max": 128, "label": "incomegroups/level4", "label_short": "incomegroups/level4short" },
+            { "min": 128, "max": 512, "label": "incomegroups/level5", "label_short": "incomegroups/level5short" },
+            { "min": 512, "max": 2048, "label": "incomegroups/level6", "label_short": "incomegroups/level6short" },
+            { "min": 2048, "max": 8192, "label": "incomegroups/level7", "label_short": "incomegroups/level7short" },
+            { "min": 8192, "max": 32726, "label": "incomegroups/level8", "label_short": "incomegroups/level8short" },
+            { "min": 32726, "max": 131072, "label": "incomegroups/level9", "label_short": "incomegroups/level9short" },
+            { "min": 131072, "max": 524288, "label": "incomegroups/level10", "label_short": "incomegroups/level10short" },
+            { "min": 524288, "max": 2097152, "label": "incomegroups/level11", "label_short": "incomegroups/level11short" },
+            { "min": 2097152, "max": 8388608, "label": "incomegroups/level12", "label_short": "incomegroups/level12short" },
+            { "min": 8388608, "max": 33554432, "label": "incomegroups/level13", "label_short": "incomegroups/level13short" },
           ]
         }
       },
@@ -354,8 +363,10 @@ VIZABI_MODEL = {
       "dsHowManyHomes": 10,
       "dsTopic": "families",
       "showBilly": false,
-      "billyFaces": false,
+      "billyFaces": true,
       "howManyBilly": 10,
+      "billyYScale": 0.5,
+      "billyMeshXPoints": 80,
       "inpercent": true,
       "timeInBackground": true,
       "curve": "curveBasis",
@@ -392,9 +403,9 @@ VIZABI_MODEL = {
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["presets", "colors", "find", "billy", "dollarstreet", "moreoptions"],
-        "sidebar": ["presets", "colors", "find"],
-        "moreoptions": ["opacity", "speed", "colors", "stack", "billy", "dollarstreet", "povertyline", "technical", "presentation", "about"]
+        "popup": ["presets", "colors", "find", "billy", "moreoptions"],
+        "sidebar": ["presets", "colors", "find", "billy"],
+        "moreoptions": ["opacity", "speed", "colors", "stack", "billy", "povertyline", "technical", "presentation", "about"]
       },
       "find": {
         "enableSelectShowSwitch": false,
