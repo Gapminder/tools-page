@@ -42,7 +42,7 @@
     "id": "mountain",
     "tool": "MountainChart",
     "toolVariation": "Base",
-    "config": "MountainChart-v6",
+    "config": "MountainChart-v7",
     "dataSources": ["povcalnet", "sg", "fasttrack", "billy"],
     "transition": ["select","time"],
     "title": "income",

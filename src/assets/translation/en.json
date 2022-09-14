@@ -123,6 +123,8 @@
         "unit/pixels": "px",
         "treemenu/other_datasets": "Other datasets",
         "treemenu/advanced": "For advanced users",
+        "mount/ds/visitThisHome": "Visit this home",
+        "mount/ds/family": "family",
         "mount/maxYmode/immediate": "Immediate",
         "mount/maxYmode/latest": "Latest",
         "mount/maxYmode/total": "Total",
