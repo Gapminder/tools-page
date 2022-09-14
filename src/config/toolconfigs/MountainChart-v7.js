@@ -359,7 +359,7 @@ VIZABI_MODEL = {
           ]
         }
       },
-      "dollarstreet": false,
+      "dsShow": false,
       "dsHowManyHomes": 10,
       "dsTopic": "families",
       "showBilly": false,
