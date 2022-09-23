@@ -85,11 +85,10 @@ VIZABI_MODEL = {
       [{
         icon: "show_geo--stack_all--facet_isness",
         mode: "show",
-        groupPath: ["geo", "$or", 0],
-        loosePath: ["geo", "$or", 1, "geo", "$in"],
+        loosePath: ["geo", "geo", "$in"],
         config: {
           data: {
-            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }] } } }
+            filter: { dimensions: { "geo": {"geo": { "$in": ["africa", "americas", "asia", "europe"] } } } }
           },
           encoding: {
             stack: { data: { constant: "all" } },
@@ -130,15 +129,16 @@ VIZABI_MODEL = {
           space: ["geo", "time"],
           filter: {
             dimensions: {
-              // "geo": { "is--world_4region": true },
-              // "geo": { "is--country": true },
+              "geo": { "geo": {"$in": ["africa", "americas", "asia", "europe"]}}
+              //"geo": { "is--world_4region": true }
+              //"geo": { "is--country": true }
               //"geo": { "un_state": true }
-              "geo": { "$or": [
-                { "is--world_4region": true }
-                //   { "is--west_and_rest": true },
-                //   { "un_state": true },
-                //   { "is--global": true }
-              ] }
+              //"geo": { "$or": [
+              //  { "is--world_4region": true },
+              //   { "is--west_and_rest": true },
+              //   { "un_state": true },
+              //   { "is--global": true }
+              //] }
               //"geo": { "geo": {"$in": ["asia", "africa", "chn"]}},
               //"time": {"time": "2021"}
             }
