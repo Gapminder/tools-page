@@ -1,51 +1,19 @@
-{   
-  "billy": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "billy-develop",
-    "name": "billy-develop"
-  },   
-  "povcalnet": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "povcalnet-develop",
-    "name": "povcalnet-develop"
+{
+  "all": {
+    "modelType": "csv",
+    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=all"
   },
-  "sg": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "SG-develop",
-    "name": "SG-develop"
+  "youth": {
+    "modelType": "csv",
+    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=youth"
   },
-  "sg_old": {
-    "reader": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "SG-develop",
-    "translateContributionLink": "https://crowdin.com/project/systema-globalis"
+  "adults": {
+    "modelType": "csv",
+    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=adults"
   },
-  "pop": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "population-develop",
-    "name": "population-develop"
-  },
-  "wdi": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "wdi-develop",
-    "name": "wdi-develop"
-  },
-  "fasttrack": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "fasttrackQA",
-    "name": "fasttrackQA"
-  },
-  "country_flags": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "country-flags",
-    "name": "country-flags"
+  "elderly": {
+    "modelType": "csv",
+    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=elderly"
   }
 }
 

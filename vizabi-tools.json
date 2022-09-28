@@ -6,8 +6,14 @@
     "bubblemap",
     "mountainchart",
     "popbyage",
+    "extapimap",
+    "combo",
     "spreadsheet"
   ],
   "paths": {
+    "combo": {
+      "js": "./src/custom_tools/combo.js",
+      "css": "./src/custom_tools/combo.css"
+    }
   }
 }

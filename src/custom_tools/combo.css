@@ -1,0 +1,16 @@
+
+.vzb-tool-combo.vzb-split-vertical {
+    position: absolute;
+  }
+
+
+.vzb-tool-combo.vzb-split-vertical
+  .vzb-chart-combo {
+    position: absolute;
+  }
+
+ .vzb-tool-combo.vzb-split-vertical
+  .vzb-chart-combo svg {
+    width: 400px;
+    height: 500px;
+  }
