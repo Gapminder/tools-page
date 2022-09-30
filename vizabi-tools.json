@@ -6,7 +6,8 @@
     "bubblemap",
     "mountainchart",
     "popbyage",
-    "spreadsheet"
+    "spreadsheet",
+    "extapimap"
   ],
   "paths": {
   }

@@ -46,6 +46,10 @@
     "service": "https://big-waffle.gapminder.org",
     "dataset": "country-flags",
     "name": "country-flags"
+  },
+  "sodertorn": {
+    "modelType": "ddfcsv",
+    "path": "https://raw.githubusercontent.com/open-numbers/ddf--sodertornsmodellen/master/"
   }
 }
 

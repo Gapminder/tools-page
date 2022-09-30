@@ -69,6 +69,16 @@
     "image": "/assets/images/chart/globaltrends-chart.png"
   },
   {
+    "id": "extapimap",
+    "tool": "ExtApiMap",
+    "dataSources": ["sodertorn"],
+    "transition": ["none"],
+    "title": "extapimap",
+    "config": "ExtApiMap-sodertorn-reactive",
+    "hideThumbnail": true,
+    "image": "/assets/images/chart/maps-chart.png"
+  },
+  {
     "id": "popbyage",
     "title": "ages",
     "image": "/assets/images/chart/ages-chart.png",
