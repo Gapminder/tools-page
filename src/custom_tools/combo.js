@@ -33,12 +33,12 @@ window.Combo = class Combo extends BaseComponent {
 
     config.subcomponents = [{
       type: BubbleChart.mainComponent,
-      placeholder: ".vzb-chart-bubble",
+      placeholder: ".vzb-bubblechart",
       model: marker,
       name: "chart"
     },{
       type: ExtApiMap.mainComponent,
-      placeholder: ".vzb-chart-map",
+      placeholder: ".vzb-extapimap",
       model: marker,
       name: "chart"
     },{
@@ -91,8 +91,8 @@ window.Combo = class Combo extends BaseComponent {
 
     config.template = `
     <div class="vzb-tool-combo vzb-split-vertical">
-      <div class="vzb-chart-combo vzb-chart-bubble"></div>
-      <div class="vzb-chart-combo vzb-chart-map" style="left:400px"></div>
+      <div class="vzb-chart-combo vzb-bubblechart"></div>
+      <div class="vzb-chart-combo vzb-extapimap"></div>
     </div>
     <div class="vzb-animationcontrols">
       <div class="vzb-timeslider"></div>
