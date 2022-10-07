@@ -5,7 +5,7 @@ var VIZABI_MODEL = {
         requiredEncodings: ["x", "y", "size"],
         data: {
           source: "all",
-          space: ["ID_2", "YEAR"],
+          space: ["level", "year"],
           filter: {
             dimensions: { }
           }
@@ -34,7 +34,7 @@ var VIZABI_MODEL = {
           },
           "size": {
             data: {
-              concept: "Population"
+              concept: "pop"
             },
             scale: {
               modelType: "size",
@@ -43,7 +43,7 @@ var VIZABI_MODEL = {
           },
           "y": {
             data: {
-              concept: "Self-rated health T",
+              concept: "lifexp"
             },
             scale: {
               allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
@@ -51,15 +51,16 @@ var VIZABI_MODEL = {
           },
           "x": {
             data: {
-              concept: "GHQ-12 T"
+              concept: "gnic"
             },
             scale: {
+              type: "log",
               allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
             }
           },
           "color": {
             data: {
-              concept: "NAME_1"
+              concept: "national"
             },
             scale: {
               modelType: "color",
@@ -68,8 +69,8 @@ var VIZABI_MODEL = {
           },
           "label": {
             data: {
-              modelType: null,
-              concept: "NAME_2"
+              modelType: "entityPropertyDataConfig",
+              concept: "name"
             }
           },
           "size_label": {
@@ -84,10 +85,9 @@ var VIZABI_MODEL = {
           "frame": {
             modelType: "frame",
             speed: 200,
-            value: "2014",
+            //value: "2014",
             splash: true,
             data: {
-              concept: "YEAR"
             }
           },
           "trail": {
@@ -97,15 +97,18 @@ var VIZABI_MODEL = {
           },
           "centroid": {
             data: {
-             concept: "ID_2" 
+              concept: "level"
             }
           },
-          // "color_map": {
-          //   "use": "property",
-          //   "which": "NAME_1",
-          //   "scaleType": "ordinal",
-          //   "syncModels": ["marker_colorlegend"]
-          // }
+          "color_map": {
+            data: {
+              concept: "national"
+            },
+            scale: {
+              modelType: "color",
+              type: "ordinal"
+            }
+          }
         }
       },
       "legend": {
@@ -134,7 +137,7 @@ var VIZABI_MODEL = {
             }
             //scale: { ref: "markers.bubble.encoding.color.scale" }
           },
-          name: { data: { concept: "NAME_1" } },
+          name: { data: { concept: "name" } },
           rank: { data: { concept: "rank" } },
           map: { data: { concept: "shape_lores_svg" } }
         }
@@ -161,6 +164,8 @@ var VIZABI_MODEL = {
           "colors",
           "label",
           "zoom",
+          "mapoptions",
+          "mapcolors",
           "technical",
           "repeat",
           "presentation",
@@ -225,8 +230,8 @@ var VIZABI_MODEL = {
         "preserveAspectRatio": true,
         "mapEngine": "mapbox",
         "mapStyle": "mapbox://styles/mapbox/light-v9",
-        "showBubbles": true,
-        "showAreas": false,
+        "showBubbles": false,
+        "showAreas": true,
         "showMap": true,
         "offset": {
           "top": 0.05,
@@ -243,12 +248,12 @@ var VIZABI_MODEL = {
         },
         "projection": "mercator",
         "topology": {
-          "path": "data/SWE_adm2.json",
+          "path": "assets/shdi2022_world_large_simpl_0.21pct.json",
           "objects": {
-            "geo": "SWE_adm2-1",
-            "boundaries": "SWE_adm2-1"
+            "geo": "shdi2022_World_large",
+            "boundaries": "shdi2022_World_large"
           },
-          "geoIdProperty": "ID_2"
+          "geoIdProperty": "gdlcode"
         }
       },
     },

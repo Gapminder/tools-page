@@ -7,32 +7,5 @@
     "transition": ["select","time"],
     "title": "all",
     "image": "/assets/images/chart/combo.png"
-  },
-  {
-    "id": "youth",
-    "tool": "Combo",
-    "config": "Combo",
-    "dataSources": ["youth"],
-    "transition": ["select","time"],
-    "title": "youth",
-    "image": "/assets/images/chart/combo.png"
-  },
-  {
-    "id": "adults",
-    "tool": "Combo",
-    "config": "Combo",
-    "dataSources": ["adults"],
-    "transition": ["select","time"],
-    "title": "adults",
-    "image": "/assets/images/chart/combo.png"
-  },
-  {
-    "id": "elderly",
-    "tool": "Combo",
-    "config": "Combo",
-    "dataSources": ["elderly"],
-    "transition": ["select","time"],
-    "title": "elderly",
-    "image": "/assets/images/chart/combo.png"
   }
 ]

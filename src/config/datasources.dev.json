@@ -1,19 +1,7 @@
 {
   "all": {
-    "modelType": "csv",
-    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=all"
-  },
-  "youth": {
-    "modelType": "csv",
-    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=youth"
-  },
-  "adults": {
-    "modelType": "csv",
-    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=adults"
-  },
-  "elderly": {
-    "modelType": "csv",
-    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk/gviz/tq?tqx=out:csv&sheet=elderly"
+    "modelType": "ddfcsv",
+    "path": "https://raw.githubusercontent.com/open-numbers/ddf--gdl--shdi/master/"
   }
 }
 
