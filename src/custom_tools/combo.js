@@ -13,8 +13,17 @@ const {
   Dialogs,
   ButtonList,
   Repeater,
+  LegacyUtils,
   versionInfo
 } = VizabiSharedComponents;
+
+const SPLIT_DIRECTION_ICON = `
+  <svg class="vzb-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="511.261px" height="511.261px" viewBox="0 0 511.261 511.261" style="enable-background:new 0 0 511.261 511.261;" xml:space="preserve">
+    <g>
+      <path d="M430.25,379.655l-75.982-43.869v59.771H120.73V151.966h59.774l-43.869-75.983L92.767,0L48.898,75.983L5.029,151.966h59.775v271.557c0,15.443,12.52,27.965,27.963,27.965h261.5v59.773l75.982-43.869l75.982-43.867L430.25,379.655z"/>
+    </g>
+  </svg>`;
+
 
 window.Combo = class Combo extends BaseComponent {
 
@@ -93,6 +102,7 @@ window.Combo = class Combo extends BaseComponent {
     <div class="vzb-tool-combo vzb-split-vertical">
       <div class="vzb-chart-combo vzb-bubblechart"></div>
       <div class="vzb-chart-combo vzb-extapimap"></div>
+      <div class="vzb-split-direction-button"></div>
     </div>
     <div class="vzb-animationcontrols">
       <div class="vzb-timeslider"></div>
@@ -119,9 +129,32 @@ window.Combo = class Combo extends BaseComponent {
 
     this.splashMarker = splashMarker;
   }
+
+  setup(options) {
+    this.DOM = {
+      comboTool: this.element.select(".vzb-tool-combo"),
+      splitDirectionButton: this.element.select(".vzb-split-direction-button")
+    }
+
+    LegacyUtils.setIcon(this.DOM.splitDirectionButton, SPLIT_DIRECTION_ICON);
+    this.DOM.splitDirectionButton.on("click", () => {
+      this.root.ui.chart.splitVertical = !this.root.ui.chart.splitVertical;
+      this.services.layout._resizeHandler();
+    });
+
+    this.addReaction(this.changeSplitDirection, true);
+  }
+
+  changeSplitDirection() {
+    const splitDirectionClasses = ["vzb-split-horizontal", "vzb-split-vertical"];
+    const classArray = this.root.ui.chart.splitVertical ? splitDirectionClasses : splitDirectionClasses.reverse();
+    this.DOM.comboTool.classed(classArray[0], false);
+    this.DOM.comboTool.classed(classArray[1], true);    
+  }
 }
 Combo.DEFAULT_UI = {
-  chart: {  
+  chart: {
+    splitVertical: false
   },
 };
 
