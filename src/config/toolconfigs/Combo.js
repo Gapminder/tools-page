@@ -196,7 +196,7 @@ var VIZABI_MODEL = {
       panWithArrow: false,
       adaptMinMaxZoom: false,
       cursorMode: "arrow",
-      zoomOnScrolling: false,
+      zoomOnScrolling: true,
       superhighlightOnMinimapHover: true,
       whenHovering: {
         showProjectionLineX: true,
@@ -241,10 +241,10 @@ var VIZABI_MODEL = {
         },
         "path": null,
         "bounds": {
-          "north":69.51657759386163,
-          "west":10.654920454289538,
-          "south":61.75276362335023,
-          "east":23.864444812776867
+          "north":65,
+          "west":-60,
+          "south":-35,
+          "east":80
         },
         "projection": "mercator",
         "topology": {
@@ -264,3 +264,4 @@ var VIZABI_MODEL = {
     },
   }
 };
+
