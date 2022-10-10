@@ -177,9 +177,9 @@ window.Combo = class Combo extends BaseComponent {
         })
         .on("end.update", (event, d) => {
           if (_this.root.ui.chart.splitVertical) {
-            _this.root.ui.chart.splitRatio = d._x / _this.toolWidth;
+            _this.root.ui.chart.splitRatio = +((d._x / _this.toolWidth).toFixed(2));
           } else {
-            _this.root.ui.chart.splitRatio = d._y / _this.toolHeight;
+            _this.root.ui.chart.splitRatio = +((d._y / _this.toolHeight).toFixed(2));
           }
         })
     );
