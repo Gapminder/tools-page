@@ -102,7 +102,10 @@ window.Combo = class Combo extends BaseComponent {
     <div class="vzb-tool-combo vzb-split-vertical">
       <div class="vzb-chart-combo vzb-bubblechart"></div>
       <div class="vzb-chart-combo vzb-extapimap"></div>
+      <div class="vzb-split-line"></div>
       <div class="vzb-split-direction-button"></div>
+      <div class="vzb-split-overlay vzb-hidden"></div>
+      <div class="vzb-split-line vzb-split-line-drag vzb-hidden"></div>
     </div>
     <div class="vzb-animationcontrols">
       <div class="vzb-timeslider"></div>
@@ -133,16 +136,58 @@ window.Combo = class Combo extends BaseComponent {
   setup(options) {
     this.DOM = {
       comboTool: this.element.select(".vzb-tool-combo"),
-      splitDirectionButton: this.element.select(".vzb-split-direction-button")
+      splitDirectionButton: this.element.select(".vzb-split-direction-button"),
+      splitOverlay: this.element.select(".vzb-split-overlay"),
+      splitLine: this.element.select(".vzb-split-line"),
+      splitLineDrag: this.element.select(".vzb-split-line-drag")
     }
 
     LegacyUtils.setIcon(this.DOM.splitDirectionButton, SPLIT_DIRECTION_ICON);
+
+    const _this = this;
+    this.DOM.splitLine.datum({});
+    this.DOM.splitLine.call(
+      d3.drag()
+        .on("start", (event, d) => {
+          if (_this.root.ui.chart.splitVertical) {
+            d.xMin = 15;
+            d.xMax = _this.toolWidth - 15;
+            _this.DOM.splitLineDrag.attr("style", `transform: translateX(${event.x}px)`)
+          } else {
+            d.yMin = 15;
+            d.yMax = _this.toolHeight - 15;
+            _this.DOM.splitLineDrag.attr("style", `transform: translateY(${event.y}px)`)
+          }
+          _this.DOM.splitOverlay.classed("vzb-hidden", false);
+          _this.DOM.splitLineDrag.classed("vzb-hidden", false);
+        })
+        .on("drag", (event, d) => {
+          if (_this.root.ui.chart.splitVertical) {
+            d._x = event.x < d.xMin ? d.xMin : event.x > d.xMax ? d.xMax : event.x;
+            _this.DOM.splitLineDrag.attr("style", `transform: translateX(${d._x}px)`)
+          } else {
+            d._y = event.y < d.yMin ? d.yMin : event.y > d.yMax ? d.yMax : event.y;
+            _this.DOM.splitLineDrag.attr("style", `transform: translateY(${d._y}px)`)
+          }
+        })
+        .on("end", () => {
+          _this.DOM.splitOverlay.classed("vzb-hidden", true);
+          _this.DOM.splitLineDrag.classed("vzb-hidden", true);
+          _this.DOM.splitLineDrag.attr("style", null);
+        })
+        .on("end.update", (event, d) => {
+          if (_this.root.ui.chart.splitVertical) {
+            _this.root.ui.chart.splitRatio = d._x / _this.toolWidth;
+          } else {
+            _this.root.ui.chart.splitRatio = d._y / _this.toolHeight;
+          }
+        })
+    );
     this.DOM.splitDirectionButton.on("click", () => {
       this.root.ui.chart.splitVertical = !this.root.ui.chart.splitVertical;
-      this.services.layout._resizeHandler();
+      this.root.ui.chart.splitRatio = 0.5;
     });
 
-    this.addReaction(this.changeSplitDirection, true);
   }
 
   changeSplitDirection() {
@@ -150,11 +195,38 @@ window.Combo = class Combo extends BaseComponent {
     const classArray = this.root.ui.chart.splitVertical ? splitDirectionClasses : splitDirectionClasses.reverse();
     this.DOM.comboTool.classed(classArray[0], false);
     this.DOM.comboTool.classed(classArray[1], true);    
+    this.services.layout._resizeHandler();
   }
+
+  changeSplitRatio() {
+    const ratio = this.root.ui.chart.splitRatio;
+    
+    if (this.root.ui.chart.splitVertical) {
+      this.DOM.comboTool.attr("style", `grid-template-columns: ${ratio}fr auto`);
+    } else {
+      this.DOM.comboTool.attr("style", `grid-template-rows: ${ratio}fr auto`);
+    }
+    this.services.layout._resizeHandler();
+  }
+
+  resize() {
+    this.services.layout.size;
+
+    this.toolHeight = (this.DOM.comboTool.node().clientHeight) || 0;
+    this.toolWidth = (this.DOM.comboTool.node().clientWidth) || 0;    
+  }
+
+  draw() {
+    this.addReaction(this.changeSplitDirection);
+    this.addReaction(this.resize);
+    this.addReaction(this.changeSplitRatio);
+  }
+
 }
 Combo.DEFAULT_UI = {
   chart: {
-    splitVertical: false
+    splitVertical: false,
+    splitRatio: 0.5
   },
 };
 
