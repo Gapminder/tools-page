@@ -153,7 +153,7 @@ VIZABI_MODEL = {
       opacitySelectDim: 0.3,
       opacityRegular: 0.8,
       hideXAxisValue: false,
-      curve: "curveMonotoneX",
+      curve: "curveMonotoneX", //curveBasis curveLinear curveMonotoneX curveCatmullRom curveNatural
       whenHovering: {
         showTooltip: false,
         hideVerticalNow: false,
