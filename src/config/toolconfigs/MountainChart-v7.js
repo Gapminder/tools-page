@@ -404,7 +404,7 @@ VIZABI_MODEL = {
     "dialogs": {
       "dialogs": {
         "popup": ["presets", "colors", "find", "billy", "dollarstreet", "moreoptions"],
-        "sidebar": ["presets", "colors", "find"],
+        "sidebar": ["presets", "colors", "find", "dollarstreet"],
         "moreoptions": ["opacity", "speed", "colors", "stack", "billy", "dollarstreet", "povertyline", "technical", "presentation", "about"]
       },
       "find": {
