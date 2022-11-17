@@ -328,6 +328,12 @@ VIZABI_MODEL = {
             scale: {
               clampDomainToData: true
             }
+          },
+          selected: {
+            modelType: "selection"
+          },
+          highlighted: {
+            modelType: "selection"
           }
         }
       }
@@ -390,6 +396,13 @@ VIZABI_MODEL = {
         aboveProc: false,
         aboveCount: false
       },
+      "ultrarich": {
+        "opacityHighlight": 1.0,
+        "opacitySelect": 1.0,
+        "opacityHighlightDim": 0.1,
+        "opacitySelectDim": 0.3,
+        "opacityRegular": 1.0,  
+      }
     },
     "data-warning": {
       doubtDomain: [1800, 1950, 2020],
