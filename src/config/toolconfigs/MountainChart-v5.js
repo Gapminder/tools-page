@@ -308,7 +308,7 @@ VIZABI_MODEL = {
       "showForecastOverlay": true,
       "showForecast": false,
       "pauseBeforeForecast": true,
-      "endBeforeForecast": "2021",
+      "endBeforeForecast": "2022",
       "opacityHighlight": 1.0,
       "opacitySelect": 1.0,
       "opacityHighlightDim": 0.1,

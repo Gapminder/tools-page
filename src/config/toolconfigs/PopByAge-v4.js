@@ -173,7 +173,7 @@ VIZABI_MODEL = {
       showForecast: true,
       showForecastOverlay: false,
       pauseBeforeForecast: false,
-      endBeforeForecast: "2021",
+      endBeforeForecast: "2022",
 
     },
     "buttons": {

@@ -96,7 +96,7 @@ VIZABI_MODEL = {
       lilFrameDisplayAlwaysHidden: true,
       showForecast: false,
       showForecastOverlay: true,
-      endBeforeForecast: "2021",
+      endBeforeForecast: "2022",
       pauseBeforeForecast: true,
       opacityHighlight: 1.0,
       opacitySelect: 1.0,
