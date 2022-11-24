@@ -78,7 +78,7 @@ VIZABI_MODEL = {
           },
           frame: {
             modelType: "frame",
-            value: "2021",
+            value: "2022",
             playbackSteps: 1,
             splash: true,
             data: {

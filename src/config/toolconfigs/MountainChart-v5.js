@@ -140,7 +140,7 @@ VIZABI_MODEL = {
               //   { "is--global": true }
               ] }
               //"geo": { "geo": {"$in": ["asia", "africa", "chn"]}},
-              //"time": {"time": "2021"}
+              //"time": {"time": "2022"}
             }
           }
         },
@@ -208,7 +208,7 @@ VIZABI_MODEL = {
             }
           },
           frame: {
-            value: "2021",
+            value: "2022",
             modelType: "frame",
             speed: 200,
             splash: true,

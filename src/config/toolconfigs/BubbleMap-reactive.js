@@ -71,7 +71,7 @@ VIZABI_MODEL = {
           "frame": {
             modelType: "frame",
             speed: 200,
-            value: "2021",
+            value: "2022",
             splash: true,
             data: {
               concept: "time"
