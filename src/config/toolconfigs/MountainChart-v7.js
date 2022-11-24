@@ -171,7 +171,7 @@ VIZABI_MODEL = {
               type: "log",
               domain: [0.11, 500]
             },
-            "tailFatX": 1.85,
+            "tailFatX": 2.15,
             "tailCutX": 0.2,
             "tailFade": 0.7,
             "xScaleFactor": 1,
@@ -387,7 +387,7 @@ VIZABI_MODEL = {
       "opacityRegular": 0.8,
       "yMaxMethod": 1,
       showProbeX: true,
-      probeX: 1.85,
+      probeX: 2.15,
       probeXCustom: 4,
       probeXType: "extreme",
       probeXDetails: {

@@ -59,7 +59,7 @@
         "hints/mount/howtostack": "กองซ้อนของภูเขา",
         "hints/mount/howtomerge": "ผสานภูเขา",
         "hints/mount/xlimits": "ขีดจำกัดของแกน X:",
-        "hints/mount/probe": "แกน X: ระดับความยากจนข้นแค้นที่ 1.85",
+        "hints/mount/probe": "แกน X: ระดับความยากจนข้นแค้นที่ 2.15",
         "hints/mount/onlyshowthefollowing": "ซ่อนรูปร่างทั้งหมดยกเว้น:",
         "hints/speed": "Play speed",
         "hints/forecastoptions": "Forecast options:",
