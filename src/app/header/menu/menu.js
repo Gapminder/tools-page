@@ -62,6 +62,11 @@ const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
           <div class="how-to-outer">
             <div class="data-editor">
               <span class="data-editor-close button-close">&times;</span>
+              <div class="data-editor-instructions">
+                Congrats! You've discovered the hidden button for editing data sources
+                <br/>
+                <a target="_blank" href="https://docs.google.com/document/d/1Ibcuzp5eaQQus515OROzkQxpcvFf3wDU03mFQmrtmV4/preview">How to show data from a generic google spreadsheet ⧉</a>
+              </div>
               <div class="table"></div>
               <p class="data-editor-buttons nav-faq-help-links">
                 <a class="add-row">+</a>
