@@ -1,50 +1,6 @@
 {
-  "billy": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "billy-master",
-    "name": "billy-master"
-  },
-  "povcalnet": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "povcalnet-master",
-    "name": "povcalnet-master"
-  },
-  "sg": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "sg-master",
-    "name": "sg-master"
-  },
-  "sg_old": {
-    "reader": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "SG-master",
-    "translateContributionLink": "https://crowdin.com/project/systema-globalis"
-  },
-  "pop": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "population-master",
-    "name": "population-master"
-  },
-  "wdi": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "wdi-master",
-    "name": "wdi-master"
-  },
-  "fasttrack": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "fasttrack",
-    "name": "fasttrack"
-  },
-  "country_flags": {
-    "modelType": "ddfbw",
-    "service": "https://big-waffle.gapminder.org",
-    "dataset": "country-flags",
-    "name": "country-flags"
+  "norrland": {
+    "reader": "csv",
+    "path": "https://docs.google.com/spreadsheets/d/1d-h4QLgv5YSP4PYwHnbHcCd_OR5-nakX--3MQGqcHyk",
   }
 }

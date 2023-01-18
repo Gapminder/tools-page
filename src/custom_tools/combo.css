@@ -1,0 +1,96 @@
+
+.vzb-tool-combo {
+  display: grid;
+  grid-auto-rows: 0;
+  grid-auto-columns: 0;
+}
+
+.vzb-tool-combo.vzb-split-vertical {
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+.vzb-tool-combo.vzb-split-horizontal {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.vzb-tool-combo .vzb-split-direction-button {
+  position: absolute;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.vzb-tool-combo .vzb-split-direction-button:hover {
+  opacity: 1;
+}
+
+.vzb-tool-combo .vzb-split-direction-button svg {
+  transform: rotate(90deg);
+  background: white;
+  height: 20px;
+  width: 20px;
+  border: solid 2px rgba(0,0,0,0.6);
+  border-radius: 4px;
+  padding: 1px;
+}
+
+.vzb-tool-combo.vzb-split-horizontal .vzb-split-direction-button {
+  grid-row: 2;
+  margin-left: 20px;
+  margin-top: -10px;
+}
+
+.vzb-tool-combo.vzb-split-vertical .vzb-split-direction-button {
+  grid-column: 2;
+  margin-top: 20px;
+  margin-left: -10px;
+}
+
+.vzb-tool-combo .vzb-split-overlay {
+  position: absolute;
+  display: grid;
+  min-height: 100vh;
+  min-width: 100vw;
+  z-index: 1;
+}
+
+.vzb-tool-combo.vzb-split-vertical .vzb-split-overlay {
+  cursor: col-resize;
+}
+
+.vzb-tool-combo.vzb-split-horizontal .vzb-split-overlay {
+  cursor: row-resize;
+}
+
+.vzb-tool-combo .vzb-split-line {
+  position: absolute;
+}
+
+.vzb-tool-combo .vzb-split-line:hover, .vzb-tool-combo .vzb-split-line.vzb-split-line-drag {
+  background-color: #4b98aa;
+}
+
+.vzb-tool-combo.vzb-split-horizontal .vzb-split-line.vzb-split-line-drag {
+  grid-row: none;  
+}
+
+.vzb-tool-combo.vzb-split-vertical .vzb-split-line.vzb-split-line-drag {
+  grid-column: none;
+}
+
+.vzb-tool-combo.vzb-split-horizontal .vzb-split-line {
+  grid-row: 2;
+  grid-column: 1/2;
+  height: 2px;
+  width: 100%;
+  cursor: row-resize;
+}
+
+.vzb-tool-combo.vzb-split-vertical .vzb-split-line {
+  grid-column: 2;
+  grid-row: 1/2;
+  width: 2px;
+  height: 100%;
+  cursor: col-resize;
+}
