@@ -1,11 +1,20 @@
 [  
   {
-    "id": "all",
+    "id": "bubble",
+    "tool": "BubbleChart",
+    "config": "Bubble",
+    "dataSources": ["all"],
+    "transition": [],
+    "title": "Bubble",
+    "image": "/assets/images/chart/combo.png"
+  },
+  {
+    "id": "combo",
     "tool": "Combo",
     "config": "Combo",
     "dataSources": ["all"],
-    "transition": ["select","time"],
-    "title": "all",
+    "transition": [],
+    "title": "Combo",
     "image": "/assets/images/chart/combo.png"
   }
 ]

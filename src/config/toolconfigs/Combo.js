@@ -51,15 +51,16 @@ var VIZABI_MODEL = {
           },
           "x": {
             data: {
-              concept: "unemployed_pct"
+              concept: "taxable_income_percapita"
             },
             scale: {
+              type: "log",
               allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
             }
           },
           "color": {
             data: {
-              concept: "voting_small_right"
+              concept: "social_assistance_rate"
             },
             scale: {
               modelType: "color"
@@ -83,7 +84,7 @@ var VIZABI_MODEL = {
           "frame": {
             modelType: "frame",
             speed: 200,
-            //value: "2014",
+            value: "2019",
             splash: true,
             data: {
             }
@@ -100,7 +101,8 @@ var VIZABI_MODEL = {
           },
           "color_map": {
             data: {
-              concept: "voting_small_right"
+              space: ["geo"],
+              concept: "canton"
             },
             scale: {
               modelType: "color"
@@ -186,7 +188,7 @@ var VIZABI_MODEL = {
       opacityHighlightDim: 0.1,
       opacitySelectDim: 0.3,
       opacityRegular: 0.8,
-      timeInBackground: true,
+      timeInBackground: false,
       timeInTrails: true,
       lockNonSelected: 0,
       numberFormatSIPrefix: true,
