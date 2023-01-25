@@ -5,9 +5,9 @@ var VIZABI_MODEL = {
         requiredEncodings: ["x", "y", "size"],
         data: {
           source: "all",
-          space: ["level", "year"],
+          space: ["geo", "year"],
           filter: {
-            dimensions: { }
+            dimensions: {"geo": {"is--commune": 1}}
           }
         },
         encoding: {
@@ -34,7 +34,7 @@ var VIZABI_MODEL = {
           },
           "size": {
             data: {
-              concept: "pop"
+              concept: "population"
             },
             scale: {
               modelType: "size",
@@ -43,7 +43,7 @@ var VIZABI_MODEL = {
           },
           "y": {
             data: {
-              concept: "lifexp"
+              concept: "foreign_nationals_pct"
             },
             scale: {
               allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
@@ -51,20 +51,18 @@ var VIZABI_MODEL = {
           },
           "x": {
             data: {
-              concept: "gnic"
+              concept: "unemployed_pct"
             },
             scale: {
-              type: "log",
               allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
             }
           },
           "color": {
             data: {
-              concept: "national"
+              concept: "voting_small_right"
             },
             scale: {
-              modelType: "color",
-              type: "ordinal"
+              modelType: "color"
             }
           },
           "label": {
@@ -97,16 +95,15 @@ var VIZABI_MODEL = {
           },
           "centroid": {
             data: {
-              concept: "level"
+              concept: "geo"
             }
           },
           "color_map": {
             data: {
-              concept: "national"
+              concept: "voting_small_right"
             },
             scale: {
-              modelType: "color",
-              type: "ordinal"
+              modelType: "color"
             }
           }
         }
@@ -241,19 +238,19 @@ var VIZABI_MODEL = {
         },
         "path": null,
         "bounds": {
-          "north":65,
-          "west":-60,
-          "south":-35,
-          "east":80
+          west: 5.9229315202020985, 
+          north: 47.860099487301966, 
+          east: 10.879775125654561, 
+          south: 45.72985618619319
         },
         "projection": "mercator",
         "topology": {
-          "path": "assets/shdi2022_world_large_simpl_0.21pct.json",
+          "path": "assets/K4voge20220101gf_ch2007Poly.json",
           "objects": {
-            "geo": "shdi2022_World_large",
-            "boundaries": "shdi2022_World_large"
+            "geo": "K4voge20220101gf_ch2007Poly",
+            "boundaries": "K4voge20220101gf_ch2007Poly"
           },
-          "geoIdProperty": "gdlcode"
+          "geoIdProperty": "id"
         }
       },
     },
