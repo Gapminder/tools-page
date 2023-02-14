@@ -52,6 +52,7 @@
     "@vizabi/barrank": "3.9.3",
     "@vizabi/bubblechart": "3.14.3",
     "@vizabi/bubblemap": "4.0.4",
+    "@vizabi/extapimap": "3.5.0",
     "vizabi-config-systema_globalis": "2.10.2",
     "@vizabi/reader-ddfcsv": "4.0.3",
     "@vizabi/reader-ddfservice": "^2.3.0",
