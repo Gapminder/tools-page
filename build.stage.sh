@@ -23,3 +23,6 @@ npm i --quiet --depth 0 --unsafe-perm && echo "✅ npm install done"
   
 echo && echo 🗂 $PWD && echo "👉 npm run build:prod:stage"
 npm run build:prod:stage && echo "✅ Tools page build done"
+
+echo && echo "👉 run visual testing via a github action"
+gh workflow run manual-percy-toolspage.yml -f env=stage -R Gapminder/visual-tests

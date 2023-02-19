@@ -43,3 +43,6 @@ curl https://api.rollbar.com/api/1/sourcemap -F access_token="${ROLLBAR_TOKEN}" 
 && curl https://api.rollbar.com/api/1/sourcemap -F access_token="${ROLLBAR_TOKEN}" -F version="${COMMIT_ID}" -F minified_url="${TOOLSPAGE_HOST}"vendor.min.js -F source_map=@vendor.min.js.map \
 && echo "" \
 && echo "✅ scheduled uploading of source maps to rollbar API"
+
+echo && echo "👉 run visual testing via a github action"
+gh workflow run manual-percy-toolspage.yml -f env=blue -R Gapminder/visual-tests

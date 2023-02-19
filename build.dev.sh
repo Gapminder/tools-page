@@ -36,3 +36,6 @@ npm i --quiet --depth 0 --unsafe-perm
 echo && echo 🗂 $PWD && echo "👉 npm run build"
 npm run build && echo "✅ Tools page build done"
 git reset --hard origin/development
+
+echo && echo "👉 run visual testing via a github action"
+gh workflow run manual-percy-toolspage.yml -f env=dev -R Gapminder/visual-tests
