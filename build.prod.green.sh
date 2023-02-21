@@ -14,5 +14,4 @@ if [ ! -d ./$1 ] || [ -z "$1" ] ;
     cp -r $1/* live/tools/ && echo "✅ Green prod $1 is now served from live/"
 
     echo && echo "👉 run visual testing via a github action"
-    gh workflow run manual-percy-toolspage.yml -f env=green -R Gapminder/visual-tests
 fi
