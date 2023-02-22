@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 eval "$(ssh-agent -s)"
-cd /home/root || return
-ssh-add /home/root/vizabi_tools_deploy_ssh
+cd /home || return
+ssh-add /home/vizabi_tools_deploy_ssh
 
 git config --global user.email "dev@gapminder.org"
 git config --global user.name "gapminderdeploy"
