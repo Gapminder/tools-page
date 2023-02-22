@@ -1,5 +1,5 @@
 {
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "env": {
         "browser": true,
         "es6": true
@@ -15,6 +15,7 @@
         "ENV": true
     },
     "parserOptions": {
+        "requireConfigFile": false,
         "ecmaVersion": 2020,
         "sourceType": "module"
     },
