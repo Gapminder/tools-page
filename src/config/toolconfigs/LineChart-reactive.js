@@ -1,5 +1,5 @@
 
-VIZABI_MODEL = {
+export const VIZABI_MODEL = {
   model: {
     markers: {
       line: {

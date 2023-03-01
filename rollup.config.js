@@ -26,6 +26,7 @@ import iife from "rollup-plugin-iife";
 import legacy from "@rollup/plugin-legacy";
 import html from "rollup-plugin-html2";
 import sourcemaps from "rollup-plugin-sourcemaps";
+import execute from "rollup-plugin-shell";
 
 
 const copyright = `// ${meta.homepage} v${meta.version} Copyright ${(new Date).getFullYear()} ${meta.author.name}`;
@@ -226,8 +227,9 @@ export default [
             , dest: "build/tools/assets/css" }
         ],
         copyOnce: true,
-        verbose: true
+        verbose: false
       }),
+      execute(["cd build/tools/config/toolconfigs/ && sed -i '' -e 's/export const VIZABI_MODEL/VIZABI_MODEL/g' *"]),
       html({
         template: "src/index.html",
         externals: getHtmlAssets().map(file => {
