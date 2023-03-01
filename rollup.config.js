@@ -220,6 +220,7 @@ export default [
           { src: "src/assets", dest: "build/tools" },
           { src: "src/data", dest: "build/tools" },
           { src: "src/config/toolconfigs", dest: "build/tools/config" },
+          { src: "node_modules/@gapminder/tools-page-chart-configs/src/*.js", dest: "build/tools/config/toolconfigs/" },
           { src: "src/config/conceptMapping.js", dest: "build/tools/config" },
           { src: "src/config/entitysetMapping.js", dest: "build/tools/config" },
           { src: "src/favicon.ico", dest: "build/tools" },
@@ -229,6 +230,7 @@ export default [
         copyOnce: true,
         verbose: false
       }),
+      //replace ES6 module declaration strings in all tool configs (for IE11 compatibility)
       execute(["cd build/tools/config/toolconfigs/ && sed -i '' -e 's/export const VIZABI_MODEL/VIZABI_MODEL/g' *"]),
       html({
         template: "src/index.html",
@@ -266,15 +268,6 @@ export default [
         varNameWithFileName("toolsPage_"),
         "config/",
         /\/([\w-]+)[\w.-]+json$/
-      ),
-      jsonToJsEmitAssets(
-        json({
-          include: /vizabi-config-systema_globalis/,
-          namedExports:false,
-          indent: "  "
-        }),
-        () => "VIZABI_MODEL",
-        "config/toolconfigs/"
       ),
       url({
         limit: 0,

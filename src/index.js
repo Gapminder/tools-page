@@ -16,8 +16,6 @@ import "vizabi-tools";
 import "@vizabi/reader-ddfservice/dist/reader-ddfservice.js";
 import DDFCsvReader from "@vizabi/reader-ddfcsv/dist/reader-ddfcsv.js";
 
-import "../node_modules/vizabi-config-systema_globalis/dist/*.json";
-
 import "properties";
 import "toolset";
 import "datasources";

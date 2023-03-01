@@ -1,3 +1,3 @@
-const export const VIZABI_MODEL = {
+export const VIZABI_MODEL = {
 };
 
