@@ -144,7 +144,7 @@ export const VIZABI_MODEL = {
     }
   },
   ui: {
-    locale: { id: "en" },
+    locale: { id: "en", shortNumberFormat: true },
     layout: { projector: false },
 
     //ui
@@ -190,7 +190,6 @@ export const VIZABI_MODEL = {
       timeInBackground: true,
       timeInTrails: true,
       lockNonSelected: 0,
-      numberFormatSIPrefix: true,
       panWithArrow: false,
       adaptMinMaxZoom: false,
       cursorMode: "arrow",

@@ -132,7 +132,7 @@
         "check/rbh/enabled": "Enable Robinhood plugin",
         "check/timeInBackground": "Time in background",
         "check/timeInTrails": "Time in trails label",
-        "check/numberFormatSIPrefix": "SI suffix in numbers",
+        "check/shortNumberFormat": "Short number format (420k, 69M)",
         "treemenu/other_datasets": "More data...",
         "indicator/_default/axis": "Constant",
         "indicator/_default/size": "One size",
