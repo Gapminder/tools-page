@@ -180,12 +180,16 @@ export const VIZABI_MODEL = {
           "color": {
             data: {
               space: ["geo"],
-              concept: "world_4region"
+              concept: "world_4region",
+              allow: {
+                concept: {
+                  filter: { concept_type: { $nin: ["measure", "string"] } }
+                }
+              }
             },
             "scale": {
               modelType: "color",
-              type: "ordinal",
-              allowedTypes: ["ordinal"]
+              type: "ordinal"
             }
           },
           "stack": {
