@@ -4,7 +4,7 @@ export const VIZABI_MODEL = {
       bubble: {
         requiredEncodings: ["x", "y", "size"],
         data: {
-          source: "sg",
+          source: "fasttrack",
           space: ["country", "time"],
           filter: {
             dimensions: { "country": { "un_state": true } }
@@ -34,7 +34,7 @@ export const VIZABI_MODEL = {
           },
           "size": {
             data: {
-              concept: "population_total"
+              concept: "pop"
             },
             scale: {
               modelType: "size",
@@ -43,7 +43,7 @@ export const VIZABI_MODEL = {
           },
           "y": {
             data: {
-              concept: "life_expectancy_years",
+              concept: "lex",
             },
             scale: {
               domain: [0, 100],
@@ -53,7 +53,7 @@ export const VIZABI_MODEL = {
           },
           "x": {
             data: {
-              concept: "income_per_person_gdppercapita_ppp_inflation_adjusted"
+              concept: "gdp_pcap"
             },
             scale: {
               domain: [300, 180000],

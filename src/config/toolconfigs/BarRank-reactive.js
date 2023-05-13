@@ -3,7 +3,7 @@ export const VIZABI_MODEL = {
     markers: {
       "bar": {
         data: {
-          source: "sg",
+          source: "fasttrack",
           space: ["country", "time"],
           filter: {
             dimensions: { "country": { "un_state": true } }
@@ -18,7 +18,7 @@ export const VIZABI_MODEL = {
           },
           "x": {
             data: {
-              concept: "population_total"
+              concept: "pop",
             },
             scale: {
               allowedTypes: ["linear", "log", "genericLog", "pow"]

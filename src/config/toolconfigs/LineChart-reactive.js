@@ -14,7 +14,7 @@ export const VIZABI_MODEL = {
               }
             }
           },
-          source: "sg",
+          source: "fasttrack",
           space: ["country", "time"]
         },
         encoding: {
@@ -32,7 +32,7 @@ export const VIZABI_MODEL = {
           },
           "y": {
             data: {
-              concept: "income_per_person_gdppercapita_ppp_inflation_adjusted"
+              concept: "gdp_pcap"
             },
             scale: {
               type: "log",

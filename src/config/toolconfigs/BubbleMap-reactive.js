@@ -3,7 +3,7 @@ export const VIZABI_MODEL = {
     markers: {
       bubble: {
         data: {
-          source: "sg",
+          source: "fasttrack",
           space: ["country", "time"],
           filter: {
             dimensions: { "country": { "un_state": true } }
@@ -18,7 +18,7 @@ export const VIZABI_MODEL = {
           },
           "size": {
             data: {
-              concept: "population_total"
+              concept: "pop"
             },
             scale: {
               modelType: "size",
