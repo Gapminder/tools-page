@@ -18,6 +18,7 @@ import { observable, autorun, toJS, when } from "mobx";
 let viz;
 let urlUpdateDisposer;
 const disposers = [];
+const MAIN_MARKERS = ["bubble", "line", "bar", "mountain", "pyramid", "spreadsheet"];
 
 //cleanup the existing tool
 function removeTool() {
@@ -39,7 +40,7 @@ function removeTool() {
 
 function googleAnalyticsLoadEvents(viz) {
   const markers = viz.model.markers;
-  const markerId = ["bubble", "line", "bar", "mountain", "pyramid", "spreadsheet"].find(id => markers[id]);
+  const markerId = MAIN_MARKERS.find(id => markers[id]);
   const marker = markers[markerId];
   const splashMarker = viz.splashMarker;
 
@@ -127,7 +128,7 @@ function setTool(tool, skipTransition) {
         //check if marker datasource is no longer among the configured datasources and kill marker config in that case
         //TODO: go deeper in encoding config and make it more granular
         const markers = pageConfig.model.markers;
-        const markerId = ["bubble", "line", "bar", "mountain", "pyramid", "spreadsheet"].find(id => markers[id]);
+        const markerId = MAIN_MARKERS.find(id => markers[id]);
         const datasourceIDs = Object.keys(pageConfig.model.dataSources);
         if (!datasourceIDs.includes(pageConfig.model.markers[markerId].data.source))
           pageConfig.model.markers = { [markerId]: { data: { source: datasourceIDs[0] } } };
@@ -186,6 +187,26 @@ function setTool(tool, skipTransition) {
           showLoading: true
         }
       });
+
+      const switchDataSourceIfConceptNotFound = mobx.autorun(() => {
+        //needed for the old URLs to work when switching to a different default data source
+        if (viz.status === "fulfilled") {
+          for (const marker in viz.model.markers) {
+            if (!MAIN_MARKERS.includes(marker)) continue;
+            for (const enc in viz.model.markers[marker].encoding) {
+              const dataconfig = viz.model.markers[marker].encoding[enc].data;
+
+              const concept = dataconfig.config.concept;
+              if (concept && !dataconfig.source.availability.valueLookup.has(concept)) {
+
+                const dataSource = Vizabi.stores.dataSources.getAll().find(ds => ds.availability.valueLookup.has(concept));
+                if (dataSource?.id) dataconfig.config.source = dataSource.id;
+              }
+            }
+          }
+        }
+      });
+      disposers.push(switchDataSourceIfConceptNotFound);
 
       googleAnalyticsLoadEvents(viz);
 
