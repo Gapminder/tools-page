@@ -30,11 +30,9 @@ const rule = {
   }
 };
 
-const conceptProperties = new Set(["which", "dim"]);
-
 function findInState(state, conceptMapping) {
   return Object.entries(state).some(([key, value]) => {
-    if (conceptProperties.has(key) && conceptMapping.has(value)) {
+    if (key === "concept" && conceptMapping[state.concept]) {
       return true;
     }
     if (typeof value == "object" && value != null) {
@@ -47,9 +45,9 @@ function findInState(state, conceptMapping) {
 function replaceInState(state, conceptMapping) {
   const newState = {};
   Object.entries(state).forEach(([key, value]) => {
-    if (conceptProperties.has(key) && conceptMapping.has(value)) {
-      newState[key] = conceptMapping.get(value);
-      console.log("Replaced " + value + " by " + conceptMapping.get(value));
+    if (key === "concept" && conceptMapping[value]) {
+      Object.assign(newState, conceptMapping[value]);
+      console.log("Replaced concept:" + value + " by " + JSON.stringify(conceptMapping[value]));
     } else if (typeof value == "object" && value != null && !Array.isArray(value)) {
       newState[key] = replaceInState(value, conceptMapping);
     } else {
