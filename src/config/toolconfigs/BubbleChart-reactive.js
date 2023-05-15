@@ -213,7 +213,7 @@ export const VIZABI_MODEL = {
       decorations: {
         "enabled": true,
         "xAxisGroups": {
-          "income_per_person_gdppercapita_ppp_inflation_adjusted": [
+          "gdp_pcap": [
             { "min": null, "max": 2650, "label": "incomegroups/level1", "label_short": "incomegroups/level1short" },
             { "min": 2650, "max": 8000, "label": "incomegroups/level2", "label_short": "incomegroups/level2short" },
             { "min": 8000, "max": 24200, "label": "incomegroups/level3", "label_short": "incomegroups/level3short" },
