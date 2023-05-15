@@ -124,7 +124,7 @@ export const VIZABI_MODEL = {
 
     //ui
     "time-slider": {
-      "show_value": true
+      "show_value": false
     },
     "buttons": {
       "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
@@ -157,10 +157,10 @@ export const VIZABI_MODEL = {
       whenHovering: {
         showTooltip: false,
         hideVerticalNow: false,
-        showProjectionLineX: false,
-        showProjectionLineY: false,
-        higlightValueX: false,
-        higlightValueY: false
+        showProjectionLineX: true,
+        showProjectionLineY: true,
+        higlightValueX: true,
+        higlightValueY: true
       },
       labels: {
         min_number_of_entities_when_values_hide: 3,
