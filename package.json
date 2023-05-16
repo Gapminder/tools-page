@@ -59,7 +59,7 @@
     "@vizabi/popbyage": "4.1.0",
     "@vizabi/mountainchart": "7.3.1",
     "@vizabi/core": "1.28.3",
-    "@vizabi/shared-components": "1.32.2",
+    "@vizabi/shared-components": "1.32.3",
     "@vizabi/spreadsheet": "3.1.0"
   },
   "devDependencies": {
