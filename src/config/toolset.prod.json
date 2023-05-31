@@ -12,7 +12,7 @@
     "id": "mountain",
     "tool": "MountainChart",
     "toolVariation": "Base",
-    "config": "MountainChart-v7",
+    "config": "MountainChart-v8",
     "dataSources": ["povcalnet", "sg", "fasttrack", "billy"],
     "transition": ["select","time"],
     "title": "income",
