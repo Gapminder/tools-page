@@ -196,10 +196,11 @@ function setTool(tool, skipTransition) {
             for (const enc in viz.model.markers[marker].encoding) {
               const dataconfig = viz.model.markers[marker].encoding[enc].data;
 
-              const concept = dataconfig.config.concept;
-              if (concept && !dataconfig.source.availability.valueLookup.has(concept)) {
+              const hasConcept = (ds, c) => ds.getConcept(c).concept;
 
-                const dataSource = Vizabi.stores.dataSources.getAll().find(ds => ds.availability.valueLookup.has(concept));
+              const concept = dataconfig.config.concept;
+              if (concept && !hasConcept(dataconfig.source, concept)) {
+                const dataSource = Vizabi.stores.dataSources.getAll().find(ds => hasConcept(ds, concept));
                 if (dataSource?.id) dataconfig.config.source = dataSource.id;
               }
             }
