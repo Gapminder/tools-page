@@ -10,7 +10,7 @@ export const VIZABI_MODEL = {
             filter: { dimensions: { "geo": { "geo": { $in: ["usa", "chn", "rus", "nga"] } } } }
           },
           encoding: {
-            order: { data: { concept: null, constant: "none" } },
+            order: { direction: "asc", data: { concept: null, constant: "none" } },
             stack: { data: { constant: "none" } },
             facet_row: { data: { constant: "none" } }
           }
@@ -23,7 +23,7 @@ export const VIZABI_MODEL = {
             filter: { dimensions: { "geo": { "un_state": true } } }
           },
           encoding: {
-            order: { data: { concept: null, constant: "none" } },
+            order: {direction: "asc", data: { concept: null, constant: "none" } },
             stack: { data: { ref: "markers.mountain.config.encoding.color.data" } },
             facet_row: { data: { constant: "none" } }
           }
@@ -37,7 +37,7 @@ export const VIZABI_MODEL = {
             filter: { dimensions: { "geo": { "is--world_4region": true } } }
           },
           encoding: {
-            order: { data: { concept: null, constant: "none" } },
+            order: { direction: "asc", data: { concept: null, constant: "none" } },
             stack: { data: { constant: "none" } },
             facet_row: { data: { constant: "none" } }
           }
@@ -53,7 +53,7 @@ export const VIZABI_MODEL = {
             filter: { dimensions: { "geo": { "un_state": true } } }
           },
           encoding: {
-            order: { data: { concept: null, constant: "none" } },
+            order: { direction: "asc", data: { concept: null, constant: "none" } },
             stack: { data: { constant: "all" } },
             facet_row: { data: { constant: "none" } }
           }
@@ -67,7 +67,7 @@ export const VIZABI_MODEL = {
             filter: { dimensions: { "geo": { "is--world_4region": true } } }
           },
           encoding: {
-            order: { data: { concept: null, constant: "none" } },
+            order: { direction: "asc", data: { concept: null, constant: "none" } },
             stack: { data: { constant: "all" } },
             facet_row: { data: { constant: "none" } }
           }
@@ -80,7 +80,7 @@ export const VIZABI_MODEL = {
             filter: { dimensions: { "geo": { "is--global": true } } }
           },
           encoding: {
-            order: { data: { concept: null, constant: "none" } },
+            order: { direction: "asc", data: { concept: null, constant: "none" } },
             stack: { data: { constant: "all" } },
             facet_row: { data: { constant: "none" } }
           }
