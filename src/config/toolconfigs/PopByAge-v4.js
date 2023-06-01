@@ -72,7 +72,7 @@ export const VIZABI_MODEL = {
           },
           "orderFacets": {
             modelType: "order",
-            custom: { ref: "markers.pyramid.data.filter.config.dimensions.geo.geo.$in" },
+            direction: { ref: "markers.pyramid.data.filter.config.dimensions.geo.geo.$in" },
             data: { ref: "markers.pyramid.encoding.facet_column.data" }
           },
           label: {
