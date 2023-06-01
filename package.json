@@ -58,7 +58,7 @@
     "@vizabi/linechart": "3.10.1",
     "@vizabi/popbyage": "4.1.0",
     "@vizabi/mountainchart": "7.3.2",
-    "@vizabi/core": "1.28.5",
+    "@vizabi/core": "1.28.7",
     "@vizabi/shared-components": "1.32.5",
     "@vizabi/spreadsheet": "3.1.0"
   },
