@@ -2,6 +2,7 @@
   {
     "id": "bubbles",
     "tool": "BubbleChart",
+    "toolVariation": "Base",
     "config": "BubbleChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack", "country_flags"],
     "transition": ["select","time"],
@@ -42,6 +43,7 @@
   {
     "id": "linechart",
     "tool": "LineChart",
+    "toolVariation": "Base",
     "config": "LineChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["show","time"],
@@ -58,6 +60,7 @@
   {
     "id": "barrank",
     "tool": "BarRank",
+    "toolVariation": "Base",
     "config": "BarRank-reactive",
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
@@ -79,6 +82,7 @@
     "image": "/assets/images/chart/spreadsheet.png",
     "dataSources": ["sg", "wdi", "fasttrack"],
     "tool": "Spreadsheet",
+    "toolVariation": "Base",
     "config": "Spreadsheet-reactive",
     "hideThumbnail": true
   },

@@ -2,6 +2,7 @@
   {
     "id": "bubbles",
     "tool": "BubbleChart",
+    "toolVariation": "Base",
     "config": "BubbleChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack", "country_flags"],
     "transition": ["select","time"],
@@ -11,6 +12,7 @@
   {
   "id": "barrank",
   "tool": "BarRank",
+  "toolVariation": "Base",
   "config": "BarRank-reactive",
   "dataSources": ["sg", "wdi", "fasttrack"],
   "transition": ["select","time"],
@@ -31,6 +33,7 @@
   {
     "id": "linechart",
     "tool": "LineChart",
+    "toolVariation": "Base",
     "config": "LineChart-reactive", 
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["show","time"],
@@ -61,6 +64,7 @@
   {
     "id": "linechart-global",
     "tool": "LineChart",
+    "toolVariation": "Base",
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["none"],
     "title": "globaltrends",
@@ -83,6 +87,7 @@
     "image": "/assets/images/chart/spreadsheet.png",
     "dataSources": ["sg", "wdi", "fasttrack"],
     "tool": "Spreadsheet",
+    "toolVariation": "Base",
     "config": "Spreadsheet-reactive",
     "hideThumbnail": true
   },

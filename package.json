@@ -50,17 +50,17 @@
     "mobx": "^5.15.7",
     "urlon": "3.1.0",
     "@gapminder/tools-page-chart-configs": "4.0.1",
-    "@vizabi/barrank": "3.10.2",
-    "@vizabi/bubblechart": "3.17.2",
+    "@vizabi/barrank": "4.0.0",
+    "@vizabi/bubblechart": "4.0.0",
     "@vizabi/bubblemap": "4.1.0",
     "@vizabi/reader-ddfcsv": "4.1.1",
     "@vizabi/reader-ddfservice": "^2.3.0",
-    "@vizabi/linechart": "3.10.1",
+    "@vizabi/linechart": "4.0.0",
     "@vizabi/popbyage": "4.1.0",
     "@vizabi/mountainchart": "7.3.4",
     "@vizabi/core": "1.29.0",
     "@vizabi/shared-components": "1.32.5",
-    "@vizabi/spreadsheet": "3.1.0"
+    "@vizabi/spreadsheet": "4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
