@@ -112,7 +112,11 @@ export const VIZABI_MODEL = {
             //scale: { ref: "markers.line.encoding.color.scale" }
           },
           name: { data: { concept: "name" } },
-          rank: { data: { concept: "rank" } },
+          order: {
+            modelType: "order",
+            direction: "asc",
+            data: { concept: "rank" }
+          },
           map: { data: { concept: "shape_lores_svg" } }
         }
       }

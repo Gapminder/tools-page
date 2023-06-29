@@ -81,7 +81,11 @@ export const VIZABI_MODEL = {
             }
           },
           name: { data: { concept: "name" } },
-          rank: { data: { concept: "rank" } },
+          order: {
+            modelType: "order",
+            direction: "asc",
+            data: { concept: "rank" }
+          },
           map: { data: { concept: "shape_lores_svg" } }
         }
       },
