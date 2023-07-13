@@ -40,7 +40,16 @@ const inToolsetTools = Object.keys(toolset.reduce((result, { tool }) => {
   tool && (result[tool.toLowerCase()] = true);
   return result;
 }, {}));
+const unbundledTools = allTools.unbundled.map(tool => ({
+  testRegExp: new RegExp(tool),
+  chunkName: tool
+}));
 
+function checkUnbundled(id) {
+  for (const tool of unbundledTools) {
+    if (tool.testRegExp.test(id)) return tool.chunkName;
+  }
+}
 
 function generateToolInputEntries() {
   return (__PROD__ ? inToolsetTools : allTools.tools).reduce((result, tool) => {
@@ -176,10 +185,14 @@ export default [
         "VizabiSharedComponents": "VizabiSharedComponents"
       },
       manualChunks(id) {
+        if (__PROD__) {
+          const result = checkUnbundled(id);
+          if (result) return result;
+        }
         if (/Vizabi|vizabi/.test(id)) {
           return "tools";
         }
-        if (/d3|mobx.umd|urlon.umd/.test(id)) {
+        if (/rollupPluginBabelHelpers|d3|mobx.umd|urlon.umd/.test(id)) {
           return "vendor";
         }
       }
@@ -241,7 +254,7 @@ export default [
           };
         })
       }),
-      __PROD__ && eslint(),
+      //__PROD__ && eslint(),
       __PROD__ && babel({
         babelHelpers: "bundled",
         include: [

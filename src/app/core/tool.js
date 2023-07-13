@@ -97,173 +97,177 @@ function setTool(tool, skipTransition) {
   timeLogger.add("SPLASH");
   timeLogger.add("FULL");
 
-  const pathToConfig = "config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
-  loadJS(pathToConfig, document.body)
-    .then(() => {
-      d3.select(".vizabi-placeholder")
-        .append("div")
-        .attr("class", "vzb-placeholder")
-        .attr("style", "width: 100%; height: 100%;");
+  (window[toolsetEntry.tool] ? Promise.resolve() : loadJS(toolsetEntry.tool.toLowerCase() + (ENV === "production" ? ".min.js" : ".js"), document.body)).then(() => {
 
-      // apply data models from configuration to pageConfig
-      function applyDataConfigs(pageConfig) {
-        if (!pageConfig.model.dataSources) pageConfig.model.dataSources = {};
-        const urlDataConfig = URLI.model?.model?.dataSources;
+    const pathToConfig = "config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
+    loadJS(pathToConfig, document.body, "vzb-tool-config")
+      .then(() => {
+        d3.select(".vizabi-placeholder")
+          .append("div")
+          .attr("class", "vzb-placeholder")
+          .attr("style", "width: 100%; height: 100%;");
 
-        if (urlDataConfig) {
-          pageConfig.model.dataSources = urlDataConfig;
-        } else {
-          //bring data configs from a separate config file to the page config (those mentioned in toolset)
+        // apply data models from configuration to pageConfig
+        function applyDataConfigs(pageConfig) {
+          if (!pageConfig.model.dataSources) pageConfig.model.dataSources = {};
+          const urlDataConfig = URLI.model?.model?.dataSources;
 
-          const dataSourcesId = toolsetEntry.dataSources || Object.keys(datasources);
-          dataSourcesId.forEach(ds => {
-            if (!datasources[ds])
-              console.warn(`Could not find data config with key ${ds} in datasources file`);
-            else
-              pageConfig.model.dataSources[ds] = datasources[ds];
-            pageConfig.model.dataSources[ds].locale = URLI.model?.ui?.locale || pageConfig.ui.locale;
-          });
+          if (urlDataConfig) {
+            pageConfig.model.dataSources = urlDataConfig;
+          } else {
+            //bring data configs from a separate config file to the page config (those mentioned in toolset)
+
+            const dataSourcesId = toolsetEntry.dataSources || Object.keys(datasources);
+            dataSourcesId.forEach(ds => {
+              if (!datasources[ds])
+                console.warn(`Could not find data config with key ${ds} in datasources file`);
+              else
+                pageConfig.model.dataSources[ds] = datasources[ds];
+              pageConfig.model.dataSources[ds].locale = URLI.model?.ui?.locale || pageConfig.ui.locale;
+            });
+          }
+
+          //check if marker datasource is no longer among the configured datasources and kill marker config in that case
+          //TODO: go deeper in encoding config and make it more granular
+          const markers = pageConfig.model.markers;
+          const markerId = MAIN_MARKERS.find(id => markers[id]);
+          const datasourceIDs = Object.keys(pageConfig.model.dataSources);
+          if (!datasourceIDs.includes(pageConfig.model.markers[markerId].data.source))
+            pageConfig.model.markers = { [markerId]: { data: { source: datasourceIDs[0] } } };
+
+          return pageConfig;
         }
 
-        //check if marker datasource is no longer among the configured datasources and kill marker config in that case
-        //TODO: go deeper in encoding config and make it more granular
-        const markers = pageConfig.model.markers;
-        const markerId = MAIN_MARKERS.find(id => markers[id]);
-        const datasourceIDs = Object.keys(pageConfig.model.dataSources);
-        if (!datasourceIDs.includes(pageConfig.model.markers[markerId].data.source))
-          pageConfig.model.markers = { [markerId]: { data: { source: datasourceIDs[0] } } };
-
-        return pageConfig;
-      }
-
-      function applyTransitionConfigs(pageConfig) {
-        if (skipTransition || !viz) return pageConfig;
-        const transitionModel = getTransitionModel(toolModelPrevious, toolsetEntryPrevious.transition, toolsetEntry.transition);
-        return deepExtend({}, pageConfig, transitionModel, true); //true --> overwrite by empty
-      }
-
-      const PLACEHOLDER = ".vzb-placeholder";
-
-      window.VIZABI_PAGE_MODEL = deepExtend({
-        ui: {
-          layout: deepExtend({}, VizabiSharedComponents.LayoutService.DEFAULTS, {
-            placeholder: PLACEHOLDER
-          }),
-          locale: deepExtend({}, VizabiSharedComponents.LocaleService.DEFAULTS, {
-            placeholder: PLACEHOLDER,
-            path: "assets/translation/"
-          })
+        function applyTransitionConfigs(pageConfig) {
+          if (skipTransition || !viz) return pageConfig;
+          const transitionModel = getTransitionModel(toolModelPrevious, toolsetEntryPrevious.transition, toolsetEntry.transition);
+          return deepExtend({}, pageConfig, transitionModel, true); //true --> overwrite by empty
         }
-      }, VIZABI_MODEL);
-      let pageConfig = VIZABI_MODEL;
-      pageConfig = applyDataConfigs(pageConfig);
-      pageConfig = applyTransitionConfigs(pageConfig);
-      if (URLI.model && URLI.model.model) {
-        VizabiSharedComponents.Utils.mergeInTarget(pageConfig.model, deepExtend(URLI.model.model), /*treat as blocks:*/ ["data.filter"]);
-      }
-      window.VIZABI_UI_CONFIG = observable((URLI.model && URLI.model.ui) ? deepExtend({}, URLI.model.ui) : {});
 
-      window.VIZABI_LOCALE = observable(VIZABI_PAGE_MODEL.ui.locale);
-      if (VIZABI_UI_CONFIG.locale !== undefined) VIZABI_LOCALE.id = VIZABI_UI_CONFIG.locale;
-      window.VIZABI_LAYOUT = observable(VIZABI_PAGE_MODEL.ui.layout);
-      if (VIZABI_UI_CONFIG.projector !== undefined) VIZABI_LAYOUT.projector = VIZABI_UI_CONFIG.projector;
+        const PLACEHOLDER = ".vzb-placeholder";
 
-      setLanguage(VIZABI_LOCALE.id);
-      dispatch.call("languageChanged", null, VIZABI_LOCALE.id);
-      appState.projector = VIZABI_LAYOUT.projector;
-
-      const toolPrototype = toolsetEntry.toolVariation ? window[toolsetEntry.tool][toolsetEntry.toolVariation] : window[toolsetEntry.tool];
-      const model = Vizabi(pageConfig.model);
-
-      viz = new toolPrototype({
-        Vizabi,
-        placeholder: PLACEHOLDER,
-        model,
-        locale: VIZABI_LOCALE,
-        layout: VIZABI_LAYOUT,
-        ui: VIZABI_UI_CONFIG,
-        default_ui: VIZABI_PAGE_MODEL.ui,
-        options: {
-          showLoading: true
+        window.VIZABI_PAGE_MODEL = deepExtend({
+          ui: {
+            layout: deepExtend({}, VizabiSharedComponents.LayoutService.DEFAULTS, {
+              placeholder: PLACEHOLDER
+            }),
+            locale: deepExtend({}, VizabiSharedComponents.LocaleService.DEFAULTS, {
+              placeholder: PLACEHOLDER,
+              path: "assets/translation/"
+            })
+          }
+        }, VIZABI_MODEL);
+        let pageConfig = VIZABI_MODEL;
+        pageConfig = applyDataConfigs(pageConfig);
+        pageConfig = applyTransitionConfigs(pageConfig);
+        if (URLI.model && URLI.model.model) {
+          VizabiSharedComponents.Utils.mergeInTarget(pageConfig.model, deepExtend(URLI.model.model), /*treat as blocks:*/ ["data.filter"]);
         }
-      });
+        window.VIZABI_UI_CONFIG = observable((URLI.model && URLI.model.ui) ? deepExtend({}, URLI.model.ui) : {});
 
-      const switchDataSourceIfConceptNotFound = mobx.autorun(() => {
-        //needed for the old URLs to work when switching to a different default data source
-        if (viz.status === "fulfilled") {
-          for (const marker in viz.model.markers) {
-            if (!MAIN_MARKERS.includes(marker)) continue;
-            for (const enc in viz.model.markers[marker].encoding) {
-              const dataconfig = viz.model.markers[marker].encoding[enc].data;
+        window.VIZABI_LOCALE = observable(VIZABI_PAGE_MODEL.ui.locale);
+        if (VIZABI_UI_CONFIG.locale !== undefined) VIZABI_LOCALE.id = VIZABI_UI_CONFIG.locale;
+        window.VIZABI_LAYOUT = observable(VIZABI_PAGE_MODEL.ui.layout);
+        if (VIZABI_UI_CONFIG.projector !== undefined) VIZABI_LAYOUT.projector = VIZABI_UI_CONFIG.projector;
 
-              const hasConcept = (ds, c) => ds.getConcept(c).concept;
+        setLanguage(VIZABI_LOCALE.id);
+        dispatch.call("languageChanged", null, VIZABI_LOCALE.id);
+        appState.projector = VIZABI_LAYOUT.projector;
 
-              const concept = dataconfig.config.concept;
-              if (concept && !hasConcept(dataconfig.source, concept)) {
-                const dataSource = Vizabi.stores.dataSources.getAll().find(ds => hasConcept(ds, concept));
-                if (dataSource?.id) dataconfig.config.source = dataSource.id;
+        const toolPrototype = toolsetEntry.toolVariation ? window[toolsetEntry.tool][toolsetEntry.toolVariation] : window[toolsetEntry.tool];
+        const model = Vizabi(pageConfig.model);
+
+        viz = new toolPrototype({
+          Vizabi,
+          placeholder: PLACEHOLDER,
+          model,
+          locale: VIZABI_LOCALE,
+          layout: VIZABI_LAYOUT,
+          ui: VIZABI_UI_CONFIG,
+          default_ui: VIZABI_PAGE_MODEL.ui,
+          options: {
+            showLoading: true
+          }
+        });
+
+        const switchDataSourceIfConceptNotFound = mobx.autorun(() => {
+          //needed for the old URLs to work when switching to a different default data source
+          if (viz.status === "fulfilled") {
+            for (const marker in viz.model.markers) {
+              if (!MAIN_MARKERS.includes(marker)) continue;
+              for (const enc in viz.model.markers[marker].encoding) {
+                const dataconfig = viz.model.markers[marker].encoding[enc].data;
+
+                const hasConcept = (ds, c) => ds.getConcept(c).concept;
+
+                const concept = dataconfig.config.concept;
+                if (concept && !hasConcept(dataconfig.source, concept)) {
+                  const dataSource = Vizabi.stores.dataSources.getAll().find(ds => hasConcept(ds, concept));
+                  if (dataSource?.id) dataconfig.config.source = dataSource.id;
+                }
               }
             }
           }
-        }
-      });
-      disposers.push(switchDataSourceIfConceptNotFound);
-
-      googleAnalyticsLoadEvents(viz);
-
-      window.viz = viz;
-
-      window.VIZABI_DEFAULT_MODEL = diffObject(
-        toJS(viz.model.config, { recurseEverything: true }),
-        (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}
-      );
-
-      const removeProperties = (obj, array, keyStack = "") => {
-        Object.keys(obj).forEach(key => {
-          if (array.some(s => (keyStack + "." + key).endsWith(s)))
-            delete obj[key];
-          else
-            (obj[key] && typeof obj[key] === "object") && removeProperties(obj[key], array, keyStack + "." + key);
         });
-        return obj;
-      };
+        disposers.push(switchDataSourceIfConceptNotFound);
 
-      urlUpdateDisposer = autorun(() => {
-        const Utils = VizabiSharedComponents.Utils;
-        const UI_CONFIG = VIZABI_UI_CONFIG;
-        const DEFAULT_MODEL = VIZABI_DEFAULT_MODEL;
-        const MODEL = VIZABI_MODEL;
-        const LOCALE = VIZABI_LOCALE;
-        const LAYOUT = VIZABI_LAYOUT;
-        const PAGE_MODEL = VIZABI_PAGE_MODEL;
+        googleAnalyticsLoadEvents(viz);
 
-        let jsmodel = toJS(viz.model.config, { recurseEverything: true });
-        let jsui = toJS(UI_CONFIG, { recurseEverything: true });
+        window.viz = viz;
 
-        jsmodel = diffObject(jsmodel, DEFAULT_MODEL || {});
-        jsui = diffObject(jsui, MODEL.ui);
+        window.VIZABI_DEFAULT_MODEL = diffObject(
+          toJS(viz.model.config, { recurseEverything: true }),
+          (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}
+        );
 
-        const model = {
-          model: Utils.clearEmpties(removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain", "presets"])),
-          ui: Utils.clearEmpties(removeProperties(jsui, ["dragging", "opened"]))
+        const removeProperties = (obj, array, keyStack = "") => {
+          Object.keys(obj).forEach(key => {
+            if (array.some(s => (keyStack + "." + key).endsWith(s)))
+              delete obj[key];
+            else
+              (obj[key] && typeof obj[key] === "object") && removeProperties(obj[key], array, keyStack + "." + key);
+          });
+          return obj;
         };
 
-        if (PAGE_MODEL.ui.locale.id !== LOCALE.id)
-          model.ui.locale = LOCALE.id;
-        else
-          delete model.ui.locale;
-        if (PAGE_MODEL.ui.layout.projector !== LAYOUT.projector)
-          model.ui.projector = LAYOUT.projector;
-        else
-          delete model.ui.projector;
+        urlUpdateDisposer = autorun(() => {
+          const Utils = VizabiSharedComponents.Utils;
+          const UI_CONFIG = VIZABI_UI_CONFIG;
+          const DEFAULT_MODEL = VIZABI_DEFAULT_MODEL;
+          const MODEL = VIZABI_MODEL;
+          const LOCALE = VIZABI_LOCALE;
+          const LAYOUT = VIZABI_LAYOUT;
+          const PAGE_MODEL = VIZABI_PAGE_MODEL;
 
-        DEFAULT_MODEL && updateURL(model, undefined, true);
-      }, { name: "tool.js: update url" });
-    })
-    .catch(err => console.error(`Failed to set up tool id = ${tool} with config from ${pathToConfig}
-      Message: ${err.message}
-      Stack: ${err.stack}`
-    ));
+          let jsmodel = toJS(viz.model.config, { recurseEverything: true });
+          let jsui = toJS(UI_CONFIG, { recurseEverything: true });
+
+          jsmodel = diffObject(jsmodel, DEFAULT_MODEL || {});
+          jsui = diffObject(jsui, MODEL.ui);
+
+          const model = {
+            model: Utils.clearEmpties(removeProperties(jsmodel, ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain", "presets"])),
+            ui: Utils.clearEmpties(removeProperties(jsui, ["dragging", "opened"]))
+          };
+
+          if (PAGE_MODEL.ui.locale.id !== LOCALE.id)
+            model.ui.locale = LOCALE.id;
+          else
+            delete model.ui.locale;
+          if (PAGE_MODEL.ui.layout.projector !== LAYOUT.projector)
+            model.ui.projector = LAYOUT.projector;
+          else
+            delete model.ui.projector;
+
+          DEFAULT_MODEL && updateURL(model, undefined, true);
+        }, { name: "tool.js: update url" });
+      })
+      .catch(err => console.error(`Failed to set up tool id = ${tool} with config from ${pathToConfig}
+        Message: ${err.message}
+        Stack: ${err.stack}`
+      ));
+
+  });
 }
 
 export {

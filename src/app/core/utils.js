@@ -30,13 +30,13 @@ export function translateNode(translator) {
   };
 }
 
-export function loadJS(url, location) {
+export function loadJS(url, location, className) {
   //url is URL of external file, implementationCode is the code
   //to be called from the file, location is the location to
   //insert the <script> element
   return new Promise((resolve, reject) => {
     const scriptTag = document.createElement("script");
-    scriptTag.classList.add("vzb-tool-config");
+    if (className) scriptTag.classList.add(className);
     scriptTag.src = url;
     scriptTag.onerror = reject;
     scriptTag.onload = resolve;
