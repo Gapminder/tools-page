@@ -92,6 +92,17 @@
     "hideThumbnail": true
   },
   {
+    "id": "all",
+    "tool": "Combo",
+    "toolVariation": "Base",
+    "config": "Combo",
+    "toolComponents": ["BubbleChart", "ExtApiMap"],
+    "dataSources": ["all"],
+    "transition": ["select","time"],
+    "title": "all",
+    "image": "/assets/images/chart/combo.png"
+  },
+  {
     "id": "dollar-street",
     "url": "http://www.gapminder.org/dollar-street",
     "image": "/assets/images/chart/dollar-street.png",

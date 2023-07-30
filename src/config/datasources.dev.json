@@ -46,6 +46,9 @@
     "service": "https://big-waffle.gapminder.org",
     "dataset": "country-flags",
     "name": "country-flags"
-  }
+  },
+  "all": {
+    "modelType": "ddfcsv",
+    "path": "https://raw.githubusercontent.com/open-numbers/ddf--gdl--shdi/master/"
+  }  
 }
-
