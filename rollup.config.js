@@ -36,8 +36,11 @@ const __DEVSERVER__ = process.env.NODE_ENV === "devserver";
 
 const allTools = require(path.resolve(__dirname, "vizabi-tools.json"));
 const toolset = require(path.resolve(__dirname, "src", "config", `toolset.${__PROD__ ? (__STAGE__ || "prod") : "dev"}.json`));
-const inToolsetTools = Object.keys(toolset.reduce((result, { tool }) => {
+const inToolsetTools = Object.keys(toolset.reduce((result, { tool, toolComponents }) => {
   tool && (result[tool.toLowerCase()] = true);
+  toolComponents && toolComponents.forEach(tool => {
+    result[tool.toLowerCase()] = true;
+  })
   return result;
 }, {}));
 const unbundledTools = allTools.unbundled.map(tool => ({
@@ -254,7 +257,7 @@ export default [
           };
         })
       }),
-      //__PROD__ && eslint(),
+      __PROD__ && eslint(),
       __PROD__ && babel({
         babelHelpers: "bundled",
         include: [
