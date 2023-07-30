@@ -60,7 +60,9 @@
     "@vizabi/mountainchart": "7.3.4",
     "@vizabi/core": "1.29.0",
     "@vizabi/shared-components": "1.33.0",
-    "@vizabi/spreadsheet": "4.0.0"
+    "@vizabi/spreadsheet": "4.0.0",
+    "@vizabi/combo": "1.0.0",
+    "@vizabi/extapimap": "4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",

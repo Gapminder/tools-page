@@ -6,10 +6,14 @@
     "bubblemap",
     "mountainchart",
     "popbyage",
-    "spreadsheet"
+    "spreadsheet",
+    "combo",
+    "extapimap"
   ],
   "paths": {
   },
   "unbundled": [
+    "combo",
+    "extapimap"
   ]
 }

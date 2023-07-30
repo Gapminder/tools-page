@@ -97,7 +97,10 @@ function setTool(tool, skipTransition) {
   timeLogger.add("SPLASH");
   timeLogger.add("FULL");
 
-  (window[toolsetEntry.tool] ? Promise.resolve() : loadJS(toolsetEntry.tool.toLowerCase() + (ENV === "production" ? ".min.js" : ".js"), document.body)).then(() => {
+  const tools = [toolsetEntry.tool];
+  if (toolsetEntry.toolComponents) tools.push(...toolsetEntry.toolComponents);
+
+  Promise.all(tools.map(tool => window[tool] ? Promise.resolve() : loadJS(tool.toLowerCase() + (ENV === "production" ? ".min.js" : ".js"), document.body))).then(() => {
 
     const pathToConfig = "config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
     loadJS(pathToConfig, document.body, "vzb-tool-config")
@@ -177,6 +180,14 @@ function setTool(tool, skipTransition) {
         const toolPrototype = toolsetEntry.toolVariation ? window[toolsetEntry.tool][toolsetEntry.toolVariation] : window[toolsetEntry.tool];
         const model = Vizabi(pageConfig.model);
 
+        const toolOptions = {
+          showLoading: true
+        };
+
+        if (toolsetEntry.toolComponents) {
+          toolOptions.toolComponents = toolsetEntry.toolComponents.map(toolComponent => window[toolComponent].Base);
+        }
+
         viz = new toolPrototype({
           Vizabi,
           placeholder: PLACEHOLDER,
@@ -185,9 +196,7 @@ function setTool(tool, skipTransition) {
           layout: VIZABI_LAYOUT,
           ui: VIZABI_UI_CONFIG,
           default_ui: VIZABI_PAGE_MODEL.ui,
-          options: {
-            showLoading: true
-          }
+          options: toolOptions
         });
 
         const switchDataSourceIfConceptNotFound = mobx.autorun(() => {
