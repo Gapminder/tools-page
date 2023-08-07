@@ -13,6 +13,10 @@
   "paths": {
   },
   "unbundled": [
+    "bubblemap",
+    "mountainchart",
+    "popbyage",
+    "spreadsheet",
     "combo",
     "extapimap"
   ]
