@@ -87,6 +87,29 @@
     "hideThumbnail": true
   },
   {
+    "id": "extapimap",
+    "tool": "ExtApiMap",
+    "toolVariation": "Base",
+    "config": "ExtApiMap",
+    "dataSources": ["sg", "wdi", "fasttrack"],
+    "transition": ["select","time"],
+    "title": "extapimap",
+    "hideThumbnail": true,
+    "image": "/assets/images/chart/extapimap.png"
+  },
+  {
+    "id": "combo-emap-bc",
+    "tool": "Combo",
+    "toolVariation": "Base",
+    "toolComponents": ["ExtApiMap", "BubbleChart"],
+    "config": "Combo-emap-bc",
+    "dataSources": ["sg", "wdi", "fasttrack"],
+    "transition": ["select","time"],
+    "title": "combo-emap-bc",
+    "hideThumbnail": true,
+    "image": "/assets/images/chart/combo-emap-bc.png"
+  },
+  {
     "id": "dollar-street",
     "url": "http://www.gapminder.org/dollar-street",
     "image": "/assets/images/chart/dollar-street.png",

@@ -92,15 +92,27 @@
     "hideThumbnail": true
   },
   {
-    "id": "all",
+    "id": "extapimap",
+    "tool": "ExtApiMap",
+    "toolVariation": "Base",
+    "config": "ExtApiMap",
+    "dataSources": ["sg", "wdi", "fasttrack"],
+    "transition": ["select","time"],
+    "title": "extapimap",
+    "hideThumbnail": true,
+    "image": "/assets/images/chart/extapimap.png"
+  },
+  {
+    "id": "combo-emap-bc",
     "tool": "Combo",
     "toolVariation": "Base",
-    "config": "Combo",
-    "toolComponents": ["BubbleChart", "ExtApiMap"],
-    "dataSources": ["all"],
+    "toolComponents": ["ExtApiMap", "BubbleChart"],
+    "config": "Combo-emap-bc",
+    "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
-    "title": "all",
-    "image": "/assets/images/chart/combo.png"
+    "title": "combo-emap-bc",
+    "hideThumbnail": true,
+    "image": "/assets/images/chart/combo-emap-bc.png"
   },
   {
     "id": "dollar-street",
