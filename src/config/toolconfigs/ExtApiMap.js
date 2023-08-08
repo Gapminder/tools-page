@@ -184,6 +184,9 @@ export const VIZABI_MODEL = {
       "opacityHighlightDim": 0.3,
       labels: {
         removeLabelBox: false
+      },
+      map: {
+        overflowBottom: 0
       }
     },
     "tree-menu": {

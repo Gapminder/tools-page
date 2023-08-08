@@ -62,7 +62,7 @@
     "@vizabi/shared-components": "1.33.1",
     "@vizabi/spreadsheet": "4.0.0",
     "@vizabi/combo": "1.0.0",
-    "@vizabi/extapimap": "4.0.2"
+    "@vizabi/extapimap": "4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",

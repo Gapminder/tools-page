@@ -188,6 +188,8 @@ export const VIZABI_MODEL = {
           "colors",
           "label",
           "zoom",
+          "mapcolors",
+          "mapoptions",
           "technical",
           "repeat",
           "presentation",
@@ -245,6 +247,9 @@ export const VIZABI_MODEL = {
             { "min": 24200, "max": null, "label": "incomegroups/level4", "label_short": "incomegroups/level4short" }
           ]
         }
+      },
+      map: {
+        overflowBottom: 0
       }
     },
     "data-warning": {
