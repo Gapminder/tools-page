@@ -7,7 +7,15 @@ export const VIZABI_MODEL = {
           source: "fasttrack",
           space: ["geo", "time"],
           filter: {
-            dimensions: { "geo": { "un_state": true } }
+            dimensions: {
+              geo: {
+                $or: [
+                  { $and: [
+                    { un_state: true }
+                  ] },
+                ]
+              }
+            }
           }
         },
         encoding: {
