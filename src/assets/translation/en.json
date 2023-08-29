@@ -44,6 +44,8 @@
         "buttons/mapoptions": "Map options",
         "marker-singular/bubble": "bubble",
         "marker-plural/bubble": "bubbles",
+        "marker-singular/bar": "bar",
+        "marker-plural/bar": "bars",
         "hints/extapimap/showBubbles": "Bubbles",
         "hints/extapimap/showAreas": "Areas",
         "hints/extapimap/showMap": "Background",

@@ -2,14 +2,21 @@ export const VIZABI_MODEL = {
   model: {
     markers: {
       "bar": {
+        requiredEncodings: ["x"],
         data: {
           source: "fasttrack",
-          space: ["country", "time"],
+          space: ["geo", "time"],
           filter: {
-            dimensions: { "country": { "un_state": true } }
+            dimensions: { "geo": { "un_state": true } }
           }
         },
         encoding: {
+          "show": {
+            modelType: "selection",
+            data: {
+              filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
+            }
+          },
           "selected": {
             modelType: "selection"
           },
@@ -26,7 +33,7 @@ export const VIZABI_MODEL = {
           },
           "color": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "world_4region"
             },
             scale: {
@@ -124,19 +131,13 @@ export const VIZABI_MODEL = {
       "show_value": false
     },
     "buttons": {
-      "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
+      "buttons": ["colors", "markercontrols", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["timedisplay", "colors", "find", "moreoptions"],
-        "sidebar": ["timedisplay", "colors", "find"],
+        "popup": ["timedisplay", "colors", "markercontrols", "moreoptions"],
+        "sidebar": ["timedisplay", "colors", "markercontrols"],
         "moreoptions": ["opacity", "speed", "colors", "repeat", "technical", "presentation", "about"]
-      },
-      "find": {
-        "panelMode": "find",
-        "showTabs": {
-          "country": "open"
-        }
       }
     }
   }
