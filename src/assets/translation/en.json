@@ -9,6 +9,7 @@
         "buttons/forecast": "Forecast",
         "buttons/lock": "Lock",
         "buttons/find": "Find",
+        "buttons/markercontrols": "Find",
         "buttons/show": "Show",
         "buttons/deselect": "Deselect",
         "buttons/showall": "Show all",
