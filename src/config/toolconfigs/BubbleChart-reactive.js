@@ -5,26 +5,12 @@ export const VIZABI_MODEL = {
         requiredEncodings: ["x", "y", "size"],
         data: {
           source: "fasttrack",
-          space: ["geo", "time"],
+          space: ["country", "time"],
           filter: {
-            dimensions: {
-              geo: {
-                $or: [
-                  { $and: [
-                    { un_state: true }
-                  ] },
-                ]
-              }
-            }
+            dimensions: { "country": { "un_state": true } }
           }
         },
         encoding: {
-          "show": {
-            modelType: "selection",
-            data: {
-              filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
-            }
-          },
           "selected": {
             modelType: "selection",
             data: {
@@ -78,7 +64,7 @@ export const VIZABI_MODEL = {
           },
           "color": {
             data: {
-              space: ["geo"],
+              space: ["country"],
               concept: "world_4region"
             },
             scale: {
@@ -167,12 +153,12 @@ export const VIZABI_MODEL = {
 
     //ui
     "buttons": {
-      "buttons": ["colors", "markercontrols", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["colors", "find", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["colors", "markercontrols", "moreoptions"],
-        "sidebar": ["colors", "markercontrols", "size", "zoom"],
+        "popup": ["colors", "find", "moreoptions"],
+        "sidebar": ["colors", "find", "size", "zoom"],
         "moreoptions": [
           "opacity",
           "speed",
