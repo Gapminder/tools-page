@@ -265,9 +265,15 @@ export default [
           "node_modules/@vizabi/**"  
         ],
         presets: [["@babel/preset-env", {
-          targets: {
-            "edge": "12"
-          },
+          targets: [
+            ">0.2%",
+            "not dead",
+            "not op_mini all",
+            "not safari < 10",
+            "not chrome < 51",
+            "not android < 5",
+            "not ie < 12"
+          ],
           modules: false,
           useBuiltIns: "entry",
           corejs: { version: "3.9" }
