@@ -47,6 +47,8 @@
         "marker-plural/bubble": "bubbles",
         "marker-singular/bar": "bar",
         "marker-plural/bar": "bars",
+        "marker-singular/line": "line",
+        "marker-plural/line": "lines",
         "hints/extapimap/showBubbles": "Bubbles",
         "hints/extapimap/showAreas": "Areas",
         "hints/extapimap/showMap": "Background",
