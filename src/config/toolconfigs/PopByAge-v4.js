@@ -8,9 +8,9 @@ export const VIZABI_MODEL = {
           filter: {
             dimensions: {
               "geo": {
-                "geo": {
-                  "$in": ["world"]
-                }
+                "$or": [{
+                  "geo": { $in: ["world"] }
+                }]
               }
             }
           }
@@ -72,7 +72,7 @@ export const VIZABI_MODEL = {
           },
           "orderFacets": {
             modelType: "order",
-            direction: { ref: "markers.pyramid.data.filter.config.dimensions.geo.geo.$in" },
+            direction: { ref: "markers.pyramid.data.filter.config.dimensions.geo.$or.0.geo.$in" },
             data: { ref: "markers.pyramid.encoding.facet_column.data" }
           },
           label: {
@@ -186,20 +186,20 @@ export const VIZABI_MODEL = {
 
     },
     "buttons": {
-      "buttons": ["colors", "find", "lock", /*"side",*/ "inpercent", "moreoptions", "sidebarcollapse", "fullscreen"]
+      "buttons": ["colors", "markercontrols", "lock", /*"side",*/ "inpercent", "moreoptions", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["timedisplay", "colors", "find", /*"side",*/ "moreoptions"],
-        "sidebar": ["timedisplay", "colors", "find", "grouping"],
+        "popup": ["timedisplay", "colors", "markercontrols", /*"side",*/ "moreoptions"],
+        "sidebar": ["timedisplay", "colors", "markercontrols", "grouping"],
         "moreoptions": ["opacity", "speed", "grouping", "colors", /*"side",*/ "presentation", "about"],
       },
-      "find": {
-        "panelMode": "show",
-        "showTabs": {
-          "geo": "open fully"
-        },
-        enablePicker: false
+      "markercontrols": {
+        "disableSwitch": true,
+        "disableSlice": true,
+        "disableAddRemoveGroups": true,
+        "disableFindInteractions": true,
+        "primaryDim": "geo"
       }
     },
     presentation: false

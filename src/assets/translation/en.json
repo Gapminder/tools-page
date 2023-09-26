@@ -51,6 +51,8 @@
         "marker-plural/line": "lines",
         "marker-singular/mountain": "mountain",
         "marker-plural/mountain": "mountains",
+        "marker-singular/pyramid": "pyramid",
+        "marker-plural/pyramid": "pyramids",
         "hints/extapimap/showBubbles": "Bubbles",
         "hints/extapimap/showAreas": "Areas",
         "hints/extapimap/showMap": "Background",
