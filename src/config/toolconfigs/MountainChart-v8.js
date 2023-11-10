@@ -387,6 +387,8 @@ export const VIZABI_MODEL = {
             { "min": 524288, "max": 2097152, "label": "incomegroups/level11", "label_short": "incomegroups/level11short" },
             { "min": 2097152, "max": 8388608, "label": "incomegroups/level12", "label_short": "incomegroups/level12short" },
             { "min": 8388608, "max": 33554432, "label": "incomegroups/level13", "label_short": "incomegroups/level13short" },
+            { "min": 33554432, "max": 134217728, "label": "incomegroups/level14", "label_short": "incomegroups/level14short" },
+            { "min": 134217728, "max": 536870912, "label": "incomegroups/level15", "label_short": "incomegroups/level15short" },
           ]
         }
       },
@@ -397,7 +399,7 @@ export const VIZABI_MODEL = {
       "billyFaces": true,
       "howManyBilly": 10,
       "billyYScale": 0.5,
-      "billyMeshXPoints": 80,
+      "billyMeshXPoints": 86,
       "inpercent": true,
       "timeInBackground": true,
       "curve": "curveBasis",
