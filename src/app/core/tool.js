@@ -210,7 +210,7 @@ function setTool(tool, skipTransition) {
                 const hasConcept = (ds, c) => ds.getConcept(c).concept;
 
                 const concept = dataconfig.config.concept;
-                if (concept && !hasConcept(dataconfig.source, concept)) {
+                if (concept && typeof concept === "string" && !hasConcept(dataconfig.source, concept)) {
                   const dataSource = Vizabi.stores.dataSources.getAll().find(ds => hasConcept(ds, concept));
                   if (dataSource?.id) dataconfig.config.source = dataSource.id;
                 }
