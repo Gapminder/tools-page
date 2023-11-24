@@ -85,6 +85,7 @@
         "check/belowCount": "Count below",
         "check/aboveProc": "% above",
         "check/aboveCount": "Count above",
+        "check/enabled": "Show labels",
         "buttons/billy": "Billionaires",
         "check/showBilly": "Show the richest",
         "buttons/dollarstreet": "Dollar Street",
