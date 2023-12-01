@@ -57,8 +57,8 @@
   "related-5600ae2b188967b26265a73c-title": " ¿Cómo Se Relacionan Ingresos con Expectativa de Vida?",
   "related-5600ae64188967b26265a73d-subtitle": "Respuesta corta — Ha caido",
   "related-5600ae64188967b26265a73d-title": "¿Cómo Ha Cambiado Cantidad de Bebes por Mujer en el mundo?",
-  "related-5600aedc188967b26265a73e-subtitle": "Esta gráfica compara Expectativa de Vida & Producto Interno Bruto de 182 naciones en 2015.",
-  "related-5600aedc188967b26265a73e-title": "Afiche Mundial Gapmind 2015",
+  "related-5600aedc188967b26265a73e-subtitle": "This chart compares Life Expectancy & GDP per capita of all nations.",
+  "related-5600aedc188967b26265a73e-title": "Gapminder World Poster",
   "related-5600782dabde580e33c79e24-subtitle": "Primero lentamente. Luego rápido.",
   "related-5600782dabde580e33c79e24-title": "¿Cómo Cambió La Población Mundial?",
   "bubbles": "Burbujas",
@@ -74,5 +74,7 @@
   "pop_by_age_desc": "Esta gráfica muestra la población por edad",
   "dollar_street": "Calle Dolar",
   "dollar_street_project": "Proyecto Calle Dolar",
+  "combo-emap-bc": "Fancy map + Bubbles",
+  "extapimap": "Fancy map",
   "share": "Compartir"
 }

@@ -57,8 +57,8 @@
   "related-5600ae2b188967b26265a73c-title": "รายได้สัมพันธ์กับอายุเฉลี่ยอย่างไร",
   "related-5600ae64188967b26265a73d-subtitle": "คำตอบสั้น ๆ — ลดลง",
   "related-5600ae64188967b26265a73d-title": "จำนวนทารกต่อผู้หญิงหนึ่งคนบนโลกเปลี่ยนแปลงไปอย่างไร",
-  "related-5600aedc188967b26265a73e-subtitle": "แผนภาพนี้เปรียบเทียบอายุเฉลี่ยและผลิตภัณฑ์ในประเทศต่อหัว (GDP per capita) ของประเทศ 182 ประเทศในปี 2015",
-  "related-5600aedc188967b26265a73e-title": "โปสเตอร์โลกของ Gapminder ปี 2015",
+  "related-5600aedc188967b26265a73e-subtitle": "This chart compares Life Expectancy & GDP per capita of all nations.",
+  "related-5600aedc188967b26265a73e-title": "Gapminder World Poster",
   "related-5600782dabde580e33c79e24-subtitle": "ช่วงแรกอย่างช้า ๆ แล้วต่อมาเร็วขึ้น",
   "related-5600782dabde580e33c79e24-title": "ประชากรโลกเปลี่ยนแปลงไปอย่างไร",
   "bubbles": "แผนภาพฟองอากาศ",
@@ -74,5 +74,7 @@
   "pop_by_age_desc": "แผนภาพนี้แสดงประชากรจำแนกตามอายุ",
   "dollar_street": "ดอลลาร์สตรีท",
   "dollar_street_project": "โครงการดอลลาร์สตรีท",
+  "combo-emap-bc": "Fancy map + Bubbles",
+  "extapimap": "Fancy map",
   "share": "แชร์"
 }

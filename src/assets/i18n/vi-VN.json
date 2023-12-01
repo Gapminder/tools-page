@@ -57,8 +57,8 @@
   "related-5600ae2b188967b26265a73c-title": " Thu nhập liên quan đến tuổi thọ như thế nào?",
   "related-5600ae64188967b26265a73d-subtitle": "Ngắn câu trả lời-giảm xuống",
   "related-5600ae64188967b26265a73d-title": "Số trẻ em bình quân trên một phụ nữ đã thay đổi như thế nào trên toàn thế giới?",
-  "related-5600aedc188967b26265a73e-subtitle": "Biểu đồ này so sánh tuổi thọ và bình quân thu nhập đầu người của 182 quốc gia vào năm 2015.",
-  "related-5600aedc188967b26265a73e-title": "Poster Gapminder thế giới năm 2015",
+  "related-5600aedc188967b26265a73e-subtitle": "This chart compares Life Expectancy & GDP per capita of all nations.",
+  "related-5600aedc188967b26265a73e-title": "Gapminder World Poster",
   "related-5600782dabde580e33c79e24-subtitle": "Ban đầu từ từ. Sau đó nhanh chóng.",
   "related-5600782dabde580e33c79e24-title": "Dân số thế giới đã thay đổi như thế nào?",
   "bubbles": "Biểu đồ bóng bay",
@@ -74,5 +74,7 @@
   "pop_by_age_desc": "Biểu đồ này cho biết cơ cấu dân số theo tuổi",
   "dollar_street": "Phố Dollar",
   "dollar_street_project": "Dự án phố Dollar",
+  "combo-emap-bc": "Fancy map + Bubbles",
+  "extapimap": "Fancy map",
   "share": "Chia sẻ"
 }

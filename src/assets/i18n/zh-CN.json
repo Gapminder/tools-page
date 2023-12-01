@@ -57,8 +57,8 @@
   "related-5600ae2b188967b26265a73c-title": " 收入水平和对生活质量的追求有多少相关性呢？",
   "related-5600ae64188967b26265a73d-subtitle": "简而言之 -- 确实下降了",
   "related-5600ae64188967b26265a73d-title": "世界上平均每个妈妈的宝宝数量发生了什么样的改变？",
-  "related-5600aedc188967b26265a73e-subtitle": "这张图表对 2015年182个国家的预期寿命和人均国内生产总值进行了比较。",
-  "related-5600aedc188967b26265a73e-title": "Gapminder 2015年世界海报",
+  "related-5600aedc188967b26265a73e-subtitle": "This chart compares Life Expectancy & GDP per capita of all nations.",
+  "related-5600aedc188967b26265a73e-title": "Gapminder World Poster",
   "related-5600782dabde580e33c79e24-subtitle": "First slowly. Then fast.",
   "related-5600782dabde580e33c79e24-title": "世界人口是如何变化的？",
   "bubbles": "Bubbles",
@@ -74,5 +74,7 @@
   "pop_by_age_desc": "This graph shows the population by age",
   "dollar_street": "Dollar Street",
   "dollar_street_project": "Dollar Street project",
+  "combo-emap-bc": "Fancy map + Bubbles",
+  "extapimap": "Fancy map",
   "share": "分享"
 }
