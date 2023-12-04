@@ -22,8 +22,7 @@ export const VIZABI_MODEL = {
               concept: "gapminder_index"
             },
             scale: {
-              modelType: "size",
-              allowedTypes: ["linear", "log", "genericLog", "pow"]
+              modelType: "size"
             }
           },
           "lat": {
@@ -80,7 +79,8 @@ export const VIZABI_MODEL = {
               constant: "_default"
             },
             scale: {
-              modelType: "size"
+              modelType: "size",
+              extent: [0, 0.34]
             }
           },
           "frame": {

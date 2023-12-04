@@ -37,8 +37,7 @@ export const VIZABI_MODEL = {
               concept: "pop"
             },
             scale: {
-              modelType: "size",
-              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
+              modelType: "size"
             }
           },
           "y": {
@@ -48,7 +47,7 @@ export const VIZABI_MODEL = {
             scale: {
               domain: [0, 100],
               zoomed: [19, 86],
-              allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
+              allowedTypes: ["linear", "log", "genericLog", "pow", "time", "rank"]
             }
           },
           "x": {
@@ -84,7 +83,7 @@ export const VIZABI_MODEL = {
             },
             scale: {
               modelType: "size",
-              allowedTypes: ["linear", "log", "genericLog", "pow", "point", "ordinal"]
+              extent: [0, 0.34]
             }
           },
           frame: {

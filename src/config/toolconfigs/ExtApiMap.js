@@ -46,8 +46,7 @@ export const VIZABI_MODEL = {
               source: "fasttrack",
             },
             scale: {
-              modelType: "size",
-              allowedTypes: ["linear", "log", "genericLog", "pow"]
+              modelType: "size"
             }
           },
           "label": {
@@ -62,7 +61,8 @@ export const VIZABI_MODEL = {
               constant: "_default"
             },
             scale: {
-              modelType: "size"
+              modelType: "size",
+              extent: [0, 0.34]
             }
           },
           // "centroid": {
