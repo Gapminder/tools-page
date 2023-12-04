@@ -3,12 +3,13 @@ export const VIZABI_MODEL = {
     markers: {
       bubble: {
         requiredEncodings: ["x", "y", "size"],
+        // requiredEncodings: ["x", "y", "x_total", "y_total", "size"],
         data: {
-          source: "fasttrack",
           space: ["geo", "time"],
-          filter: {
-            dimensions: { "geo": { "$or": [{ "un_state": true }] } }
-          }
+          source: "co2emissions",
+          // filter: {
+          //   //dimensions: { "geo": { "$or": [{ "un_state": true }] } }
+          // }
         },
         encoding: {
           "show": {
@@ -40,34 +41,69 @@ export const VIZABI_MODEL = {
           },
           "size": {
             data: {
-              concept: "pop"
+              concept: "total_co2",
             },
             scale: {
-              modelType: "size"
+              modelType: "size",
+              domain: [0, 10628351002],
+              zoomed: [0, 10628351002],
+              extent: [0, 1]
             }
           },
           "y": {
-            modelType: "lane",
             data: {
-              concept: "lex",
+              concept: "co2e_per_cap",
             },
             scale: {
-              domain: [0, 100],
-              zoomed: [19, 86],
+              domain: [0, 150],
+              zoomed: [0, 60]
             }
           },
           "x": {
             data: {
-              concept: "gdp_pcap"
+              concept: "mean_income"
             },
             scale: {
-              domain: [300, 180000],
-              zoomed: [400, 96000],
               type: "log",
+              domain: [0.2, 450],
+              zoomed: [0.2, 450]
+            }
+          },
+          "y_total": {
+            modelType: "lane",
+            scale: {
+              allowedTypes: ["linear", "log", "genericLog", "pow", "time", "rank"]
+            },
+            data: {
+              space: ["geo", "time"],
+              concept: { ref: "markers.bubble.encoding.y.data.concept" },
+              source: { ref: "markers.bubble.encoding.y.data.source" }
+            }
+          },
+          "x_total": {
+            scale: {
+              allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
+            },
+            data: {
+              space: ["geo", "time"],
+              concept: { ref: "markers.bubble.encoding.x.data.concept" },
+              source: { ref: "markers.bubble.encoding.x.data.source" }
+            }
+          },
+          "size_total": {
+            data: {
+              space: ["geo", "time"],
+              concept: { ref: "markers.bubble.encoding.size.data.concept" },
+              source: { ref: "markers.bubble.encoding.size.data.source" }
+            },
+            scale: {
+              modelType: "size",
+              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
             }
           },
           "color": {
             data: {
+              source: "fasttrack",
               space: ["geo"],
               concept: "world_4region"
             },
@@ -157,12 +193,12 @@ export const VIZABI_MODEL = {
 
     //ui
     "buttons": {
-      "buttons": ["colors", "markercontrols", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["colors", "markercontrols", "skateramp-story", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["colors", "markercontrols", "moreoptions"],
-        "sidebar": ["colors", "markercontrols", "size", "zoom"],
+        "popup": ["colors", "markercontrols", "skateramp-story", "moreoptions"],
+        "sidebar": ["colors", "skateramp-story", "size", "zoom"],
         "moreoptions": [
           "opacity",
           "speed",
@@ -239,7 +275,9 @@ export const VIZABI_MODEL = {
         "sg": "spread",
         "fasttrack": "spread",
         "country_flags": "spread",
-        "wdi": "folder:other_datasets"
+        "wdi": "folder:other_datasets",
+        "co2emissions": "folder:other_datasets",
+        "u5deaths": "folder:other_datasets"
       }
     }
   }

@@ -46,5 +46,17 @@
     "service": "https://big-waffle.gapminder.org",
     "dataset": "country-flags",
     "name": "country-flags"
+  },
+  "co2emissions": {
+    "modelType": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "co2emissions",
+    "name": "co2emissions"
+  },
+  "u5deaths": {
+    "modelType": "ddfbw",
+    "service": "https://big-waffle.gapminder.org",
+    "dataset": "u5deaths",
+    "name": "u5deaths"
   }
 }
