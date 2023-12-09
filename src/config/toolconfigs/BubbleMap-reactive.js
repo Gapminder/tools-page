@@ -6,7 +6,7 @@ export const VIZABI_MODEL = {
           source: "sg",
           space: ["geo", "time"],
           filter: {
-            dimensions: { "geo": { "$or": [{ "un_state": true }] } }
+            dimensions: { "geo": { "$or": [{ "is--country": true }] } }
           }
         },
         encoding: {
@@ -183,20 +183,20 @@ export const VIZABI_MODEL = {
         colorGeo: false,
         preserveAspectRatio: false,
         scale: 1.1,
+        rotate: [-11, 0],
         offset: {
           top: 0.05,
-          right: 0,
-          bottom: -0.07,
-          left: -0.15
+          right: 0.01,
+          bottom: 0.05,
+          left: -0.12
         },
         projection: "geo" + "Aitoff",
         topology: {
           path: "assets/world-50m.json",
           objects: {
-            geo: "land",
             boundaries: "countries"
           },
-          geoIdProperty: null,
+          geoIdProperty: "id",
         }
       }
     },
