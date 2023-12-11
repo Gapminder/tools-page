@@ -162,6 +162,7 @@ export const VIZABI_MODEL = {
       }
     },
     "chart": {
+      showTitles: true,
       timeInBackground: true,
       showForecast: false,
       showForecastOverlay: true,

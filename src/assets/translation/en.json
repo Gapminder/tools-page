@@ -77,6 +77,7 @@
         "check/zoomOnScrolling": "Zoom with mouse wheel",
         "check/flipSides": "Flip sides",
         "check/timeInBackground": "Time in background",
+        "check/showTitles": "Show chart titles",
         "check/timeInTrails": "Time in trails label",
         "check/shortNumberFormat": "Short number format (420k, 69M)",
         "check/rbh/enabled": "Enable Robinhood plugin",
