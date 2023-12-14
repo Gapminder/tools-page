@@ -52,7 +52,7 @@
     "@gapminder/tools-page-chart-configs": "4.0.1",
     "@vizabi/barrank": "4.0.1",
     "@vizabi/bubblechart": "4.1.2",
-    "@vizabi/bubblemap": "4.3.0",
+    "@vizabi/bubblemap": "4.3.1",
     "@vizabi/reader-ddfcsv": "4.1.1",
     "@vizabi/reader-ddfservice": "^2.3.0",
     "@vizabi/linechart": "4.0.0",
