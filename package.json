@@ -58,8 +58,8 @@
     "@vizabi/linechart": "4.0.0",
     "@vizabi/popbyage": "4.1.0",
     "@vizabi/mountainchart": "7.3.8",
-    "@vizabi/core": "1.31.2",
-    "@vizabi/shared-components": "1.36.0",
+    "@vizabi/core": "1.31.3",
+    "@vizabi/shared-components": "1.36.1",
     "@vizabi/spreadsheet": "4.0.0",
     "@vizabi/combo": "1.0.0",
     "@vizabi/extapimap": "4.0.5"

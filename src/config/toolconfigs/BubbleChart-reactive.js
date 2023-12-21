@@ -41,6 +41,7 @@ export const VIZABI_MODEL = {
             }
           },
           "y": {
+            modelType: "lane",
             data: {
               concept: "lex",
             },
