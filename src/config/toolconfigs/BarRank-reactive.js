@@ -26,9 +26,6 @@ export const VIZABI_MODEL = {
           "x": {
             data: {
               concept: "pop",
-            },
-            scale: {
-              allowedTypes: ["linear", "log", "genericLog", "pow"]
             }
           },
           "color": {

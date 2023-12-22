@@ -35,8 +35,7 @@ export const VIZABI_MODEL = {
               concept: "gdp_pcap"
             },
             scale: {
-              type: "log",
-              allowedTypes: ["linear", "log", "genericLog", "pow"]
+              type: "log"
             }
           },
           "x": {
@@ -44,8 +43,7 @@ export const VIZABI_MODEL = {
               concept: "time"
             },
             scale: {
-              type: "time",
-              allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
+              type: "time"
             }
           },
           "color": {
