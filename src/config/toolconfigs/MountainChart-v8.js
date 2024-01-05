@@ -4,10 +4,18 @@ export const VIZABI_MODEL = {
       [{
         icon: "show_countries--stack_none--facet_none",
         mode: "show",
-        loosePath: ["geo", "geo", "$in"],
+        loosePath: ["geo", "$or", 0, "geo", "$in"],
         config: {
           data: {
-            filter: { dimensions: { "geo": { "geo": { $in: ["usa", "chn", "rus", "nga"] } } } }
+            filter: {
+              dimensions: { 
+                "geo": { 
+                  "$or": [{
+                    "geo": { $in: ["usa", "chn", "rus", "nga"] } 
+                  }]
+                }
+              }
+            }
           },
           encoding: {
             order: { direction: "asc", data: { concept: null, constant: "none" } },
@@ -91,14 +99,22 @@ export const VIZABI_MODEL = {
       [{
         icon: "show_geo--stack_all--facet_isness",
         mode: "show",
-        loosePath: ["geo", "geo", "$in"],
+        loosePath: ["geo", "$or", 0, "geo", "$in"],
         config: {
           data: {
-            filter: { dimensions: { "geo": {"geo": { "$in": ["africa", "americas", "asia", "europe"] } } } }
+            filter: { 
+              dimensions: { 
+                "geo": {
+                  "$or": [{
+                    "geo": { "$in": ["africa", "americas", "asia", "europe"] }
+                  }]
+                } 
+              }
+            }
           },
           encoding: {
             order: {
-              direction: { ref: "markers.mountain.data.filter.config.dimensions.geo.geo.$in" },
+              direction: { ref: "markers.mountain.data.filter.config.dimensions.geo.$or.0.geo.$in" },
               data: { constant: null, concept: "geo" }
             },
             stack: { data: { constant: "all" } },
@@ -141,7 +157,11 @@ export const VIZABI_MODEL = {
           space: ["geo", "time"],
           filter: {
             dimensions: {
-              "geo": { "geo": {"$in": ["africa", "americas", "asia", "europe"]}}
+              "geo": { 
+                "$or": [{
+                  "geo": { "$in": ["africa", "americas", "asia", "europe"]}
+                }]
+              }
               //"geo": { "is--world_4region": true }
               //"geo": { "is--country": true }
               //"geo": { "un_state": true }
@@ -166,7 +186,7 @@ export const VIZABI_MODEL = {
           },
           "order": {
             modelType: "order",
-            direction: { ref: "markers.mountain.data.filter.config.dimensions.geo.geo.$in" },
+            direction: { ref: "markers.mountain.data.filter.config.dimensions.geo.$or.0.geo.$in" },
             data: { constant: null, concept: "geo" }
           },
           "selected": {
@@ -439,12 +459,12 @@ export const VIZABI_MODEL = {
       "show_value": false
     },
     "buttons": {
-      "buttons": ["colors", "find", "inpercent", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
+      "buttons": ["colors", "markercontrols", "inpercent", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"],
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["presets", "colors", "find", "billy", "dollarstreet", "moreoptions"],
-        "sidebar": ["presets", "colors", "find", "dollarstreet"],
+        "popup": ["presets", "colors", "markercontrols", "billy", "dollarstreet", "moreoptions"],
+        "sidebar": ["presets", "colors", "markercontrols", "dollarstreet"],
         "moreoptions": ["opacity", "speed", "colors", "stack", "billy", "dollarstreet", "povertyline", "technical", "presentation", "about"]
       },
       "find": {

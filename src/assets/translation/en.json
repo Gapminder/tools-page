@@ -49,6 +49,8 @@
         "marker-plural/bar": "bars",
         "marker-singular/line": "line",
         "marker-plural/line": "lines",
+        "marker-singular/mountain": "mountain",
+        "marker-plural/mountain": "mountains",
         "hints/extapimap/showBubbles": "Bubbles",
         "hints/extapimap/showAreas": "Areas",
         "hints/extapimap/showMap": "Background",
