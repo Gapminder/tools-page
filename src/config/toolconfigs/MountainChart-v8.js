@@ -479,6 +479,10 @@ export const VIZABI_MODEL = {
         "showTabs": {
           "geo": "open"
         }
+      },
+      "markercontrols": {
+        "disableSwitch": true,
+        "disableSlice": true
       }
     },
     "tree-menu": {
