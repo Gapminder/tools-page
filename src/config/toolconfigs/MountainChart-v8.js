@@ -114,7 +114,10 @@ export const VIZABI_MODEL = {
           },
           encoding: {
             order: {
-              direction: { ref: "markers.mountain.data.filter.config.dimensions.geo.$or.0.geo.$in" },
+              direction: { ref: {
+                path: "markers.mountain.data.filter",
+                transform: "orderDirection"
+              }},
               data: { constant: null, concept: "geo" }
             },
             stack: { data: { constant: "all" } },
@@ -186,7 +189,10 @@ export const VIZABI_MODEL = {
           },
           "order": {
             modelType: "order",
-            direction: { ref: "markers.mountain.data.filter.config.dimensions.geo.$or.0.geo.$in" },
+            direction: { ref: {
+              path: "markers.mountain.data.filter",
+              transform: "orderDirection"
+            }},
             data: { constant: null, concept: "geo" }
           },
           "selected": {
