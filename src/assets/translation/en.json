@@ -92,7 +92,7 @@
         "buttons/billy": "Billionaires",
         "check/showBilly": "Show the richest",
         "buttons/dollarstreet": "Dollar Street",
-        "check/dsShow": "Show photos from <a href='https://www.gapminder.org/dollar-street' target='_blank'>Dollar Street</a>",
+        "check/dsShow": "Show homes from <a href='https://www.gapminder.org/dollar-street' target='_blank'>Dollar Street</a>",
         "ds/show": "Show",
         "ds/homes": "homes",
         "dialogs/color/select-all": "Select all in that group",
