@@ -151,6 +151,7 @@
         "mount/merging/color": "By colors",
         "mount/merging/world": "World",
         "mount/merging/none": "None",
+        "mount/presets/hint": "Hold shift to see more cards",
         "mount/manualSorting": "Manual sorting of groups:",
         "mount/people": "people",
         "mount/few": "few",

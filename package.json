@@ -57,7 +57,7 @@
     "@vizabi/reader-ddfservice": "^2.3.0",
     "@vizabi/linechart": "4.0.0",
     "@vizabi/popbyage": "4.1.0",
-    "@vizabi/mountainchart": "7.3.9",
+    "@vizabi/mountainchart": "7.3.10",
     "@vizabi/core": "1.31.5",
     "@vizabi/shared-components": "1.38.0",
     "@vizabi/spreadsheet": "4.0.0",
