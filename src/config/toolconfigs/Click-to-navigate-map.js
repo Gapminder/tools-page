@@ -4,12 +4,15 @@ export const VIZABI_MODEL = {
       bubble: {
         data: {
           source: "sg",
-          space: ["country", "time"],
-          filter: {
-            dimensions: { "country": { "un_state": true } }
-          }
+          space: ["geo", "time"]
         },
         encoding: {
+          "show": {
+            modelType: "selection",
+            data: {
+              filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
+            }
+          },
           "selected": {
             modelType: "selection"
           },
@@ -27,13 +30,13 @@ export const VIZABI_MODEL = {
           },
           "lat": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "latitude"
             }
           },
           "lon": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "longitude"
             }
           },
@@ -69,7 +72,7 @@ export const VIZABI_MODEL = {
           },
           "label": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               modelType: "entityPropertyDataConfig",
               concept: "name"
             }
@@ -133,7 +136,11 @@ export const VIZABI_MODEL = {
             //scale: { ref: "markers.bubble.encoding.color.scale" }
           },
           name: { data: { concept: "name" } },
-          rank: { data: { concept: "rank" } },
+          order: {
+            modelType: "order",
+            direction: "asc",
+            data: { concept: "rank" }
+          },
           map: { data: { concept: "shape_lores_svg" } }
         }
       }
@@ -146,12 +153,12 @@ export const VIZABI_MODEL = {
     //ui
     "buttons": {
       "sidebarCollapse": true,
-      "buttons": ["find"]
+      "buttons": ["markercontrols"]
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["colors", "find", "moreoptions"],
-        "sidebar": ["colors", "find", "size"],
+        "popup": ["colors", "markercontrols", "moreoptions"],
+        "sidebar": ["colors", "markercontrols", "size"],
         "moreoptions": [
           "opacity",
           "speed",
@@ -164,11 +171,17 @@ export const VIZABI_MODEL = {
           "presentation",
           "about"
         ]
+      },
+      "markercontrols": {
+        "disableSwitch": true,
+        "disableSlice": true,
+        "disableAddRemoveGroups": true,
       }
     },
     "chart": {
       timeInBackground: false,
       clickUrl: "https://www.gapminder.org/ignorance/gapminder-index-pilot/?country=",
+      showTitles: false,
       showForecast: false,
       showForecastOverlay: true,
       pauseBeforeForecast: true,
@@ -189,20 +202,20 @@ export const VIZABI_MODEL = {
         colorGeo: false,
         preserveAspectRatio: false,
         scale: 1.1,
+        rotate: [-11, 0],
         offset: {
           top: 0.05,
-          right: 0,
-          bottom: -0.07,
-          left: -0.15
+          right: 0.01,
+          bottom: 0.05,
+          left: -0.12
         },
         projection: "geo" + "Aitoff",
         topology: {
           path: "assets/world-50m.json",
           objects: {
-            geo: "land",
             boundaries: "countries"
           },
-          geoIdProperty: null,
+          geoIdProperty: "id",
         }
       }
     },
