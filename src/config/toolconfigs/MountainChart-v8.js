@@ -482,7 +482,8 @@ export const VIZABI_MODEL = {
       },
       "markercontrols": {
         "disableSwitch": true,
-        "disableSlice": true
+        "disableSlice": true,
+        "disableAddRemoveGroups": true,
       }
     },
     "tree-menu": {
