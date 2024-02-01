@@ -6,9 +6,18 @@ export const VIZABI_MODEL = {
         data: {
           locale: "en",
           source: "sg",
-          space: ["country", "time"],
+          space: ["geo", "time"],
+          filter: {
+            dimensions: { "geo": { "$or": [{ "is--country": true }] } }
+          }
         },
         encoding: {
+          "show": {
+            modelType: "selection",
+            data: {
+              filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
+            }
+          },
           "selected": {
             modelType: "selection"
           },
@@ -17,7 +26,7 @@ export const VIZABI_MODEL = {
           },
           "color": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "world_4region"
             },
             scale: {
@@ -33,8 +42,8 @@ export const VIZABI_MODEL = {
           },
           "color_map": {
             data: {
-              concept: "country",
-              space: ["country"],
+              concept: "geo",
+              space: ["geo"],
             },
             scale: {
               modelType: "color"
@@ -51,7 +60,7 @@ export const VIZABI_MODEL = {
           },
           "label": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               modelType: "entityPropertyDataConfig",
               concept: "name"
             }
@@ -67,19 +76,19 @@ export const VIZABI_MODEL = {
           },
           // "centroid": {
           //   data: {
-          //     space: ["country"],
+          //     space: ["geo"],
           //     concept: "baskod2010"
           //   }
           // },
           "lat": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "latitude"
             }
           },
           "lon": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "longitude"
             }
           },
@@ -158,12 +167,12 @@ export const VIZABI_MODEL = {
   "ui": {
     //ui
     "buttons": {
-      "buttons": ["colors", "find", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["colors", "markercontrols", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["colors", "find", "moreoptions"],
-        "sidebar": ["colors", "find", "size", "zoom"],
+        "popup": ["colors", "markercontrols", "moreoptions"],
+        "sidebar": ["colors", "markercontrols", "size", "zoom"],
         "moreoptions": [
           "opacity",
           "speed",
@@ -177,6 +186,9 @@ export const VIZABI_MODEL = {
           "presentation",
           "about"
         ]
+      },
+      "markercontrols": {
+        "disableSlice": true
       }
     },
     "chart": {

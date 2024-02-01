@@ -6,9 +6,18 @@ export const VIZABI_MODEL = {
         data: {
           locale: "en",
           source: "sg",
-          space: ["country", "time"],
+          space: ["geo", "time"],
+          filter: {
+            dimensions: { "geo": { "$or": [{ "is--country": true }] } }
+          }
         },
         encoding: {
+          "show": {
+            modelType: "selection",
+            data: {
+              filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
+            }
+          },
           "selected": {
             modelType: "selection",
             data: {
@@ -65,7 +74,7 @@ export const VIZABI_MODEL = {
           },
           "color": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "world_4region"
             },
             scale: {
@@ -105,26 +114,26 @@ export const VIZABI_MODEL = {
           },
           // "centroid": {
           //   data: {
-          //     space: ["country"],
+          //     space: ["geo"],
           //     concept: "baskod2010"
           //   }
           // },
           "lat": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "latitude"
             }
           },
           "lon": {
             data: {
-              space: ["country"],
+              space: ["geo"],
               concept: "longitude"
             }
           },
           "color_map": {
             data: {
-              concept: "country",
-              space: ["country"],
+              concept: "geo",
+              space: ["geo"],
             },
             scale: {
               modelType: "color"
@@ -175,12 +184,12 @@ export const VIZABI_MODEL = {
 
     //ui
     "buttons": {
-      "buttons": ["colors", "find", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["colors", "markercontrols", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["colors", "find", "moreoptions"],
-        "sidebar": ["colors", "find", "size", "zoom"],
+        "popup": ["colors", "markercontrols", "moreoptions"],
+        "sidebar": ["colors", "markercontrols", "size", "zoom"],
         "moreoptions": [
           "opacity",
           "speed",
@@ -197,9 +206,8 @@ export const VIZABI_MODEL = {
           "about"
         ]
       },
-      "find": {
-        enableSelectShowSwitch: false,
-        enableMarkerSpaceOptions: false,
+      "markercontrols": {
+        "disableSlice": true
       }
     },
 
