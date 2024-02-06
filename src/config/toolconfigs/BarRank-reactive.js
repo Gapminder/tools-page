@@ -136,6 +136,10 @@ export const VIZABI_MODEL = {
         "sidebar": ["timedisplay", "colors", "markercontrols"],
         "moreoptions": ["opacity", "speed", "colors", "repeat", "technical", "presentation", "about"]
       }
+    },
+    "markercontrols": {
+      "disableAddRemoveGroups": true,
+      "primaryDim": "geo"
     }
   }
 };

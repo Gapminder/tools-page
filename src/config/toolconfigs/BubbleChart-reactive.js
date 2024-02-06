@@ -178,6 +178,7 @@ export const VIZABI_MODEL = {
         ]
       },
       "markercontrols": {
+        "disableAddRemoveGroups": true,
         "primaryDim": "geo"
       }
     },

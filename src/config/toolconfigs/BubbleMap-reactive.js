@@ -159,6 +159,11 @@ export const VIZABI_MODEL = {
           "presentation",
           "about"
         ]
+      },
+      "markercontrols": {
+        "disableSlice": true,
+        "disableAddRemoveGroups": true,
+        "primaryDim": "geo"
       }
     },
     "chart": {

@@ -207,7 +207,8 @@ export const VIZABI_MODEL = {
         ]
       },
       "markercontrols": {
-        "disableSlice": true
+        "disableSlice": true,
+        "disableAddRemoveGroups": true
       }
     },
 

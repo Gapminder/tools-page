@@ -136,6 +136,10 @@ export const VIZABI_MODEL = {
         "popup": ["colors", "markercontrols", "moreoptions"],
         "sidebar": ["colors", "markercontrols"],
         "moreoptions": ["opacity", "speed", "colors", "axes", "technical", "repeat", "presentation", "about"]
+      },
+      "markercontrols": {
+        "disableAddRemoveGroups": true,
+        "primaryDim": "geo"
       }
     },
     chart: {
