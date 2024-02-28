@@ -25,6 +25,7 @@ import BitlyService from "./core/bitly.service";
 import LocationService from "./core/location.service";
 import RelatedItems from "./related-items/related-items";
 import Footer from "./footer/footer";
+import UserLogin from "./header/user-login/user-login";
 
 const App = function() {
 
@@ -149,7 +150,13 @@ const App = function() {
     dispatch,
     {});
 
-  setLanguage(appState.language);
+  const userLogin = new UserLogin(
+    d3.select(".header .app-user-login"),
+    translator,
+    dispatch,
+    {});
+
+    setLanguage(appState.language);
 };
 
 export default App;
