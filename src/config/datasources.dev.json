@@ -1,4 +1,8 @@
-{   
+{
+  "boendebarom": {
+    "modelType": "csv",
+    "path": "https://corsproxy.io/?https://www.mattiasohman.se/uploads/boendebarometer_new.csv"
+  },   
   "billy": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
