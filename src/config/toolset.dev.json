@@ -1,10 +1,22 @@
 [  
   {
+    "id": "combo-emap-bc",
+    "tool": "Combo",
+    "toolVariation": "Base",
+    "toolComponents": ["ExtApiMap", "BubbleChart"],
+    "config": "Combo-eam-bc-boendebarom", 
+    "dataSources": ["boendebarom"],
+    "transition": ["select","time"],
+    "title": "combo-emap-bc",
+    "hideThumbnail": true,
+    "image": "/assets/images/chart/combo-emap-bc.png"
+  },
+  {
     "id": "bubbles",
     "tool": "BubbleChart",
     "toolVariation": "Base",
-    "config": "BubbleChart-reactive", 
-    "dataSources": ["sg", "wdi", "fasttrack", "country_flags"],
+    "config": "BubbleChart-boendebarom", 
+    "dataSources": ["boendebarom"],
     "transition": ["select","time"],
     "title": "bubbles",
     "image": "/assets/images/chart/bubble-chart.png"
@@ -101,18 +113,6 @@
     "title": "extapimap",
     "hideThumbnail": true,
     "image": "/assets/images/chart/extapimap.png"
-  },
-  {
-    "id": "combo-emap-bc",
-    "tool": "Combo",
-    "toolVariation": "Base",
-    "toolComponents": ["ExtApiMap", "BubbleChart"],
-    "config": "Combo-emap-bc",
-    "dataSources": ["sg", "wdi", "fasttrack"],
-    "transition": ["select","time"],
-    "title": "combo-emap-bc",
-    "hideThumbnail": true,
-    "image": "/assets/images/chart/combo-emap-bc.png"
   },
   {
     "id": "dollar-street",

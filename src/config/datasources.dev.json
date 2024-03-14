@@ -1,4 +1,8 @@
-{   
+{
+  "boendebarom": {
+    "modelType": "ddfcsv",
+    "path": "https://github.com/open-numbers/ddf--ibfuu--boendebarometer"
+  },   
   "billy": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
