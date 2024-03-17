@@ -18,29 +18,29 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
           <form class="panel signup-panel">
             <span>Sign up</span>
             <label for="email"><b>E-mail</b></label>
-            <input type="text" placeholder="Enter email" name="email" required>
+            <input type="email" placeholder="Enter email" name="email" required>
 
             <label for="psw"><b>Choose Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
+            <input id="signup-psw" type="password" placeholder="Enter Password" name="psw" required minlength="6">
 
             <label for="psw2"><b>Confirm New Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw2" required>
+            <input id="signup-psw2" type="password" placeholder="Enter Password" name="psw2" required minlength="6">
 
             <button class="button button-signup">Create account</button>
           </form>
           <form class="panel login-panel">
             <span>Log in</span>
             <label for="email"><b>E-mail</b></label>
-            <input type="text" placeholder="Enter email" name="email" required>
+            <input type="email" placeholder="Enter email" name="email" required>
 
             <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
+            <input type="password" placeholder="Enter Password" name="psw" required minlength="6">
 
             <button class="button button-login">Log in</button>
 
             <hr>
             <span class="hr-text-center">or</span>
-            <button class="button button-switch-signup">Sign up</button>
+            <span class="button button-switch-signup">Sign up</span>
           </form>
         </span>
       </div>
@@ -77,20 +77,36 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
     placeHolder.select(".user-login-form").classed("signup", true);
   });
 
-  placeHolder.select(".signup-panel").on("submit", e => {
-    e.preventDefault();
-    const data = new FormData(e.target);
+  placeHolder.select(".signup-panel").on("submit", event => {
+    event.preventDefault();
+    const data = new FormData(event.target);
     userSignup(data.get("email"), data.get("psw"));
     switchUserLogin.call(this);
   });
 
-  placeHolder.select(".login-panel").on("submit", e => {
-    e.preventDefault();
-    const data = new FormData(e.target);
+  placeHolder.select(".login-panel").on("submit", event => {
+    event.preventDefault();
+    const data = new FormData(event.target);
     if (userLogin(data.get("email"), data.get("psw"))) {
       switchUserLogin.call(this);
-    };    
+    };
   });
+
+  placeHolder.select("#signup-psw").on("input", (event) => {
+    const data = new FormData(event.target.form);
+    placeHolder.select("#signup-psw2").node()
+      .setCustomValidity(data.get("psw") !== data.get("psw2") ? "Passwords should be equal" : "");
+  });
+
+  placeHolder.select("#signup-psw2").on("input", (event) => {
+    const data = new FormData(event.target.form);
+    event.target.setCustomValidity("");
+    event.target.setCustomValidity(data.get("psw") !== data.get("psw2") ? "Passwords should be equal" : "");
+  });
+
+
+
+
 
   function switchUserLogin(force) {
     this.isUserLoginOpen = force || force === false ? force : !this.isUserLoginOpen;
@@ -102,18 +118,24 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
   }
 
 
-  function userSignup(user, pass) {
+  async function userSignup(user, pass) {
+    const hash = await hashSHA2(`${user}:${pass}`);
+
     sessionStorage.setItem("user", user)
-    hash(pass).then(hash => {
-      sessionStorage.setItem("token", hash);
-      updateUserLogin();
-      //TODO save user
-    })
+    sessionStorage.setItem("token", hash);
+    
+    //TODO save user
+    return true;
   }
 
-  function userLogin(user, pass) {
+  async function userLogin(user, pass) {
+    const hash = await hashSHA2(`${user}:${pass}`);
+
+    sessionStorage.setItem("user", user)
+    sessionStorage.setItem("token", hash);
+
     //TODO check user
-    return false;
+    return true;
   }
 
   this.isLogged = false;
@@ -122,7 +144,7 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
     return sessionStorage.getItem("user") && sessionStorage.getItem("token");
   }
   
-  async function hash(string) {
+  async function hashSHA2(string) {
     const utf8 = new TextEncoder().encode(string);
     const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
     const hashArray = Array.from(new Uint8Array(hashBuffer));

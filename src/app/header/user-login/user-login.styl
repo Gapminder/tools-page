@@ -3,7 +3,7 @@
 
 .app-user-login
 
-  button
+  button, span.button
     appearance: none
     -webkit-appearance: none
     -moz-appearance: none
@@ -19,6 +19,7 @@
   &.open
     .user-login-form-wrapper
       display: flex
+      z-index: 9999
 
   &.logged
     .user-login-title
