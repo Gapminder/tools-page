@@ -1,3 +1,5 @@
 {
-  "LANGUAGES": ["en","ar-SA","de-DE","es-ES","fr-FR","he-IL","id-ID","ru-RU","sv-SE","vi-VN","zh-CN","th-TH"]
+  "LANGUAGES": ["en","ar-SA","de-DE","es-ES","fr-FR","he-IL","id-ID","ru-RU","sv-SE","vi-VN","zh-CN","th-TH"],
+  "S_URL": "https://ljbyyhiaaezetjldooim.supabase.co", 
+  "S_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqYnl5aGlhYWV6ZXRqbGRvb2ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAwODE2MzQsImV4cCI6MjAyNTY1NzYzNH0.bO6QvpF45pe42nwuWTEnJc6c6R5MDlJhtJHPqjDKnLQ"
 }

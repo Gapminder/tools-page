@@ -5,6 +5,8 @@ import "core-js/es/object/from-entries"; //safari11
 import "regenerator-runtime/runtime.js";
 import "./app/app.styl";
 
+import ("@supabase/supabase-js/dist/umd/supabase.js");
+
 import "~d3";
 import "~mobx";
 import "urlon/dist/urlon.umd";

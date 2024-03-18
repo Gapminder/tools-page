@@ -1,4 +1,5 @@
 import * as utils from "../../core/utils";
+import { supabaseClient } from "../../core/supabase.service";
 
 const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) {
   const templateHtml = `  
@@ -60,11 +61,11 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
     switchUserLogin.call(this);
   });
 
-  placeHolder.select(".user-logged-logout").on("click", () => {
-    sessionStorage.removeItem("user");
-    sessionStorage.removeItem("token");
-    updateUserLogin();
-    switchUserLogin.call(this);
+  placeHolder.select(".user-logged-logout").on("click", async () => {
+    if (await userLogout()) {
+      switchUserLogin.call(this);
+      updateUserLogin();
+    }
   });
 
   placeHolder.select(".user-login-title").on("click", () => {
@@ -77,18 +78,21 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
     placeHolder.select(".user-login-form").classed("signup", true);
   });
 
-  placeHolder.select(".signup-panel").on("submit", event => {
+  placeHolder.select(".signup-panel").on("submit", async event => {
     event.preventDefault();
     const data = new FormData(event.target);
-    userSignup(data.get("email"), data.get("psw"));
-    switchUserLogin.call(this);
+    if (await userSignup(data.get("email"), data.get("psw"))) {
+      switchUserLogin.call(this);
+      updateUserLogin();
+    }
   });
 
-  placeHolder.select(".login-panel").on("submit", event => {
+  placeHolder.select(".login-panel").on("submit", async event => {
     event.preventDefault();
     const data = new FormData(event.target);
-    if (userLogin(data.get("email"), data.get("psw"))) {
+    if (await userLogin(data.get("email"), data.get("psw"))) {
       switchUserLogin.call(this);
+      updateUserLogin();
     };
   });
 
@@ -113,35 +117,33 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
     placeHolder.classed("open", this.isUserLoginOpen);
   }
 
-  function updateUserLogin() {
-    placeHolder.classed("logged", isLogged())
+  async function updateUserLogin() {
+    placeHolder.classed("logged", await isLogged())
   }
 
 
-  async function userSignup(user, pass) {
-    const hash = await hashSHA2(`${user}:${pass}`);
-
-    sessionStorage.setItem("user", user)
-    sessionStorage.setItem("token", hash);
-    
-    //TODO save user
-    return true;
+  async function userSignup(email, password) {
+    const { data, error } = await supabaseClient.auth.signUp({ email, password });
+    console.log(error, data);
+    return error ? false : true;
   }
 
-  async function userLogin(user, pass) {
-    const hash = await hashSHA2(`${user}:${pass}`);
+  async function userLogin(email, password) {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    console.log(error, data);
+    return error ? false : true;
+  }
 
-    sessionStorage.setItem("user", user)
-    sessionStorage.setItem("token", hash);
-
-    //TODO check user
-    return true;
+  async function userLogout() {
+    const { error } = await supabaseClient.auth.signOut();
+    return error ? false : true;
   }
 
   this.isLogged = false;
 
-  function isLogged() {
-    return sessionStorage.getItem("user") && sessionStorage.getItem("token");
+  async function isLogged() {
+    const { data, error } = await supabaseClient.auth.getSession();
+    return data.session && true;
   }
   
   async function hashSHA2(string) {
