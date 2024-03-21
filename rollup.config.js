@@ -185,7 +185,8 @@ export default [
       globals: {
         "mobx": "mobx",
         "Vizabi": "Vizabi",
-        "VizabiSharedComponents": "VizabiSharedComponents"
+        "VizabiSharedComponents": "VizabiSharedComponents",
+        "supabase": "supabase"
       },
       manualChunks(id) {
         if (__PROD__) {
@@ -195,14 +196,14 @@ export default [
         if (/Vizabi|vizabi/.test(id)) {
           return "tools";
         }
-        if (/rollupPluginBabelHelpers|d3|mobx.umd|urlon.umd/.test(id)) {
+        if (/rollupPluginBabelHelpers|supabase\-js|d3|mobx.umd|urlon.umd/.test(id)) {
           return "vendor";
         }
       }
     },
     //treeshake: __PROD__ ? {} : false,
     context: "window",
-    external: ["mobx", "Vizabi", "VizabiSharedComponents"],
+    external: ["mobx", "Vizabi", "VizabiSharedComponents", "supabase"],
     plugins: [
     //__PROD__ &&
       trash({
@@ -235,6 +236,7 @@ export default [
         targets: [
           { src: "src/assets", dest: "build/tools" },
           { src: "src/data", dest: "build/tools" },
+          { src: "src/auth", dest: "build/tools" },
           { src: "src/config/toolconfigs", dest: "build/tools/config" },
           { src: "node_modules/@gapminder/tools-page-chart-configs/src/*.js", dest: "build/tools/config/toolconfigs/" },
           { src: "src/config/conceptMapping.js", dest: "build/tools/config" },

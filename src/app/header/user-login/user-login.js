@@ -38,7 +38,15 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
             <input type="password" placeholder="Enter Password" name="psw" required minlength="6">
 
             <button class="button button-login">Log in</button>
-
+            
+            <span class="login-oauth">
+              <span class="button button-google-login">
+                <i class="fa fa-2x fa-google"></i>
+              </span>
+              <span  class="button button-github-login">
+                <i class="fa fa-2x fa-github"></i>
+              </span>
+            </span>
             <hr>
             <span class="hr-text-center">or</span>
             <span class="button button-switch-signup">Sign up</span>
@@ -108,19 +116,87 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
     event.target.setCustomValidity(data.get("psw") !== data.get("psw2") ? "Passwords should be equal" : "");
   });
 
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+    console.log(event, session)
+  
+    if (event === 'INITIAL_SESSION') {
+  
+    } else if (event === 'SIGNED_IN') {
+      setTimeout(() => {
+        updateUserLogin();
+        if (this.openPopup) {
+          this.openPopup.close();
+          this.openPopup = void 0;
+        }
+      }, 0)
+    } else if (event === 'SIGNED_OUT') {
+  
+    } else if (event === 'PASSWORD_RECOVERY') {
+  
+    } else if (event === 'TOKEN_REFRESHED') {
+  
+    } else if (event === 'USER_UPDATED') {
+  
+    }
+  })
 
+  placeHolder.select(".button-github-login").on("click", async () => {
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: location.origin + "/tools/auth/",
+          skipBrowserRedirect: true
+        }
+      })
+      console.log(error, data)
+      
+      this.openPopup = openPopup(data.url, "OAuth", screen.width * 0.3, screen.height * 0.6);
 
+      switchUserLogin.call(this);
+      updateUserLogin();
+  });
 
+  placeHolder.select(".button-google-login").on("click", async () => {
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        queryParams: {
+          access_type: 'offline',
+        },
+        scopes: ["email", "profile"],
+        redirectTo: location.origin + "/tools/auth/",
+        skipBrowserRedirect: true
+      }
+    });
+    console.log(error, data);    
 
+    if (!error) {
+      this.openPopup = openPopup(data.url, "OAuth", screen.width * 0.3, screen.height * 0.6);
+    }
+
+    switchUserLogin.call(this);
+    updateUserLogin();
+
+  })
+
+  function openPopup(src, title, width, height) {
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 4;
+    return window.open(src, title, 'popup, toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left);
+  }
+  
   function switchUserLogin(force) {
     this.isUserLoginOpen = force || force === false ? force : !this.isUserLoginOpen;
     placeHolder.classed("open", this.isUserLoginOpen);
   }
 
   async function updateUserLogin() {
-    placeHolder.classed("logged", await isLogged())
+    const logged = await isLogged();
+    if (logged.isLogged) {
+      placeHolder.select(".user-logged-name").text(logged.session.user.email);
+    }
+    placeHolder.classed("logged", logged.isLogged);
   }
-
 
   async function userSignup(email, password) {
     const { data, error } = await supabaseClient.auth.signUp({ email, password });
@@ -143,7 +219,10 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
 
   async function isLogged() {
     const { data, error } = await supabaseClient.auth.getSession();
-    return data.session && true;
+    return { 
+      isLogged: data.session && true,
+      session: data.session
+    };
   }
   
   async function hashSHA2(string) {
