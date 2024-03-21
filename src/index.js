@@ -5,7 +5,9 @@ import "core-js/es/object/from-entries"; //safari11
 import "regenerator-runtime/runtime.js";
 import "./app/app.styl";
 
-import ("@supabase/supabase-js/dist/umd/supabase.js");
+//prevent remove module from bundle (simple import works on rollup@4 but not on rollup@2)
+import * as _ from "@supabase/supabase-js/dist/umd/supabase.js";
+console.log(_);
 
 import "~d3";
 import "~mobx";
