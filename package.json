@@ -12,7 +12,7 @@
     "dev": "NODE_ENV=devserver rollup -c --watch",
     "prod": "cross-env NODE_ENV=production rollup -c && ./node_modules/.bin/http-server build -p 4200",
     "eslint:fix": "./node_modules/.bin/eslint --fix src",
-    "ncu-vizabi": "ncu -u @vizabi/core @vizabi/shared-components @vizabi/ddfservice-reader @vizabi/ddfcsv-reader @vizabi/barrank @vizabi/bubblechart @vizabi/bubblemap @vizabi/linechart @vizabi/mountainchart @vizabi/popbyage @vizabi/spreadsheet @vizabi/extapimap"
+    "ncu-vizabi": "ncu -u @vizabi/core @vizabi/shared-components @vizabi/ddfservice-reader @vizabi/ddfcsv-reader @vizabi/barrank @vizabi/bubblechart @vizabi/bubblemap @vizabi/linechart @vizabi/mountainchart @vizabi/popbyage @vizabi/spreadsheet @vizabi/extapimap @vizabi/combo"
   },
   "repository": {
     "type": "git",
@@ -62,8 +62,8 @@
     "@vizabi/core": "1.31.5",
     "@vizabi/shared-components": "1.39.2",
     "@vizabi/spreadsheet": "4.0.0",
-    "@vizabi/combo": "1.0.0",
-    "@vizabi/extapimap": "4.1.0"
+    "@vizabi/combo": "1.1.0",
+    "@vizabi/extapimap": "4.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
