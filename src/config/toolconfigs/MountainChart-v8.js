@@ -420,7 +420,7 @@ export const VIZABI_MODEL = {
       },
       "dsShow": false,
       "dsHowManyHomes": 10,
-      "dsTopic": "families",
+      "dsTopic": "homes",
       "showBilly": false,
       "billyFaces": true,
       "howManyBilly": 10,
