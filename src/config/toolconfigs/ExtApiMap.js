@@ -24,6 +24,9 @@ export const VIZABI_MODEL = {
           "highlighted": {
             modelType: "selection"
           },
+          "superhighlighted": {
+            modelType: "selection"
+          },
           "color": {
             data: {
               space: ["geo"],
