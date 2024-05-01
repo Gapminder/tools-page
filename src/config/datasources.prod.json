@@ -1,43 +1,43 @@
 {
   "billy": {
-    "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "modelType": "ddfcsv",
+    "path": "https://github.com/open-numbers/ddf--gapminder--billionaires.git",
     "dataset": "billy/master",
     "name": "billy/master"
   },
   "povcalnet": {
-    "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "modelType": "ddfcsv",
+    "path": "https://github.com/open-numbers/ddf--worldbank--povcalnet.git",
     "dataset": "povcalnet/master",
     "name": "povcalnet/master"
   },
   "sg": {
-    "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "modelType": "ddfcsv",
+    "path": "https://github.com/open-numbers/ddf--gapminder--systema_globalis.git",
     "dataset": "sg/master",
     "name": "sg/master"
   },
   "pop": {
-    "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "modelType": "ddfcsv",
+    "path": "https://github.com/open-numbers/ddf--gapminder--population.git",
     "dataset": "population/master",
     "name": "population/master"
   },
   "wdi": {
-    "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "modelType": "ddfcsv",
+    "path": "https://github.com/open-numbers/ddf--open_numbers--world_development_indicators.git",
     "dataset": "wdi/master",
     "name": "wdi/master"
   },
   "fasttrack": {
-    "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "modelType": "ddfcsv",
+    "path": "https://github.com/open-numbers/ddf--gapminder--fasttrack.git",
     "dataset": "fasttrack/master",
     "name": "fasttrack/master"
   },
   "country_flags": {
-    "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "modelType": "ddfcsv",
+    "path": "https://github.com/open-numbers/ddf--gapminder--country_flag_svg.git",
     "dataset": "country-flags",
     "name": "country-flags"
   }
