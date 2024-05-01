@@ -16,7 +16,7 @@ import {
 } from "./utils";
 import { runInAction } from "mobx";
 
-const URL_VERSION = "v1";
+const URL_VERSION = "v2";
 
 let poppedModel = {};
 let URLI = {};
