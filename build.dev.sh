@@ -8,7 +8,7 @@ git config --global user.email "dev@gapminder.org"
 git config --global user.name "gapminderdeploy"
 
 # BUILD: Tools Page --------------------------------------------
-git clone git@github.com:Gapminder/tools-page.git -b development
+git clone git@github.com:Gapminder/tools-page.git -b develop
 cd tools-page || return
 npm cache clean -f
 npm i json -g --depth 0 --unsafe-perm
@@ -19,7 +19,7 @@ if [ -z "$1" ]; then
 fi
 
 echo && echo 🗂 $PWD && echo "👉 git pull, set versions of all vizabi tools and readers to 'latest', npm i"
-git pull origin development 
+git pull origin develop
 # npm view vizabi versions | sed "s/'/\"/g" | json -- -1
 json -I -f package.json -e 'this.dependencies["@vizabi/core"]="latest"'
 json -I -f package.json -e 'this.dependencies["@vizabi/bubblechart"]="latest"'
@@ -35,7 +35,7 @@ npm i --quiet --depth 0 --unsafe-perm
   
 echo && echo 🗂 $PWD && echo "👉 npm run build"
 npm run build && echo "✅ Tools page build done"
-git reset --hard origin/development
+git reset --hard origin/develop
 
 echo && echo "👉 run visual testing via a github action"
 gh workflow run manual-percy-toolspage.yml -f env=dev -R Gapminder/visual-tests
