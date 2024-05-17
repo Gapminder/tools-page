@@ -4,7 +4,7 @@ export const VIZABI_MODEL = {
       "pyramid": {
         data: {
           source: "pop",
-          space: ["geo", "year", "age", "gender"],
+          space: ["geo", "year", "age"],
           filter: {
             dimensions: {
               "geo": {
@@ -32,6 +32,8 @@ export const VIZABI_MODEL = {
           x: {
             data: {
               concept: "population",
+              //space: ['geo','year','age', 'gender'],
+              space: ["geo", "year", "age"],
               // space: {
               //   filter: {
               //     concept: { '$eq': ["geo", "year", "age", "gender"] }
@@ -52,6 +54,7 @@ export const VIZABI_MODEL = {
             modelType: "aggregate",
             data: {
               concept: "population",
+              space: ["geo", "year", "age"]
             },
             measures: ["x"],
             grouping: {
@@ -85,6 +88,7 @@ export const VIZABI_MODEL = {
             splash: true,
             data: {
               concept: "year",
+              space: ["geo", "year", "age"],
             },
             //interpolate: false
           },
@@ -100,11 +104,16 @@ export const VIZABI_MODEL = {
           },
           side: {
             data: {
-              space: ['gender'],
-              concept: 'gender'
-              //constant: "true",
-            },
-            defaultConcept: "gender"
+              //space: ['gender'],
+              //concept: 'gender'
+              constant: "true",
+            }
+          },
+          stack: {
+            data: {
+              //concept: "education_level" or whatever
+              constant: "true",
+            }
           },
           "repeat": {
             modelType: "repeat",
@@ -169,7 +178,6 @@ export const VIZABI_MODEL = {
       flipSides: true,
       lockActive: true,
       lockNonSelected: 0,
-      overhang: true,
 
       showForecast: true,
       showForecastOverlay: false,
@@ -178,13 +186,13 @@ export const VIZABI_MODEL = {
 
     },
     "buttons": {
-      "buttons": ["colors", "markercontrols", "lock", "sided","inpercent", "moreoptions", "sidebarcollapse", "fullscreen"]
+      "buttons": ["colors", "markercontrols", "lock", /*"side",*/ "inpercent", "moreoptions", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["timedisplay", "colors", "markercontrols", "moreoptions"],
+        "popup": ["timedisplay", "colors", "markercontrols", /*"side",*/ "moreoptions"],
         "sidebar": ["timedisplay", "colors", "markercontrols", "grouping"],
-        "moreoptions": ["opacity", "speed", "grouping", "colors", "side", "presentation", "about"],
+        "moreoptions": ["opacity", "speed", "grouping", "colors", /*"side",*/ "presentation", "about"],
       },
       "markercontrols": {
         "disableSwitch": true,
