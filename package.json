@@ -54,7 +54,7 @@
     "@vizabi/barrank": "4.0.1",
     "@vizabi/bubblechart": "4.1.4",
     "@vizabi/bubblemap": "4.3.2",
-    "@vizabi/reader-ddfcsv": "4.1.1",
+    "@vizabi/reader-ddfcsv": "4.2.0",
     "@vizabi/reader-ddfservice": "^2.3.0",
     "@vizabi/linechart": "4.0.0",
     "@vizabi/popbyage": "5.0.0",
