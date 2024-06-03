@@ -62,7 +62,7 @@ export const VIZABI_MODEL = {
             },
             "order": {
               modelType: "order",
-              direction: "desc",
+              direction: "asc",
               data: {
                 ref: "markers.pyramid.config.encoding.y.data"
               }
