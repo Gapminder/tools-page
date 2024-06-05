@@ -23,7 +23,6 @@ import virtual from "@rollup/plugin-virtual";
 import autoprefixer from "autoprefixer";
 import postcssUrl from "postcss-url";
 import iife from "rollup-plugin-iife";
-import legacy from "@rollup/plugin-legacy";
 import html from "rollup-plugin-html2";
 import sourcemaps from "rollup-plugin-sourcemaps";
 import execute from "rollup-plugin-shell";
@@ -227,9 +226,6 @@ export default [
       }),
       globImport({
         format: "import"
-      }),
-      legacy({
-        [require.resolve("@vizabi/reader-ddfcsv/dist/reader-ddfcsv")]: "DDFCsvReader"
       }),
       copy({
         targets: [
