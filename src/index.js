@@ -18,7 +18,7 @@ import "@vizabi/shared-components/build/VizabiSharedComponents.js";
 
 import "vizabi-tools";
 import "@vizabi/reader-ddfservice/dist/reader-ddfservice.js";
-import DDFCsvReader from "@vizabi/reader-ddfcsv/dist/reader-ddfcsv.js";
+import "@vizabi/reader-ddfcsv/dist/reader-ddfcsv.js";
 
 import "properties";
 import "toolset";
