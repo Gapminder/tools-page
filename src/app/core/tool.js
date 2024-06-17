@@ -13,7 +13,7 @@ import {
 } from "./chart-transition";
 import { loadJS, deepExtend, diffObject } from "./utils";
 import timeLogger from "./timelogger";
-import { observable, autorun, toJS, when } from "mobx";
+import { observable, autorun, toJS, reaction } from "mobx";
 
 let viz;
 let urlUpdateDisposer;
@@ -44,24 +44,37 @@ function googleAnalyticsLoadEvents(viz) {
   const marker = markers[markerId];
   const splashMarker = viz.splashMarker;
 
-  if (splashMarker) {
-    registerLoadFinish(splashMarker, "SPLASH");
-  }
-  registerLoadFinish(marker, "FULL");
+  registerLoadFinish(marker, "FULL", !!splashMarker);
 
-  function registerLoadFinish(loadMarker, id) {
+  function registerLoadFinish(loadMarker, id, splashed) {
+    let splashReady = false;
+    if (splashed) console.time("SPLASH");
     console.time(id);
-    const dispose = when(
-      () => loadMarker.state == "fulfilled",
+    const dispose = reaction(
       () => {
-        console.timeEnd(id);
-        const time = timeLogger.snapOnce(id);
-        if (gtag && time) gtag("event", "timing_complete", {
-          "name": id + " load",
-          "value": time,
-          "event_category": "Page load",
-          "event_label": appState.tool
-        });
+        if (loadMarker.state != "fulfilled") return;
+        return loadMarker.id;
+      },
+      () => {
+        const logById = id => {
+          console.timeEnd(id);
+          const time = timeLogger.snapOnce(id);
+          if (gtag && time) gtag("event", "timing_complete", {
+            "name": id + " load",
+            "value": time,
+            "event_category": "Page load",
+            "event_label": appState.tool
+          });  
+        }
+        
+        if (splashed && loadMarker.id.split("-").pop() == "splash") {
+          splashReady = true;
+          logById("SPLASH");
+        } else {
+          dispose();
+          if (splashed && !splashReady) logById("SPLASH");
+          logById(id);
+        }
       },
       { name: id + " google load registration",
         onError: err => {
