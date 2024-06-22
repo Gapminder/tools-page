@@ -51,7 +51,7 @@ export const VIZABI_MODEL = {
             "aggregate": {
               modelType: "aggregate",
               data: {
-                concept: "population",
+                ref: "markers.pyramid.config.encoding.x.data"
               },
               measures: ["x"],
               grouping: {
