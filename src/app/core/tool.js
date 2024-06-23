@@ -60,7 +60,7 @@ function googleAnalyticsLoadEvents(viz) {
           console.timeEnd(id);
           const time = timeLogger.snapOnce(id);
           if (gtag && time) gtag("event", "timing_complete", {
-            "name": id + " load",
+            "name": time < 30000 ? `${id} load` : `${id} load above 30s`,
             "value": time,
             "event_category": "Page load",
             "event_label": appState.tool
