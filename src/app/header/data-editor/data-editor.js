@@ -17,7 +17,7 @@ const readersSchema = {
 const defaultValues = {
   "reader": "ddfbw",
   "nameColumnIndex": 1,
-  "service": "https://big-waffle.gapminder.org"
+  "service": "https://small-waffle.gapminder.org"
 };
 const propDependency = {
   "nameColumnIndex": {
