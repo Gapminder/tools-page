@@ -5,7 +5,7 @@
     "toolVariation": "Base",
     "toolComponents": ["ExtApiMap", "BubbleChart"],
     "config": "Combo-eam-bc-boendebarom", 
-    "dataSources": ["boendebarom"],
+    "dataSources": ["boendebarom", "kolada"],
     "transition": ["select","time"],
     "title": "combo-emap-bc",
     "hideThumbnail": true,
@@ -16,7 +16,7 @@
     "tool": "BubbleChart",
     "toolVariation": "Base",
     "config": "BubbleChart-boendebarom", 
-    "dataSources": ["boendebarom"],
+    "dataSources": ["boendebarom", "kolada"],
     "transition": ["select","time"],
     "title": "bubbles",
     "image": "/assets/images/chart/bubble-chart.png"

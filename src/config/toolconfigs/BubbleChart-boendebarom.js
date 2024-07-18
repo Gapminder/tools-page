@@ -227,9 +227,8 @@ export const VIZABI_MODEL = {
     "tree-menu": {
       "showDataSources": false,
       "folderStrategyByDataset": {
-        "sg": "spread",
-        "fasttrack": "spread",
-        "deso_flags": "spread",
+        "kolada": "spread",
+        "boendebarom": "spread",
         "wdi": "folder:other_datasets"
       }
     }

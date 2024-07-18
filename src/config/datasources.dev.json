@@ -3,6 +3,10 @@
     "modelType": "ddfcsv",
     "path": "https://github.com/open-numbers/ddf--ibfuu--boendebarometer"
   },   
+  "kolada": {
+    "modelType": "ddfcsv",
+    "path": "https://github.com/open-numbers/ddf--kolada--dump"
+  },   
   "billy": {
     "modelType": "ddfbw",
     "service": "https://big-waffle.gapminder.org",
