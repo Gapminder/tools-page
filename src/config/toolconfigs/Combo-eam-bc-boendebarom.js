@@ -6,7 +6,7 @@ export const VIZABI_MODEL = {
         data: {
           locale: "en",
           source: "boendebarom",
-          space: ["deso", "year"],
+          space: ["geo", "year"],
         },
         encoding: {
           "selected": {
@@ -98,19 +98,19 @@ export const VIZABI_MODEL = {
           },
           "centroid": {
             data: {
-              space: ["deso", "year"],
-              concept: "deso"
+              space: ["geo", "year"],
+              concept: "geo"
             }
           },
           // "lat": {
           //   data: {
-          //     space: ["deso"],
+          //     space: ["geo"],
           //     concept: "latitude"
           //   }
           // },
           // "lon": {
           //   data: {
-          //     space: ["deso"],
+          //     space: ["geo"],
           //     concept: "longitude"
           //   }
           // },
@@ -287,12 +287,12 @@ export const VIZABI_MODEL = {
         },
         "projection": "mercator",
         topology: {
-          path: "assets/01_03_wgs84.json",
+          path: "assets/shapes.json",
           objects: {
-            geo: "01_03_wgs84_geojson",
-            boundaries: "01_03_wgs84_geojson"
+            geo: "shapes",
+            boundaries: "shapes"
           },
-          geoIdProperty: "Deso",
+          geoIdProperty: "id",
         }
       }
     },
