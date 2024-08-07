@@ -2,14 +2,14 @@
   "billy": {
     "modelType": "ddfbw",
     "service": "https://small-waffle.gapminder.org",
-    "dataset": "billy-stage",
-    "name": "billy-stage"
+    "dataset": "billy/stage",
+    "name": "billy/stage"
   },
   "povcalnet": {
     "modelType": "ddfbw",
     "service": "https://small-waffle.gapminder.org",
-    "dataset": "povcalnet-stage",
-    "name": "povcalnet-stage"
+    "dataset": "povcalnet/stage",
+    "name": "povcalnet/stage"
   },
   "sg": {
     "modelType": "ddfbw",

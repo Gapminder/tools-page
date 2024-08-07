@@ -2,14 +2,14 @@
   "billy": {
     "modelType": "ddfbw",
     "service": "https://small-waffle.gapminder.org",
-    "dataset": "billy-develop",
-    "name": "billy-develop"
+    "dataset": "billy/develop",
+    "name": "billy/develop"
   },   
   "povcalnet": {
     "modelType": "ddfbw",
     "service": "https://small-waffle.gapminder.org",
-    "dataset": "povcalnet-develop",
-    "name": "povcalnet-develop"
+    "dataset": "povcalnet/develop",
+    "name": "povcalnet/develop"
   },
   "sg": {
     "modelType": "ddfbw",
