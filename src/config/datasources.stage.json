@@ -26,8 +26,8 @@
   "pop": {
     "modelType": "ddfbw",
     "service": "https://small-waffle.gapminder.org",
-    "dataset": "population-stage",
-    "name": "population-stage"
+    "dataset": "population/stage",
+    "name": "population/stage"
   },
   "wdi": {
     "modelType": "ddfbw",

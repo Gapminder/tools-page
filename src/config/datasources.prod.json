@@ -26,8 +26,8 @@
   "pop": {
     "modelType": "ddfbw",
     "service": "https://small-waffle.gapminder.org",
-    "dataset": "population-master",
-    "name": "population-master"
+    "dataset": "population/master",
+    "name": "population/master"
   },
   "wdi": {
     "modelType": "ddfbw",
