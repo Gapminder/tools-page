@@ -14,14 +14,8 @@
   "sg": {
     "modelType": "ddfbw",
     "service": "https://small-waffle.gapminder.org",
-    "dataset": "sg-master",
-    "name": "sg-master"
-  },
-  "sg_old": {
-    "reader": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
-    "dataset": "SG-master",
-    "translateContributionLink": "https://crowdin.com/project/systema-globalis"
+    "dataset": "sg/master",
+    "name": "sg/master"
   },
   "pop": {
     "modelType": "ddfbw",
@@ -32,14 +26,14 @@
   "wdi": {
     "modelType": "ddfbw",
     "service": "https://small-waffle.gapminder.org",
-    "dataset": "wdi-master",
-    "name": "wdi-master"
+    "dataset": "wdi/master",
+    "name": "wdi/master"
   },
   "fasttrack": {
     "modelType": "ddfbw",
     "service": "https://small-waffle.gapminder.org",
-    "dataset": "fasttrack",
-    "name": "fasttrack"
+    "dataset": "fasttrack/master",
+    "name": "fasttrack/master"
   },
   "country_flags": {
     "modelType": "ddfbw",
