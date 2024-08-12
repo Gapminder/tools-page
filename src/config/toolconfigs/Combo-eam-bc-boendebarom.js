@@ -191,12 +191,12 @@ export const VIZABI_MODEL = {
 
     //ui
     "buttons": {
-      "buttons": ["colors", "mapcolors", "find", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["colors", "mapcolors", "markercontrols", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["colors", "find", "moreoptions"],
-        "sidebar": ["colors", "find", "mapcolors", "zoom"],
+        "popup": ["colors", "markercontrols", "moreoptions"],
+        "sidebar": ["colors", "markercontrols", "mapcolors", "zoom"],
         "moreoptions": [
           "opacity",
           "speed",
@@ -213,9 +213,9 @@ export const VIZABI_MODEL = {
           "about"
         ]
       },
-      "find": {
-        enableSelectShowSwitch: false,
-        enableMarkerSpaceOptions: false,
+      "markercontrols": {
+        "disableAddRemoveGroups": true,
+        "primaryDim": "geo"
       }
     },
 
