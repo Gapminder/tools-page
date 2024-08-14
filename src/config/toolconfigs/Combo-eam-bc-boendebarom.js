@@ -268,6 +268,7 @@ export const VIZABI_MODEL = {
         }
       },
       "map": {
+        "missingDataColor": "none", //"#999" or "none" for transparent. "none" makes it faster
         "scale": 1,
         "preserveAspectRatio": true,
         "mapEngine": "mapbox",
@@ -289,8 +290,8 @@ export const VIZABI_MODEL = {
         topology: {
           path: "assets/shapes.json",
           objects: {
-            geo: "shapes",
-            boundaries: "shapes"
+            areas: "shapes",
+            boundaries: false
           },
           geoIdProperty: "id",
         }
@@ -303,8 +304,8 @@ export const VIZABI_MODEL = {
     "tree-menu": {
       "showDataSources": false,
       "folderStrategyByDataset": {
-        "sg": "spread",
-        "fasttrack": "spread",
+        "kolada": "spread",
+        "boendebarom": "spread",
         "wdi": "folder:other_datasets"
       }
     }
