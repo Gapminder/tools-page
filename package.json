@@ -12,7 +12,7 @@
     "dev": "NODE_ENV=devserver rollup -c --watch",
     "prod": "cross-env NODE_ENV=production rollup -c && ./node_modules/.bin/http-server build -p 4200",
     "eslint:fix": "./node_modules/.bin/eslint --fix src",
-    "ncu-vizabi": "ncu -u @vizabi/core @vizabi/shared-components @vizabi/ddfservice-reader @vizabi/ddfcsv-reader @vizabi/barrank @vizabi/bubblechart @vizabi/bubblemap @vizabi/linechart @vizabi/mountainchart @vizabi/popbyage @vizabi/spreadsheet @vizabi/extapimap @vizabi/combo"
+    "ncu-vizabi": "ncu -u @vizabi/core @vizabi/shared-components @vizabi/reader-ddfservice @vizabi/reader-ddfcsv @vizabi/barrank @vizabi/bubblechart @vizabi/bubblemap @vizabi/linechart @vizabi/mountainchart @vizabi/popbyage @vizabi/spreadsheet @vizabi/extapimap @vizabi/combo"
   },
   "repository": {
     "type": "git",
@@ -53,17 +53,17 @@
     "@supabase/supabase-js": "^2.39.8",
     "@vizabi/barrank": "4.0.1",
     "@vizabi/bubblechart": "4.1.4",
-    "@vizabi/bubblemap": "4.3.2",
-    "@vizabi/reader-ddfcsv": "4.3.11",
+    "@vizabi/bubblemap": "4.4.2",
+    "@vizabi/reader-ddfcsv": "4.5.0",
     "@vizabi/reader-ddfservice": "^2.3.0",
     "@vizabi/linechart": "4.0.0",
-    "@vizabi/popbyage": "5.0.2",
+    "@vizabi/popbyage": "5.0.3",
     "@vizabi/mountainchart": "7.3.12",
     "@vizabi/core": "1.31.7",
     "@vizabi/shared-components": "1.40.0",
     "@vizabi/spreadsheet": "4.0.0",
-    "@vizabi/combo": "1.1.1",
-    "@vizabi/extapimap": "4.2.1"
+    "@vizabi/combo": "1.1.2",
+    "@vizabi/extapimap": "4.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
