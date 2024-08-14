@@ -98,8 +98,7 @@ export const VIZABI_MODEL = {
         topology: {
           path: "assets/world-50m.json",
           objects: {
-            geo: "land",
-            boundaries: "countries"
+            areas: "countries"
           },
           geoIdProperty: null,
         }
