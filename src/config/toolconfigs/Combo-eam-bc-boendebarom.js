@@ -2,7 +2,7 @@ export const VIZABI_MODEL = {
   model: {
     markers: {
       bubble: {
-        requiredEncodings: ["x", "y", "centroid", "size"],
+        requiredEncodings: [],
         data: {
           locale: "en",
           source: "boendebarom",
