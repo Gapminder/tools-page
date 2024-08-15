@@ -1,4 +1,94 @@
 const toolsPage_conceptMapping =  {
+  //If you are adding a new redirect, ctrl+f the concpet you are redirecting from
+  //in this file! it might be that one of the old redirects needs to be updated
+
+  //2024-08-15 moving more from SG to fasttrack
+  children_per_woman_total_fertility: 
+    {concept: "children_per_woman_total_fertility", source: "fasttrack" },
+  children_per_woman_total_fertility_with_projections: 
+    {concept: "children_per_woman_total_fertility", source: "fasttrack" },
+
+  population_aged_0_14_years_both_sexes_percent:
+    {concept: "population_aged_0_14_years_both_sexes_percent", source: "fasttrack"},
+  population_aged_0_14_years_female_percent:
+    {concept: "population_aged_0_14_years_female_percent", source: "fasttrack"},
+  population_aged_0_14_years_male_percent:
+    {concept: "population_aged_0_14_years_male_percent", source: "fasttrack"},
+  population_aged_0_14_years_total_number:
+    {concept: "population_aged_0_14_years_total_number", source: "fasttrack"},
+  population_aged_0_4_years_both_sexes_percent:
+    {concept: "population_aged_0_4_years_both_sexes_percent", source: "fasttrack"},
+  population_aged_0_4_years_female_percent:
+    {concept: "population_aged_0_4_years_female_percent", source: "fasttrack"},
+  population_aged_0_4_years_male_percent:
+    {concept: "population_aged_0_4_years_male_percent", source: "fasttrack"},
+  population_aged_0_4_years_total_number:
+    {concept: "population_aged_0_4_years_total_number", source: "fasttrack"},
+  population_aged_10_14_years_both_sexes_percent:
+    {concept: "population_aged_10_14_years_both_sexes_percent", source: "fasttrack"},
+  population_aged_10_14_years_female_percent:
+    {concept: "population_aged_10_14_years_female_percent", source: "fasttrack"},
+  population_aged_10_14_years_male_percent:
+    {concept: "population_aged_10_14_years_male_percent", source: "fasttrack"},
+  population_aged_10_14_years_total_number:
+    {concept: "population_aged_10_14_years_total_number", source: "fasttrack"},
+  population_aged_15_19_years_both_sexes_percent:
+    {concept: "population_aged_15_19_years_both_sexes_percent", source: "fasttrack"},
+  population_aged_15_19_years_female_percent:
+    {concept: "population_aged_15_19_years_female_percent", source: "fasttrack"},
+  population_aged_15_19_years_male_percent:
+    {concept: "population_aged_15_19_years_male_percent", source: "fasttrack"},
+  population_aged_15_19_years_total_number:
+    {concept: "population_aged_15_19_years_total_number", source: "fasttrack"},
+  population_aged_20_39_years_both_sexes_percent:
+    {concept: "population_aged_20_39_years_both_sexes_percent", source: "fasttrack"},
+  population_aged_20_39_years_female_percent:
+    {concept: "population_aged_20_39_years_female_percent", source: "fasttrack"},
+  population_aged_20_39_years_male_percent:
+    {concept: "population_aged_20_39_years_male_percent", source: "fasttrack"},
+  population_aged_20_39_years_total_number:
+    {concept: "population_aged_20_39_years_total_number", source: "fasttrack"},
+  population_aged_40_59_years_both_sexes_percent:
+    {concept: "population_aged_40_59_years_both_sexes_percent", source: "fasttrack"},
+  population_aged_40_59_years_female_percent:
+    {concept: "population_aged_40_59_years_female_percent", source: "fasttrack"},
+  population_aged_40_59_years_male_percent:
+    {concept: "population_aged_40_59_years_male_percent", source: "fasttrack"},
+  population_aged_40_59_years_total_number:
+    {concept: "population_aged_40_59_years_total_number", source: "fasttrack"},
+  population_aged_5_9_years_both_sexes_percent:
+    {concept: "population_aged_5_9_years_both_sexes_percent", source: "fasttrack"},
+  population_aged_5_9_years_female_percent:
+    {concept: "population_aged_5_9_years_female_percent", source: "fasttrack"},
+  population_aged_5_9_years_male_percent:
+    {concept: "population_aged_5_9_years_male_percent", source: "fasttrack"},
+  population_aged_5_9_years_total_number:
+    {concept: "population_aged_5_9_years_total_number", source: "fasttrack"},
+  population_aged_60plus_years_both_sexes_percent:
+    {concept: "population_aged_60plus_years_both_sexes_percent", source: "fasttrack"},
+  population_aged_60plus_years_female_percent:
+    {concept: "population_aged_60plus_years_female_percent", source: "fasttrack"},
+  population_aged_60plus_years_male_percent:
+    {concept: "population_aged_60plus_years_male_percent", source: "fasttrack"},
+  population_aged_60plus_years_total_number:
+    {concept: "population_aged_60plus_years_total_number", source: "fasttrack"},
+  population_aged_65plus_years_both_sexes_percent:
+    {concept: "population_aged_65plus_years_both_sexes_percent", source: "fasttrack"},
+  population_aged_65plus_years_female_percent:
+    {concept: "population_aged_65plus_years_female_percent", source: "fasttrack"},
+  population_aged_65plus_years_male_percent:
+    {concept: "population_aged_65plus_years_male_percent", source: "fasttrack"},
+  population_aged_65plus_years_total_number:
+    {concept: "population_aged_65plus_years_total_number", source: "fasttrack"},
+  population_aged_70plus_years_both_sexes_percent:
+    {concept: "population_aged_70plus_years_both_sexes_percent", source: "fasttrack"},
+  population_aged_70plus_years_female_percent:
+    {concept: "population_aged_70plus_years_female_percent", source: "fasttrack"},
+  population_aged_70plus_years_male_percent:
+    {concept: "population_aged_70plus_years_male_percent", source: "fasttrack"},
+  population_aged_70plus_years_total_number:
+    {concept: "population_aged_70plus_years_total_number", source: "fasttrack"},
+
   //2023-05-11 moving some important indicators from SG to fasttrack
   population_total:
     { concept: "pop", source: "fasttrack" },
@@ -12,7 +102,7 @@ const toolsPage_conceptMapping =  {
     { concept: "extreme_poverty_percent_people_below_190_a_day" },
   // legacy temporary GW indicator
   children_per_woman_temporary_update:
-    { concept: "children_per_woman_total_fertility" },
+    { concept: "children_per_woman_total_fertility", source: "fasttrack" },
   // updated ppp year in WDI
   co2_intensity_of_economic_output_kg_co2_per_2005_ppp_of_gdp:
     { concept: "co2_intensity_of_economic_output_kg_co2_per_2011_ppp_of_gdp" },
