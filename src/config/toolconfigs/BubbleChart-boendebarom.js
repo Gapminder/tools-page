@@ -59,6 +59,7 @@ export const VIZABI_MODEL = {
           },
           "color": {
             data: {
+              space: ["geo"],
               concept: "kommun"
             },
             scale: {
@@ -85,7 +86,7 @@ export const VIZABI_MODEL = {
           frame: {
             modelType: "frame",
             speed: 200,
-            value: "2017",
+            value: "2022",
             splash: true,
             data: {
               concept: "year"

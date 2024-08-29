@@ -27,6 +27,7 @@ export const VIZABI_MODEL = {
           },
           "color": {
             data: {
+              space: ["geo"],
               concept: "kommun"
             },
             scale: {
@@ -160,12 +161,12 @@ export const VIZABI_MODEL = {
   "ui": {
     //ui
     "buttons": {
-      "buttons": ["colors", "markercontrols", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["mapcolors", "markercontrols", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["colors", "markercontrols", "moreoptions"],
-        "sidebar": ["colors", "markercontrols", "size", "zoom"],
+        "popup": ["mapcolors", "markercontrols", "moreoptions"],
+        "sidebar": ["mapcolors", "markercontrols", "zoom"],
         "moreoptions": [
           "opacity",
           "speed",

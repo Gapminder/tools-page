@@ -60,6 +60,7 @@ export const VIZABI_MODEL = {
           },
           "color": {
             data: {
+              space: ["geo"],
               concept: "kommun"
             },
             scale: {
