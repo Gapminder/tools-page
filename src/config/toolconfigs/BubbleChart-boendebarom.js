@@ -78,7 +78,8 @@ export const VIZABI_MODEL = {
             },
             scale: {
               modelType: "size",
-              allowedTypes: ["linear", "log", "genericLog", "pow", "point", "ordinal"]
+              allowedTypes: ["linear", "log", "genericLog", "pow", "point", "ordinal"],
+              extent: [0, 0.34]
             }
           },
           frame: {
@@ -134,7 +135,7 @@ export const VIZABI_MODEL = {
           order: {
             modelType: "order",
             direction: "asc",
-            data: { concept: "rank" }
+            data: { concept: "name" }
           },
           map: { data: { concept: "shape_lores_svg" } }
         }

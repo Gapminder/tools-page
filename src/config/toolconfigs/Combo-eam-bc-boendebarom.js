@@ -37,7 +37,7 @@ export const VIZABI_MODEL = {
             scale: {
               extent: [0, 0.05],
               modelType: "size",
-              allowedTypes: ["linear", "log", "genericLog", "pow"]
+              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
             }
           },
           "y": {
@@ -79,13 +79,14 @@ export const VIZABI_MODEL = {
             },
             scale: {
               modelType: "size",
-              allowedTypes: ["linear", "log", "genericLog", "pow", "point", "ordinal"]
+              allowedTypes: ["linear", "log", "genericLog", "pow", "point", "ordinal"],
+              extent: [0, 0.34]
             }
           },
           frame: {
             modelType: "frame",
             speed: 200,
-            value: "2017",
+            value: "2022",
             splash: true,
             data: {
               concept: "year"
@@ -116,7 +117,7 @@ export const VIZABI_MODEL = {
           // },
           "color_map": {
             data: {
-              concept: "m_syssel_deso_20_64"
+              concept: "m_invbak_deso_alla"
             },
             scale: {
               modelType: "color"
@@ -154,7 +155,7 @@ export const VIZABI_MODEL = {
           order: {
             modelType: "order",
             direction: "asc",
-            data: { concept: "rank" }
+            data: { concept: "name" }
           },
           map: { data: { concept: "shape_lores_svg" } }
         }
@@ -240,7 +241,7 @@ export const VIZABI_MODEL = {
       zoomOnScrolling: true,
       superhighlightOnMinimapHover: true,
       splitVertical: true,
-      splitRatio: 0.4,
+      splitRatio: 0.65,
       whenHovering: {
         showProjectionLineX: true,
         showProjectionLineY: true,
