@@ -80,7 +80,7 @@ export const VIZABI_MODEL = {
             },
             frame: {
               modelType: "frame",
-              value: "2022",
+              value: "2023",
               playbackSteps: 1,
               splash: true,
               data: {
@@ -174,7 +174,7 @@ export const VIZABI_MODEL = {
         showForecast: true,
         showForecastOverlay: false,
         pauseBeforeForecast: false,
-        endBeforeForecast: "2022",
+        endBeforeForecast: "2023",
   
       },
       "buttons": {

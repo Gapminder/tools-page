@@ -47,7 +47,7 @@ export const VIZABI_MODEL = {
           frame: {
             modelType: "frame",
             speed: 200,
-            value: "2022",
+            value: "2023",
             splash: true,
             data: {
               concept: "time"
@@ -104,7 +104,7 @@ export const VIZABI_MODEL = {
       lilFrameDisplayAlwaysHidden: true,
       showForecast: false,
       showForecastOverlay: true,
-      endBeforeForecast: "2022",
+      endBeforeForecast: "2023",
       pauseBeforeForecast: true,
       opacityHighlight: 1.0,
       opacitySelect: 1.0,
