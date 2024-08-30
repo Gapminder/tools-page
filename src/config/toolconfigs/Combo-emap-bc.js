@@ -45,8 +45,7 @@ export const VIZABI_MODEL = {
               source: "fasttrack",
             },
             scale: {
-              modelType: "size",
-              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
+              modelType: "size"
             }
           },
           "y": {
@@ -56,8 +55,7 @@ export const VIZABI_MODEL = {
             },
             scale: {
               domain: [0, 100],
-              zoomed: [19, 86],
-              allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
+              zoomed: [19, 86]
             }
           },
           "x": {
@@ -68,8 +66,7 @@ export const VIZABI_MODEL = {
             scale: {
               domain: [300, 180000],
               zoomed: [400, 96000],
-              type: "log",
-              allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
+              type: "log"
             }
           },
           "color": {
@@ -259,7 +256,14 @@ export const VIZABI_MODEL = {
         }
       },
       map: {
-        overflowBottom: 0
+        overflowBottom: 0,
+        topology: {
+          path: "assets/world-50m.json",
+          objects: {
+            areas: "countries",
+            boundaries: "countries"
+          }
+        }
       }
     },
     "data-warning": {

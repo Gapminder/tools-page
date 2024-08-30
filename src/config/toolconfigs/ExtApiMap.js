@@ -202,7 +202,14 @@ export const VIZABI_MODEL = {
         removeLabelBox: false
       },
       map: {
-        overflowBottom: 0
+        overflowBottom: 0,
+        topology: {
+          path: "assets/world-50m.json",
+          objects: {
+            areas: "countries",
+            boundaries: "countries"
+          }
+        }
       }
     },
     "tree-menu": {
