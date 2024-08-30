@@ -92,7 +92,7 @@ export const VIZABI_MODEL = {
             scale: {
               modelType: "size",
               extent: [0, 0.34],
-              allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
+              allowedTypes: ["linear", "point"]
             }
           },
           frame: {
