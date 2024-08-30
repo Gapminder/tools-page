@@ -98,7 +98,7 @@ export const VIZABI_MODEL = {
           "frame": {
             modelType: "frame",
             speed: 200,
-            value: "2022",
+            value: "2023",
             splash: true,
             data: {
               concept: "time"
