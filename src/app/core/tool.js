@@ -237,6 +237,19 @@ function setTool(tool, skipTransition) {
 
         window.viz = viz;
 
+        const searchInput =  viz.element.select("input.vzb-treemenu-search");
+        viz.element.select(".vzb-treemenu-wrap").on("click.tm", function(e) {
+          const sourceData = d3.select(e.srcElement).datum();
+          if (sourceData.type !== "indicator") return;
+          const meta = {
+            concept: sourceData.id,
+            datasource: sourceData?.byDataSources?.[0]?.dataSource?.id,
+            reason: searchInput.node().value ? "search" : "menu"
+          }
+          //call google analytics with meta
+          //console.log("treemenu click", meta);
+        }, { capture: true });
+
         window.VIZABI_DEFAULT_MODEL = diffObject(
           toJS(viz.model.config, { recurseEverything: true }),
           (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}
