@@ -240,15 +240,59 @@ function setTool(tool, skipTransition) {
         const searchInput =  viz.element.select("input.vzb-treemenu-search");
         viz.element.select(".vzb-treemenu-wrap").on("click.tm", function(e) {
           const sourceData = d3.select(e.srcElement).datum();
-          if (sourceData.type !== "indicator") return;
-          const meta = {
-            concept: sourceData.id,
-            datasource: sourceData?.byDataSources?.[0]?.dataSource?.id,
-            reason: searchInput.node().value ? "search" : "menu"
-          }
-          //call google analytics with meta
-          //console.log("treemenu click", meta);
+          if (sourceData.concept_type !== "measure" && sourceData.concept_type !== "string") return;
+
+          if (gtag) gtag("event", "concept_request", {
+            "name": searchInput.node().value ? "search" : "menu",
+            "value": sourceData.id,
+            "event_category": sourceData?.byDataSources?.[0]?.dataSource?.id,
+            "event_label": appState.tool
+          });
         }, { capture: true });
+
+        const mainMarkerName = Object.keys(VIZABI_MODEL.model.markers).filter(m => MAIN_MARKERS.includes(m))?.[0];
+        if (mainMarkerName) {
+          const ignoredConcepts = [
+            'time',
+            'name',
+            'geo',
+            'country', 
+            'world_4region',
+            'world_6region',
+            'is--', 
+            'un_sdg_region',
+            'g77_and_oecd_countries', 
+            'global', 
+            'income_3groups', 
+            'income_groups', 
+            'landlocked', 
+            'main_religion_2008', 
+            'un_sdg_ldc', 
+            'unhcr_region', 
+            'unicef_region', 
+            'west_and_rest', 
+            'age', 
+            'gender',
+            'latitude',
+            'longitude'
+          ];
+          const defaultSource = VIZABI_MODEL.model.markers[mainMarkerName].data.source;
+          const encodings = VIZABI_MODEL.model.markers[mainMarkerName].encoding;
+          const passedConcepts = [];
+          Object.keys(encodings).filter(enc => enc !== "frame").forEach(encKey => {
+            const encData = encodings[encKey]?.data;
+            const concept = encData?.concept;
+            if (!concept || passedConcepts.includes(concept) || encData.constant || ignoredConcepts.includes(concept)) return;
+            passedConcepts.push(concept);
+            
+            if (gtag) gtag("event", "concept_request", {
+              "name": "url",
+              "value": concept,
+              "event_category": encData.source || defaultSource,
+              "event_label": appState.tool
+            });
+          });
+        } 
 
         window.VIZABI_DEFAULT_MODEL = diffObject(
           toJS(viz.model.config, { recurseEverything: true }),
