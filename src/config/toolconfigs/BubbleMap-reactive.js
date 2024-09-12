@@ -162,7 +162,7 @@ export const VIZABI_MODEL = {
       },
       "markercontrols": {
         "disableSlice": true,
-        "disableAddRemoveGroups": true,
+        "disableAddRemoveGroups": false,
         "primaryDim": "geo"
       }
     },
