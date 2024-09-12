@@ -28,7 +28,7 @@ export const VIZABI_MODEL = {
         mode: "select",
         config: {
           data: {
-            filter: { dimensions: { "geo": { "un_state": true } } }
+            filter: { dimensions: { "geo": { "$or": [{ "un_state": true }] } } }
           },
           encoding: {
             order: {direction: "asc", data: { concept: null, constant: "none" } },
@@ -39,10 +39,10 @@ export const VIZABI_MODEL = {
       }, {
         icon: "show_regions--stack_none--facet_none",
         mode: "none",
-        groupPath: ["geo"],
+        groupPath: ["geo", "$or"],
         config: {
           data: {
-            filter: { dimensions: { "geo": { "is--world_4region": true } } }
+            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }]} } }
           },
           encoding: {
             order: { direction: "asc", data: { concept: null, constant: "none" } },
@@ -58,7 +58,7 @@ export const VIZABI_MODEL = {
         mode: "select",
         config: {
           data: {
-            filter: { dimensions: { "geo": { "un_state": true } } }
+            filter: { dimensions: { "geo": { "$or": [{ "un_state": true }] } } }
           },
           encoding: {
             order: { direction: "asc", data: { concept: null, constant: "none" } },
@@ -69,10 +69,10 @@ export const VIZABI_MODEL = {
       }, {
         icon: "show_regions--stack_all--facet_none",
         mode: "none",
-        groupPath: ["geo"],
+        groupPath: ["geo", "$or"],
         config: {
           data: {
-            filter: { dimensions: { "geo": { "is--world_4region": true } } }
+            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }]} } }
           },
           encoding: {
             order: { direction: "asc", data: { concept: null, constant: "none" } },
@@ -85,7 +85,7 @@ export const VIZABI_MODEL = {
         mode: "none",
         config: {
           data: {
-            filter: { dimensions: { "geo": { "is--global": true } } }
+            filter: { dimensions: { "geo": { "$or": [{ "is--global": true } ] } } }
           },
           encoding: {
             order: { direction: "asc", data: { concept: null, constant: "none" } },
@@ -127,10 +127,10 @@ export const VIZABI_MODEL = {
       }, {
         icon: "show_regions--stack_all--facet_regions",
         mode: "none",
-        groupPath: ["geo"],
+        groupPath: ["geo", "$or"],
         config: {
           data: {
-            filter: { dimensions: { "geo": { "is--world_4region": true } } }
+            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }]} } }
           },
           encoding: {
             order: { direction: "asc", data: { concept: "rank", constant: null } },
@@ -143,7 +143,7 @@ export const VIZABI_MODEL = {
         mode: "select",
         config: {
           data: {
-            filter: { dimensions: { "geo": { "un_state": true } } }
+            filter: { dimensions: { "geo": { "$or": [{ "un_state": true }] } } }
           },
           encoding: {
             order: { direction: "asc", data: { concept: "rank", constant: null } },
