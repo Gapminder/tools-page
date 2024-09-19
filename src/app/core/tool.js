@@ -258,7 +258,7 @@ concept=${sourceData.id}\
 &referer=${window.location.host}\
 `;
         
-          fetch(`http://small-waffle-noproxy.gapminder.org:8081/record?${options}`);
+          fetch(`https://tools-page-analytics-server.gapminder.org/record?${options}`);
         }, { capture: true });
 
         // const mainMarkerName = Object.keys(VIZABI_MODEL.model.markers).filter(m => MAIN_MARKERS.includes(m))?.[0];
