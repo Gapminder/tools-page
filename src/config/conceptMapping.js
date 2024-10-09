@@ -2,6 +2,12 @@ const toolsPage_conceptMapping =  {
   //If you are adding a new redirect, ctrl+f the concpet you are redirecting from
   //in this file! it might be that one of the old redirects needs to be updated
 
+  //2024-10-09 moving corruption_perception_index_cpi to fasttrack
+  corruption_perception_index_cpi_pre2012:
+    {concept: "corruption_perception_index_cpi", source: "fasttrack"},
+  corruption_perception_index_cpi:
+    {concept: "corruption_perception_index_cpi", source: "fasttrack"},
+
   //2024-08-15 moving more from SG to fasttrack
   children_per_woman_total_fertility: 
     {concept: "children_per_woman_total_fertility", source: "fasttrack" },
