@@ -165,8 +165,8 @@ export const VIZABI_MODEL = {
     },
     "dialogs": {
       "dialogs": {
-        "popup": ["mapcolors", "markercontrols", "moreoptions"],
-        "sidebar": ["mapcolors", "markercontrols", "zoom"],
+        "popup": ["markercontrols", "moreoptions"],
+        "sidebar": ["markercontrols", "zoom"],
         "moreoptions": [
           "opacity",
           "speed",
@@ -183,7 +183,8 @@ export const VIZABI_MODEL = {
       },
       "markercontrols": {
         "disableSlice": true,
-        "disableAddRemoveGroups": true
+        "disableAddRemoveGroups": true,
+        "drilldown": "region.kommun.regso"
       }
     },
     "chart": {

@@ -171,7 +171,8 @@ export const VIZABI_MODEL = {
       },
       "markercontrols": {
         "disableAddRemoveGroups": true,
-        "primaryDim": "geo"
+        "primaryDim": "geo",
+        "drilldown": "region.kommun.regso"
       }
     },
 

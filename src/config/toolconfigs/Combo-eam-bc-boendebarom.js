@@ -218,7 +218,7 @@ export const VIZABI_MODEL = {
       "markercontrols": {
         "disableAddRemoveGroups": true,
         "primaryDim": "geo",
-        "drilldown": "region.kommun"
+        "drilldown": "region.kommun.regso"
       }
     },
 
@@ -271,6 +271,8 @@ export const VIZABI_MODEL = {
         }
       },
       "map": {
+        "useBivariateColorScaleWithDataFromXY": true,
+        "bivariateColorPalette": "BlPu",
         "missingDataColor": "none", //"#999" or "none" for transparent. "none" makes it faster
         "scale": 1,
         "preserveAspectRatio": true,
