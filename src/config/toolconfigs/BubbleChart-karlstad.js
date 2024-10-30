@@ -4,17 +4,14 @@ export const VIZABI_MODEL = {
       bubble: {
         requiredEncodings: ["x", "y", "size"],
         data: {
-          source: "fasttrack",
-          space: ["geo", "time"],
-          filter: {
-            dimensions: { "geo": { "$or": [{ "un_state": true }] } }
-          }
+          source: "karlstad_demo",
+          space: ["geo", "year"]
         },
         encoding: {
           "show": {
             modelType: "selection",
             data: {
-              filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
+              filter: {}
             }
           },
           "selected": {
@@ -40,7 +37,7 @@ export const VIZABI_MODEL = {
           },
           "size": {
             data: {
-              concept: "pop"
+              concept: "befolkning"
             },
             scale: {
               modelType: "size"
@@ -49,27 +46,20 @@ export const VIZABI_MODEL = {
           "y": {
             modelType: "lane",
             data: {
-              concept: "lex",
+              concept: "befolkning_utaneuropafodda_procent",
             },
-            scale: {
-              domain: [0, 100],
-              zoomed: [19, 86],
-            }
+            scale: {}
           },
           "x": {
             data: {
-              concept: "gdp_pcap"
+              concept: "uppform_aganderatt_procent"
             },
-            scale: {
-              domain: [300, 180000],
-              zoomed: [400, 96000],
-              type: "log",
-            }
+            scale: {}
           },
           "color": {
             data: {
               space: ["geo"],
-              concept: "world_4region"
+              concept: "region"
             },
             scale: {
               modelType: "color",
@@ -94,15 +84,15 @@ export const VIZABI_MODEL = {
           frame: {
             modelType: "frame",
             speed: 200,
-            value: "2023",
+            value: "2022",
             splash: true,
             data: {
-              concept: "time"
+              concept: "year"
             }
           },
           "trail": {
             modelType: "trail",
-            groupDim: "time",
+            groupDim: "year",
             show: true
           },
           "repeat": {
@@ -179,7 +169,8 @@ export const VIZABI_MODEL = {
       },
       "markercontrols": {
         "disableAddRemoveGroups": false,
-        "primaryDim": "geo"
+        "primaryDim": "geo",
+        "drilldown": "region.kommun.regso"
       }
     },
 
@@ -237,9 +228,7 @@ export const VIZABI_MODEL = {
     "tree-menu": {
       "showDataSources": false,
       "folderStrategyByDataset": {
-        "sg": "spread",
-        "fasttrack": "spread",
-        "country_flags": "spread",
+        "karlstad_demo": "spread",
         "wdi": "folder:other_datasets"
       }
     }

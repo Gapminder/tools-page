@@ -5,8 +5,9 @@ export const VIZABI_MODEL = {
         requiredEncodings: ["color_map"],
         data: {
           locale: "en",
-          source: "boendebarom",
-          space: ["geo", "year"]
+          source: "karlstad_demo",
+          space: ["geo", "year"],
+          filter: {dimensions: {geo: {"$or": [{"is--deso":true}]}}}
         },
         encoding: {
           "selected": {
@@ -28,7 +29,7 @@ export const VIZABI_MODEL = {
           "color": {
             data: {
               space: ["geo"],
-              concept: "kommun"
+              concept: "region"
             },
             scale: {
               modelType: "color",
@@ -37,7 +38,7 @@ export const VIZABI_MODEL = {
           },
           "color_map": {
             data: {
-              concept: "m_efterg_deso_25_64"
+              concept: "syssel_procent"
             },
             scale: {
               modelType: "color"
@@ -45,7 +46,7 @@ export const VIZABI_MODEL = {
           },
           "size": {
             data: {
-              concept: "m_efterg_deso_25_64"
+              concept: "syssel_procent"
             },
             scale: {
               modelType: "size"              
@@ -194,6 +195,8 @@ export const VIZABI_MODEL = {
         removeLabelBox: false
       },
       "map": {
+        "useBivariateColorScaleWithDataFromXY": false,
+        "bivariateColorPalette": "BlPu",
         "missingDataColor": "none", //"#999" or "none" for transparent. "none" makes it faster
         "scale": 1,
         "preserveAspectRatio": true,
@@ -210,11 +213,11 @@ export const VIZABI_MODEL = {
         },
         "path": null,
         "bounds": {
-          west: 17.675, north: 59.482, east: 18.276, south: 59.182
+          west: 12.9, north: 59.7, east: 14.1, south: 59.1
         },
         "projection": "mercator",
         topology: {
-          path: "assets/shapes.json",
+          path: "assets/shapes-karlstad.json",
           objects: {
             areas: "shapes",
             boundaries: false
@@ -226,8 +229,7 @@ export const VIZABI_MODEL = {
     "tree-menu": {
       "showDataSources": false,
       "folderStrategyByDataset": {
-        "kolada": "spread",
-        "boendebarom": "spread",
+        "karlstad_demo": "spread",
         "wdi": "folder:other_datasets"
       }
     }

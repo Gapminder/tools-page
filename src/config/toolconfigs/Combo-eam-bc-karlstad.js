@@ -7,6 +7,7 @@ export const VIZABI_MODEL = {
           locale: "en",
           source: "karlstad_demo",
           space: ["geo", "year"],
+          filter: {dimensions: {geo: {"$or": [{"is--deso":true}]}}}
         },
         encoding: {
           "selected": {
@@ -59,7 +60,7 @@ export const VIZABI_MODEL = {
           "color": {
             data: {
               space: ["geo"],
-              concept: "deso_type"
+              concept: "region"
             },
             scale: {
               modelType: "color",
@@ -216,7 +217,7 @@ export const VIZABI_MODEL = {
       "markercontrols": {
         "disableAddRemoveGroups": true,
         "primaryDim": "geo",
-        "drilldown": "region.kommun.regso"
+        "drilldown": "regso"
       }
     },
 
@@ -291,7 +292,7 @@ export const VIZABI_MODEL = {
         },
         "projection": "mercator",
         topology: {
-          path: "assets/shapes.json",
+          path: "assets/shapes-karlstad.json",
           objects: {
             areas: "shapes",
             boundaries: false
