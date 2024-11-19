@@ -3,7 +3,7 @@
     "id": "combo-emap-bc",
     "tool": "Combo",
     "toolVariation": "Base",
-    "toolComponents": ["ExtApiMap", "BubbleChart"],
+    "toolComponents": ["BubbleChart", "ExtApiMap"],
     "config": "Combo-eam-bc-karlstad", 
     "dataSources": ["karlstad_demo"],
     "transition": ["select","time"],

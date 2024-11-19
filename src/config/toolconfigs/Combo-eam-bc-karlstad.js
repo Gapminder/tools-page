@@ -192,7 +192,7 @@ export const VIZABI_MODEL = {
 
     //ui
     "buttons": {
-      "buttons": ["colors", "mapcolors", "markercontrols", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["colors", "markercontrols", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
@@ -242,7 +242,7 @@ export const VIZABI_MODEL = {
       zoomOnScrolling: true,
       superhighlightOnMinimapHover: true,
       splitVertical: true,
-      splitRatio: 0.65,
+      splitRatio: 0.55,
       whenHovering: {
         showProjectionLineX: true,
         showProjectionLineY: true,
