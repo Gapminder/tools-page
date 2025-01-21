@@ -237,6 +237,10 @@ function setTool(tool, skipTransition) {
 
         window.viz = viz;
 
+/*
+CUSTOM EVENT ANALYTICS CODE
+see https://github.com/Gapminder/tools-page-analytics-server
+
         const searchInput =  viz.element.select("input.vzb-treemenu-search");
         viz.element.select(".vzb-treemenu-wrap").on("click.tm", function(e) {
           const sourceData = d3.select(e.srcElement).datum();
@@ -260,6 +264,7 @@ concept=${sourceData.id}\
         
           fetch(`https://tools-page-analytics-server.gapminder.org/record?${options}`);
         }, { capture: true });
+*/
 
         // const mainMarkerName = Object.keys(VIZABI_MODEL.model.markers).filter(m => MAIN_MARKERS.includes(m))?.[0];
         // if (mainMarkerName) {
