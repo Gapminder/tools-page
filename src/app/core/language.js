@@ -7,12 +7,13 @@ import {
   d3json
 } from "./utils";
 
-const DEFAULT_LANGUAGE = { key: "en", text: "English" };
+const DEFAULT_LANGUAGE = { key: "sv-SE", text: "Svenska" };
 const AVAILABLE_LANGUAGES = [
   DEFAULT_LANGUAGE,
   { key: "ar-SA", text: "العربية", isRtl: true },
   { key: "he-IL", text: "עִבְרִית", isRtl: true },
   { key: "es-ES", text: "Español", isRtl: false },
+  { key: "en", text: "English", isRtl: false },
   { key: "vi-VN", text: "Tiếng Việt", isRtl: false, fontFamily: "Helvetica, Arial, Sans-Serif" },
   { key: "ru-RU", text: "Русский", isRtl: false, fontFamily: "Helvetica, Arial, Sans-Serif" },
   { key: "th-TH", text: "ภาษาไทย", isRtl: false, fontFamily: "Helvetica, Arial, Sans-Serif" }
