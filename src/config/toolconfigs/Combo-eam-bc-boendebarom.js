@@ -275,7 +275,7 @@ export const VIZABI_MODEL = {
       },
       "map": {
         "useBivariateColorScaleWithDataFromXY": false,
-        "bivariateColorPalette": "BlPu",
+        "bivariateColorPalette": "BlPu5",
         "missingDataColor": "none", //"#999" or "none" for transparent. "none" makes it faster
         "scale": 1,
         "preserveAspectRatio": true,
