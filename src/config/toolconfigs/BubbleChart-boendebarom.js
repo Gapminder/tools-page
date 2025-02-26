@@ -196,10 +196,10 @@ export const VIZABI_MODEL = {
       yearInBackground: true,
       yearInTrails: true,
       lockNonSelected: 0,
-      panWithArrow: false,
+      panWithArrow: true,
       adaptMinMaxZoom: false,
       cursorMode: "arrow",
-      zoomOnScrolling: false,
+      zoomOnScrolling: true,
       superhighlightOnMinimapHover: true,
       whenHovering: {
         showProjectionLineX: true,
