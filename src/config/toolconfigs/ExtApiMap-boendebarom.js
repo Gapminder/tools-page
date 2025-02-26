@@ -201,7 +201,7 @@ export const VIZABI_MODEL = {
         removeLabelBox: false
       },
       "map": {
-        "missingDataColor": "none", //"#999" or "none" for transparent. "none" makes it faster
+        "missingDataColor": false, //"#999" or false for transparent
         "scale": 1,
         "preserveAspectRatio": true,
         "mapEngine": "mapbox",
