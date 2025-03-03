@@ -47,20 +47,20 @@ li.nav-expandable
           text-decoration none
 
     .nav-expanded:hover + .nav-toggle-expanded
-      border-left-color $brand-primary
-      border-right-color $brand-primary
+      border-left-color $color-primary
+      border-right-color $color-primary
 
     .nav-toggle-expanded
       border-left $navbar-border-size solid transparent
       border-right $navbar-border-size solid transparent
       &:hover
         background-color white
-        color $brand-primary
+        color $color-primary
 
       +for_breakpoint(small)
         &.active
           background-color white
-          color $brand-primary
+          color $color-primary
 
           & + .nav-expanded
             z-index 55
@@ -75,7 +75,7 @@ li.nav-expandable
     .how-to-use-video
       &.active
         background-color white
-        color $brand-primary
+        color $color-primary
 
         & + .nav-expanded
           z-index 55
@@ -161,7 +161,7 @@ li.nav-expandable
             margin-bottom 5px
 
           .column-item-icon
-            background-color $brand-primary
+            background-color $color-primary
             border-radius 50%
             width 11px
             height 11px
@@ -200,7 +200,7 @@ li.nav-expandable
               line-height 31px
 
             .column-item-icon
-              color $brand-primary
+              color $color-primary
               font-size 32px
               position absolute
 
