@@ -1,4 +1,4 @@
-export default [
+[
   {
     "_id": "5600af4a188967b26265a73f",
     "_relatedTo": [
@@ -67,5 +67,5 @@ export default [
     "subtitle": "First slowly. Then fast.",
     "title": "How Did The World Population Change?",
     "__v": 0
-  },
-];
+  }
+]

@@ -1,4 +1,4 @@
-/* 
+/*
   the transition from v1 to v2 contains two breaking changes
     - CHANGE 1
     "geo" is now preferred instead of "country" in filters. some URLS break because they set "country" in enc filters and spaces
@@ -15,39 +15,36 @@
     after
     https://www.gapminder.org/tools/#$ui$chart$endBeforeForecast=2023;;&model$markers$pyramid$data$filter$dimensions$geo$/$or@$geo$/$in@=americas&=europe&=africa&=asia;;;;;;;;&encoding$aggregate$grouping$age$grouping:5;;;&frame$value=1950&playbackSteps:5;;;;;&chart-type=popbyage&url=v1
 
-*/ 
-
-import {parseURL, decodeUrlHash, URLI} from "../../core/url.js"
+*/
 
 const rule = {
-    test(url) {
-      return url.includes("#") && url.includes("url=v1");
-    },
-  
-    use(url) {
-      
-      // CHANGE 1
-      url = url
-        .replaceAll("$country$/in", "$geo$/in")
-        .replaceAll("$country=", "$geo=")
+  test(url) {
+    return url.includes("#") && url.includes("url=v1");
+  },
 
-        
-      // Replace "country" with "geo" and return the modified string
-      // this regex tests if url has a substring in the form of "space@ ... =country ... ;"
-      var spaceRegex = /(space@[^;]*)(=country)([^;]*;)/;
-      while (spaceRegex.test(url))
-        url = url.replace(spaceRegex, "$1=geo$3");
-        
-    
-      // CHANGE 2
-      // this regex tests if url has a substring in the form of "$filter$dimensions$geo$geo$/$in@ ... ;;;;;;"
-      const filterRegex = /(\$filter\$dimensions\$geo\$geo\$\/\$in@)([^;]*)(;;;;;;)/;
-      while (filterRegex.test(url))
-        url = url.replace(filterRegex, "$filter$dimensions$geo$/$or@$geo$/$in@$2;;;;;;;;");
+  use(url) {
 
-      return url;
-    }
-  };
-  
-  export default rule;
-  
+    // CHANGE 1
+    url = url
+      .replaceAll("$country$/in", "$geo$/in")
+      .replaceAll("$country=", "$geo=");
+
+
+    // Replace "country" with "geo" and return the modified string
+    // this regex tests if url has a substring in the form of "space@ ... =country ... ;"
+    const spaceRegex = /(space@[^;]*)(=country)([^;]*;)/;
+    while (spaceRegex.test(url))
+      url = url.replace(spaceRegex, "$1=geo$3");
+
+
+    // CHANGE 2
+    // this regex tests if url has a substring in the form of "$filter$dimensions$geo$geo$/$in@ ... ;;;;;;"
+    const filterRegex = /(\$filter\$dimensions\$geo\$geo\$\/\$in@)([^;]*)(;;;;;;)/;
+    while (filterRegex.test(url))
+      url = url.replace(filterRegex, "$filter$dimensions$geo$/$or@$geo$/$in@$2;;;;;;;;");
+
+    return url;
+  }
+};
+
+export default rule;

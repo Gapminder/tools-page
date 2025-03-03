@@ -1,15 +1,5 @@
-//ADAPTED CODE FROM: http://blog.vjeux.com/2011/javascript/urlon-url-object-notation.html
-import {
-  viz,
-  setTool
-} from "./tool";
-import {
-  setLanguage
-} from "./language";
-import {
-  appState,
-  dispatch
-} from "./global";
+import { upgradeUrl } from "./deprecated-url";
+
 import {
   debounce,
   deepExtend,
@@ -59,7 +49,6 @@ window.addEventListener("popstate", e => {
 
   const localeId = ((poppedModel || {}).locale || {}).id;
   if (localeId && localeId !== appState.language) {
-    setLanguage(localeId);
     dispatch.call("languageChanged", null, localeId);
   }
 
@@ -70,7 +59,7 @@ window.addEventListener("popstate", e => {
 });
 
 //grabs width, height, tabs open, and updates the url
-function updateURL(model, event, replaceInsteadPush) {
+function updateURL(model, tool, replaceInsteadPush) {
   resetPopStateLoopFlag();
   // if (popStateLoopFlag || (poppedModel && comparePlainObjects(viz.getModel(), poppedModel))) {
   //   //popStateLoopFlag = false;
@@ -94,7 +83,7 @@ function updateURL(model, event, replaceInsteadPush) {
   // if (minModel && Object.keys(minModel).length > 0) {
   //   Object.assign(url, minModel);
   // }
-  url["chart-type"] = appState.tool;
+  url["chart-type"] = tool;
   url["url"] = URL_VERSION;
 
   //console.log("pushing state", poppedModel, event);
@@ -107,30 +96,19 @@ function updateURL(model, event, replaceInsteadPush) {
 
 const debouncedUpdateUrl = debounce(updateURL, 310);
 
-function parseURL() {
-  const loc = window.location.toString();
-  let hash = null;
-  URLI = {
-  };
-  if (loc.indexOf("#") >= 0) {
-    hash = loc.substring(loc.indexOf("#") + 1);
+function parseURL(rawUrl = window.location.toString()) {
+  const hash = rawUrl.includes("#") && rawUrl.substring(rawUrl.indexOf("#") + 1);
+  if (!hash) return null;
 
-    if (hash) {
-
-      let parsedUrl = {};
-      try {
-        parsedUrl = urlon.parse(decodeUrlHash(hash) || "$;");
-      }
-      catch {
-        console.warn("Failed to decode and parse this hash:", hash);
-      }
-
-      URLI.model = parsedUrl;
-      URLI["chart-type"] = parsedUrl["chart-type"];
-      delete parsedUrl["chart-type"];
-
-    }
+  let parsedUrl = {};
+  try {
+    parsedUrl = urlon.parse(decodeUrlHash(hash) || "$;");
   }
+  catch {
+    console.warn("Failed to decode and parse this hash:", hash);
+  }
+
+  return parsedUrl;
 }
 
 function encodeUrlHash(hash) {
@@ -150,11 +128,47 @@ function resetURL() {
   //location.href = href.substring(0, href.indexOf('#'));
 }
 
+
+function getEmbedded() {
+  const embeddedMatch = /embedded=(true|false)/.exec(window.location.search);
+  return (embeddedMatch || [])[1] === "true";
+}
+function getLocale() {
+  return URLI.model?.ui?.locale;
+}
+function getProjector() {
+  return URLI.model?.ui?.projector === "true";
+}
+
+function init({ allowedTools }) {
+
+  //Upgrade raw URL
+  const url = location.href;
+  const upgradedUrl = upgradeUrl(url);
+  if (upgradedUrl !== url)
+    location.replace(upgradedUrl);
+
+  //Only then parse URL
+  const model = parseURL();
+  URLI = model;
+
+  //apply defaults
+  const toolFromUrl = URLI["chart-type"];
+  const tool = (toolFromUrl && allowedTools.includes(toolFromUrl)) ? toolFromUrl : allowedTools[0];
+
+  updateURL(model, tool, true);
+
+
+  return tool;
+}
+
 export {
+  init,
   URLI,
   debouncedUpdateUrl as updateURL,
   encodeUrlHash,
   decodeUrlHash,
   parseURL,
-  resetURL
+  resetURL,
+  getEmbedded, getLocale, getProjector
 };

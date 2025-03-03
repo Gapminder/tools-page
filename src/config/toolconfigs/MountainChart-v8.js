@@ -8,10 +8,10 @@ export const VIZABI_MODEL = {
         config: {
           data: {
             filter: {
-              dimensions: { 
-                "geo": { 
+              dimensions: {
+                "geo": {
                   "$or": [{
-                    "geo": { $in: ["usa", "chn", "rus", "nga"] } 
+                    "geo": { $in: ["usa", "chn", "rus", "nga"] }
                   }]
                 }
               }
@@ -31,7 +31,7 @@ export const VIZABI_MODEL = {
             filter: { dimensions: { "geo": { "$or": [{ "un_state": true }] } } }
           },
           encoding: {
-            order: {direction: "asc", data: { concept: null, constant: "none" } },
+            order: { direction: "asc", data: { concept: null, constant: "none" } },
             stack: { data: { ref: "markers.mountain.config.encoding.color.data" } },
             facet_row: { data: { constant: "none" } }
           }
@@ -42,7 +42,7 @@ export const VIZABI_MODEL = {
         groupPath: ["geo", "$or"],
         config: {
           data: {
-            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }]} } }
+            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }] } } }
           },
           encoding: {
             order: { direction: "asc", data: { concept: null, constant: "none" } },
@@ -72,7 +72,7 @@ export const VIZABI_MODEL = {
         groupPath: ["geo", "$or"],
         config: {
           data: {
-            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }]} } }
+            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }] } } }
           },
           encoding: {
             order: { direction: "asc", data: { concept: null, constant: "none" } },
@@ -85,7 +85,7 @@ export const VIZABI_MODEL = {
         mode: "none",
         config: {
           data: {
-            filter: { dimensions: { "geo": { "$or": [{ "is--global": true } ] } } }
+            filter: { dimensions: { "geo": { "$or": [{ "is--global": true }] } } }
           },
           encoding: {
             order: { direction: "asc", data: { concept: null, constant: "none" } },
@@ -102,13 +102,13 @@ export const VIZABI_MODEL = {
         loosePath: ["geo", "$or", 0, "geo", "$in"],
         config: {
           data: {
-            filter: { 
-              dimensions: { 
+            filter: {
+              dimensions: {
                 "geo": {
                   "$or": [{
                     "geo": { "$in": ["africa", "americas", "asia", "europe"] }
                   }]
-                } 
+                }
               }
             }
           },
@@ -117,7 +117,7 @@ export const VIZABI_MODEL = {
               direction: { ref: {
                 path: "markers.mountain.data.filter",
                 transform: "orderDirection"
-              }},
+              } },
               data: { constant: null, concept: "geo" }
             },
             stack: { data: { constant: "all" } },
@@ -130,7 +130,7 @@ export const VIZABI_MODEL = {
         groupPath: ["geo", "$or"],
         config: {
           data: {
-            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }]} } }
+            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }] } } }
           },
           encoding: {
             order: { direction: "asc", data: { concept: "rank", constant: null } },
@@ -160,9 +160,9 @@ export const VIZABI_MODEL = {
           space: ["geo", "time"],
           filter: {
             dimensions: {
-              "geo": { 
+              "geo": {
                 "$or": [{
-                  "geo": { "$in": ["africa", "americas", "asia", "europe"]}
+                  "geo": { "$in": ["africa", "americas", "asia", "europe"] }
                 }]
               }
               //"geo": { "is--world_4region": true }
@@ -192,7 +192,7 @@ export const VIZABI_MODEL = {
             direction: { ref: {
               path: "markers.mountain.data.filter",
               transform: "orderDirection"
-            }},
+            } },
             data: { constant: null, concept: "geo" }
           },
           "selected": {
