@@ -3,7 +3,7 @@
 
 .footer-container
   background-color $color-grey
-  color: $color-grey-light
+  color $color-footer-text
   width 100%
   position: relative
   display flex
@@ -11,30 +11,35 @@
   .footer-container
     justify-content space-between
 
-  .service-container
-    width 100px
-    padding-top 15px
-
-  .service-content
-    a
-      margin 0 5px
-
   .menu-holder
     display block
     padding 15px 15px 15px 15px
 
-   .logo-gray
-      margin-bottom 7px
-
-   .general-menu
+    .general-menu
       get-font-size(small)
       font-family $theme-font-regular
 
-   .main-menu
+    .main-menu
       get-font-size(small)
       font-family $theme-font-light
       margin-top 5px
       line-height: 1.7em
+
+    .bottom-header
+      font-size: 2em
+      margin-bottom: 0.7em
+
+    .bottom-text
+      margin-bottom: 1em
+
+  .logos-holder
+    display flex
+    flex-direction column
+    justify-content center
+    row-gap 10px
+    padding-right 20px
+    padding-top 20px
+    padding-bottom 20px
 
 .nav
   font-weight bold
@@ -54,9 +59,9 @@
 .nav a
   display inline-block
   color $color-footer-link
-  text-decoration none
-  text-transform uppercase
-  letter-spacing 0.07em
+  text-decoration underline
+  text-underline-offset 0.12em
+  font-variant all-petite-caps
 
   &:hover
     color $color-primary
