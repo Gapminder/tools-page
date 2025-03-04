@@ -3,10 +3,10 @@ import * as utils from "../core/utils";
 const Footer = function(placeHolder, translator, dispatch) {
   const templateHtml = `
     <div class="footer-container">
+        <div class="logos-holder">
+            <img src="assets/images/gapminder_word_logo.svg" height="30px">
+        </div>
         <div class="footer-container menu-holder">
-            <div class="logo-gray">
-                <img src="assets/images/logo-gray.png">
-            </div>
             <div class="general-menu">
                 <ul class="nav">
                     <!--li><a href="//gapminder.org/world/?use_gapminder_world" data-text="old_bubble_chart"></a></li-->
@@ -27,13 +27,8 @@ const Footer = function(placeHolder, translator, dispatch) {
                     <li><a href="//github.com/Gapminder/tools-page/issues" data-text="report_problem"></a></li>
                 </ul>
             </div>
-        </div>
-        <div class="footer-container service-container">
-            <div class="service-content">
-                <a href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Fwww.gapminder.org&related=Gapminder&text=Gapminder&tw_p=tweetbutton&url=http%3A%2F%2Fwww.gapminder.org%2Ftools%2F"><img src="assets/images/footer/twitter-gray.png"></a>
-                <a href="http://www.addtoany.com/add_to/facebook?linkurl=http%3A%2F%2Fwww.gapminder.org%2Ftools%2F&"><img src="assets/images/footer/facebook-gray.png"></a>
-            </div>
-        </div>
+        </div>          
+      </div>
     </div>
   `;
   //require("./footer.html");
