@@ -166,12 +166,12 @@ export const VIZABI_MODEL = {
     layout: { projector: false },
     //ui
     "buttons": {
-      "buttons": ["mapcolors", "markercontrols", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["markercontrols", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
         "popup": ["markercontrols", "moreoptions"],
-        "sidebar": ["markercontrols", "zoom"],
+        "sidebar": ["markercontrols"],
         "moreoptions": [
           "opacity",
           "speed",
