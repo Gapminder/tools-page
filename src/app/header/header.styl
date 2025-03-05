@@ -3,6 +3,7 @@
 
 a
   text-decoration none
+  display inline-block
 
 
     
@@ -16,6 +17,7 @@ a
   margin:0
   position absolute
   z-index 999
+  font-weight bold
 
   +for_breakpoint(small)
     position static
@@ -25,7 +27,14 @@ a
     &:hover
       display block !important
 
+  li
+    padding-right 15px
 
+    +for_breakpoint(small)
+      padding-right 5px
+
+    +for_breakpoint(not-small)
+      display inline
 
 
 .header
