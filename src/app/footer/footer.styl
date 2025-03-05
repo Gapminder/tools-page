@@ -37,31 +37,29 @@
     flex-direction column
     justify-content center
     row-gap 10px
-    padding-right 20px
-    padding-top 20px
-    padding-bottom 20px
+    padding 20px 20px 20px 10px
 
-.nav
-  font-weight bold
-  list-style none
-  margin 0
-  padding 0
+  ul
+    font-weight bold
+    list-style none
+    margin 0
+    padding 0
 
-.nav li
-  padding-right 15px
+    li
+      padding-right 15px
 
-  +for_breakpoint(small)
-    padding-right 5px
+      +for_breakpoint(small)
+        padding-right 5px
 
-  +for_breakpoint(not-small)
-    display inline
+      +for_breakpoint(not-small)
+        display inline
 
-.nav a
-  display inline-block
-  color $color-footer-link
-  text-decoration underline
-  text-underline-offset 0.12em
-  font-variant all-petite-caps
+    a
+      display inline-block
+      color $color-footer-link
+      text-decoration underline
+      text-underline-offset 0.12em
+      font-variant all-petite-caps
 
-  &:hover
-    color $color-primary
+      &:hover
+        color $color-primary
