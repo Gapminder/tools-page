@@ -45,7 +45,7 @@ export const VIZABI_MODEL = {
           },
           "color_map": {
             data: {
-              concept: "geo",
+              concept: "landlocked",
               space: ["geo"],
             },
             scale: {
@@ -202,6 +202,7 @@ export const VIZABI_MODEL = {
         removeLabelBox: false
       },
       map: {
+        "showAreas": true,
         overflowBottom: 0,
         topology: {
           path: "assets/world-50m.json",
