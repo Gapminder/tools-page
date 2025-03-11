@@ -104,7 +104,7 @@
         "dialogs/color/select-all-in-group": "Markera alla inom",
         "dialogs/color/add-all-in-group": "Lägg till alla inom",
         "dialogs/color/remove-all-in-group": "Ta bort alla inom",
-        "dialogs/color/remove-else": "Ta bort allt annat",
+        "dialogs/color/remove-else": "Ta bort alla utanför",
         "dialogs/color/edit-color": "Justera färg",
         "dialogs/color/edit-color-blocked-hint": "Dataset författare tillåter inte färgjustering för",
         "dialogs/find": "Select",
