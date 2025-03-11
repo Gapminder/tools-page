@@ -104,7 +104,7 @@
         "dialogs/color/select-all-in-group": "Select all in",
         "dialogs/color/add-all-in-group": "Add all in",
         "dialogs/color/remove-all-in-group": "Remove all in",
-        "dialogs/color/remove-else": "Remove everything else",
+        "dialogs/color/remove-else": "Remove all outside of",
         "dialogs/color/edit-color": "Edit color",
         "dialogs/color/edit-color-blocked-hint": "Dataset author made colors unchangeable for",
         "dialogs/find": "Select",
