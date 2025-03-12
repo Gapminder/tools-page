@@ -1,8 +1,6 @@
-import { viz } from "./tool";
-import {
-  appState,
-  dispatch
-} from "./global";
+//import { viz } from "./tool";
+import { initState, setState, getState, dispatch } from "./global.js";
+import * as cms from "./cms.js";
 import {
   d3json
 } from "./utils";
@@ -22,17 +20,17 @@ const AVAILABLE_LANGUAGES = [
 const TRANSLATION_DICTIONARY = {};
 
 function setLocale(arg) {
-  if (!arg) arg = appState.language;
+  if (!arg) arg = getState("locale");
 
   const langId = /(\w+)-*/.exec(arg)[1];
   d3.select("html")
     .attr("lang", langId)
     .attr("class", langId);
 
-  appState.language = arg;
+  setState("locale", arg);
 
-  if (!viz || !viz.services) return;
-  viz.services.locale.id = arg;
+  //if (!viz || !viz.services) return;
+  //viz.services.locale.id = arg;
 }
 
 function loadTranslation(language) {
@@ -47,50 +45,62 @@ function loadTranslation(language) {
   });
 }
 
-function changeLanguage(language) {
-  if (TRANSLATION_DICTIONARY[language]) {
-    translateNow();
-  } else {
-    const promises = [];
-    if (!TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key] && language !== DEFAULT_LANGUAGE.key) {
-      promises.push(loadTranslation(DEFAULT_LANGUAGE.key).then(translation => {
-        TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key] = translation;
-      }));
-    }
-    promises.push(loadTranslation(language).then(translation => {
-      TRANSLATION_DICTIONARY[language] = translation;
-    }));
-    Promise.all(promises).then(() => {
-      translateNow();
-    });
-  }
-}
+// function changeLanguage(language) {
+//   if (TRANSLATION_DICTIONARY[language]) {
+//     translateNow();
+//   } else {
+//     const promises = [];
+//     if (!TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key] && language !== DEFAULT_LANGUAGE.key) {
+//       promises.push(loadTranslation(DEFAULT_LANGUAGE.key).then(translation => {
+//         TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key] = translation;
+//       }));
+//     }
+//     promises.push(loadTranslation(language).then(translation => {
+//       TRANSLATION_DICTIONARY[language] = translation;
+//     }));
+//     Promise.all(promises).then(() => {
+//       translateNow();
+//     });
+//   }
+// }
 
-function translateNow() {
-  const languageConfig = AVAILABLE_LANGUAGES.filter(({ key }) => key === appState.language)[0];
-  d3.select(".wrapper").classed("page-lang-rtl", languageConfig.isRtl);
-  dispatch.call("translate");
-}
+// function translateNow() {
+//   const locale = getState("locale");
+//   const languageConfig = AVAILABLE_LANGUAGES.filter(({ key }) => key === locale)[0];
+//   d3.select(".wrapper").classed("page-lang-rtl", languageConfig.isRtl);
+//   dispatch.call("translate");
+// }
 
 function translator(key) {
-  return TRANSLATION_DICTIONARY[appState.language]
-    && TRANSLATION_DICTIONARY[appState.language][key] ? TRANSLATION_DICTIONARY[appState.language][key]
+  const locale = getState("locale");
+  return TRANSLATION_DICTIONARY[locale]
+    && TRANSLATION_DICTIONARY[locale][key] ? TRANSLATION_DICTIONARY[locale][key]
     :
     TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key]
     && TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key][key] ? TRANSLATION_DICTIONARY[DEFAULT_LANGUAGE.key][key] : key;
 }
 
-function setLanguage(language) {
-  setLocale(language);
-  changeLanguage(appState.language);
+function initTranslator(dictionary) {
+  TRANSLATION_DICTIONARY["en"] = dictionary;
 }
 
-function getLanguages() {
-  return AVAILABLE_LANGUAGES;
+function getFileReaderForVizabi(id){
+  console.log("vizabi wants file from cms: " + id);
+  const {DOCID_I18N} = cms.getSettings();
+  return cms.loadSheet({ docid: DOCID_I18N, sheet: "tools/" + id, type: "language" });
 }
+
+// function setLanguage(language) {
+//   setLocale(language);
+//   changeLanguage(locale);
+// }
+
+// function getLanguages() {
+//   return AVAILABLE_LANGUAGES;
+// }
 
 export {
   translator,
-  setLanguage,
-  getLanguages
+  initTranslator,
+  getFileReaderForVizabi,
 };

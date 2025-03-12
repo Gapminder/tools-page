@@ -1,64 +1,74 @@
-import { setTool } from "./core/tool";
-import { URLI, parseURL } from "./core/url";
-import { appState, dispatch } from "./core/global";
-import { upgradeUrl } from "./core/deprecated-url";
+import * as urlService from "./core/url.js";
+import * as cmsService from "./core/cms.js";
+import { initState, setState, getState, dispatch } from "./core/global.js";
 import { scrollTo, deepExtend } from "./core/utils";
 
-import {
-  translator,
-  setLanguage,
-  getLanguages
-} from "./core/language";
+import { translator, initTranslator } from "./core/language.js";
 
-import ChartSwitcher from "./header/chart-switcher/chart-switcher";
-import LanguageSwitcher from "./header/language-switcher/language-switcher";
-import SocialButtons from "./header/social-buttons/social-buttons";
-import Menu from "./header/menu/menu";
-import MenuMobile from "./header/menu-mobile/menu-mobile";
-import Message from "./header/message/message";
-import SeeAlso from "./see-also/see-also";
-import DataEditor from "./header/data-editor/data-editor";
 
-import menuItems from "./core/menu-items";
-import relatedItems from "./core/related-items";
-import BitlyService from "./core/bitly.service";
-import LocationService from "./core/location.service";
-import RelatedItems from "./related-items/related-items";
-import Footer from "./footer/footer";
 import UserLogin from "./header/user-login/user-login";
+// import LanguageSwitcher from "./header/language-switcher/language-switcher";
+// import SocialButtons from "./header/social-buttons/social-buttons";
+// import Menu from "./header/menu/menu";
+// import MenuMobile from "./header/menu-mobile/menu-mobile";
+// import Message from "./header/message/message";
+// import DataEditor from "./header/data-editor/data-editor";
 
-const App = function() {
+// import menuItems from "./core/menu-items";
+// import BitlyService from "./core/bitly.service";
+// import LocationService from "./core/location.service";
+import ChartSwitcher from "./header/chart-switcher/chart-switcher.js";
+import SeeAlso from "./see-also/see-also.js";
+import RelatedItems from "./related-items/related-items.js";
+import Footer from "./footer/footer.js";
+import { setTool } from "./core/tool.js";
 
-  Message.init(
-    d3.select(".app-message"),
-    translator,
-    dispatch
-  );
 
-  const url = location.href;
-  const upgradedUrl = upgradeUrl(url);
-  if (upgradedUrl !== url) {
-    location.replace(upgradedUrl);
+const App = async function() {
+
+  const configs = await cmsService.load();
+  const allowedTools = configs.toolset.filter(f => !!f.tool).map(m => m.id);
+
+  const tool_id = urlService.init({ allowedTools });
+  initState({ configs, tool: tool_id, urlService });
+  initTranslator(configs["page/en"]);
+
+  d3.select(".wrapper").classed("embedded-view", getState("embedded"));
+
+  new SeeAlso({ dom: ".app-see-also", translator, dispatch, data: configs.toolset });
+  new RelatedItems({ dom: ".app-related-items", translator, dispatch, data: configs.related, switchTool });
+  new Footer({ dom: ".app-footer", translator, dispatch });
+
+  new ChartSwitcher({ dom: ".header .app-chart-switcher", translator, dispatch, data: configs.toolset, switchTool });
+
+  function switchTool(id) {
+    if (getState("tool") === id) {
+      //switch to same tool: reset state, discard chart transition
+      urlService.resetURL();
+    } else {
+      setTool(id, configs);
+    }
+    dispatch.call("toolChanged", null, id);
   }
 
-  const embeddedMatch = /embedded=(true|false)/.exec(window.location.search);
-  d3.select(".wrapper").classed("embedded-view", (embeddedMatch || [])[1] === "true");
+  setTool(null, configs)
 
-  const tools = toolsPage_toolset.filter(f => !!f.tool).map(m => m.id);
-  parseURL();
-  Object.assign(appState, {
-    tool: (URLI["chart-type"] && tools.includes(URLI["chart-type"])) ? URLI["chart-type"] : tools[0],
-    language: URLI.model?.ui?.locale || "en",
-    projector: (URLI.model?.ui?.projector === "true") || false
+
+  dispatch.on("toolChanged.app", id => {
+    window.history.pushState({
+      tool: id,
+      model: {}
+    }, "Title", `#$chart-type=${id}`);
   });
 
-  window.history.replaceState({
-    tool: appState.tool,
-    model: deepExtend({}, URLI.model, true)
-  }, "Title");
-  setTool();
 
-  const languageSwitcher = new LanguageSwitcher(
+  return;
+  new Message({ dom: ".app-message", translator, dispatch });
+  new Tool({ dom: ".app-tool", translator, dispatch });
+
+  new DataEditor({ dom: ".header .data-editor", translator, dispatch });
+
+  new LanguageSwitcher(
     d3.select(".header .app-language-switcher"),
     translator,
     dispatch,
@@ -68,26 +78,8 @@ const App = function() {
       onClick: d => setLanguage(d.key)
     });
 
-  const chartSwitcher = new ChartSwitcher(
-    d3.select(".header .app-chart-switcher"),
-    translator,
-    dispatch,
-    {
-      tools: toolsPage_toolset,
-      appState,
-      onClick: d => {
-        dispatch.call("toolChanged", null, d.id);
-        if (appState.tool == d.id) {
-          //switch to same tool: reset state, discard chart transition
-          URLI.model = {};
-          setTool(null, true);
-        } else {
-          setTool(d.id);
-        }
-      }
-    });
 
-  const menu = new Menu(
+  new Menu(
     d3.select(".header .app-menu"),
     translator,
     dispatch,
@@ -95,7 +87,7 @@ const App = function() {
       menuItems: menuItems.children
     });
 
-  const menuMobile = new MenuMobile(
+  new MenuMobile(
     d3.select(".header .menu-mobile"),
     translator,
     dispatch,
@@ -103,25 +95,8 @@ const App = function() {
       menu: d3.select(".header")
     });
 
-  const seeAlso = new SeeAlso(
-    d3.select(".app-see-also"),
-    translator,
-    dispatch,
-    {
-      tools: toolsPage_toolset,
-      selectedTool: appState.tool,
-      onClick: d => {
-        scrollTo({
-          element: d3.select(".wrapper").node(),
-          complete: () => {
-            dispatch.call("toolChanged", null, d.id);
-            setTool(d.id);
-          }
-        });
-      }
-    });
 
-  const socialButtons = new SocialButtons(
+  new SocialButtons(
     d3.select(".social-list .app-social-buttons"),
     translator,
     appState,
@@ -131,24 +106,6 @@ const App = function() {
       locationService: LocationService(),
     });
 
-  const related = new RelatedItems(
-    d3.select(".app-related-items"),
-    translator,
-    dispatch,
-    {
-      relatedItems
-    });
-
-  const footer = new Footer(
-    d3.select(".app-footer"),
-    translator,
-    dispatch);
-
-  const dataEditor = new DataEditor(
-    d3.select(".header .data-editor"),
-    translator,
-    dispatch,
-    {});
 
   const userLogin = new UserLogin(
     d3.select(".header .app-user-login"),

@@ -1,7 +1,7 @@
 import * as utils from "../core/utils";
 
-const Footer = function(placeHolder, translator, dispatch) {
-  const templateHtml = `
+const Footer = function({ dom, translator, dispatch }) {
+  const template = `
     <div class="footer-container">
       <div class="footer-container menu-holder">
         <div class="bottom-header">BOENDEBAROMETERN</div>
@@ -29,14 +29,8 @@ const Footer = function(placeHolder, translator, dispatch) {
 
     </div>
   `;
-  //require("./footer.html");
 
-  const template = d3.create("div");
-  template.html(templateHtml);
-
-  for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(() => elem);
-  }
+  const placeHolder = d3.select(dom).html(template);
 
   translate();
   dispatch.on("translate.footer", () => {
