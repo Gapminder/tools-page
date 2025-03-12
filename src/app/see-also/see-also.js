@@ -1,79 +1,55 @@
 import * as utils from "../core/utils";
+import { getState } from "../core/global.js";
 
-const SeeAlso = function(placeHolder, translator, dispatch, { tools, selectedTool, onClick }) {
-  const templateHtml = `
+
+const SeeAlso = function({ dom, translator, dispatch, data, switchTool }) {
+  const template = `
     <div class="see-also-block">
       <h2 class="heading-2 see-also-heading" data-text="other_tools"></h2>
-
-      <div class="other-tools-container">
-        <div class="other-tools-item">
-          <a rel="noopener">
-            <img class="image"/>
-            <span class="title"></span>
-          </a>
-        </div>
-      </div>
+      <div class="other-tools-container"></div>
     </div>
   `;
-  //require("./see-also.html");
 
-  //TODO why is it not passed via arguments?
-  tools = toolsPage_toolset;
+  const placeHolder = d3.select(dom).html(template);
+  const items = placeHolder.select(".other-tools-container").selectAll(".other-tools-item")
+    .data(data)
+    .join("div")
+    .attr("class", "other-tools-item")
+    //href="${getLink(d.id)}"
+    .html(d => `
+      <a rel="noopener">
+        <img class="image" src="${d.image}"/>
+        <span class="title"></span>
+      </a>
+    `)
+    .on("click", (event, d) => {
+      utils.scrollTo({
+        element: d3.select(".wrapper").node(),
+        complete: () => {
+          switchTool(d.id);
+        }
+      });
 
-  const template = d3.create("div");
-  template.html(templateHtml);
-
-  const itemTemplate = template.select(".other-tools-item");
-  for (const tool of tools) {
-    itemTemplate.clone(true)
-      .datum(tool)
-      .attr("hidden", (tool.id === selectedTool || tool.hideThumbnail) ? true : null)
-      .raise()
-      .call(fillToolItem);
-  }
-  itemTemplate.remove();
-
-  for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(() => elem);
-  }
+    });
 
   translate();
+  updateShowHide();
+
   dispatch.on("translate.seeAlso", () => {
     translate();
   });
 
-  dispatch.on("toolChanged.seeAlso", d => {
-    const tool = tools.filter(({ id }) => id === d)[0];
-    toolChanged(tool);
+  dispatch.on("toolChanged.seeAlso", id => {
+    updateShowHide(id);
   });
 
   function translate() {
     placeHolder.select(".see-also-heading").each(utils.translateNode(translator));
-    placeHolder.selectAll(".other-tools-item").select(".title")
-      .text(d => translator(d.title || d.id));
+    items.select(".title").text(d => translator(d.title || d.id));
   }
 
-  function toolChanged(tool) {
-    placeHolder.selectAll(".other-tools-item")
-      .attr("hidden", _d => (_d.id === tool.id || _d.hideThumbnail) ? true : null);
-  }
-
-  function getLink(tool) {
-    return `${window.location.pathname}#$chart-type=${tool}`;
-  }
-
-  function fillToolItem(item) {
-    const tool = item.datum();
-    const a = item.select("a");
-    if (tool.url) {
-      a.attr("href", tool.url);
-    } else {
-      a.attr("href", getLink(tool.id))
-        .on("click", (event, d) => {
-          onClick(d);
-        });
-    }
-    a.select(".image").attr("src", "." + tool.image);
+  function updateShowHide(id = getState("tool")) {
+    items.attr("hidden", d => (d.id === id || d.hideThumbnail) ? true : null);
   }
 
 };

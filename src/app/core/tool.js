@@ -1,12 +1,11 @@
-import {
-  appState, dispatch
-} from "./global";
+import { getState, setState, dispatch } from "./global.js";
+
 import {
   URLI,
   updateURL
 } from "./url";
 import {
-  setLanguage,
+  getFileReaderForVizabi,
 } from "./language";
 import {
   getTransitionModel
@@ -21,7 +20,9 @@ const disposers = [];
 const MAIN_MARKERS = ["bubble", "line", "bar", "mountain", "pyramid", "spreadsheet"];
 
 //cleanup the existing tool
-function removeTool() {
+function cleanupPreviousTool() {
+  //kill the autorun reactions from the old tool
+  if (urlUpdateDisposer) urlUpdateDisposer();
   if (viz) {
     viz.deconstruct();
     viz = void 0;
@@ -63,10 +64,10 @@ function googleAnalyticsLoadEvents(viz) {
             "name": time < 30000 ? `${id} load` : `${id} load above 30s`,
             "value": time,
             "event_category": "Page load",
-            "event_label": appState.tool
-          });  
-        }
-        
+            "event_label": getState("tool")
+          });
+        };
+
         if (splashed && loadMarker.id.split("-").pop() == "splash") {
           splashReady = true;
           logById("SPLASH");
@@ -87,41 +88,40 @@ function googleAnalyticsLoadEvents(viz) {
   }
 }
 
-function setTool(tool, skipTransition) {
-  const toolset = toolsPage_toolset;
-  const datasources = toolsPage_datasources;
+async function setTool(tool, {toolset, datasources}, skipTransition) {
 
-  if (tool === appState.tool) return;
-  if (!tool) tool = appState.tool;
-
+  if (tool === getState("tool")) return;
+  if (!tool) tool = getState("tool");
+  
+  //gtag is a global variable from index.html
   //configure google analytics with the active tool, which would be counted as a "page view" of our single-page-application
   if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool, "page_path": "/" + tool });
 
   const toolsetEntry = toolset.find(f => f.id === tool);
-  const toolsetEntryPrevious = toolset.find(f => f.id === appState.tool);
-  const toolModelPrevious = {}; //TODO: viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL_PREVIOUS) : {};
-  appState.tool = tool;
+  const toolsetEntryPrevious = toolset.find(f => f.id === getState("tool"));
+  setState("tool", tool);
 
-  //kill old autorun listener
-  if (urlUpdateDisposer) urlUpdateDisposer();
-  removeTool();
+  cleanupPreviousTool();
 
   timeLogger.removeAll();
   timeLogger.add("SPLASH");
   timeLogger.add("FULL");
 
-  const tools = [toolsetEntry.tool];
-  if (toolsetEntry.toolComponents) tools.push(...toolsetEntry.toolComponents);
+  //LAZY-LOAD TOOLS JS CODE
+  const toolsToLoad = [toolsetEntry.tool].concat(toolsetEntry.toolComponents || []);
+  await Promise.all(toolsToLoad.map(
+    tool => window[tool] 
+      ? Promise.resolve() 
+      : loadJS(tool.toLowerCase() + (ENV === "production" ? ".min.js" : ".js"), document.body)
+  ));
 
-  Promise.all(tools.map(tool => window[tool] ? Promise.resolve() : loadJS(tool.toLowerCase() + (ENV === "production" ? ".min.js" : ".js"), document.body))).then(() => {
-
-    const pathToConfig = "config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
-    loadJS(pathToConfig, document.body, "vzb-tool-config")
-      .then(() => {
-        d3.select(".vizabi-placeholder")
-          .append("div")
-          .attr("class", "vzb-placeholder")
-          .attr("style", "width: 100%; height: 100%;");
+  const pathToConfig = "config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
+  loadJS(pathToConfig, document.body, "vzb-tool-config")
+    .then(() => {
+      d3.select(".vizabi-placeholder")
+        .append("div")
+        .attr("class", "vzb-placeholder")
+        .attr("style", "width: 100%; height: 100%;");
 
         // apply data models from configuration to pageConfig
         function applyDataConfigs(pageConfig) {
@@ -156,6 +156,7 @@ function setTool(tool, skipTransition) {
 
         function applyTransitionConfigs(pageConfig) {
           if (skipTransition || !viz) return pageConfig;
+          const toolModelPrevious = {}; //TODO: viz ? viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL_PREVIOUS) : {};
           const transitionModel = getTransitionModel(toolModelPrevious, toolsetEntryPrevious.transition, toolsetEntry.transition);
           return deepExtend({}, pageConfig, transitionModel, true); //true --> overwrite by empty
         }
@@ -169,7 +170,8 @@ function setTool(tool, skipTransition) {
             }),
             locale: deepExtend({}, VizabiSharedComponents.LocaleService.DEFAULTS, {
               placeholder: PLACEHOLDER,
-              path: "assets/translation/"
+              path: "assets/translation/",
+              getExternalFileReader: getFileReaderForVizabi
             })
           }
         }, VIZABI_MODEL);
@@ -186,9 +188,9 @@ function setTool(tool, skipTransition) {
         window.VIZABI_LAYOUT = observable(VIZABI_PAGE_MODEL.ui.layout);
         if (VIZABI_UI_CONFIG.projector !== undefined) VIZABI_LAYOUT.projector = VIZABI_UI_CONFIG.projector;
 
-        setLanguage(VIZABI_LOCALE.id);
-        dispatch.call("languageChanged", null, VIZABI_LOCALE.id);
-        appState.projector = VIZABI_LAYOUT.projector;
+        //setLanguage(VIZABI_LOCALE.id); //should be a reaction instead of action
+        //dispatch.call("languageChanged", null, VIZABI_LOCALE.id); //should be a reaction instead of action
+        setState("projector", VIZABI_LAYOUT.projector);
 
         const toolPrototype = toolsetEntry.toolVariation ? window[toolsetEntry.tool][toolsetEntry.toolVariation] : window[toolsetEntry.tool];
         const model = Vizabi(pageConfig.model);
@@ -237,7 +239,7 @@ function setTool(tool, skipTransition) {
 
         window.viz = viz;
 
-/*
+        /*
 CUSTOM EVENT ANALYTICS CODE
 see https://github.com/Gapminder/tools-page-analytics-server
 
@@ -250,18 +252,18 @@ see https://github.com/Gapminder/tools-page-analytics-server
           //   "name": searchInput.node().value ? "search" : "menu",
           //   "value": sourceData.id,
           //   "event_category": sourceData?.byDataSources?.[0]?.dataSource?.id,
-          //   "event_label": appState.tool
+          //   "event_label": getState("tool")
           // });
 
           const options = `\
 concept=${sourceData.id}\
 &space=${sourceData?.byDataSources?.[0]?.spaces?.[0]}\
-&tool=${appState.tool}\
+&tool=${getState("tool")}\
 &dataset=${sourceData?.byDataSources?.[0]?.dataSource?.id}\
 &type=${searchInput.node().value ? "search" : "menu"}\
 &referer=${window.location.host}\
 `;
-        
+
           fetch(`https://tools-page-analytics-server.gapminder.org/record?${options}`);
         }, { capture: true });
 */
@@ -272,22 +274,22 @@ concept=${sourceData.id}\
         //     'time',
         //     'name',
         //     'geo',
-        //     'country', 
+        //     'country',
         //     'world_4region',
         //     'world_6region',
-        //     'is--', 
+        //     'is--',
         //     'un_sdg_region',
-        //     'g77_and_oecd_countries', 
-        //     'global', 
-        //     'income_3groups', 
-        //     'income_groups', 
-        //     'landlocked', 
-        //     'main_religion_2008', 
-        //     'un_sdg_ldc', 
-        //     'unhcr_region', 
-        //     'unicef_region', 
-        //     'west_and_rest', 
-        //     'age', 
+        //     'g77_and_oecd_countries',
+        //     'global',
+        //     'income_3groups',
+        //     'income_groups',
+        //     'landlocked',
+        //     'main_religion_2008',
+        //     'un_sdg_ldc',
+        //     'unhcr_region',
+        //     'unicef_region',
+        //     'west_and_rest',
+        //     'age',
         //     'gender',
         //     'latitude',
         //     'longitude'
@@ -300,15 +302,15 @@ concept=${sourceData.id}\
         //     const concept = encData?.concept;
         //     if (!concept || passedConcepts.includes(concept) || encData.constant || ignoredConcepts.includes(concept)) return;
         //     passedConcepts.push(concept);
-            
+
         //     if (gtag) gtag("event", "concept_request", {
         //       "name": "url",
         //       "value": concept,
         //       "event_category": encData.source || defaultSource,
-        //       "event_label": appState.tool
+        //       "event_label": getState("tool")
         //     });
         //   });
-        // } 
+        // }
 
         window.VIZABI_DEFAULT_MODEL = diffObject(
           toJS(viz.model.config, { recurseEverything: true }),
@@ -362,7 +364,7 @@ concept=${sourceData.id}\
         Stack: ${err.stack}`
       ));
 
-  });
+  
 }
 
 export {
