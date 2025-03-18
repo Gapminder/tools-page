@@ -1,9 +1,5 @@
 import Table from "../../core/table";
 import {
-  viz,
-  setTool
-} from "../../core/tool";
-import {
   URLI
 } from "../../core/url";
 
@@ -37,10 +33,12 @@ const propTypes = {
   }
 };
 
-const DataEditor = function(placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
+const DataEditor = function({dom, translator, state, tool, viz, languages, selectedLanguage, onClick }) {
   let data;
 
-  dispatch.on("menuOpen.dataEditor", d => {
+  const placeHolder = d3.select(dom);
+
+  state.dispatch.on("menuOpen.dataEditor", d => {
     if (d.menu_label !== "data_editor") return;
     makeData();
     updateTable();
@@ -134,8 +132,8 @@ const DataEditor = function(placeHolder, translator, dispatch, { languages, sele
   placeHolder.select(".de-reset")
     .on("click", () => {
       URLI.model = {};
-      setTool(null, true);
-      dispatch.call("menuClose");
+      tool.setTool(null, true);
+      state.dispatch.call("menuClose");
     });
 
   placeHolder.select(".de-apply")
@@ -153,8 +151,8 @@ const DataEditor = function(placeHolder, translator, dispatch, { languages, sele
       }, {});
 
       URLI.model = { model: { dataSources: dataModel } };
-      setTool(null, true);
-      dispatch.call("menuClose");
+      tool.setTool(null, true);
+      state.dispatch.call("menuClose");
     });
 };
 

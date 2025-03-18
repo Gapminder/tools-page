@@ -1,57 +1,50 @@
-const LanguageSwitcher = function(placeHolder, translator, dispatch, { languages, selectedLanguage, onClick }) {
-  const templateHtml = `
+
+const LanguageSwitcher = function({dom, translator, state, data, swithLanguage}) {
+  const template = `
     <div class="lang-current"></div>
-
-    <ul>
-      <li></li>
-    </ul>
+    <ul hidden></ul>
   `;
-  //require("./language-switcher.html");
 
-  const template = d3.create("div");
-  template.html(templateHtml);
+  const placeHolder = d3.select(dom).html(template);
 
-  const itemTemplate = template.select("ul li");
-  for (const language of languages) {
-    itemTemplate.clone(true)
-      .datum(language)
-      .raise()
-      .on("click", (event, d) => {
-        switcher.text(d.text);
-        switchLanguage.call(this);
-        onClick(d);
-      })
-      .style("font-family", d => d.fontFamily ? d.fontFamily : null)
-      .text(d => d.text);
-  }
-  itemTemplate.remove();
+  const items = placeHolder.select("ul").selectAll("li")
+    .data(data)
+    .join("li")
+    .text(d => translator(d))
+    .on("click", (event, d) => {
+      toggleMenu.call(this, false);
+      swithLanguage(d);
+    })
 
-  dispatch.on("languageChanged.languageSwitcher", d => {
-    const selectedLanguageConfig = languages.filter(({ key }) => key === d)[0];
-    placeHolder.select(".lang-current")
-      .text(selectedLanguageConfig.text);
+  updateSelected();
+
+  state.dispatch.on("languageChanged.languageSwitcher", id => {
+    updateSelected(id);    
   });
 
-  this.isLanguageSwitcherVisible = false;
-  const selectedLanguageConfig = languages.filter(({ key }) => key === selectedLanguage)[0];
-  const switcher = template.select(".lang-current");
-  switcher.on("click", () => switchLanguage.call(this));
-  switcher.text(selectedLanguageConfig.text);
-
-  for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(() => elem);
+  function updateSelected(id = state.getState("locale")) {
+    items.classed("selected", d => d === id);
+    placeHolder.select(".lang-current")
+      .text(translator(id));
   }
 
-  d3.select(window).on("resize.languageSwitcher", () => switchLanguage.call(this, false));
+
+  // MENU OPENING LOGIC
+  // open menu
+  const switcher = placeHolder.select(".lang-current")
+    .on("click", () => toggleMenu.call(this));
+
+  // hide menu on resize or click outside
+  d3.select(window).on("resize.languageSwitcher", () => toggleMenu.call(this, false));
   d3.select(window).on("click.languageSwitcher", event => {
-    if (this.isLanguageSwitcherVisible && event.target && (event.target !== switcher.node())) {
-      switchLanguage.call(this, false);
+    if (this.isMenuOpen && event.target && (event.target !== switcher.node())) {
+      toggleMenu.call(this, false);
     }
   });
 
-  function switchLanguage(force) {
-    this.isLanguageSwitcherVisible = force || force === false ? force : !this.isLanguageSwitcherVisible;
-    placeHolder.select("ul").attr("class", this.isLanguageSwitcherVisible ? "selected" : null);
+  function toggleMenu(show) {
+    this.isMenuOpen = (show === true || show === false) ? show : !this.isMenuOpen;
+    placeHolder.select("ul").attr("hidden", this.isMenuOpen ? null : true);
   }
 
 };

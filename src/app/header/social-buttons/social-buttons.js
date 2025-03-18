@@ -1,7 +1,7 @@
 import * as utils from "../../core/utils";
 import { saveSvg } from "../../core/download-utils.js";
 
-const SocialButtons = function(placeHolder, translator, appState, dispatch, { bitlyService, locationService }) {
+const SocialButtons = function({dom, translator, state, bitlyService, locationService }) {
   const templateHtml = `
     <li>
       <div class="share-text-box" data-text="share"></div>
@@ -40,6 +40,7 @@ const SocialButtons = function(placeHolder, translator, appState, dispatch, { bi
   `;
   //require("./social-buttons.html");
 
+  const placeHolder = d3.select(dom);
   const template = d3.create("div");
   template.html(templateHtml);
 
@@ -63,7 +64,7 @@ const SocialButtons = function(placeHolder, translator, appState, dispatch, { bi
   }
 
   translate();
-  dispatch.on("translate.socialButtons", () => {
+  state.dispatch.on("translate.socialButtons", () => {
     translate();
   });
 
@@ -109,7 +110,7 @@ const SocialButtons = function(placeHolder, translator, appState, dispatch, { bi
   function download() {
     d3.selectAll(".vzb-export").each(function(_, i) {
       const filename = d3.timeFormat("%Y-%m-%d at %H.%M.%S")(new Date())
-        + " - " + toolsPage_toolset.find(f => f.id == appState.tool).title
+        + " - " + toolsPage_toolset.find(f => f.id == state.getState("tool")).title
         + " - " + (i + 1);
 
       saveSvg(d3.select(this), filename + ".svg");

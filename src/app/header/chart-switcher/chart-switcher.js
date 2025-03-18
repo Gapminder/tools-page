@@ -1,10 +1,8 @@
-import { getState } from "../../core/global.js";
-
 // function getLink(id) {
 //   return `${window.location.pathname}#$chart-type=${id}`;
 // }
 
-const ChartSwitcher = function({ dom, translator, dispatch, data, switchTool }) {
+const ChartSwitcher = function({ dom, translator, state, data, switchTool }) {
   const template = `
     <div class="chart-switcher">
       <a class="chart-switcher-button"></a>
@@ -26,24 +24,24 @@ const ChartSwitcher = function({ dom, translator, dispatch, data, switchTool }) 
   translate();
   updateSelected();
 
-  dispatch.on("translate.chartSwitcher", () => {
+  state.dispatch.on("translate.chartSwitcher", () => {
     translate();
   });
 
-  dispatch.on("toolChanged.chartSwitcher", id => {
+  state.dispatch.on("toolChanged.chartSwitcher", id => {
     updateSelected(id);
     translate();
   });
 
   function translate() {
-    const selectedToolConfig = data.find(({ id }) => id === getState("tool"));
+    const selectedToolConfig = data.find(({ id }) => id === state.getState("tool"));
     placeHolder.select(".chart-switcher-button")
       .text(translator(selectedToolConfig.title || selectedToolConfig.id));
     placeHolder.selectAll(".chart-switcher-options div")
       .select("a").text(d => translator(d.title || d.id));
   }
 
-  function updateSelected(id = getState("tool")) {
+  function updateSelected(id = state.getState("tool")) {
     items.classed("selected", d => d.id === id);
   }
 
@@ -55,14 +53,14 @@ const ChartSwitcher = function({ dom, translator, dispatch, data, switchTool }) 
   // hide menu on resize or click outside
   d3.select(window).on("resize.chartSwitcher", () => toggleMenu.call(this, false));
   d3.select(window).on("click.chartSwitcher", event => {
-    if (this.areToolsOpen && event.target && (event.target !== switcher.node())) {
+    if (this.isMenuOpen && event.target && (event.target !== switcher.node())) {
       toggleMenu.call(this, false);
     }
   });
 
   function toggleMenu(show) {
-    this.areToolsOpen = (show === true || show === false) ? show : !this.areToolsOpen;
-    placeHolder.select(".chart-switcher-options").attr("hidden", this.areToolsOpen ? null : true);
+    this.isMenuOpen = (show === true || show === false) ? show : !this.isMenuOpen;
+    placeHolder.select(".chart-switcher-options").attr("hidden", this.isMenuOpen ? null : true);
   }
 
 };
