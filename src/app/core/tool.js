@@ -1,4 +1,4 @@
-import { getState, setState, dispatch } from "./global.js";
+import { getState, setState } from "./global.js";
 
 import {
   URLI,
@@ -88,7 +88,13 @@ function googleAnalyticsLoadEvents(viz) {
   }
 }
 
-async function setTool(tool, {toolset, datasources}, skipTransition) {
+const Tool = function({cmsData, state, dom}) {
+  const {toolset, datasources, toolconfig} = cmsData;
+  return {
+    setTool: async function(tool, skipTransition) {
+      
+    
+
 
   if (tool === getState("tool")) return;
   if (!tool) tool = getState("tool");
@@ -116,8 +122,8 @@ async function setTool(tool, {toolset, datasources}, skipTransition) {
   ));
 
   const pathToConfig = "config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
-  loadJS(pathToConfig, document.body, "vzb-tool-config")
-    .then(() => {
+  await loadJS(pathToConfig, document.body, "vzb-tool-config")
+    
       d3.select(".vizabi-placeholder")
         .append("div")
         .attr("class", "vzb-placeholder")
@@ -126,7 +132,7 @@ async function setTool(tool, {toolset, datasources}, skipTransition) {
         // apply data models from configuration to pageConfig
         function applyDataConfigs(pageConfig) {
           if (!pageConfig.model.dataSources) pageConfig.model.dataSources = {};
-          const urlDataConfig = URLI.model?.model?.dataSources;
+          const urlDataConfig = URLI.model?.dataSources;
 
           if (urlDataConfig) {
             pageConfig.model.dataSources = urlDataConfig;
@@ -139,7 +145,7 @@ async function setTool(tool, {toolset, datasources}, skipTransition) {
                 console.warn(`Could not find data config with key ${ds} in datasources file`);
               else
                 pageConfig.model.dataSources[ds] = datasources[ds];
-              pageConfig.model.dataSources[ds].locale = URLI.model?.ui?.locale || pageConfig.ui.locale;
+              pageConfig.model.dataSources[ds].locale = URLI.ui?.locale || pageConfig.ui.locale;
             });
           }
 
@@ -174,14 +180,14 @@ async function setTool(tool, {toolset, datasources}, skipTransition) {
               getExternalFileReader: getFileReaderForVizabi
             })
           }
-        }, VIZABI_MODEL);
-        let pageConfig = VIZABI_MODEL;
+        }, VIZABI_MODEL, toolconfig.get(tool) || {});
+        let pageConfig = window.VIZABI_PAGE_MODEL;
         pageConfig = applyDataConfigs(pageConfig);
         pageConfig = applyTransitionConfigs(pageConfig);
-        if (URLI.model && URLI.model.model) {
-          VizabiSharedComponents.Utils.mergeInTarget(pageConfig.model, deepExtend(URLI.model.model), /*treat as blocks:*/ ["data.filter"]);
+        if (URLI.model) {
+          VizabiSharedComponents.Utils.mergeInTarget(pageConfig.model, deepExtend(URLI.model), /*treat as blocks:*/ ["data.filter"]);
         }
-        window.VIZABI_UI_CONFIG = observable((URLI.model && URLI.model.ui) ? deepExtend({}, URLI.model.ui) : {});
+        window.VIZABI_UI_CONFIG = observable((URLI.ui) ? deepExtend({}, URLI.ui) : {});
 
         window.VIZABI_LOCALE = observable(VIZABI_PAGE_MODEL.ui.locale);
         if (VIZABI_UI_CONFIG.locale !== undefined) VIZABI_LOCALE.id = VIZABI_UI_CONFIG.locale;
@@ -314,7 +320,7 @@ concept=${sourceData.id}\
 
         window.VIZABI_DEFAULT_MODEL = diffObject(
           toJS(viz.model.config, { recurseEverything: true }),
-          (URLI.model && URLI.model.model) ? deepExtend({}, URLI.model.model) : {}
+          (URLI.model) ? deepExtend({}, URLI.model) : {}
         );
 
         const removeProperties = (obj, array, keyStack = "") => {
@@ -358,19 +364,20 @@ concept=${sourceData.id}\
 
           DEFAULT_MODEL && updateURL(model, undefined, true);
         }, { name: "tool.js: update url" });
-      })
-      .catch(err => console.error(`Failed to set up tool id = ${tool} with config from ${pathToConfig}
-        Message: ${err.message}
-        Stack: ${err.stack}`
-      ));
+      
+      // .catch(err => console.error(`Failed to set up tool id = ${tool} with config from ${pathToConfig}
+      //   Message: ${err.message}
+      //   Stack: ${err.stack}`
+      // ));
 
-  
+      return viz;
+      }
+    
+  }
 }
 
-export {
-  viz,
-  setTool
-};
+
+export default Tool;
 
 
 //   'change_hook_which': function(evt, arg) {

@@ -153,6 +153,7 @@ jsAssets.push(
   "config/properties.js",
   "config/toolset.js",
   "config/datasources.js",
+  "config/menu-items.js",
   "config/conceptMapping.js",
   "config/entitysetMapping.js"
 );
@@ -235,6 +236,7 @@ export default [
           { src: "src/auth", dest: "build/tools" },
           { src: "src/config/toolconfigs", dest: "build/tools/config" },
           { src: "node_modules/@gapminder/tools-page-chart-configs/src/*.js", dest: "build/tools/config/toolconfigs/" },
+          { src: "src/config/menu-items.js", dest: "build/tools/config" },
           { src: "src/config/conceptMapping.js", dest: "build/tools/config" },
           { src: "src/config/entitysetMapping.js", dest: "build/tools/config" },
           { src: "src/config/related.json", dest: "build/tools/config" },

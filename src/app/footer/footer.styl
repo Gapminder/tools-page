@@ -4,16 +4,17 @@
 .footer-container
   background-color $color-grey
   color $color-footer-text
-  width 100%
   position: relative
   display flex
-
-  .footer-container
-    justify-content space-between
+  gap: 20px
+  flex-wrap: wrap
+  padding 20px
+  justify-content space-evenly
 
   .menu-holder
     display block
-    padding 15px 15px 15px 15px
+    padding: 0px
+    max-width: 600px;
 
     .general-menu
       get-font-size(small)
@@ -33,11 +34,14 @@
       margin-bottom: 1em
 
   .logos-holder
+    padding: 0px
+    position: relative
     display flex
-    flex-direction column
+    flex-direction row
+    align-items center    
+    gap 40px
+    flex-wrap wrap
     justify-content center
-    row-gap 10px
-    padding 20px 20px 20px 10px
 
   ul
     font-weight bold
@@ -54,12 +58,12 @@
       +for_breakpoint(not-small)
         display inline
 
-    a
-      display inline-block
-      color $color-footer-link
-      text-decoration underline
-      text-underline-offset 0.12em
-      font-variant all-petite-caps
+  a
+    display inline-block
+    color $color-footer-link
+    text-decoration underline
+    text-underline-offset 0.12em
+    font-variant all-petite-caps
 
-      &:hover
-        color $color-primary
+    &:hover
+      color $color-primary

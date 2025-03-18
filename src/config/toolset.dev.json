@@ -9,7 +9,7 @@
     "transition": ["select","time"],
     "title": "combo-emap-bc",
     "hideThumbnail": false,
-    "image": "/assets/images/chart/combo-emap-bc.png"
+    "image": "assets/images/chart/combo-emap-bc.png"
   },
   {
     "id": "bubbles",
@@ -19,12 +19,12 @@
     "dataSources": ["boendebarom", "kolada"],
     "transition": ["select","time"],
     "title": "bubbles",
-    "image": "/assets/images/chart/bubble-chart.png"
+    "image": "assets/images/chart/bubble-chart.png"
   },
   {
     "id": "spreadsheet",
     "title": "spreadsheet",
-    "image": "/assets/images/chart/spreadsheet.png",
+    "image": "assets/images/chart/spreadsheet.png",
     "dataSources": ["boendebarom", "kolada"],
     "tool": "Spreadsheet",
     "toolVariation": "Base",
@@ -40,6 +40,6 @@
     "transition": ["select","time"],
     "title": "extapimap",
     "hideThumbnail": false,
-    "image": "/assets/images/chart/extapimap.png"
+    "image": "assets/images/chart/extapimap.png"
   }
 ]

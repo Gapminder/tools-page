@@ -41,7 +41,10 @@ Vizabi.stores.dataSources.createAndAddType("ddfcsv", ddfReader);
 // BW reader integration
 Vizabi.stores.dataSources.createAndAddType("ddfbw", DDFServiceReader.getReader());
 
+const DOCID_CMS = "1hLX-RzuZfmluKl_jfhfNUaJhmwOmVhP9pZfuY2brZgE";
+const DOCID_I18N = "1OXCxxeQQ60ctgROSVjpHaiHtAt99eBkf4fdD0fBzUig";
+const DEFAULT_LOCALE = "sv-SE";
 
 window.js = mobx.toJS;
 window.VIZABI_PAGE_MODEL = null;
-App();
+App({DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE});
