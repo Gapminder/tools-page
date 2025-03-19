@@ -408,3 +408,13 @@ function deepArrayEquals(a, b) {
   return true;
 }
 
+export function removeProperties(obj, array, keyStack = "") {
+  Object.keys(obj).forEach(key => {
+    if (array.some(s => (keyStack + "." + key).endsWith(s)))
+      delete obj[key];
+    else
+      (obj[key] && typeof obj[key] === "object") && removeProperties(obj[key], array, keyStack + "." + key);
+  });
+  return obj;
+};
+

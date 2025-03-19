@@ -11,7 +11,7 @@ let popStateLoopFlag = false;
 const resetPopStateLoopFlag = debounce(() => {popStateLoopFlag = false;}, 500);
 
 let URLI = {ui: {}, model: {}};
-let defaultLocale = null;
+let defaultLoc = null;
 
 function init({ allowedTools, defaultLocale }) {
   //Upgrade raw URL
@@ -21,14 +21,15 @@ function init({ allowedTools, defaultLocale }) {
     location.replace(upgradedUrl);
 
   //Only then parse URL
-  URLI = deepExtend({ui: {locale: defaultLocale}}, parseURLHashWithUrlon());
+  defaultLoc = defaultLocale;
+  URLI = deepExtend({ui: {locale: {id: defaultLocale}}}, parseURLHashWithUrlon());
 
   //apply defaults
   const toolFromUrl = getTool();
   const tool = (toolFromUrl && allowedTools.includes(toolFromUrl)) ? toolFromUrl : allowedTools[0];
 
   updateURL({model: URLI.model, ui: URLI.ui, tool, replaceInsteadPush: true});
-  return {getEmbedded, getTool, getURLI, getLocale, getProjector, setTool, setLocale, setProjector, updateURL, dispatch};
+  return {getEmbedded, getTool, getURLI, getLocale, getProjector, setTool, setLocale, setProjector, updateURL: debouncedUpdateUrl, dispatch};
 }
 
 
@@ -36,7 +37,7 @@ function popState(state){
   
   //if history state is empty — backfill it based on URL hash
   if (!state) {
-    URLI = parseURLHashWithUrlon();
+    URLI = deepExtend({ui: {locale: {id: defaultLoc}}}, parseURLHashWithUrlon());
     return pushToHistory({model: URLI.model, ui: URLI.ui, replaceInsteadPush: true});
   }
 
@@ -88,7 +89,7 @@ function getEmbedded() {
   return window.location.search.includes("embedded=true");
 }
 function getLocale() {
-  return URLI.ui?.locale;
+  return URLI.ui?.locale?.id;
 }
 function getProjector() {
   return URLI.ui?.projector === "true";
@@ -98,7 +99,7 @@ function getTool() {
 }
 function setLocale(id) {
   if(!id || id === getLocale()) return;
-  Object.assign(URLI.ui, {locale: id});
+  Object.assign(URLI.ui, {locale: {id: id}});
   pushToHistory();
   dispatch.call("languageChanged", null, id);
 }
