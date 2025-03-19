@@ -1,6 +1,6 @@
 import * as utils from "../core/utils";
 
-const SeeAlso = function({ dom, translator, state, data, switchTool }) {
+const SeeAlso = function({ dom, translator, state, data }) {
   const template = `
     <div class="see-also-block">
       <h2 class="heading-2 see-also-heading" data-text="other_tools"></h2>
@@ -24,7 +24,7 @@ const SeeAlso = function({ dom, translator, state, data, switchTool }) {
       utils.scrollTo({
         element: d3.select(".wrapper").node(),
         complete: () => {
-          switchTool(d.id);
+          state.setTool(d.id);
         }
       });
 
@@ -46,7 +46,7 @@ const SeeAlso = function({ dom, translator, state, data, switchTool }) {
     items.select(".title").text(d => translator(d.title || d.id));
   }
 
-  function updateShowHide(id = state.getState("tool")) {
+  function updateShowHide(id = state.getTool()) {
     items.attr("hidden", d => (d.id === id || d.hideThumbnail) ? true : null);
   }
 

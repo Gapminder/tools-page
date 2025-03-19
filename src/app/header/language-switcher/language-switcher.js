@@ -1,5 +1,5 @@
 
-const LanguageSwitcher = function({dom, translator, state, data, swithLanguage}) {
+const LanguageSwitcher = function({dom, translator, state, data}) {
   const template = `
     <div class="lang-current"></div>
     <ul hidden></ul>
@@ -13,7 +13,7 @@ const LanguageSwitcher = function({dom, translator, state, data, swithLanguage})
     .text(d => translator(d))
     .on("click", (event, d) => {
       toggleMenu.call(this, false);
-      swithLanguage(d);
+      state.setLocale(d);
     })
 
   updateSelected();
@@ -22,7 +22,7 @@ const LanguageSwitcher = function({dom, translator, state, data, swithLanguage})
     updateSelected(id);    
   });
 
-  function updateSelected(id = state.getState("locale")) {
+  function updateSelected(id = state.getLocale()) {
     items.classed("selected", d => d === id);
     placeHolder.select(".lang-current")
       .text(translator(id));

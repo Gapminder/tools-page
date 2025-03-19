@@ -1,147 +1,19 @@
-import { upgradeUrl } from "./deprecated-url";
-
-import {
-  debounce,
-  deepExtend,
-} from "./utils";
-import { runInAction } from "mobx";
+import { upgradeUrl } from "./deprecated-url.js";
+import { debounce, deepExtend } from "./utils.js";
 
 const URL_VERSION = "v2";
+const dispatch = d3.dispatch("translate", "toolChanged", "toolStateChangeFromPage", "toolReset", "languageChanged", "projectorChanged", "menuOpen", "menuClose");
 
-let poppedModel = {};
-let URLI = {};
 
+//TODO: We have problem with possible infinite loop of
+//updating vizabi model - updating url - updating vizabi model and so on…
 let popStateLoopFlag = false;
-const resetPopStateLoopFlag = debounce(() => {
-  popStateLoopFlag = false;
-}, 500);
+const resetPopStateLoopFlag = debounce(() => {popStateLoopFlag = false;}, 500);
 
-window.addEventListener("popstate", e => {
-  //console.log(e, diffObject());
-  if (!e.state) {
-    parseURL();
-    window.history.replaceState({
-      tool: URLI["chart-type"],
-      model: deepExtend({}, URLI.model, true)
-    }, "Title");
-    poppedModel = {};
-    return;
-  }
+let URLI = {ui: {}, model: {}};
+let defaultLocale = null;
 
-  //console.log("model diff", diffObject(e.state.model, viz.getModel()));
-  poppedModel = e.state.model;
-  if (e.state.tool !== appState.tool) {
-    parseURL();
-    setTool(e.state.tool, true);
-    dispatch.call("toolChanged", null, e.state.tool);
-  } else {
-    //FIX ME
-    //We have problem with possible infinite loop of
-    //updating vizabi model - updating url - updating vizabi model and so on…
-    //because hook.spaceRef is not model prop from init
-    popStateLoopFlag = true;
-    //viz.setModel(poppedModel);
-    runInAction(() => {
-      VizabiSharedComponents.Utils.replaceProps(VIZABI_UI_CONFIG, e.state.model.ui || {});
-      VizabiSharedComponents.Utils.mergeInTarget(viz.model.config, e.state.model.model || {});
-    });
-  }
-
-  const localeId = ((poppedModel || {}).locale || {}).id;
-  if (localeId && localeId !== appState.language) {
-    dispatch.call("languageChanged", null, localeId);
-  }
-
-  const projector = (poppedModel || {}).projector;
-  if (projector && projector !== appState.projector) {
-    dispatch.call("projectorChanged", null, projector);
-  }
-});
-
-//grabs width, height, tabs open, and updates the url
-function updateURL(model, tool, replaceInsteadPush) {
-  resetPopStateLoopFlag();
-  // if (popStateLoopFlag || (poppedModel && comparePlainObjects(viz.getModel(), poppedModel))) {
-  //   //popStateLoopFlag = false;
-  //   return;
-  // }
-
-  // poppedModel = viz.getModel();
-  poppedModel = model;
-
-  // if (typeof viz !== "undefined") {
-  //   minModel = viz.getPersistentMinimalModel(VIZABI_PAGE_MODEL);
-  // }
-
-  const url = {};
-  if (poppedModel.ui && Object.keys(poppedModel.ui).length > 0) {
-    Object.assign(url, { ui: poppedModel.ui });
-  }
-  if (poppedModel.model && Object.keys(poppedModel.model).length > 0) {
-    Object.assign(url, { model: poppedModel.model });
-  }
-  // if (minModel && Object.keys(minModel).length > 0) {
-  //   Object.assign(url, minModel);
-  // }
-  url["chart-type"] = tool;
-  url["url"] = URL_VERSION;
-
-  //console.log("pushing state", poppedModel, event);
-  window.history[replaceInsteadPush ? "replaceState" : "pushState"]({
-    tool: url["chart-type"],
-    model: deepExtend({}, poppedModel, true)
-  //need to encode symbols like # in color codes because urlon can't handle them properly
-  }, "Title", "#" + encodeUrlHash(urlon.stringify(url)));
-}
-
-const debouncedUpdateUrl = debounce(updateURL, 310);
-
-function parseURL(rawUrl = window.location.toString()) {
-  const hash = rawUrl.includes("#") && rawUrl.substring(rawUrl.indexOf("#") + 1);
-  if (!hash) return {};
-
-  let parsedUrl = {};
-  try {
-    parsedUrl = urlon.parse(decodeUrlHash(hash) || "$;");
-  }
-  catch {
-    console.warn("Failed to decode and parse this hash:", hash);
-  }
-
-  return parsedUrl;
-}
-
-function encodeUrlHash(hash) {
-  return hash.replace(/=#/g, "=%23");
-}
-
-function decodeUrlHash(hash) {
-  //replacing %2523 with %23 needed when manual encoding operation of encodeUrlHash()
-  //plus the enforced encoding in some browsers resulted in double encoding
-  return decodeURIComponent(hash.replace(/%2523/g, "%23"));
-}
-
-function resetURL() {
-  //var href = location.href + "#";
-
-  window.history.replaceState("Object", "Title", "#");
-  //location.href = href.substring(0, href.indexOf('#'));
-}
-
-
-function getEmbedded() {
-  const embeddedMatch = /embedded=(true|false)/.exec(window.location.search);
-  return (embeddedMatch || [])[1] === "true";
-}
-function getLocale() {
-  return URLI.ui?.locale;
-}
-function getProjector() {
-  return URLI.ui?.projector === "true";
-}
-
-function init({ allowedTools }) {
-
+function init({ allowedTools, defaultLocale }) {
   //Upgrade raw URL
   const url = location.href;
   const upgradedUrl = upgradeUrl(url);
@@ -149,18 +21,133 @@ function init({ allowedTools }) {
     location.replace(upgradedUrl);
 
   //Only then parse URL
-  const model = parseURL();
-  URLI = model;
+  URLI = deepExtend({ui: {locale: defaultLocale}}, parseURLHashWithUrlon());
 
   //apply defaults
-  const toolFromUrl = URLI["chart-type"];
+  const toolFromUrl = getTool();
   const tool = (toolFromUrl && allowedTools.includes(toolFromUrl)) ? toolFromUrl : allowedTools[0];
 
-  updateURL(model, tool, true);
-
-
-  return tool;
+  updateURL({model: URLI.model, ui: URLI.ui, tool, replaceInsteadPush: true});
+  return {getEmbedded, getTool, getURLI, getLocale, getProjector, setTool, setLocale, setProjector, updateURL, dispatch};
 }
+
+
+function popState(state){
+  
+  //if history state is empty — backfill it based on URL hash
+  if (!state) {
+    URLI = parseURLHashWithUrlon();
+    return pushToHistory({model: URLI.model, ui: URLI.ui, replaceInsteadPush: true});
+  }
+
+  const tool = state.tool;
+  if (tool && tool !== getTool()) {
+    setTool(tool);
+  } else {
+    popStateLoopFlag = true;
+    dispatch.call("toolStateChangeFromPage", null, state);
+  }
+
+  setLocale(state.ui?.locale);
+  setProjector(state.ui?.projector);
+};
+
+function updateURL({model = {}, ui = {}, tool, replaceInsteadPush}) {
+  Object.assign(URLI, {model, ui, "chart-type": tool});
+  resetPopStateLoopFlag();
+  pushToHistory({tool, ui, model, replaceInsteadPush})
+}
+
+function resetURL() {
+  pushToHistory();
+}
+
+function pushToHistory({tool = URLI["chart-type"], ui = URLI.ui, model = URLI.model, replaceInsteadPush = false} = {}) {
+  
+  const objectToSerialise = {};
+  if (ui && Object.keys(ui).length > 0)
+    Object.assign(objectToSerialise, { ui: ui });
+  if (model && Object.keys(model).length > 0)
+    Object.assign(objectToSerialise, { model: model });
+
+  objectToSerialise["chart-type"] = tool;
+  objectToSerialise["url"] = URL_VERSION;
+
+  window.history[replaceInsteadPush ? "replaceState" : "pushState"]({
+    tool,
+    model: deepExtend({}, model, true),
+    ui: deepExtend({}, model, true),
+  //need to encode symbols like # in color codes because urlon can't handle them properly
+  }, "unused mandatory parameter", "#" + encodeUrlHash(urlon.stringify(objectToSerialise)));
+}
+
+function getURLI(){
+  return URLI;
+}
+function getEmbedded() {
+  return window.location.search.includes("embedded=true");
+}
+function getLocale() {
+  return URLI.ui?.locale;
+}
+function getProjector() {
+  return URLI.ui?.projector === "true";
+}
+function getTool() {
+  return URLI["chart-type"];
+}
+function setLocale(id) {
+  if(!id || id === getLocale()) return;
+  Object.assign(URLI.ui, {locale: id});
+  pushToHistory();
+  dispatch.call("languageChanged", null, id);
+}
+function setProjector(truefalse) {
+  if(!truefalse && truefalse !== false || truefalse === getProjector()) return;
+  Object.assign(URLI.ui, {projector: truefalse});
+  pushToHistory();
+  dispatch.call("projectorChanged", null, truefalse);
+}
+function setTool(id, force = false) {
+  if(id === getTool() && force) {
+    resetURL();
+    dispatch.call("toolReset", null, id);
+  } else if (id) {
+    URLI["chart-type"] = id;
+    pushToHistory();
+    dispatch.call("toolChanged", null, id);
+  }
+}
+
+
+function parseURLHashWithUrlon(rawUrl = window.location.toString()) {
+  const hash = rawUrl.includes("#") && rawUrl.substring(rawUrl.indexOf("#") + 1);
+  if (!hash) return {};
+
+  try {
+    return urlon.parse(decodeUrlHash(hash) || "$;");
+  }
+  catch {
+    console.warn("Failed to decode and parse this URL hash:", hash);
+    return {};
+  }
+}
+
+//need to encode symbols like # in color codes because urlon can't handle them properly
+function encodeUrlHash(hash) {
+  return hash.replace(/=#/g, "=%23"); //replace every # with %23
+}
+
+function decodeUrlHash(hash) {
+  //replacing %2523 with %23 needed when manual encoding operation of encodeUrlHash()
+  //plus the enforced encoding in some browsers resulted in double encoding # --> %23 --> %2523
+  return decodeURIComponent(hash.replace(/%2523/g, "%23"));
+}
+
+const debouncedUpdateUrl = debounce(updateURL, 310);
+
+// HANDLE BROWSER BACK-FORWARD BUTTON
+window.addEventListener("popstate", event => popState(event.state));
 
 export {
   init,
@@ -168,7 +155,11 @@ export {
   debouncedUpdateUrl as updateURL,
   encodeUrlHash,
   decodeUrlHash,
-  parseURL,
+  parseURLHashWithUrlon,
+  pushToHistory,
   resetURL,
-  getEmbedded, getLocale, getProjector
+  getURLI,
+  getEmbedded, getLocale, getProjector, getTool,
+  setLocale, setProjector, setTool,
+  dispatch
 };

@@ -110,7 +110,7 @@ const SocialButtons = function({dom, translator, state, bitlyService, locationSe
   function download() {
     d3.selectAll(".vzb-export").each(function(_, i) {
       const filename = d3.timeFormat("%Y-%m-%d at %H.%M.%S")(new Date())
-        + " - " + toolsPage_toolset.find(f => f.id == state.getState("tool")).title
+        + " - " + toolsPage_toolset.find(f => f.id == state.getTool()).title
         + " - " + (i + 1);
 
       saveSvg(d3.select(this), filename + ".svg");

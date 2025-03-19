@@ -2,7 +2,7 @@ import * as cms from "./cms.js";
 
 let defaultLocale;
 let availableLocales;
-let getState;
+let getStateLocale;
 const dictionary = {};
 
 function getLocaleDisplayName(locale){
@@ -12,7 +12,7 @@ function getLocaleDisplayName(locale){
 }
 
 function setLocalePageClasses() {
-  const locale = getState("locale");
+  const locale = getStateLocale();
   const langId = locale.split("-")[1];
   d3.select("html")
     .attr("lang", langId)
@@ -23,7 +23,7 @@ function setLocalePageClasses() {
 
 function translator(key) {
   if(availableLocales.includes(key)) return getLocaleDisplayName(key);
-  const locale = getState("locale");
+  const locale = getStateLocale();
   return dictionary[locale] && dictionary[locale][key] 
     || dictionary[defaultLocale] && dictionary[defaultLocale][key] 
     || null;
@@ -40,12 +40,12 @@ function loadData(locale, prefix = "page", folder = "i18n"){
 }
 
 async function initTranslator(state, locales) {
-  getState = getState || state.getState;
+  getStateLocale = getStateLocale || state.getLocale;
   availableLocales = availableLocales || locales;
   defaultLocale = cms.getSettings().DEFAULT_LOCALE;
   dictionary[defaultLocale] = await loadData(defaultLocale, "page", "i18n");
   
-  const locale = getState("locale");
+  const locale = getStateLocale();
   if(locale !== defaultLocale) dictionary[locale] = await loadData(locale, "page", "i18n");
   
   setLocalePageClasses();

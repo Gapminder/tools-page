@@ -1,4 +1,4 @@
-import { parseURL } from "./../url.js";
+import { parseURLHashWithUrlon } from "./../url.js";
 
 const rule = {
   test(url) {
@@ -15,7 +15,7 @@ const rule = {
       return decodeURIComponent(hash.replace(/%2523/g, "%23"));
     }
 
-    const oldState = parseURL(url);
+    const oldState = parseURLHashWithUrlon(url);
     const oldSelect = oldState?.model?.state?.marker?.select;
     if (oldSelect) {
       console.log("ATTEMPTING TO MODERNIZE OLD SELECT", oldSelect);
