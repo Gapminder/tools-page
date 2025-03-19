@@ -1,9 +1,4 @@
-import { getState, setState } from "./global.js";
 
-import {
-  URLI,
-  updateURL
-} from "./url";
 import {
   getFileReaderForVizabi,
 } from "./language";
@@ -64,7 +59,7 @@ function googleAnalyticsLoadEvents(viz) {
             "name": time < 30000 ? `${id} load` : `${id} load above 30s`,
             "value": time,
             "event_category": "Page load",
-            "event_label": getState("tool")
+            "event_label": state.getTool()
           });
         };
 
@@ -91,21 +86,21 @@ function googleAnalyticsLoadEvents(viz) {
 const Tool = function({cmsData, state, dom}) {
   const {toolset, datasources, toolconfig} = cmsData;
   return {
-    setTool: async function(tool, skipTransition) {
+    setTool: async function(tool, skipTransition = true) {
       
     
 
 
-  if (tool === getState("tool")) return;
-  if (!tool) tool = getState("tool");
+  if (tool === state.getTool()) return;
+  if (!tool) tool = state.getTool();
   
   //gtag is a global variable from index.html
   //configure google analytics with the active tool, which would be counted as a "page view" of our single-page-application
   if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool, "page_path": "/" + tool });
 
   const toolsetEntry = toolset.find(f => f.id === tool);
-  const toolsetEntryPrevious = toolset.find(f => f.id === getState("tool"));
-  setState("tool", tool);
+  const toolsetEntryPrevious = toolset.find(f => f.id === state.getTool());
+  state.setTool(tool);
 
   cleanupPreviousTool();
 
@@ -132,7 +127,7 @@ const Tool = function({cmsData, state, dom}) {
         // apply data models from configuration to pageConfig
         function applyDataConfigs(pageConfig) {
           if (!pageConfig.model.dataSources) pageConfig.model.dataSources = {};
-          const urlDataConfig = URLI.model?.dataSources;
+          const urlDataConfig = state.getURLI().model?.dataSources;
 
           if (urlDataConfig) {
             pageConfig.model.dataSources = urlDataConfig;
@@ -145,7 +140,7 @@ const Tool = function({cmsData, state, dom}) {
                 console.warn(`Could not find data config with key ${ds} in datasources file`);
               else
                 pageConfig.model.dataSources[ds] = datasources[ds];
-              pageConfig.model.dataSources[ds].locale = URLI.ui?.locale || pageConfig.ui.locale;
+              pageConfig.model.dataSources[ds].locale = state.getLocale() || pageConfig.ui.locale;
             });
           }
 
@@ -184,19 +179,18 @@ const Tool = function({cmsData, state, dom}) {
         let pageConfig = window.VIZABI_PAGE_MODEL;
         pageConfig = applyDataConfigs(pageConfig);
         pageConfig = applyTransitionConfigs(pageConfig);
-        if (URLI.model) {
-          VizabiSharedComponents.Utils.mergeInTarget(pageConfig.model, deepExtend(URLI.model), /*treat as blocks:*/ ["data.filter"]);
+        if (state.getURLI().model) {
+          VizabiSharedComponents.Utils.mergeInTarget(pageConfig.model, deepExtend(state.getURLI().model), /*treat as blocks:*/ ["data.filter"]);
         }
-        window.VIZABI_UI_CONFIG = observable((URLI.ui) ? deepExtend({}, URLI.ui) : {});
+        window.VIZABI_UI_CONFIG = observable((state.getURLI().ui) ? deepExtend({}, state.getURLI().ui) : {});
 
         window.VIZABI_LOCALE = observable(VIZABI_PAGE_MODEL.ui.locale);
         if (VIZABI_UI_CONFIG.locale !== undefined) VIZABI_LOCALE.id = VIZABI_UI_CONFIG.locale;
         window.VIZABI_LAYOUT = observable(VIZABI_PAGE_MODEL.ui.layout);
         if (VIZABI_UI_CONFIG.projector !== undefined) VIZABI_LAYOUT.projector = VIZABI_UI_CONFIG.projector;
 
-        //setLanguage(VIZABI_LOCALE.id); //should be a reaction instead of action
-        //dispatch.call("languageChanged", null, VIZABI_LOCALE.id); //should be a reaction instead of action
-        setState("projector", VIZABI_LAYOUT.projector);
+        state.setLocale(VIZABI_LOCALE.id); //should be a reaction instead of action
+        state.setProjector("projector", VIZABI_LAYOUT.projector);
 
         const toolPrototype = toolsetEntry.toolVariation ? window[toolsetEntry.tool][toolsetEntry.toolVariation] : window[toolsetEntry.tool];
         const model = Vizabi(pageConfig.model);
@@ -258,13 +252,13 @@ see https://github.com/Gapminder/tools-page-analytics-server
           //   "name": searchInput.node().value ? "search" : "menu",
           //   "value": sourceData.id,
           //   "event_category": sourceData?.byDataSources?.[0]?.dataSource?.id,
-          //   "event_label": getState("tool")
+          //   "event_label": state.getTool()
           // });
 
           const options = `\
 concept=${sourceData.id}\
 &space=${sourceData?.byDataSources?.[0]?.spaces?.[0]}\
-&tool=${getState("tool")}\
+&tool=${state.getTool()}\
 &dataset=${sourceData?.byDataSources?.[0]?.dataSource?.id}\
 &type=${searchInput.node().value ? "search" : "menu"}\
 &referer=${window.location.host}\
@@ -313,14 +307,14 @@ concept=${sourceData.id}\
         //       "name": "url",
         //       "value": concept,
         //       "event_category": encData.source || defaultSource,
-        //       "event_label": getState("tool")
+        //       "event_label": state.getTool()
         //     });
         //   });
         // }
 
         window.VIZABI_DEFAULT_MODEL = diffObject(
           toJS(viz.model.config, { recurseEverything: true }),
-          (URLI.model) ? deepExtend({}, URLI.model) : {}
+          (state.getURLI().model) ? deepExtend({}, state.getURLI().model) : {}
         );
 
         const removeProperties = (obj, array, keyStack = "") => {
@@ -362,7 +356,7 @@ concept=${sourceData.id}\
           else
             delete model.ui.projector;
 
-          DEFAULT_MODEL && updateURL(model, undefined, true);
+          DEFAULT_MODEL && state.updateURL({model: model.model, ui: model.ui, tool:undefined, replaceInsteadPush: true});
         }, { name: "tool.js: update url" });
       
       // .catch(err => console.error(`Failed to set up tool id = ${tool} with config from ${pathToConfig}
@@ -371,7 +365,20 @@ concept=${sourceData.id}\
       // ));
 
       return viz;
-      }
+      },
+      setVizabiToolState({model = {}, ui = {}} = {}){
+        //viz.setModel(poppedModel);
+        runInAction(() => {
+          VizabiSharedComponents.Utils.replaceProps(VIZABI_UI_CONFIG, ui);
+          VizabiSharedComponents.Utils.mergeInTarget(viz.model.config, model);
+        });
+      },
+      setVizabiLocale(id){
+        if (viz?.services?.locale) viz.services.locale.id = id;
+      },
+      setVizabiProjector(truefalse){
+        if (viz?.services?.layout) viz.services.layout.projector = truefalse;
+      },
     
   }
 }

@@ -1,6 +1,5 @@
 import * as urlService from "./core/url.js";
 import * as cmsService from "./core/cms.js";
-import { initState } from "./core/global.js";
 import { scrollTo, deepExtend } from "./core/utils";
 
 import { initTranslator } from "./core/language.js";
@@ -31,24 +30,22 @@ const App = async function(settings) {
   const cmsData = await cmsService.load(settings);
   const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.id);
 
-  const tool_id = urlService.init({ allowedTools });
-  const state = initState({ configs: cmsData, defaultLocale: settings.DEFAULT_LOCALE, tool: tool_id, urlService });
-
+  const state = urlService.init({ allowedTools, defaultLocale: settings.DEFAULT_LOCALE });
   
-  d3.select(".wrapper").classed("embedded-view", state.getState("embedded"));
+  d3.select(".wrapper").classed("embedded-view", state.getEmbedded());
   
     
   const translator = await initTranslator(state, cmsData.properties?.locales);
   const tool = new Tool({cmsData, state, dom: ".vizabi-placeholder"});
   
   new ChartSwitcher({translator, state, dom: ".header .app-chart-switcher", 
-    data: cmsData.toolset, switchTool });
+    data: cmsData.toolset });
   new LanguageSwitcher({translator, state, dom: ".header .app-language-switcher", 
-    data: cmsData.properties?.locales, swithLanguage});
+    data: cmsData.properties?.locales});
   new SeeAlso({translator, state, dom: ".app-see-also", 
-    data: cmsData.toolset, switchTool });
+    data: cmsData.toolset });
   new RelatedItems({translator, state, dom: ".app-related-items", 
-    data: cmsData.related, switchTool });
+    data: cmsData.related });
   new SocialButtons({translator, state, dom: ".social-list .app-social-buttons", 
     bitlyService: BitlyService(), locationService: LocationService()});
   new Footer({translator, state, dom: ".app-footer" });
@@ -57,35 +54,32 @@ const App = async function(settings) {
   new Menu({dom: ".header .app-menu", translator, state, data: cmsData.menu });
   new MenuMobile( d3.select(".header .menu-mobile"), translator, state.dispatch,{ menu: d3.select(".header") });
 
-  async function switchTool(id) {
-    if (state.getState("tool") === id) {
-      //switch to same tool: reset state, discard chart transition
-      urlService.resetURL();
-    } else {
-      tool.setTool(id);
-    }
-    state.dispatch.call("toolChanged", null, id);
-  }
-
-  async function swithLanguage(id){
-    state.setState("locale", id);
-    if (viz && viz.services) viz.services.locale.id = id;
-    
-    state.dispatch.call("languageChanged", null, id);
-    await initTranslator();
-    state.dispatch.call("translate", null, id);
-  }  
-  
-  state.dispatch.on("toolChanged.app", id => {
-    window.history.pushState({ tool: id, model: {} }, "Title", `#$chart-type=${id}`);
-  });
-
   const userLogin = new UserLogin(
     d3.select(".header .app-user-login"),
     translator,
     dispatch,
     {});
 
+  state.dispatch.on("toolChanged.app", id => {
+    tool.setTool(id);
+  });
+  state.dispatch.on("toolStateChangeFromPage.app", state => {
+    tool.setVizabiToolState(state);
+  });
+  state.dispatch.on("toolReset.app", () => {
+    tool.setVizabiToolToDefaultConfig();
+  });
+  state.dispatch.on("languageChanged.app", async id => {
+    tool.setVizabiLocale(id);
+    await initTranslator();
+    state.dispatch.call("translate", null, id);
+  });
+  state.dispatch.on("projectorChanged.app", truefalse => {
+    tool.setVizabiProjector(truefalse);
+  });
+
+
+  
   viz = await tool.setTool();
   return viz;
 };

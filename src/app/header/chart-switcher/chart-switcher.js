@@ -2,7 +2,7 @@
 //   return `${window.location.pathname}#$chart-type=${id}`;
 // }
 
-const ChartSwitcher = function({ dom, translator, state, data, switchTool }) {
+const ChartSwitcher = function({ dom, translator, state, data }) {
   const template = `
     <div class="chart-switcher">
       <a class="chart-switcher-button"></a>
@@ -18,7 +18,7 @@ const ChartSwitcher = function({ dom, translator, state, data, switchTool }) {
     .html(`<a rel="noopener"></a>`) //href="${tool.url || getLink(tool.id)}"
     .on("click", (event, d) => {
       toggleMenu.call(this, false);
-      switchTool(d.id);
+      state.setTool(d.id);
     });
 
   translate();
@@ -34,14 +34,14 @@ const ChartSwitcher = function({ dom, translator, state, data, switchTool }) {
   });
 
   function translate() {
-    const selectedToolConfig = data.find(({ id }) => id === state.getState("tool"));
+    const selectedToolConfig = data.find(({ id }) => id === state.getTool());
     placeHolder.select(".chart-switcher-button")
       .text(translator(selectedToolConfig.title || selectedToolConfig.id));
     placeHolder.selectAll(".chart-switcher-options div")
       .select("a").text(d => translator(d.title || d.id));
   }
 
-  function updateSelected(id = state.getState("tool")) {
+  function updateSelected(id = state.getTool()) {
     items.classed("selected", d => d.id === id);
   }
 
