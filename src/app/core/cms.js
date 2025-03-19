@@ -25,7 +25,15 @@ const parsing = page => {
 };
 
 function groupedParser(data){
-  return d3.rollup(data, v => nestObject(arrayToObject(v.map(({key, value})=>({key, value: ducktypeAndParseValue(value)})))), d => d["tool_id"]);
+  return d3.rollup(
+    data, 
+    v => nestObject(arrayToObject( v.map(({key, value})=> {
+      //special case for frame values, which remain remain strings like vizabi expects
+      //otherwise this gives unnecessary URL state as types don't match
+      if (key.endsWith("encoding.frame.value")) return { key, value: ducktypeAndParseValue(value, {numbers: false}) };
+      return { key, value: ducktypeAndParseValue(value) };
+    } ))), 
+    d => d["tool_id"]);
 }
 
 function defaultParser(data){
@@ -48,7 +56,7 @@ function arrayToObject(data) {
   return Object.fromEntries(data.map(entry => ([entry.key, entry.hasOwnProperty("value") ? entry.value : entry])));
 }
 
-function ducktypeAndParseValue(value, {arrays = true, trim = true} = {}){
+function ducktypeAndParseValue(value, {arrays = true, booleans = true, numbers = true, trim = true} = {}){
   //null
   if (value === "")
     return null;
@@ -56,10 +64,10 @@ function ducktypeAndParseValue(value, {arrays = true, trim = true} = {}){
   if (arrays && value.includes(","))
     return value.split(",").map(m => ducktypeAndParseValue(m))
   //boolean
-  if (["true", "false", "TRUE", "FALSE"].includes(value))
+  if (booleans && ["true", "false", "TRUE", "FALSE"].includes(value))
     return ["true", "TRUE"].includes(value);
   //number
-  if (!isNaN(parseFloat(value)))
+  if (numbers && !isNaN(parseFloat(value)))
     return parseFloat(value);
   //string
   return trim ? value.trim() : value;
