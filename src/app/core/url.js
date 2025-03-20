@@ -114,9 +114,10 @@ function setTool(id, force = false) {
     resetURL();
     dispatch.call("toolReset", null, id);
   } else if (id) {
+    const previousToolId = URLI["chart-type"];
     URLI["chart-type"] = id;
     pushToHistory();
-    dispatch.call("toolChanged", null, id);
+    dispatch.call("toolChanged", null, {id, previousToolId});
   }
 }
 

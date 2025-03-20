@@ -53,8 +53,8 @@ const App = async function(settings) {
   new Menu({dom: ".header .app-menu", translator, state, data: cmsData.menu });
   new MenuMobile( d3.select(".header .menu-mobile"), translator, state.dispatch,{ menu: d3.select(".header") });
 
-  state.dispatch.on("toolChanged.app", id => {
-    tool.setTool(id);
+  state.dispatch.on("toolChanged.app", ({id, previousToolId}) => {
+    tool.setTool({id, previousToolId});
   });
   state.dispatch.on("toolStateChangeFromPage.app", state => {
     tool.setVizabiToolState(state);
