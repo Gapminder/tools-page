@@ -62,16 +62,13 @@ const Tool = function({cmsData, state, dom}) {
 
 
 
-  async function setTool(tool, skipTransition = true) {
+  async function setTool({id, previousToolId} = {}, skipTransition = true) {
         
-    if (tool === state.getTool()) return;
-    if (!tool) tool = state.getTool();
-    
     //init gtag if (gtag) gtag("config", poduction ...
+    const tool = id || state.getTool();
     
     const toolsetEntry = toolset.find(f => f.id === tool);
     const toolsetEntryPrevious = toolset.find(f => f.id === state.getTool());
-    state.setTool(tool);
 
     cleanupPreviousTool();
 
@@ -118,7 +115,7 @@ const Tool = function({cmsData, state, dom}) {
 
     let vizabiStartConfig = deepExtend({}, pageBaseConfig);
 
-    vizabiStartConfig = applyTransitionConfigs(vizabiStartConfig);
+    if(previousToolId) vizabiStartConfig = applyTransitionConfigs(vizabiStartConfig);
     
     //apply URL configs
     vizabiStartConfig = applyDataConfigFromUrlStateToTarget(toolsetEntry, state.getURLI(), vizabiStartConfig);
