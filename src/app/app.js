@@ -60,8 +60,8 @@ const App = async function(settings) {
     dispatch,
     {});
 
-  state.dispatch.on("toolChanged.app", id => {
-    tool.setTool(id);
+  state.dispatch.on("toolChanged.app", ({id, previousToolId}) => {
+    tool.setTool({id, previousToolId});
   });
   state.dispatch.on("toolStateChangeFromPage.app", state => {
     tool.setVizabiToolState(state);
