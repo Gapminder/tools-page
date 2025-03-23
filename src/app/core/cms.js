@@ -99,7 +99,7 @@ function nestObject(flat) {
 
 
 const getPages = (locale = DEFAULT_LOCALE) => ([
-  { docid: DOCID_CMS, sheet: "toolconfig", fallbackContent: {} },
+  { docid: DOCID_CMS, sheet: "toolconfig", fallbackContent: new Map() },
   { docid: DOCID_CMS, sheet: "toolset", fallbackContent: toolsPage_toolset },
   { docid: DOCID_CMS, sheet: "properties", fallbackContent: toolsPage_properties },
   { docid: DOCID_CMS, sheet: "datasources", fallbackContent: toolsPage_datasources },
@@ -176,6 +176,9 @@ function loadSheet(page) {
         }
         cache[getCacheID(page)] = data;
         return data;
+      })
+      .catch(err => {
+        console.error(`Error loading local sheet ${localUrl}`, err);
       });
   });
 }
