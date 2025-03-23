@@ -240,7 +240,7 @@ export default [
           { src: "src/config/conceptMapping.js", dest: "build/tools/config" },
           { src: "src/config/entitysetMapping.js", dest: "build/tools/config" },
           { src: "src/config/related.json", dest: "build/tools/config" },
-          { src: "src/favicon.ico", dest: "build/tools" },
+          { src: "src/favicon.png", dest: "build/tools" },
           { src: [ "@vizabi/shared-components/build/VizabiSharedComponents.css", ...getEntryToolsCssFilenames()].map(css=>require.resolve(css))
             , dest: "build/tools/assets/css" }
         ],

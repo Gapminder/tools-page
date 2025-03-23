@@ -62,7 +62,7 @@ const Tool = function({cmsData, state, dom}) {
 
 
 
-  async function setTool({id, previousToolId} = {}, skipTransition = true) {
+  async function setTool({id, previousToolId, skipTransition = true} = {}) {
         
     //init gtag if (gtag) gtag("config", poduction ...
     const tool = id || state.getTool();

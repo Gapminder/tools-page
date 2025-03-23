@@ -12,6 +12,12 @@ export const VIZABI_MODEL = {
           }
         },
         encoding: {
+          "show": {
+            modelType: "selection",
+            data: {
+              filter: { dimensions: { "geo": { "$not": { "is--deso": 1 } } } }
+            }
+          },
           "selected": {
             modelType: "selection"
           },
@@ -40,7 +46,6 @@ export const VIZABI_MODEL = {
           },
           "color_map": {
             data: {
-              concept: "m_efterg_25_64"
             },
             scale: {
               modelType: "color"
@@ -48,7 +53,6 @@ export const VIZABI_MODEL = {
           },
           "size": {
             data: {
-              concept: "m_efterg_25_64"
             },
             scale: {
               modelType: "size"              
@@ -92,7 +96,6 @@ export const VIZABI_MODEL = {
           "frame": {
             modelType: "frame",
             speed: 200,
-            value: "2022",
             splash: true,
             data: {
               concept: "year"
@@ -178,10 +181,10 @@ export const VIZABI_MODEL = {
           //"axes",
           "size",
           "colors",
-          //"label",
+          "label",
           "mapcolors",
           "mapoptions",
-          "technical",
+          //"technical",
           "presentation",
           "about"
         ]
@@ -198,7 +201,9 @@ export const VIZABI_MODEL = {
       "opacityRegular": 0.8,
       "opacityHighlightDim": 0.3,
       labels: {
-        removeLabelBox: false
+        enabled: true,
+        dragging: true,
+        removeLabelBox: true
       },
       "map": {
         "missingDataColor": false, //"#999" or false for transparent

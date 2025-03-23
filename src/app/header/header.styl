@@ -4,6 +4,7 @@
 a
   text-decoration none
   display inline-block
+  cursor pointer
 
 
     
@@ -38,6 +39,8 @@ a
 
 
 .header
+  height: var(--header-height)
+  letter-spacing 0.05em
   width 100%
   display flex
   flex-wrap nowrap
@@ -53,9 +56,10 @@ a
       max-height none
 
   a
-    color $color-blue-darker
+    user-select none
+    color $navbar-default-link-color
     &:hover
-      color $color-primary
+      text-decoration underline
 
   .navigation
     white-space nowrap
@@ -78,7 +82,7 @@ a
       color white
       float left
       get-font-size(medium)
-      line-height $header-height
+      line-height var(--header-height)
       margin 0
       +for_breakpoint(small)
         height 30px
