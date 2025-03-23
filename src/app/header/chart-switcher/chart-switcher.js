@@ -28,7 +28,7 @@ const ChartSwitcher = function({ dom, translator, state, data }) {
     translate();
   });
 
-  state.dispatch.on("toolChanged.chartSwitcher", ({id, previousToolId}) => {
+  state.dispatch.on("toolChanged.chartSwitcher", ({ id, previousToolId }) => {
     updateSelected(id);
     translate();
   });

@@ -1,7 +1,7 @@
 import * as utils from "../../core/utils";
 import { saveSvg } from "../../core/download-utils.js";
 
-const SocialButtons = function({dom, translator, state, bitlyService, locationService }) {
+const SocialButtons = function({ dom, translator, state, bitlyService, locationService }) {
   const templateHtml = `
     <li>
       <div class="share-text-box" data-text="share"></div>

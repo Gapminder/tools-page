@@ -1,6 +1,6 @@
 import * as utils from "../../core/utils";
 
-const Menu = function({dom, translator, state, data}) {
+const Menu = function({ dom, translator, state, data }) {
   const _this = this;
   const templateHtml = `
     <li class="nav-expandable menu-items">

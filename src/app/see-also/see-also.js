@@ -37,7 +37,7 @@ const SeeAlso = function({ dom, translator, state, data }) {
     translate();
   });
 
-  state.dispatch.on("toolChanged.seeAlso", ({id, previousToolId}) => {
+  state.dispatch.on("toolChanged.seeAlso", ({ id, previousToolId }) => {
     updateShowHide(id);
   });
 

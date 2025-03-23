@@ -416,5 +416,5 @@ export function removeProperties(obj, array, keyStack = "") {
       (obj[key] && typeof obj[key] === "object") && removeProperties(obj[key], array, keyStack + "." + key);
   });
   return obj;
-};
+}
 

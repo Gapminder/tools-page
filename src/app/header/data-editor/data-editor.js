@@ -33,7 +33,7 @@ const propTypes = {
   }
 };
 
-const DataEditor = function({dom, translator, state, tool, viz, languages, selectedLanguage, onClick }) {
+const DataEditor = function({ dom, translator, state, tool, viz, languages, selectedLanguage, onClick }) {
   let data;
 
   const placeHolder = d3.select(dom);

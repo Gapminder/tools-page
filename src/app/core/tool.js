@@ -22,8 +22,8 @@ const PLACEHOLDER = ".vzb-placeholder";
 //   return variation ? window[tool][variation] : window[tool];
 // }
 
-const Tool = function({cmsData, state, dom}) {
-  const {toolset, datasources, toolconfig} = cmsData;
+const Tool = function({ cmsData, state, dom }) {
+  const { toolset, datasources, toolconfig } = cmsData;
 
 
   // apply data models from configuration to target
@@ -59,14 +59,11 @@ const Tool = function({cmsData, state, dom}) {
   }
 
 
+  async function setTool({ id, previousToolId, skipTransition = true } = {}) {
 
-
-
-  async function setTool({id, previousToolId, skipTransition = true} = {}) {
-        
     //init gtag if (gtag) gtag("config", poduction ...
     const tool = id || state.getTool();
-    
+
     const toolsetEntry = toolset.find(f => f.id === tool);
     const toolsetEntryPrevious = toolset.find(f => f.id === state.getTool());
 
@@ -79,14 +76,14 @@ const Tool = function({cmsData, state, dom}) {
     //LAZY-LOAD TOOLS JS CODE
     const toolsToLoad = [toolsetEntry.tool].concat(toolsetEntry.toolComponents || []);
     await Promise.all(toolsToLoad.map(
-      tool => window[tool] 
-        ? Promise.resolve() 
+      tool => window[tool]
+        ? Promise.resolve()
         : loadJS(tool.toLowerCase() + (ENV === "production" ? ".min.js" : ".js"), document.body)
     ));
 
     const pathToConfig = "config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
     await loadJS(pathToConfig, document.body, "vzb-tool-config");
-      
+
     d3.select(".vizabi-placeholder")
       .append("div")
       .attr("class", "vzb-placeholder")
@@ -100,7 +97,7 @@ const Tool = function({cmsData, state, dom}) {
     }
 
 
-    let pageBaseConfig = deepExtend({
+    const pageBaseConfig = deepExtend({
       ui: {
         layout: deepExtend({}, VizabiSharedComponents.LayoutService.DEFAULTS, {
           placeholder: PLACEHOLDER
@@ -115,16 +112,16 @@ const Tool = function({cmsData, state, dom}) {
 
     let vizabiStartConfig = deepExtend({}, pageBaseConfig);
 
-    if(previousToolId) vizabiStartConfig = applyTransitionConfigs(vizabiStartConfig);
-    
+    if (previousToolId) vizabiStartConfig = applyTransitionConfigs(vizabiStartConfig);
+
     //apply URL configs
     vizabiStartConfig = applyDataConfigFromUrlStateToTarget(toolsetEntry, state.getURLI(), vizabiStartConfig);
     VizabiSharedComponents.Utils.mergeInTarget(vizabiStartConfig, state.getURLI(), /*treat as blocks:*/ ["data.filter"]);
-    
+
     const VIZABI_UI_CONFIG = observable(vizabiStartConfig.ui);
     const VIZABI_LOCALE = observable(vizabiStartConfig.ui.locale);
     const VIZABI_LAYOUT = observable(vizabiStartConfig.ui.layout);
-    
+
     const ToolPrototype =  toolsetEntry.toolVariation ? window[toolsetEntry.tool][toolsetEntry.toolVariation] : window[toolsetEntry.tool];
     viz = new ToolPrototype({
       Vizabi,
@@ -149,7 +146,7 @@ const Tool = function({cmsData, state, dom}) {
     }, vizabiStartConfig), pageBaseConfig);
 
     //console.log({combinedDefaultConfig, urlInitConfig})
-    
+
 
     const switchDataSourceIfConceptNotFound = mobx.autorun(() => {
       //needed for the old URLs to work when switching to a different default data source
@@ -181,36 +178,36 @@ const Tool = function({cmsData, state, dom}) {
       const currentConfig = {
         model: toJS(viz.model.config, { recurseEverything: true }),
         ui: toJS(VIZABI_UI_CONFIG, { recurseEverything: true })
-      }
-      
+      };
+
       const meaningfulDeltaConfig = Utils.clearEmpties(
         removeProperties(
           diffObject(currentConfig, combinedDefaultConfig),
           ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain", "presets", "overflowBottom", "dragging", "opened", "dataSources"]
-          )
         )
-          
-      state.updateURL({model: meaningfulDeltaConfig.model, ui: meaningfulDeltaConfig.ui, tool, replaceInsteadPush: true});
+      );
+
+      state.updateURL({ model: meaningfulDeltaConfig.model, ui: meaningfulDeltaConfig.ui, tool, replaceInsteadPush: true });
 
     }, { name: "tool.js: update url" });
-  
+
     window.viz = viz;
     return viz;
   }
 
-  function setVizabiToolState({model = {}, ui = {}} = {}){
+  function setVizabiToolState({ model = {}, ui = {} } = {}) {
     //viz.setModel(poppedModel);
     runInAction(() => {
       VizabiSharedComponents.Utils.replaceProps(VIZABI_UI_CONFIG, ui);
       VizabiSharedComponents.Utils.mergeInTarget(viz.model.config, model);
     });
   }
-  
-  function setVizabiLocale(id){
+
+  function setVizabiLocale(id) {
     if (viz?.services?.locale) viz.services.locale.id = id;
   }
-  
-  function setVizabiProjector(truefalse){
+
+  function setVizabiProjector(truefalse) {
     if (viz?.services?.layout) viz.services.layout.projector = truefalse;
   }
 
@@ -233,6 +230,6 @@ const Tool = function({cmsData, state, dom}) {
       .remove();
   }
 
-  return {setTool, setVizabiToolState, setVizabiLocale, setVizabiProjector};
-}
+  return { setTool, setVizabiToolState, setVizabiLocale, setVizabiProjector };
+};
 export default Tool;

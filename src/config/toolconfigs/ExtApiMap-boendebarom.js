@@ -55,7 +55,7 @@ export const VIZABI_MODEL = {
             data: {
             },
             scale: {
-              modelType: "size"              
+              modelType: "size"
             }
           },
           "label": {

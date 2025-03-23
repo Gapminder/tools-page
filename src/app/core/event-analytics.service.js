@@ -1,60 +1,56 @@
 //gtag is a global variable from index.html
-    //configure google analytics with the active tool, which would be counted as a "page view" of our single-page-application
-    if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool, "page_path": "/" + tool });
-
+//configure google analytics with the active tool, which would be counted as a "page view" of our single-page-application
+if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool, "page_path": "/" + tool });
 
 
 function googleAnalyticsLoadEvents(viz) {
-    const markers = viz.model.markers;
-    const markerId = MAIN_MARKERS.find(id => markers[id]);
-    const marker = markers[markerId];
-    const splashMarker = viz.splashMarker;
-  
-    registerLoadFinish(marker, "FULL", !!splashMarker);
-  
-    function registerLoadFinish(loadMarker, id, splashed) {
-      let splashReady = false;
-      if (splashed) console.time("SPLASH");
-      console.time(id);
-      const dispose = reaction(
-        () => {
-          if (loadMarker.state != "fulfilled") return;
-          return loadMarker.id;
-        },
-        () => {
-          const logById = id => {
-            console.timeEnd(id);
-            const time = timeLogger.snapOnce(id);
-            if (gtag && time) gtag("event", "timing_complete", {
-              "name": time < 30000 ? `${id} load` : `${id} load above 30s`,
-              "value": time,
-              "event_category": "Page load",
-              "event_label": state.getTool()
-            });
-          };
-  
-          if (splashed && loadMarker.id.split("-").pop() == "splash") {
-            splashReady = true;
-            logById("SPLASH");
-          } else {
-            dispose();
-            if (splashed && !splashReady) logById("SPLASH");
-            logById(id);
-          }
-        },
-        { name: id + " google load registration",
-          onError: err => {
-            console.log(err);
-            window.Rollbar && Rollbar.critical(err);
-          }
+  const markers = viz.model.markers;
+  const markerId = MAIN_MARKERS.find(id => markers[id]);
+  const marker = markers[markerId];
+  const splashMarker = viz.splashMarker;
+
+  registerLoadFinish(marker, "FULL", !!splashMarker);
+
+  function registerLoadFinish(loadMarker, id, splashed) {
+    let splashReady = false;
+    if (splashed) console.time("SPLASH");
+    console.time(id);
+    const dispose = reaction(
+      () => {
+        if (loadMarker.state != "fulfilled") return;
+        return loadMarker.id;
+      },
+      () => {
+        const logById = id => {
+          console.timeEnd(id);
+          const time = timeLogger.snapOnce(id);
+          if (gtag && time) gtag("event", "timing_complete", {
+            "name": time < 30000 ? `${id} load` : `${id} load above 30s`,
+            "value": time,
+            "event_category": "Page load",
+            "event_label": state.getTool()
+          });
+        };
+
+        if (splashed && loadMarker.id.split("-").pop() == "splash") {
+          splashReady = true;
+          logById("SPLASH");
+        } else {
+          dispose();
+          if (splashed && !splashReady) logById("SPLASH");
+          logById(id);
         }
-      );
-      disposers.push(dispose);
-    }
+      },
+      { name: id + " google load registration",
+        onError: err => {
+          console.log(err);
+          window.Rollbar && Rollbar.critical(err);
+        }
+      }
+    );
+    disposers.push(dispose);
   }
-
-
-
+}
 
 
 //   'change_hook_which': function(evt, arg) {
@@ -74,8 +70,7 @@ function googleAnalyticsLoadEvents(viz) {
 //     });
 
 
-
-        /*
+/*
 CUSTOM EVENT ANALYTICS CODE
 see https://github.com/Gapminder/tools-page-analytics-server
 
@@ -104,46 +99,46 @@ concept=${sourceData.id}\
         }, { capture: true });
 */
 
-        // const mainMarkerName = Object.keys(VIZABI_MODEL.model.markers).filter(m => MAIN_MARKERS.includes(m))?.[0];
-        // if (mainMarkerName) {
-        //   const ignoredConcepts = [
-        //     'time',
-        //     'name',
-        //     'geo',
-        //     'country',
-        //     'world_4region',
-        //     'world_6region',
-        //     'is--',
-        //     'un_sdg_region',
-        //     'g77_and_oecd_countries',
-        //     'global',
-        //     'income_3groups',
-        //     'income_groups',
-        //     'landlocked',
-        //     'main_religion_2008',
-        //     'un_sdg_ldc',
-        //     'unhcr_region',
-        //     'unicef_region',
-        //     'west_and_rest',
-        //     'age',
-        //     'gender',
-        //     'latitude',
-        //     'longitude'
-        //   ];
-        //   const defaultSource = VIZABI_MODEL.model.markers[mainMarkerName].data.source;
-        //   const encodings = VIZABI_MODEL.model.markers[mainMarkerName].encoding;
-        //   const passedConcepts = [];
-        //   Object.keys(encodings).filter(enc => enc !== "frame").forEach(encKey => {
-        //     const encData = encodings[encKey]?.data;
-        //     const concept = encData?.concept;
-        //     if (!concept || passedConcepts.includes(concept) || encData.constant || ignoredConcepts.includes(concept)) return;
-        //     passedConcepts.push(concept);
+// const mainMarkerName = Object.keys(VIZABI_MODEL.model.markers).filter(m => MAIN_MARKERS.includes(m))?.[0];
+// if (mainMarkerName) {
+//   const ignoredConcepts = [
+//     'time',
+//     'name',
+//     'geo',
+//     'country',
+//     'world_4region',
+//     'world_6region',
+//     'is--',
+//     'un_sdg_region',
+//     'g77_and_oecd_countries',
+//     'global',
+//     'income_3groups',
+//     'income_groups',
+//     'landlocked',
+//     'main_religion_2008',
+//     'un_sdg_ldc',
+//     'unhcr_region',
+//     'unicef_region',
+//     'west_and_rest',
+//     'age',
+//     'gender',
+//     'latitude',
+//     'longitude'
+//   ];
+//   const defaultSource = VIZABI_MODEL.model.markers[mainMarkerName].data.source;
+//   const encodings = VIZABI_MODEL.model.markers[mainMarkerName].encoding;
+//   const passedConcepts = [];
+//   Object.keys(encodings).filter(enc => enc !== "frame").forEach(encKey => {
+//     const encData = encodings[encKey]?.data;
+//     const concept = encData?.concept;
+//     if (!concept || passedConcepts.includes(concept) || encData.constant || ignoredConcepts.includes(concept)) return;
+//     passedConcepts.push(concept);
 
-        //     if (gtag) gtag("event", "concept_request", {
-        //       "name": "url",
-        //       "value": concept,
-        //       "event_category": encData.source || defaultSource,
-        //       "event_label": state.getTool()
-        //     });
-        //   });
-        // }
+//     if (gtag) gtag("event", "concept_request", {
+//       "name": "url",
+//       "value": concept,
+//       "event_category": encData.source || defaultSource,
+//       "event_label": state.getTool()
+//     });
+//   });
+// }

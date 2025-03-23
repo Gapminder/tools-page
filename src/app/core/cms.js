@@ -24,23 +24,23 @@ const parsing = page => {
   return page.type === "language" ? parseLanguageStrings : (parsers[page.sheet] || donothing);
 };
 
-function groupedParser(data){
+function groupedParser(data) {
   return d3.rollup(
-    data, 
-    v => nestObject(arrayToObject( v.map(({key, value})=> {
+    data,
+    v => nestObject(arrayToObject(v.map(({ key, value }) => {
       //special case for frame values, which remain remain strings like vizabi expects
       //otherwise this gives unnecessary URL state as types don't match
-      if (key.endsWith("encoding.frame.value")) return { key, value: ducktypeAndParseValue(value, {numbers: false}) };
-      if (key.endsWith("space")) return { key, value: value.split(",").filter(f => f)};
+      if (key.endsWith("encoding.frame.value")) return { key, value: ducktypeAndParseValue(value, { numbers: false }) };
+      if (key.endsWith("space")) return { key, value: value.split(",").filter(f => f) };
       return { key, value: ducktypeAndParseValue(value) };
-    } ))), 
+    }))),
     d => d["tool_id"]);
 }
 
-function defaultParser(data){
+function defaultParser(data) {
   return data.map(entry => {
     const result = {};
-    for (let key of Object.keys(entry)){
+    for (const key of Object.keys(entry)) {
       result[key] = ducktypeAndParseValue(entry[key]);
     }
     return result;
@@ -49,7 +49,7 @@ function defaultParser(data){
 
 function parseLanguageStrings(data) {
   return nestObject(arrayToObject(
-    data.map(({key, value}) => ({key, value: ducktypeAndParseValue(value, {arrays: false, trim: false})}))
+    data.map(({ key, value }) => ({ key, value: ducktypeAndParseValue(value, { arrays: false, trim: false }) }))
   ));
 }
 
@@ -57,13 +57,13 @@ function arrayToObject(data) {
   return Object.fromEntries(data.map(entry => ([entry.key, entry.hasOwnProperty("value") ? entry.value : entry])));
 }
 
-function ducktypeAndParseValue(value, {arrays = true, booleans = true, numbers = true, trim = true} = {}){
+function ducktypeAndParseValue(value, { arrays = true, booleans = true, numbers = true, trim = true } = {}) {
   //null
   if (value === "")
     return null;
   //array
   if (arrays && value.includes(","))
-    return value.split(",").map(m => ducktypeAndParseValue(m))
+    return value.split(",").map(m => ducktypeAndParseValue(m));
   //boolean
   if (booleans && ["true", "false", "TRUE", "FALSE"].includes(value))
     return ["true", "TRUE"].includes(value);
@@ -81,12 +81,12 @@ function nestObject(flat) {
     if (!Object.prototype.hasOwnProperty.call(flat, key)) continue;
     const value = flat[key];
     // Split on "." only, leave other symbols (like / or -) intact.
-    const parts = key.split('.');
+    const parts = key.split(".");
     let current = nested;
     // Walk through each part except the last, creating objects as needed
     for (let i = 0; i < parts.length - 1; i++) {
       const part = parts[i];
-      if (!current[part] || typeof current[part] !== 'object') {
+      if (!current[part] || typeof current[part] !== "object") {
         current[part] = {};
       }
       current = current[part];
@@ -96,7 +96,6 @@ function nestObject(flat) {
   }
   return nested;
 }
-
 
 
 const getPages = (locale = DEFAULT_LOCALE) => ([
@@ -110,13 +109,13 @@ const getPages = (locale = DEFAULT_LOCALE) => ([
   { docid: DOCID_I18N, sheet: `tools/${locale}`, type: "language", fallbackPath: `./assets/translation/${locale}.json` },
 ]);
 
-function setSettings(settings = {}){
+function setSettings(settings = {}) {
   DOCID_CMS = settings.DOCID_CMS;
   DOCID_I18N = settings.DOCID_I18N;
   DEFAULT_LOCALE = settings.DEFAULT_LOCALE;
 }
-function getSettings(){
-  return {DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE};
+function getSettings() {
+  return { DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE };
 }
 
 function getCacheID(page) {
@@ -128,7 +127,7 @@ const cache = {};
 
 function loadSheet(page) {
   const cached = cache[getCacheID(page)];
-  if(cached) return Promise.resolve(cached);
+  if (cached) return Promise.resolve(cached);
 
   const sheet = page.sheet;
   const docid = page.docid;
@@ -166,8 +165,8 @@ function loadSheet(page) {
   // Fallback to local file if remote load fails for any reason.
   return remoteLoad.catch(err => {
     if (page.fallbackContent) {
-      console.warn(`Remote load for sheet "${sheet}" failed: ${err.message}. Falling back to local content`, page.fallbackContent);  
-      return Promise.resolve(page.fallbackContent)
+      console.warn(`Remote load for sheet "${sheet}" failed: ${err.message}. Falling back to local content`, page.fallbackContent);
+      return Promise.resolve(page.fallbackContent);
     }
     console.warn(`Remote load for sheet "${sheet}" failed: ${err.message}. Falling back to local file: ${localUrl}`);
     return d3.json(localUrl)
