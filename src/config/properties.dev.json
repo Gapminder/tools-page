@@ -1,5 +1,8 @@
 {
   "LANGUAGES": ["sv-SE", "en"],
   "S_URL": "https://ljbyyhiaaezetjldooim.supabase.co", 
-  "S_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqYnl5aGlhYWV6ZXRqbGRvb2ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAwODE2MzQsImV4cCI6MjAyNTY1NzYzNH0.bO6QvpF45pe42nwuWTEnJc6c6R5MDlJhtJHPqjDKnLQ"
+  "S_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqYnl5aGlhYWV6ZXRqbGRvb2ltIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAwODE2MzQsImV4cCI6MjAyNTY1NzYzNH0.bO6QvpF45pe42nwuWTEnJc6c6R5MDlJhtJHPqjDKnLQ",
+  "DOCID_CMS": "1hLX-RzuZfmluKl_jfhfNUaJhmwOmVhP9pZfuY2brZgE",
+  "DOCID_I18N": "1OXCxxeQQ60ctgROSVjpHaiHtAt99eBkf4fdD0fBzUig",
+  "DEFAULT_LOCALE": "sv-SE"
 }

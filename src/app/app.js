@@ -26,12 +26,12 @@ import Tool from "./core/tool.js";
 
 let viz;
 
-const App = async function(settings) {
+const App = async function({DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en"} = {}) {
 
-  const cmsData = await cmsService.load(settings);
+  const cmsData = await cmsService.load({DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE});
   const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.id);
 
-  const state = urlService.init({ allowedTools, defaultLocale: settings.DEFAULT_LOCALE });
+  const state = urlService.init({ allowedTools, defaultLocale: DEFAULT_LOCALE });
   
   d3.select(".wrapper").classed("embedded-view", state.getEmbedded());
   
