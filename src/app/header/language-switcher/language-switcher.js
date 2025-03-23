@@ -1,5 +1,5 @@
 
-const LanguageSwitcher = function({dom, translator, state, data}) {
+const LanguageSwitcher = function({ dom, translator, state, data }) {
   const template = `
     <div class="lang-current"></div>
     <ul hidden></ul>
@@ -14,12 +14,12 @@ const LanguageSwitcher = function({dom, translator, state, data}) {
     .on("click", (event, d) => {
       toggleMenu.call(this, false);
       state.setLocale(d);
-    })
+    });
 
   updateSelected();
 
   state.dispatch.on("languageChanged.languageSwitcher", id => {
-    updateSelected(id);    
+    updateSelected(id);
   });
 
   function updateSelected(id = state.getLocale()) {

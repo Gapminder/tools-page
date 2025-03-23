@@ -5,10 +5,10 @@ let availableLocales;
 let getStateLocale;
 const dictionary = {};
 
-function getLocaleDisplayName(locale){
+function getLocaleDisplayName(locale) {
   const languageId = locale.split("-")[0];
-  const dn = new Intl.DisplayNames([languageId], {type: 'language'});
-  return dn.of(locale).split(" ")[0]; 
+  const dn = new Intl.DisplayNames([languageId], { type: "language" });
+  return dn.of(locale).split(" ")[0];
 }
 
 function setLocalePageClasses() {
@@ -22,20 +22,20 @@ function setLocalePageClasses() {
 }
 
 function translator(key) {
-  if(availableLocales.includes(key)) return getLocaleDisplayName(key);
+  if (availableLocales.includes(key)) return getLocaleDisplayName(key);
   const locale = getStateLocale();
-  return dictionary[locale] && dictionary[locale][key] 
-    || dictionary[defaultLocale] && dictionary[defaultLocale][key] 
+  return dictionary[locale] && dictionary[locale][key]
+    || dictionary[defaultLocale] && dictionary[defaultLocale][key]
     || null;
 }
 
-function loadData(locale, prefix = "page", folder = "i18n"){
-  const {DOCID_I18N} = cms.getSettings();
-  return cms.loadSheet({ 
-    docid: DOCID_I18N, 
+function loadData(locale, prefix = "page", folder = "i18n") {
+  const { DOCID_I18N } = cms.getSettings();
+  return cms.loadSheet({
+    docid: DOCID_I18N,
     sheet: `${prefix}/${locale}`,
-    type: "language", 
-    fallbackPath: `./assets/${folder}/${locale}.json` 
+    type: "language",
+    fallbackPath: `./assets/${folder}/${locale}.json`
   });
 }
 
@@ -44,15 +44,15 @@ async function initTranslator(state, locales) {
   availableLocales = availableLocales || locales;
   defaultLocale = cms.getSettings().DEFAULT_LOCALE;
   dictionary[defaultLocale] = await loadData(defaultLocale, "page", "i18n");
-  
+
   const locale = getStateLocale();
-  if(locale !== defaultLocale) dictionary[locale] = await loadData(locale, "page", "i18n");
-  
+  if (locale !== defaultLocale) dictionary[locale] = await loadData(locale, "page", "i18n");
+
   setLocalePageClasses();
   return translator;
 }
 
-function getFileReaderForVizabi(locale){
+function getFileReaderForVizabi(locale) {
   return loadData(locale, "tools", "translation");
 }
 

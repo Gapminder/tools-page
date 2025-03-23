@@ -1,4 +1,4 @@
-const Message = function({dom, translator, state}) {
+const Message = function({ dom, translator, state }) {
 
   const placeHolder = d3.select(dom);
 
@@ -25,7 +25,7 @@ const Message = function({dom, translator, state}) {
   state.dispatch.on("translate.message", () => {
     translate();
   });
-  
+
 
   function translate() {
     // no translation yet, because message text (from world) requires template for hash variable

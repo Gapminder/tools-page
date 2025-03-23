@@ -10,7 +10,7 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data }) {
     .join("a")
     .html(d => `<img src="${d.icon}"/><span data-text="${d.id}"></span>`)
     .on("click", (event, d) => {
-      if(state.getTool() === d.id) return;
+      if (state.getTool() === d.id) return;
       state.setTool(d.id);
     });
 
@@ -21,7 +21,7 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data }) {
     translate();
   });
 
-  state.dispatch.on("toolChanged.chartSwitcher", ({id, previousToolId}) => {
+  state.dispatch.on("toolChanged.chartSwitcher", ({ id, previousToolId }) => {
     updateSelected(id);
   });
 
@@ -35,6 +35,5 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data }) {
 
 
 };
-  
+
 export default ChartSwitcherWithIcons;
-  
