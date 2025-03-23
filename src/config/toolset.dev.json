@@ -9,7 +9,8 @@
     "transition": ["select","time"],
     "title": "combo-emap-bc",
     "hideThumbnail": false,
-    "image": "assets/images/chart/combo-emap-bc.png"
+    "image": "assets/images/chart/combo-emap-bc.png",
+    "icon": "assets/images/chart/vizabi_mapandbubbles.svg"
   },
   {
     "id": "bubbles",
@@ -19,7 +20,8 @@
     "dataSources": ["boendebarom", "kolada"],
     "transition": ["select","time"],
     "title": "bubbles",
-    "image": "assets/images/chart/bubble-chart.png"
+    "image": "assets/images/chart/bubble-chart.png",
+    "icon": "assets/images/chart/vizabi_bubbles.svg"
   },
   {
     "id": "spreadsheet",
@@ -40,6 +42,7 @@
     "transition": ["select","time"],
     "title": "extapimap",
     "hideThumbnail": false,
-    "image": "assets/images/chart/extapimap.png"
+    "image": "assets/images/chart/extapimap.png",
+    "icon": "assets/images/chart/vizabi_map.svg"
   }
 ]
