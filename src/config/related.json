@@ -1,71 +1,43 @@
 [
   {
-    "_id": "5600af4a188967b26265a73f",
-    "_relatedTo": [
-    ],
-    "link": "//www.gapminder.org/answers/how-many-are-rich-and-how-many-are-poor/",
-    "image": "assets/images/answers/poor_rich.png",
-    "subtitle": "Short answer — Most are in between",
-    "title": "How many are rich and how many are poor?",
-    "__v": 0
+    "_id": "related1",
+    "link": "https://www.uu.se/institution/bostads-och-urbanforskning/forskning/forskningsprojekt/boendesegregation-urbanisering-och-ojamlika-livsvillkor",
+    "image": "https://www.uu.se/images/200.2293423318ecba401bd1acd8/1713185231531/segregation%20och%20urbanisering.png",
+    "title": "Boendesegregation, urbanisering och ojämlika livsvillkor",
+    "subtitle": "Finansiär: Vetenskapsrådet"
   },
   {
-    "_id": "560061d4fc0d7c00002110a4",
-    "title": "How Reliable is the World Population Forecast?",
-    "subtitle": "Short answer — Very reliable",
-    "image": "assets/images/answers/population_forecast.png",
-    "link": "//www.gapminder.org/answers/how-reliable-is-the-world-population-forecast/",
-    "_relatedTo": [
-    ]
+    "_id": "related2",
+    "link": "https://www.uu.se/institution/bostads-och-urbanforskning/forskning/forskningsprojekt/socialt-hallbar-mobilitet-i-gottsunda-och-backlosa",
+    "image": "https://www.uu.se/images/200.2293423318ecba401bd25be1/1713353137837/Socialt%20h%C3%A5llbar%20mobilitet%20i%20Gottsunda%20och%20B%C3%A4ckl%C3%B6sa.jpgg",
+    "title": "Socialt hållbar mobilitet i Gottsunda och Bäcklösa",
+    "subtitle": "Finansiär: Formas"
   },
   {
-    "_id": "5600ad4c188967b26265a73b",
-    "_relatedTo": [
-    ],
-    "link": "//www.gapminder.org/answers/will-saving-poor-children-lead-to-overpopulation/",
-    "image": "assets/images/answers/overpopulation.png",
-    "subtitle": "Short answer — No. The opposite.",
-    "title": "Will saving poor children lead to overpopulation?",
-    "__v": 0
+    "_id": "related3",
+    "link": "https://www.uu.se/institution/bostads-och-urbanforskning/forskning/forskningsprojekt/nybyggnation-flyttkedjor-och-bostadsojamlikhet",
+    "image": "https://www.uu.se/images/200.3a15a5c418f05954ce7203b/1713792960140/Nybyggnation_flyttkedjor%20och%20bostadsoj%C3%A4mlikhet.jpg",
+    "title": "Nybyggnation, flyttkedjor och bostadsojämlikhet",
+    "subtitle": "Finansiär: Forte"
   },
   {
-    "_id": "5600ae2b188967b26265a73c",
-    "_relatedTo": [
-    ],
-    "link": "//www.gapminder.org/answers/how-does-income-relate-to-life-expectancy/",
-    "image": "assets/images/answers/life_expectancy.png",
-    "subtitle": "Short answer — Rich people live longer",
-    "title": " How Does Income Relate to Life Expectancy?",
-    "__v": 0
-  },
-  {
-    "_id": "5600ae64188967b26265a73d",
-    "_relatedTo": [
-    ],
-    "link": "//www.gapminder.org/answers/how-did-babies-per-woman-change-in-the-world/",
-    "image": "assets/images/answers/babies_per_woman.png",
-    "subtitle": "Short answer — It dropped",
-    "title": "How Did Babies per Woman Change in the World?",
-    "__v": 0
-  },
-  {
-    "_id": "5600aedc188967b26265a73e",
-    "_relatedTo": [
-    ],
-    "link": "//www.gapminder.org/fw/world-health-chart/",
-    "image": "assets/images/answers/gapminder_world_2013_v5.jpg",
-    "subtitle": "This chart compares Life Expectancy & GDP per capita of all nations",
-    "title": "Gapminder World Poster",
-    "__v": 0
-  },
-  {
-    "_id": "5600782dabde580e33c79e24",
-    "_relatedTo": [
-    ],
-    "link": "//www.gapminder.org/answers/how-did-the-world-population-change/",
-    "image": "assets/images/answers/world_population.png",
-    "subtitle": "First slowly. Then fast.",
-    "title": "How Did The World Population Change?",
-    "__v": 0
+    "_id": "related4",
+    "link": "https://www.uu.se/institution/bostads-och-urbanforskning/forskning/forskarportratt/roger-andersson",
+    "image": "https://www.uu.se/images/200.b9fb3d718e5fac0eac48420/1712132529053/roger%20andersson.jpg",
+    "title": "«Segregation är en central samhällsfråga som berör alla»",
+    "subtitle": "Roger Andersson, professor emeritus i kulturgeografi"
   }
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+

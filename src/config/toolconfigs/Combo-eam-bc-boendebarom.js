@@ -51,18 +51,19 @@ export const VIZABI_MODEL = {
           },
           "y": {
             data: {
-              concept: "m_efterg_25_64",
+              concept: "mean_dispink_20_64",
             },
             scale: {
+              zoomed: [100, 1000],
               allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
             }
           },
           "x": {
             data: {
-              concept: "m_dispin_20_64"
+              concept: "mean_eftergym_25_64",
             },
             scale: {
-              zoomed: [100, 1000],
+              zoomed: [0.15, 0.8],
               allowedTypes: ["linear", "log", "genericLog", "pow", "time"]
             }
           },
@@ -126,7 +127,7 @@ export const VIZABI_MODEL = {
           // },
           "color_map": {
             data: {
-              concept: "m_efterg_25_64"
+              concept: "mean_eftergym_25_64"
             },
             scale: {
               modelType: "color"
