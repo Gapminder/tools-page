@@ -11,6 +11,12 @@ export const VIZABI_MODEL = {
           }
         },
         encoding: {
+          "show": {
+            modelType: "selection",
+            data: {
+              filter: { dimensions: { "geo": { "$not": { "is--deso": 1 } } } }
+            }
+          },
           "selected": {
             modelType: "selection",
             data: {
@@ -151,7 +157,7 @@ export const VIZABI_MODEL = {
 
     //ui
     "buttons": {
-      "buttons": ["colors", "markercontrols", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["markercontrols", "colors", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
@@ -165,7 +171,7 @@ export const VIZABI_MODEL = {
           "colors",
           "label",
           "zoom",
-          "technical",
+          //"technical",
           "repeat",
           "presentation",
           "about"
@@ -177,7 +183,7 @@ export const VIZABI_MODEL = {
         "primaryDim": "geo",
         "drilldown": "region.kommun.regso",
         "shortcutForSwitch": true,
-        "shortcutForSwitch_allow": ["geo", "kommun", "regso"],
+        "shortcutForSwitch_allow": ["kommun", "regso"],
       }
     },
 
@@ -229,8 +235,7 @@ export const VIZABI_MODEL = {
       }
     },
     "data-warning": {
-      doubtDomain: [1800, 1950, 2015],
-      doubtRange: [0, 0, 0]
+      enable: false
     },
     "tree-menu": {
       "showDataSources": false,

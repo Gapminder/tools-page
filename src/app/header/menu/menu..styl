@@ -28,14 +28,11 @@ li.nav-expandable
       cursor pointer
       display block
       font-family $theme-font-regular
-      font-size $font-size-header-small
       line-height 1
       padding 13px 15px 12px 15px
       position relative
-      text-transform uppercase
-      letter-spacing 0.07em
-      text-decoration none
       font-weight lighter
+      font-variant: all-petite-caps
       
       +for_breakpoint(medium)
         padding 13px 8px 12px 8px
@@ -44,7 +41,7 @@ li.nav-expandable
         padding 10px
 
         &:hover
-          text-decoration none
+          text-decoration underline
 
     .nav-expanded:hover + .nav-toggle-expanded
       border-left-color $color-primary

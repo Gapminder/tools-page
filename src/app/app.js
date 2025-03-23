@@ -16,9 +16,10 @@ import LocationService from "./core/location.service"; //TODO REFACTOR
 
 import SocialButtons from "./header/social-buttons/social-buttons.js";
 import LanguageSwitcher from "./header/language-switcher/language-switcher.js";
-import ChartSwitcher from "./header/chart-switcher/chart-switcher.js";
+import ChartSwitcherWithIcons from "./header/chart-switcher/chart-switcher-with-icons.js";
 import SeeAlso from "./see-also/see-also.js";
 import RelatedItems from "./related-items/related-items.js";
+import VideoBlock from "./related-items/video-block.js";
 import Footer from "./footer/footer.js";
 import Tool from "./core/tool.js";
 
@@ -37,14 +38,15 @@ const App = async function(settings) {
   const translator = await initTranslator(state, cmsData.properties?.locales);
   const tool = new Tool({cmsData, state, dom: ".vizabi-placeholder"});
   
-  new ChartSwitcher({translator, state, dom: ".header .app-chart-switcher", 
+  new ChartSwitcherWithIcons({translator, state, dom: ".header .app-chart-switcher", 
     data: cmsData.toolset });
-  new LanguageSwitcher({translator, state, dom: ".header .app-language-switcher", 
+  new LanguageSwitcher({translator, state, dom: ".app-language-switcher", 
     data: cmsData.properties?.locales});
-  new SeeAlso({translator, state, dom: ".app-see-also", 
-    data: cmsData.toolset });
-  new RelatedItems({translator, state, dom: ".app-related-items", 
+  //new SeeAlso({translator, state, dom: ".app-see-also", 
+  //  data: cmsData.toolset });
+  new RelatedItems({translator, state, dom: ".app-related-items .related-block", 
     data: cmsData.related });
+  new VideoBlock({dom: ".video-block"});
   new SocialButtons({translator, state, dom: ".social-list .app-social-buttons", 
     bitlyService: BitlyService(), locationService: LocationService()});
   new Footer({translator, state, dom: ".app-footer" });
@@ -52,6 +54,8 @@ const App = async function(settings) {
   new DataEditor({translator, state, tool, viz, dom: ".header .data-editor"});
   new Menu({dom: ".header .app-menu", translator, state, data: cmsData.menu });
   new MenuMobile( d3.select(".header .menu-mobile"), translator, state.dispatch,{ menu: d3.select(".header") });
+
+  d3.select("a.logo").on("click", state.resetState);
 
   state.dispatch.on("toolChanged.app", ({id, previousToolId}) => {
     tool.setTool({id, previousToolId});

@@ -12,6 +12,12 @@ export const VIZABI_MODEL = {
           }
         },
         encoding: {
+          "show": {
+            modelType: "selection",
+            data: {
+              filter: { dimensions: { "geo": { "$not": { "is--deso": 1 } } } }
+            }
+          },
           "selected": {
             modelType: "selection",
             data: {
@@ -83,7 +89,7 @@ export const VIZABI_MODEL = {
             scale: {
               modelType: "size",
               allowedTypes: ["linear", "log", "genericLog", "pow", "point", "ordinal"],
-              extent: [0, 0.22]
+              extent: [0, 0.34]
             }
           },
           frame: {
@@ -195,7 +201,7 @@ export const VIZABI_MODEL = {
 
     //ui
     "buttons": {
-      "buttons": ["colors", "markercontrols", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
+      "buttons": ["markercontrols", "colors", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
     },
     "dialogs": {
       "dialogs": {
@@ -211,7 +217,7 @@ export const VIZABI_MODEL = {
           "mapoptions",
           "label",
           "zoom",
-          "technical",
+          //"technical",
           "about"
         ]
       },

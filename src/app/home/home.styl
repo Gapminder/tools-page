@@ -7,11 +7,11 @@
 .column.main
   box-sizing(border-box)
   width 100%
-  height "calc(100% - %s - 40px)" % $header-height
+  height "calc(100% - %s - 40px)" % var(--header-height)
   +for_breakpoint(medium)
-    height "calc(100% - %s - 30px)" % $header-height
+    height "calc(100% - %s - 9px)" % var(--header-height)
   +for_breakpoint(small)
-    height "calc(100% - %s - 15px)" % $header-height
+    height "calc(100% - %s - 9px)" % var(--header-height)
   background white
 
 .card
