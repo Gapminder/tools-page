@@ -1,3 +1,6 @@
 {
-  "LANGUAGES": ["en","ar-SA","de-DE","es-ES","fr-FR","he-IL","id-ID","ru-RU","sv-SE","vi-VN","zh-CN","th-TH"]
+  "locales": ["en","ar-SA","de-DE","es-ES","fr-FR","he-IL","id-ID","ru-RU","sv-SE","vi-VN","zh-CN","th-TH"],
+  "DOCID_CMS": "",
+  "DOCID_I18N": "",
+  "DEFAULT_LOCALE": "en"
 }
