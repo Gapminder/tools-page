@@ -22,11 +22,12 @@ function setLocalePageClasses() {
 }
 
 function translator(key) {
+  //get name of language for language switchers and such
   if(availableLocales.includes(key)) return getLocaleDisplayName(key);
   const locale = getStateLocale();
   return dictionary[locale] && dictionary[locale][key] 
     || dictionary[defaultLocale] && dictionary[defaultLocale][key] 
-    || null;
+    || key;
 }
 
 function loadData(locale, prefix = "page", folder = "i18n"){
