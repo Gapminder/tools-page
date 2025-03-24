@@ -18,7 +18,7 @@
   "dataSources": ["sg", "wdi", "fasttrack"],
   "transition": ["select","time"],
   "title": "ranks",
-  "image": "/assets/images/chart/ranks-chart.png"
+  "image": "assets/images/chart/ranks-chart.png"
   },
   {
     "id": "clickmap",
@@ -29,7 +29,7 @@
     "transition": ["select","time"],
     "title": "clickmap",
     "hideThumbnail": true,
-    "image": "/assets/images/chart/maps-chart.png"
+    "image": "assets/images/chart/maps-chart.png"
   },
   {
     "id": "linechart",
@@ -39,7 +39,7 @@
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["show","time"],
     "title": "trends",
-    "image": "/assets/images/chart/trends-chart.png"
+    "image": "assets/images/chart/trends-chart.png"
   },
 
   {
@@ -50,7 +50,7 @@
     "dataSources": ["povcalnet", "sg", "fasttrack", "billy"],
     "transition": ["select","time"],
     "title": "income",
-    "image": "/assets/images/chart/income-chart.png"
+    "image": "assets/images/chart/income-chart.png"
   },
   {
     "id": "map",
@@ -60,7 +60,7 @@
     "dataSources": ["sg", "wdi", "fasttrack"],
     "transition": ["select","time"],
     "title": "maps",
-    "image": "/assets/images/chart/maps-chart.png"
+    "image": "assets/images/chart/maps-chart.png"
   },
   {
     "id": "linechart-global",
@@ -71,12 +71,12 @@
     "title": "globaltrends",
     "config": "LineChart-global",
     "hideThumbnail": true,
-    "image": "/assets/images/chart/globaltrends-chart.png"
+    "image": "assets/images/chart/globaltrends-chart.png"
   },
   {
     "id": "popbyage",
     "title": "ages",
-    "image": "/assets/images/chart/ages-chart.png",
+    "image": "assets/images/chart/ages-chart.png",
     "tool": "PopByAge",
     "toolVariation": "Base",
     "config": "PopByAge-v5",
@@ -85,7 +85,7 @@
   {
     "id": "spreadsheet",
     "title": "spreadsheet",
-    "image": "/assets/images/chart/spreadsheet.png",
+    "image": "assets/images/chart/spreadsheet.png",
     "dataSources": ["sg", "wdi", "fasttrack"],
     "tool": "Spreadsheet",
     "toolVariation": "Base",
@@ -101,7 +101,7 @@
     "transition": ["select","time"],
     "title": "extapimap",
     "hideThumbnail": true,
-    "image": "/assets/images/chart/extapimap.png",
+    "image": "assets/images/chart/extapimap.png",
     "icon": "assets/images/chart/vizabi_map.svg"
   },
   {
@@ -114,13 +114,13 @@
     "transition": ["select","time"],
     "title": "combo-emap-bc",
     "hideThumbnail": true,
-    "image": "/assets/images/chart/combo-emap-bc.png",
+    "image": "assets/images/chart/combo-emap-bc.png",
     "icon": "assets/images/chart/vizabi_mapandbubbles.svg"
   },
   {
     "id": "dollar-street",
     "url": "http://www.gapminder.org/dollar-street",
-    "image": "/assets/images/chart/dollar-street.png",
+    "image": "assets/images/chart/dollar-street.png",
     "title": "dollar_street"
   }
 ]
