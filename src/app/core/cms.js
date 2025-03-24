@@ -31,6 +31,7 @@ function groupedParser(data){
       //special case for frame values, which remain remain strings like vizabi expects
       //otherwise this gives unnecessary URL state as types don't match
       if (key.endsWith("encoding.frame.value")) return { key, value: ducktypeAndParseValue(value, {numbers: false}) };
+      if (key.endsWith("space")) return { key, value: value.split(",").filter(f => f)};
       return { key, value: ducktypeAndParseValue(value) };
     } ))), 
     d => d["tool_id"]);

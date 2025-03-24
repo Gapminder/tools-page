@@ -29,7 +29,7 @@ function init({ allowedTools, defaultLocale }) {
   const tool = (toolFromUrl && allowedTools.includes(toolFromUrl)) ? toolFromUrl : allowedTools[0];
 
   updateURL({model: URLI.model, ui: URLI.ui, tool, replaceInsteadPush: true});
-  return {getEmbedded, getTool, getURLI, getLocale, getProjector, setTool, setLocale, setProjector, updateURL: debouncedUpdateUrl, dispatch};
+  return {getEmbedded, getTool, resetState, getURLI, getLocale, getProjector, setTool, setLocale, setProjector, updateURL: debouncedUpdateUrl, dispatch};
 }
 
 
@@ -57,10 +57,6 @@ function updateURL({model = {}, ui = {}, tool, replaceInsteadPush}) {
   Object.assign(URLI, {model, ui, "chart-type": tool});
   resetPopStateLoopFlag();
   pushToHistory({tool, ui, model, replaceInsteadPush})
-}
-
-function resetURL() {
-  pushToHistory();
 }
 
 function pushToHistory({tool = URLI["chart-type"], ui = URLI.ui, model = URLI.model, replaceInsteadPush = false} = {}) {
@@ -109,16 +105,19 @@ function setProjector(truefalse) {
   pushToHistory();
   dispatch.call("projectorChanged", null, truefalse);
 }
-function setTool(id, force = false) {
-  if(id === getTool() && force) {
-    resetURL();
-    dispatch.call("toolReset", null, id);
-  } else if (id) {
-    const previousToolId = URLI["chart-type"];
-    URLI["chart-type"] = id;
-    pushToHistory();
-    dispatch.call("toolChanged", null, {id, previousToolId});
-  }
+function setTool(id = getTool()) {
+  const previousToolId = URLI["chart-type"];
+  URLI["chart-type"] = id;
+  URLI.ui = {ui: {locale: {id: defaultLoc}}};
+  URLI.model = {};
+  pushToHistory();
+  dispatch.call("toolChanged", null, {id, previousToolId});
+}
+function resetState() {
+  URLI.ui = {ui: {locale: {id: defaultLoc}}};
+  URLI.model = {};
+  pushToHistory();
+  dispatch.call("toolChanged", null, {id: getTool(), previousToolId: getTool()});
 }
 
 
@@ -159,7 +158,7 @@ export {
   decodeUrlHash,
   parseURLHashWithUrlon,
   pushToHistory,
-  resetURL,
+  resetState,
   getURLI,
   getEmbedded, getLocale, getProjector, getTool,
   setLocale, setProjector, setTool,
