@@ -1,6 +1,6 @@
 import * as utils from "../core/utils";
 
-const RelatedItems = function({ dom, translator, dispatch, data }) {
+const RelatedItems = function({ dom, translator, state, data }) {
   const template = `  
     <div class="related-block">
       <h2 class="heading-2 related-heading" data-text="popular"></h2>
@@ -17,19 +17,19 @@ const RelatedItems = function({ dom, translator, dispatch, data }) {
     .join("li")
     .attr("class", "related-item")
     .html(d => `
-      <a rel="noopener" href="${d.link}">
+      <a class="newtab" rel="noopener" href="${d.link}" target="_blank">
         <div class="related-item-thumbnail">
           <img src="${d.image}">
         </div>
         <div class="related-item-info">
-          <span class="title" data-text="related-${d._id}-title"></span>
-          <span class="subtitle" data-text="related-${d._id}-subtitle"></span>
+          <span class="title" data-text="related-${d._id}-title" data-text-fallback="${d.title}"></span>
+          <span class="subtitle" data-text="related-${d._id}-subtitle" data-text-fallback="${d.subtitle}"></span>
         </div>
       </a>`
     );
 
   translate();
-  dispatch.on("translate.relatedItems", () => {
+  state.dispatch.on("translate.relatedItems", () => {
     translate();
   });
 

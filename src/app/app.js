@@ -1,112 +1,87 @@
 import * as urlService from "./core/url.js";
 import * as cmsService from "./core/cms.js";
-import { initState, setState, getState, dispatch } from "./core/global.js";
+import { initState } from "./core/global.js";
 import { scrollTo, deepExtend } from "./core/utils";
 
-import { translator, initTranslator } from "./core/language.js";
+import { initTranslator } from "./core/language.js";
 
 
-// import LanguageSwitcher from "./header/language-switcher/language-switcher";
-// import SocialButtons from "./header/social-buttons/social-buttons";
-// import Menu from "./header/menu/menu";
-// import MenuMobile from "./header/menu-mobile/menu-mobile";
-// import Message from "./header/message/message";
-// import DataEditor from "./header/data-editor/data-editor";
+import Menu from "./header/menu/menu.js";
+import MenuMobile from "./header/menu-mobile/menu-mobile.js";
+import Message from "./header/message/message.js";
+import DataEditor from "./header/data-editor/data-editor.js";
 
 // import menuItems from "./core/menu-items";
-// import BitlyService from "./core/bitly.service";
-// import LocationService from "./core/location.service";
+import BitlyService from "./core/bitly.service"; //TODO REFACTOR
+import LocationService from "./core/location.service"; //TODO REFACTOR
+
+import SocialButtons from "./header/social-buttons/social-buttons.js";
+import LanguageSwitcher from "./header/language-switcher/language-switcher.js";
 import ChartSwitcher from "./header/chart-switcher/chart-switcher.js";
 import SeeAlso from "./see-also/see-also.js";
 import RelatedItems from "./related-items/related-items.js";
 import Footer from "./footer/footer.js";
-import { setTool } from "./core/tool.js";
+import Tool from "./core/tool.js";
 
+let viz;
 
-const App = async function() {
+const App = async function(settings) {
 
-  const configs = await cmsService.load();
-  const allowedTools = configs.toolset.filter(f => !!f.tool).map(m => m.id);
+  const cmsData = await cmsService.load(settings);
+  const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.id);
 
   const tool_id = urlService.init({ allowedTools });
-  initState({ configs, tool: tool_id, urlService });
-  initTranslator(configs["page/en"]);
+  const state = initState({ configs: cmsData, defaultLocale: settings.DEFAULT_LOCALE, tool: tool_id, urlService });
 
-  d3.select(".wrapper").classed("embedded-view", getState("embedded"));
+  
+  d3.select(".wrapper").classed("embedded-view", state.getState("embedded"));
+  
+    
+  const translator = await initTranslator(state, cmsData.properties?.locales);
+  const tool = new Tool({cmsData, state, dom: ".vizabi-placeholder"});
+  
+  new ChartSwitcher({translator, state, dom: ".header .app-chart-switcher", 
+    data: cmsData.toolset, switchTool });
+  new LanguageSwitcher({translator, state, dom: ".header .app-language-switcher", 
+    data: cmsData.properties?.locales, swithLanguage});
+  new SeeAlso({translator, state, dom: ".app-see-also", 
+    data: cmsData.toolset, switchTool });
+  new RelatedItems({translator, state, dom: ".app-related-items", 
+    data: cmsData.related, switchTool });
+  new SocialButtons({translator, state, dom: ".social-list .app-social-buttons", 
+    bitlyService: BitlyService(), locationService: LocationService()});
+  new Footer({translator, state, dom: ".app-footer" });
+  new Message({translator, state, dom: ".app-message"});
+  new DataEditor({translator, state, tool, viz, dom: ".header .data-editor"});
+  new Menu({dom: ".header .app-menu", translator, state, data: cmsData.menu });
+  new MenuMobile( d3.select(".header .menu-mobile"), translator, state.dispatch,{ menu: d3.select(".header") });
 
-  new SeeAlso({ dom: ".app-see-also", translator, dispatch, data: configs.toolset });
-  new RelatedItems({ dom: ".app-related-items", translator, dispatch, data: configs.related, switchTool });
-  new Footer({ dom: ".app-footer", translator, dispatch });
-
-  new ChartSwitcher({ dom: ".header .app-chart-switcher", translator, dispatch, data: configs.toolset, switchTool });
-
-  function switchTool(id) {
-    if (getState("tool") === id) {
+  async function switchTool(id) {
+    if (state.getState("tool") === id) {
       //switch to same tool: reset state, discard chart transition
       urlService.resetURL();
     } else {
-      setTool(id, configs);
+      tool.setTool(id);
     }
-    dispatch.call("toolChanged", null, id);
+    state.dispatch.call("toolChanged", null, id);
   }
 
-  setTool(null, configs)
-
-
-  dispatch.on("toolChanged.app", id => {
-    window.history.pushState({
-      tool: id,
-      model: {}
-    }, "Title", `#$chart-type=${id}`);
+  async function swithLanguage(id){
+    state.setState("locale", id);
+    if (viz && viz.services) viz.services.locale.id = id;
+    
+    state.dispatch.call("languageChanged", null, id);
+    await initTranslator();
+    state.dispatch.call("translate", null, id);
+  }  
+  
+  state.dispatch.on("toolChanged.app", id => {
+    window.history.pushState({ tool: id, model: {} }, "Title", `#$chart-type=${id}`);
   });
-
-
-  return;
-  new Message({ dom: ".app-message", translator, dispatch });
-  new Tool({ dom: ".app-tool", translator, dispatch });
-
-  new DataEditor({ dom: ".header .data-editor", translator, dispatch });
-
-  new LanguageSwitcher(
-    d3.select(".header .app-language-switcher"),
-    translator,
-    dispatch,
-    {
-      languages: getLanguages(),
-      selectedLanguage: appState.language,
-      onClick: d => setLanguage(d.key)
-    });
-
-
-  new Menu(
-    d3.select(".header .app-menu"),
-    translator,
-    dispatch,
-    {
-      menuItems: menuItems.children
-    });
-
-  new MenuMobile(
-    d3.select(".header .menu-mobile"),
-    translator,
-    dispatch,
-    {
-      menu: d3.select(".header")
-    });
-
-
-  new SocialButtons(
-    d3.select(".social-list .app-social-buttons"),
-    translator,
-    appState,
-    dispatch,
-    {
-      bitlyService: BitlyService(),
-      locationService: LocationService(),
-    });
-
-
-  setLanguage(appState.language);
+  
+  
+  viz = await tool.setTool();
+  return viz;
 };
 
 export default App;

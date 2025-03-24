@@ -1,8 +1,6 @@
 import * as utils from "../core/utils";
-import { getState } from "../core/global.js";
 
-
-const SeeAlso = function({ dom, translator, dispatch, data, switchTool }) {
+const SeeAlso = function({ dom, translator, state, data, switchTool }) {
   const template = `
     <div class="see-also-block">
       <h2 class="heading-2 see-also-heading" data-text="other_tools"></h2>
@@ -35,11 +33,11 @@ const SeeAlso = function({ dom, translator, dispatch, data, switchTool }) {
   translate();
   updateShowHide();
 
-  dispatch.on("translate.seeAlso", () => {
+  state.dispatch.on("translate.seeAlso", () => {
     translate();
   });
 
-  dispatch.on("toolChanged.seeAlso", id => {
+  state.dispatch.on("toolChanged.seeAlso", id => {
     updateShowHide(id);
   });
 
@@ -48,7 +46,7 @@ const SeeAlso = function({ dom, translator, dispatch, data, switchTool }) {
     items.select(".title").text(d => translator(d.title || d.id));
   }
 
-  function updateShowHide(id = getState("tool")) {
+  function updateShowHide(id = state.getState("tool")) {
     items.attr("hidden", d => (d.id === id || d.hideThumbnail) ? true : null);
   }
 

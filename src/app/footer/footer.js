@@ -1,6 +1,6 @@
 import * as utils from "../core/utils";
 
-const Footer = function({ dom, translator, dispatch }) {
+const Footer = function({ dom, translator, state }) {
   const template = `
     <div class="footer-container">
         <div class="logos-holder">
@@ -35,7 +35,7 @@ const Footer = function({ dom, translator, dispatch }) {
   const placeHolder = d3.select(dom).html(template);
 
   translate();
-  dispatch.on("translate.footer", () => {
+  state.dispatch.on("translate.footer", () => {
     translate();
   });
 

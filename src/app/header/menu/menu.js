@@ -1,6 +1,6 @@
 import * as utils from "../../core/utils";
 
-const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
+const Menu = function({dom, translator, state, data}) {
   const _this = this;
   const templateHtml = `
     <li class="nav-expandable menu-items">
@@ -84,6 +84,8 @@ const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
   //require("./menu.html");
   const path = "./assets";
 
+  const placeHolder = d3.select(dom);
+  const menuItems = data.children;
   const template = d3.create("div");
   template.html(templateHtml);
 
@@ -124,7 +126,7 @@ const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
     switchHowTo.call(this);
   });
 
-  dispatch.on("menuClose", () => {
+  state.dispatch.on("menuClose", () => {
     this.selectedMenuItem = null;
     selectMenuItem({});
     switchHowTo.call(this);
@@ -135,7 +137,7 @@ const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
   }
 
   translate();
-  dispatch.on("translate.menu", () => {
+  state.dispatch.on("translate.menu", () => {
     translate();
   });
 
@@ -190,7 +192,7 @@ const Menu = function(placeHolder, translator, dispatch, { menuItems }) {
 
   function selectMenuItem(d) {
     _this.selectedMenuItem = d.menu_label === _this.selectedMenuItem ? null : d.menu_label;
-    if (_this.selectedMenuItem) dispatch.call("menuOpen", null, d);
+    if (_this.selectedMenuItem) state.dispatch.call("menuOpen", null, d);
     placeHolder.selectAll(".nav-expandable-item a.menu-item")
       .classed("active", d => _this.selectedMenuItem === d?.menu_label);
   }

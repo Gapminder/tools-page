@@ -19,13 +19,14 @@ export function translateNode(translator) {
   return function() {
     const el = d3.select(this);
     const text = el.attr("data-text");
+    const fallback = el.attr("data-text-fallback");
     if (!text) return;
     const textChildNode = Array.from(el.node().childNodes)
       .filter(({ nodeName }) => nodeName === "#text")[0];
     if (textChildNode) {
-      textChildNode.textContent = translator(text);
+      textChildNode.textContent = translator(text) ?? fallback ?? text;
     } else {
-      el.text(translator(text));
+      el.text(translator(text) ?? fallback ?? text);
     }
   };
 }

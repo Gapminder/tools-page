@@ -1,6 +1,4 @@
-
-const DOCID_CMS = "1T7xgVBfqGu50gqr-LFFcQyCKMRrwLYO0onZi-G3nZZQ";
-const DOCID_I18N = "1iJvxJhlRo32cu_oT1cSvttKddQPWspveOfqSM6Uy7Ek";
+let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE;
 const resetCache = true;
 const TIMEOUT_MS = 2000; // adjust timeout duration
 
@@ -12,25 +10,61 @@ const validation = {
   toolset: data => data && data.length > 0,
   properties: data => data && data.length > 0,
   datasources: data => data && data.length > 0,
-  related: data => data && data.length > 0,
+  menu: data => data && data.length > 0,
+  related: data => !!data,
 };
 
 const parsing = page => {
   const parsers = {
-    "toolset": parseValuesToArray,
-    "datasources": parseToKVP,
+    "toolset": defaultParser,
+    "toolconfig": groupedParser,
+    "properties": data => arrayToObject(defaultParser(data)),
+    "datasources": arrayToObject,
   };
   return page.type === "language" ? parseLanguageStrings : (parsers[page.sheet] || donothing);
 };
 
-function parseLanguageStrings(data) {
-  data = data.map(({key, value}) => ({key, value: parseBoolean(value)}))
-  return nestObject(Object.fromEntries(data.map(({ key, value }) => ([key, value]))));
+function groupedParser(data){
+  return d3.rollup(data, v => nestObject(arrayToObject(v.map(({key, value})=>({key, value: ducktypeAndParseValue(value)})))), d => d["tool_id"]);
 }
 
-function parseBoolean(value){
-  return ["true", "false", "TRUE", "FALSE"].includes(value) ? ["true", "TRUE"].includes(value) : value;
+function defaultParser(data){
+  return data.map(entry => {
+    const result = {};
+    for (let key of Object.keys(entry)){
+      result[key] = ducktypeAndParseValue(entry[key]);
+    }
+    return result;
+  });
 }
+
+function parseLanguageStrings(data) {
+  return nestObject(arrayToObject(
+    data.map(({key, value}) => ({key, value: ducktypeAndParseValue(value, {arrays: false, trim: false})}))
+  ));
+}
+
+function arrayToObject(data) {
+  return Object.fromEntries(data.map(entry => ([entry.key, entry.hasOwnProperty("value") ? entry.value : entry])));
+}
+
+function ducktypeAndParseValue(value, {arrays = true, trim = true} = {}){
+  //null
+  if (value === "")
+    return null;
+  //array
+  if (arrays && value.includes(","))
+    return value.split(",").map(m => ducktypeAndParseValue(m))
+  //boolean
+  if (["true", "false", "TRUE", "FALSE"].includes(value))
+    return ["true", "TRUE"].includes(value);
+  //number
+  if (!isNaN(parseFloat(value)))
+    return parseFloat(value);
+  //string
+  return trim ? value.trim() : value;
+}
+
 
 function nestObject(flat) {
   const nested = {};
@@ -54,40 +88,26 @@ function nestObject(flat) {
   return nested;
 }
 
-function parseToKVP(data) {
-  return Object.fromEntries(data.map((entry) => ([entry.key, entry.value || entry])));
+
+
+const getPages = (locale = DEFAULT_LOCALE) => ([
+  { docid: DOCID_CMS, sheet: "toolconfig", fallbackContent: {} },
+  { docid: DOCID_CMS, sheet: "toolset", fallbackContent: toolsPage_toolset },
+  { docid: DOCID_CMS, sheet: "properties", fallbackContent: toolsPage_properties },
+  { docid: DOCID_CMS, sheet: "datasources", fallbackContent: toolsPage_datasources },
+  { docid: DOCID_CMS, sheet: "menu", fallbackContent: toolsPage_menuItems },
+  { docid: DOCID_CMS, sheet: "related", fallbackContent: "" },
+  { docid: DOCID_I18N, sheet: `page/${locale}`, type: "language", fallbackPath: `./assets/i18n/${locale}.json` },
+  { docid: DOCID_I18N, sheet: `tools/${locale}`, type: "language", fallbackPath: `./assets/translation/${locale}.json` },
+]);
+
+function setSettings(settings = {}){
+  DOCID_CMS = settings.DOCID_CMS;
+  DOCID_I18N = settings.DOCID_I18N;
+  DEFAULT_LOCALE = settings.DEFAULT_LOCALE;
 }
-
-function parseValuesToArray(data){
-  const columnsToParse = ["toolComponents", "dataSources"];
-  return data.map(entry => {
-    const result = {};
-    for (let key of Object.keys(entry)){
-      if (entry[key] === "") {
-        result[key] = null;
-      } else if (columnsToParse.includes(key)){
-        result[key] = entry[key].split(",").map(m => m.trim());
-      } else {
-        result[key] = entry[key];
-      }
-    }
-    return result;
-  })
-}
-
-const pages = [
-  { docid: DOCID_CMS, sheet: "toolconfig" },
-  { docid: DOCID_CMS, sheet: "toolset" },
-  { docid: DOCID_CMS, sheet: "properties" },
-  { docid: DOCID_CMS, sheet: "datasources" },
-  { docid: DOCID_CMS, sheet: "related" },
-  { docid: DOCID_I18N, sheet: "page/en", type: "language" },
-  { docid: DOCID_I18N, sheet: "tools/en", type: "language" },
-];
-
-
 function getSettings(){
-  return {DOCID_CMS, DOCID_I18N};
+  return {DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE};
 }
 
 function getCacheID(page) {
@@ -105,7 +125,7 @@ function loadSheet(page) {
   const docid = page.docid;
   const cacheSuffix = resetCache ? `&cache=${new Date()}` : "";
   const remoteUrl = `https://docs.google.com/spreadsheets/d/${docid}/gviz/tq?tqx=out:csv&sheet=${sheet}${cacheSuffix}`;
-  const localUrl = `./config/${sheet}.json`;
+  const localUrl = page.fallbackPath || `./config/${sheet}.json`;
 
   // Attempt remote load with timeout
   const remoteLoad = new Promise((resolve, reject) => {
@@ -136,7 +156,11 @@ function loadSheet(page) {
 
   // Fallback to local file if remote load fails for any reason.
   return remoteLoad.catch(err => {
-    console.warn(`Remote load for sheet "${sheet}" failed: ${err.message}. Falling back to local file.`);
+    if (page.fallbackContent) {
+      console.warn(`Remote load for sheet "${sheet}" failed: ${err.message}. Falling back to local content`, page.fallbackContent);  
+      return Promise.resolve(page.fallbackContent)
+    }
+    console.warn(`Remote load for sheet "${sheet}" failed: ${err.message}. Falling back to local file: ${localUrl}`);
     return d3.json(localUrl)
       .then(data => {
         if (validation[sheet] && !validation[sheet](data)) {
@@ -148,7 +172,9 @@ function loadSheet(page) {
   });
 }
 
-async function load() {
+async function load(settings) {
+  setSettings(settings);
+  const pages = getPages();
   return Promise.all(
     pages.map(page => loadSheet(page))
   ).then(response => {

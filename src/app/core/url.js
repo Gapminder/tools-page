@@ -98,7 +98,7 @@ const debouncedUpdateUrl = debounce(updateURL, 310);
 
 function parseURL(rawUrl = window.location.toString()) {
   const hash = rawUrl.includes("#") && rawUrl.substring(rawUrl.indexOf("#") + 1);
-  if (!hash) return null;
+  if (!hash) return {};
 
   let parsedUrl = {};
   try {
@@ -134,10 +134,10 @@ function getEmbedded() {
   return (embeddedMatch || [])[1] === "true";
 }
 function getLocale() {
-  return URLI.model?.ui?.locale;
+  return URLI.ui?.locale;
 }
 function getProjector() {
-  return URLI.model?.ui?.projector === "true";
+  return URLI.ui?.projector === "true";
 }
 
 function init({ allowedTools }) {

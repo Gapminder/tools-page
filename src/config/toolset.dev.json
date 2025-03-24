@@ -7,7 +7,7 @@
     "dataSources": ["sg", "wdi", "fasttrack", "country_flags"],
     "transition": ["select","time"],
     "title": "bubbles",
-    "image": "/assets/images/chart/bubble-chart.png"
+    "image": "assets/images/chart/bubble-chart.png"
   },
   {
   "id": "barrank",
