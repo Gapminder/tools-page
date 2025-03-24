@@ -1,11 +1,19 @@
 //complementary mixins
 @import 'variables.styl'
 
+:root
+  --header-height: $header-height-xlarge
+  @media (max-width: $large-screen)
+    --header-height: $header-height-large
+  @media (max-width: $small-screen)
+    --header-height: $header-height-small
+
 media_queries = {
   small : "only screen and (max-width: $small-screen)",
   small-landscape  : "only screen and (max-width: $small-screen) and (orientation: landscape)",
   medium : "only screen and (min-width: $small-screen + 1) and (max-width: $large-screen - 1)",
   large : "only screen and (min-width: $large-screen)",
+  xlarge : "only screen and (min-width: $xlarge-screen)",
   not-large : "only screen and (max-width: $large-screen - 1)",
   not-small : "only screen and (min-width: $small-screen + 1)",
   tablet : "only screen and (min-width: 601px) and (max-width: 800px)",

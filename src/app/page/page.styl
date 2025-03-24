@@ -30,6 +30,15 @@ body
 .invisible
   visibility hidden
 
+.app-line-under-chart
+  height: var(--header-height)
+  background-color: #f5f9fb
+  display: flex
+  align-items: center
+  justify-content: start
+  .social
+    get-global-margin-left()
+
 .social-list
   list-style none
   /*margin 0 100px 0 0*/
@@ -51,7 +60,7 @@ body
 
 .loader-wrapper
   box-sizing(border-box)
-  position(fixed, $header-height 0 0 0)
+  position(fixed, var(--header-height) 0 0 0)
   background-color white
   padding 10px
   text-align center
@@ -125,13 +134,8 @@ body
     .heading-2
       display none
 
-.related
-  display block
-  flex 1 65%
 
-  +for_breakpoint(small)
-    flex-basis 100%
-    order 2
+
 
 .connections
   display flex

@@ -2,16 +2,14 @@ import * as utils from "../core/utils";
 
 const RelatedItems = function({ dom, translator, state, data }) {
   const template = `  
-    <div class="related-block">
-      <h2 class="heading-2 related-heading" data-text="popular"></h2>
-      <div class="related-container">
-        <ul class="related-items"></ul>
-      </div>
+    <div class="related-heading" data-text="popular"></div>
+    <div class="related-container">
+      <ul class="related-items"></ul>
     </div>
   `;
 
   const placeHolder = d3.select(dom).html(template);
-  placeHolder.select(".related-items")
+  placeHolder.select("ul.related-items")
     .selectAll("li")
     .data(data)
     .join("li")
