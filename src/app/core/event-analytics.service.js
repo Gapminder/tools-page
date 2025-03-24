@@ -4,10 +4,9 @@
 
 
 
-function googleAnalyticsLoadEvents(viz) {
+function googleAnalyticsLoadEvents(viz, toolsetEntry) {
     const markers = viz.model.markers;
-    const markerId = MAIN_MARKERS.find(id => markers[id]);
-    const marker = markers[markerId];
+    const marker = markers[toolsetEntry.mainMarker];
     const splashMarker = viz.splashMarker;
   
     registerLoadFinish(marker, "FULL", !!splashMarker);
@@ -104,7 +103,7 @@ concept=${sourceData.id}\
         }, { capture: true });
 */
 
-        // const mainMarkerName = Object.keys(VIZABI_MODEL.model.markers).filter(m => MAIN_MARKERS.includes(m))?.[0];
+        // const mainMarkerName = toolsetEntry.mainMarker;
         // if (mainMarkerName) {
         //   const ignoredConcepts = [
         //     'time',
