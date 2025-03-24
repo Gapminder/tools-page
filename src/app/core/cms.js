@@ -31,17 +31,23 @@ function groupedParser(data){
       //special case for frame values, which remain remain strings like vizabi expects
       //otherwise this gives unnecessary URL state as types don't match
       if (key.endsWith("encoding.frame.value")) return { key, value: ducktypeAndParseValue(value, {numbers: false}) };
-      if (key.endsWith("space")) return { key, value: value.split(",").filter(f => f)};
+      if (key.endsWith("space")) return { key, value: forceAnArray(value)};
       return { key, value: ducktypeAndParseValue(value) };
     } ))), 
     d => d["tool_id"]);
+}
+
+function forceAnArray(string){
+  return string.split(",").filter(f => f).map(m => ducktypeAndParseValue(m));
 }
 
 function defaultParser(data){
   return data.map(entry => {
     const result = {};
     for (let key of Object.keys(entry)){
-      result[key] = ducktypeAndParseValue(entry[key]);
+      if (["dataSources", "toolComponents"].includes(key)) result[key] = forceAnArray(entry[key]);
+      else
+        result[key] = ducktypeAndParseValue(entry[key]);
     }
     return result;
   });
@@ -59,7 +65,7 @@ function arrayToObject(data) {
 
 function ducktypeAndParseValue(value, {arrays = true, booleans = true, numbers = true, trim = true} = {}){
   //null
-  if (value === "")
+  if (value === "" || value === "null")
     return null;
   //array
   if (arrays && value.includes(","))
