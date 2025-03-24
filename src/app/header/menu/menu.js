@@ -89,6 +89,7 @@ const Menu = function({ dom, translator, state, data }) {
   const template = d3.create("div");
   template.html(templateHtml);
 
+  if(!menuItems) return;
   const itemTemplate = template.select(".menu-items .nav-expandable-item");
   for (const item of menuItems) {
     itemTemplate.clone(true)
