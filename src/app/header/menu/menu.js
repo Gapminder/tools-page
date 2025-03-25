@@ -1,6 +1,110 @@
 import * as utils from "../../core/utils";
 
-const Menu = function({ dom, translator, state, data }) {
+const HOWTO_IFRAME = `<iframe
+  width="100%"
+  style="aspect-ratio: 16 / 9; border: 1px solid grey;"
+  src="https://www.youtube.com/embed/lSYU5X3ETf8?si=LZpmhJMaMbdXLe5b&rel=0"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+  </iframe>`
+
+const Menu = function({ dom, translator, state, data, menuButton, mobileMenuContainer }) {
+  const template = `
+    <a class="howto-button" data-text="how_to_use"></a>
+
+    <div class="how-to-outer">
+      <div class="how-to-content">
+        <span class="how-to-close button-close">&times;</span>
+        <div class="howToContent"></div>
+        <p class="nav-faq-help-links">
+          <a target="_blank" href="//static.gapminder.org/GapminderMedia/wp-uploads/Gapminder-Tools-Guide.pdf" data-text="pdf_guide"></a>
+          <a target="_blank" href="//visual-encodings.com" data-text="can_i_show_my_own_data"></a>
+        </p>
+      </div>
+    </div>
+  `
+  const placeHolder = d3.select(dom).html(template);
+  const mobileMenu = d3.select(mobileMenuContainer);
+  const howToOuter = placeHolder.select(".how-to-outer");
+  const menuItems = data.children;
+  let isHowToOpen = false;
+  let isMobileMenuOpen = false;
+
+  mobileMenu.append("div").html(`<a class="howto-button" data-text="how_to_use"></a>`);
+  mobileMenu.append("div").attr("class", "howToContentMobile");
+
+
+  placeHolder.select(".howto-button")
+    .on("click", () => toggleHowTo());
+
+  mobileMenu.select(".howto-button")
+    .on("click", () => toggleHowToMobile());
+
+  placeHolder.select(".how-to-close")
+    .on("click", () => toggleHowTo(false))
+
+  howToOuter
+    .on("click", () => toggleHowTo(false))
+
+  const hamburgerButton = d3.select(menuButton)
+    .on("click", () => toggleMobileMenu());
+      
+
+    
+
+  translate();
+  state.dispatch.on("translate.menu", () => {
+    translate();
+  });
+
+  function translate(){
+    placeHolder.selectAll("a").each(utils.translateNode(translator));
+    mobileMenu.selectAll("a").each(utils.translateNode(translator));
+  }
+
+  function toggleHowTo(force) {
+    isHowToOpen = force ?? !isHowToOpen;
+    howToOuter.style("display", isHowToOpen ? "block" : "none");
+    const howToContent = placeHolder.select(".howToContent");
+
+    if (isHowToOpen && !howToContent.select("iframe").size()) {
+      howToContent.html(HOWTO_IFRAME);
+    }
+
+  }
+
+  function toggleHowToMobile(force){
+    const howToContentMobile = mobileMenu.select(".howToContentMobile");
+
+    if (force !== false && !howToContentMobile.select("iframe").size()) {
+      howToContentMobile.html(HOWTO_IFRAME);
+    }
+  }
+
+  function toggleMobileMenu(force) {
+    isMobileMenuOpen = force ?? !isMobileMenuOpen;
+    mobileMenu.classed("open", isMobileMenuOpen);
+    hamburgerButton.classed("open", isMobileMenuOpen);
+  }
+    
+
+  d3.select(window).on("resize.menu", () => {
+    //skip menu resize in fullscreen
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || document.mozFullScreenElement) return;
+    //if (this.selectedMenuItem === "data_editor") return;
+
+    this.selectedMenuItem = null;
+    //selectMenuItem({});
+    toggleHowTo(false);
+    toggleMobileMenu(false);
+    toggleHowToMobile(false);
+  });
+
+  //if(!menuItems) return;
+  return
+
   const _this = this;
   const templateHtml = `
     <li class="nav-expandable menu-items">
@@ -28,27 +132,6 @@ const Menu = function({ dom, translator, state, data }) {
           </div>
         </div>
       </div>
-    </li>
-
-    <li class="nav-expandable">
-      <div class="nav-expandable-item">
-
-        <a class="menu-item how-to-button how-to-use-video" data-text="how_to_use"><span>►</span>_</a>
-
-        <div class="nav-expanded">
-          <div class="how-to-outer">
-            <div class="how-to-content">
-              <span class="how-to-close button-close">&times;</span>
-              <div class="howToContent"></div>
-                <p class="nav-faq-help-links">
-                  <a target="_blank" href="//static.gapminder.org/GapminderMedia/wp-uploads/Gapminder-Tools-Guide.pdf" data-text="pdf_guide"></a>
-                  <a target="_blank" href="//visual-encodings.com" data-text="can_i_show_my_own_data"></a>
-                </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </li>
 
     <li class="nav-expandable">
@@ -82,20 +165,10 @@ const Menu = function({ dom, translator, state, data }) {
   //require("./menu.html");
   const path = "./assets";
 
-  const placeHolder = d3.select(dom);
-  const menuItems = data.children;
-  const template = d3.create("div");
-  template.html(templateHtml);
 
-  if(!menuItems) return;
+
+  
   const itemTemplate = template.select(".menu-items .nav-expandable-item");
-  for (const item of menuItems) {
-    itemTemplate.clone(true)
-      .datum(item)
-      .raise()
-      .call(fillMenuItem);
-  }
-  itemTemplate.remove();
 
   this.selectedMenuItem = null;
 
@@ -131,59 +204,31 @@ const Menu = function({ dom, translator, state, data }) {
     switchHowTo.call(this);
   });
 
-  for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(() => elem);
-  }
+  
 
-  translate();
-  state.dispatch.on("translate.menu", () => {
-    translate();
-  });
+  
 
-  d3.select(window).on("resize.menu", () => {
-    //skip menu resize in fullscreen
-    if (document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement || document.mozFullScreenElement) return;
-    if (this.selectedMenuItem === "data_editor") return;
+  // function translate() {
+  //   placeHolder
+  //     .selectAll(".menu-items .nav-expandable-item")
+  //     .call(selection => selection
+  //       .select("a.menu-item")
+  //       .text(d => translator(d.menu_label)))
+  //     .selectAll(".expanded-column-item")
+  //     .call(selection => {
+  //       selection.select(".column-item-heading").text(d => translator(d.menu_label));
+  //       selection.select(".column-item-description").text(d => translator(d.caption));
+  //     });
 
-    this.selectedMenuItem = null;
-    selectMenuItem({});
-    switchHowTo.call(this);
-  });
+  //   placeHolder.select(".menu-item.how-to-use-video")
+  //     .each(utils.translateNode(translator));
+  //   placeHolder.select(".menu-item.data-editor-button")
+  //     .each(utils.translateNode(translator));
+  //   placeHolder.selectAll("p.nav-faq-help-links a")
+  //     .each(utils.translateNode(translator));
+  // }
 
-  function translate() {
-    placeHolder
-      .selectAll(".menu-items .nav-expandable-item")
-      .call(selection => selection
-        .select("a.menu-item")
-        .text(d => translator(d.menu_label)))
-      .selectAll(".expanded-column-item")
-      .call(selection => {
-        selection.select(".column-item-heading").text(d => translator(d.menu_label));
-        selection.select(".column-item-description").text(d => translator(d.caption));
-      });
-
-    placeHolder.select(".menu-item.how-to-use-video")
-      .each(utils.translateNode(translator));
-    placeHolder.select(".menu-item.data-editor-button")
-      .each(utils.translateNode(translator));
-    placeHolder.selectAll("p.nav-faq-help-links a")
-      .each(utils.translateNode(translator));
-  }
-
-  function switchHowTo() {
-    const howToContentEmpty = this.howToContent.node().children.length <= 0;
-
-    if (howToContentEmpty) {
-      const content = document.createElement("div");
-      const contentMobile = document.createElement("div");
-      const vimeoContent = `<iframe width="100%" style="aspect-ratio: 16 / 9; border: 1px solid grey;" src="https://www.youtube.com/embed/lSYU5X3ETf8?si=LZpmhJMaMbdXLe5b&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
-
-      content.innerHTML = vimeoContent;
-      contentMobile.innerHTML = vimeoContent;
-      this.howToContent.node().appendChild(content);
-    }
-
-  }
+  
 
   function selectMenuItem(d) {
     _this.selectedMenuItem = d.menu_label === _this.selectedMenuItem ? null : d.menu_label;

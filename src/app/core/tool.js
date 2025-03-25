@@ -182,7 +182,7 @@ const Tool = function({ cmsData, state, dom }) {
       const meaningfulDeltaConfig = Utils.clearEmpties(
         removeProperties(
           diffObject(currentConfig, combinedDefaultConfig),
-          ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain", "presets", "overflowBottom", "dragging", "opened", "dataSources"]
+          ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain", "presets", "dragging", "opened", "dataSources"]
         )
       );
 

@@ -84,6 +84,13 @@ get-global-margin-left()
   @media (min-width: $large-screen)
     margin-left: calc(5px + 0.015 * (100vw - 290px))
   margin-left: 20px
+
+get-global-margin-right()
+  @media (max-width: $small-screen)
+    margin-right: 10px
+  @media (min-width: $large-screen)
+    margin-right: calc(5px + 0.015 * (100vw - 290px))
+  margin-right: 20px
   
 get-font-size(size)
   if size == small
