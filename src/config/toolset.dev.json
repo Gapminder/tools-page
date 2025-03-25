@@ -5,6 +5,7 @@
     "toolVariation": "Base",
     "toolComponents": ["ExtApiMap", "BubbleChart"],
     "config": "Combo-eam-bc-boendebarom", 
+    "mainMarker": "bubble",
     "dataSources": ["boendebarom", "kolada"],
     "transition": ["select","time"],
     "title": "combo-emap-bc",
@@ -17,6 +18,7 @@
     "tool": "BubbleChart",
     "toolVariation": "Base",
     "config": "BubbleChart-boendebarom", 
+    "mainMarker": "bubble",
     "dataSources": ["boendebarom", "kolada"],
     "transition": ["select","time"],
     "title": "bubbles",
@@ -31,6 +33,7 @@
     "tool": "Spreadsheet",
     "toolVariation": "Base",
     "config": "Spreadsheet-boendebarom",
+    "mainMarker": "spreadsheet",
     "hideThumbnail": true
   },
   {
@@ -38,6 +41,7 @@
     "tool": "ExtApiMap",
     "toolVariation": "Base",
     "config": "ExtApiMap-boendebarom",
+    "mainMarker": "bubble",
     "dataSources": ["boendebarom", "kolada"],
     "transition": ["select","time"],
     "title": "extapimap",
