@@ -34,11 +34,11 @@ const ChartSwitcher = function({ dom, translator, state, data }) {
   });
 
   function translate() {
-    const selectedToolConfig = data.find(({ id }) => id === state.getTool());
+    const activeTool = data.find(({ id }) => id === state.getTool());
     placeHolder.select(".chart-switcher-button")
-      .text(translator(selectedToolConfig.title || selectedToolConfig.id));
+      .text(translator(activeTool.title || activeTool.id) || (activeTool.title || activeTool.id));
     placeHolder.selectAll(".chart-switcher-options div")
-      .select("a").text(d => translator(d.title || d.id));
+      .select("a").text(d => translator(d.title || d.id) || (d.title || d.id));
   }
 
   function updateSelected(id = state.getTool()) {
