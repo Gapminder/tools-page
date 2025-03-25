@@ -200,7 +200,7 @@ export const VIZABI_MODEL = {
       opacityHighlightDim: 0.1,
       opacitySelectDim: 0.3,
       opacityRegular: 0.8,
-      yearInBackground: true,
+      timeInBackground: true,
       yearInTrails: true,
       lockNonSelected: 0,
       panWithArrow: true,
