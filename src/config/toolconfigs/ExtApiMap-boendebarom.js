@@ -185,7 +185,7 @@ export const VIZABI_MODEL = {
           "mapcolors",
           "mapoptions",
           //"technical",
-          "presentation",
+          //"presentation",
           "about"
         ]
       },
