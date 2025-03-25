@@ -27,7 +27,7 @@ function translator(key) {
   const locale = getStateLocale();
   return dictionary[locale] && dictionary[locale][key] 
     || dictionary[defaultLocale] && dictionary[defaultLocale][key] 
-    || key;
+    || null;
 }
 
 function loadData(locale, prefix = "page", folder = "i18n") {
