@@ -15,7 +15,7 @@ const Footer = function({ dom, translator, state }) {
             vid Uppsala universitet i samarbete med
             <a href="https://www.lansforsakringar.se/stockholm/privat/om-oss/hallbarhet--forskning/forskning/om-forskningsfonden/" target="_blank">LFs Forskningsstiftelse</a>,
             <a href="https://www.gapminder.org/" target="_blank">Gapminder</a> 
-            och <a href="https://visual-encodings.com/" target="_blank">Visual Encodings AB</a>
+            och <a href="https://visual-encodings.com/" target="_blank">Vizabi charts</a>
           </p>
           <p>
             Hör gärna av dig till IBF om du har frågor:  <a href="mailto:mattias.ohman@ibf.uu.se" target="_blank"> mattias.ohman@ibf.uu.se </a>         
@@ -33,6 +33,7 @@ const Footer = function({ dom, translator, state }) {
         <img src="assets/images/uu-logo-red.svg" height="120px">
         <img src="assets/images/lf_logo_rgb.png" height="80px">
         <img src="assets/images/gapminder_word_logo.svg" height="40px">
+        <img src="assets/images/vizabi-charts-plainsvg.svg" height="120px" style="margin-bottom:20px">
       </div>
 
     </div>
