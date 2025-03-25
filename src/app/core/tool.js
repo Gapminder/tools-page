@@ -50,7 +50,7 @@ const Tool = function({ cmsData, state, dom }) {
     //TODO: go deeper in encoding config and make it more granular
     const markerId = toolsetEntry.mainMarker;
     const datasourceIDs = Object.keys(target.model.dataSources);
-    if (!datasourceIDs.includes(target.model.markers[markerId].data.source))
+    if (!datasourceIDs.includes(target.model.markers[markerId]?.data?.source))
       target.model.markers = { [markerId]: { data: { source: datasourceIDs[0] } } };
 
     return target;
@@ -105,7 +105,8 @@ const Tool = function({ cmsData, state, dom }) {
           path: "assets/translation/",
           getExternalFileReader: getFileReaderForVizabi
         })
-      }
+      },
+      model: {markers: {[toolsetEntry.mainMarker]: {data: {source: toolsetEntry.dataSources[0]}}}}
     }, VIZABI_MODEL /* add config from file */, toolconfig.get(tool) || {} /* add config from cms */);
 
     let vizabiStartConfig = deepExtend({}, pageBaseConfig);
