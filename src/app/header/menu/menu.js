@@ -42,9 +42,7 @@ const Menu = function({ dom, translator, state, data }) {
               <div class="howToContent"></div>
                 <p class="nav-faq-help-links">
                   <a target="_blank" href="//static.gapminder.org/GapminderMedia/wp-uploads/Gapminder-Tools-Guide.pdf" data-text="pdf_guide"></a>
-                  <a target="_blank" href="//www.gapminder.org/tools-offline/" data-text="can_i_download_Gapminder_Tools"></a>
-                  <a target="_blank" href="//vizabi.org/tutorials/2017/04/03/show-your-data/" data-text="can_i_show_my_own_data"></a>
-                  <a target="_blank" href="//www.gapminder.org/faq_frequently_asked_questions/" data-text="more_help_and_faq"></a>
+                  <a target="_blank" href="//visual-encodings.com" data-text="can_i_show_my_own_data"></a>
                 </p>
             </div>
           </div>
@@ -178,11 +176,7 @@ const Menu = function({ dom, translator, state, data }) {
     if (howToContentEmpty) {
       const content = document.createElement("div");
       const contentMobile = document.createElement("div");
-      const vimeoContent = `<iframe src="https://player.vimeo.com/video/231885967"
-                                    class="how-to-frame"
-                                    webkitallowfullscreen
-                                    mozallowfullscreen
-                                    allowfullscreen></iframe>`;
+      const vimeoContent = `<iframe width="100%" style="aspect-ratio: 16 / 9; border: 1px solid grey;" src="https://www.youtube.com/embed/lSYU5X3ETf8?si=LZpmhJMaMbdXLe5b&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
 
       content.innerHTML = vimeoContent;
       contentMobile.innerHTML = vimeoContent;
