@@ -1,15 +1,15 @@
 
-const MobileMenu = function(placeHolder, translator, dispatch, { menu }) {
+const MobileMenu = function({translator, state, dom,  data, menuButton }) {
 
-  this.isMobileMenuOpen = false;
-  placeHolder.on("click", () => switchMobileMenu.call(this));
+  const button = d3.select(menuButton).on("click", toggleMobileMenu);
+  let isMobileMenuOpen = false;
+  
+  d3.select(window).on("resize.mobileMenu", () => toggleMobileMenu(false));
 
-  d3.select(window).on("resize.mobileMenu", () => switchMobileMenu.call(this, false));
-
-  function switchMobileMenu(force) {
-    this.isMobileMenuOpen = force || force === false ? force : !this.isMobileMenuOpen;
-    menu.classed("open", this.isMobileMenuOpen);
-    placeHolder.classed("open", this.isMobileMenuOpen);
+  function toggleMobileMenu(force) {
+    isMobileMenuOpen = force ?? !isMobileMenuOpen;
+    //menu.classed("open", isMobileMenuOpen);
+    button.classed("open", isMobileMenuOpen);
   }
 
 };

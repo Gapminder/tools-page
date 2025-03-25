@@ -6,7 +6,6 @@ import { initTranslator } from "./core/language.js";
 
 
 import Menu from "./header/menu/menu.js";
-import MenuMobile from "./header/menu-mobile/menu-mobile.js";
 import Message from "./header/message/message.js";
 import DataEditor from "./header/data-editor/data-editor.js";
 
@@ -40,6 +39,8 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
 
   new ChartSwitcherWithIcons({ translator, state, dom: ".header .app-chart-switcher",
     data: cmsData.toolset });
+  new Menu({ translator, state, dom: ".header .menu", 
+    data: cmsData.menu, menuButton: ".header .menu-icon", mobileMenuContainer: ".app-mobile-menu" });
   new LanguageSwitcher({ translator, state, dom: ".app-language-switcher",
     data: cmsData.properties?.locales });
   //new SeeAlso({translator, state, dom: ".app-see-also",
@@ -52,8 +53,6 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
   new Footer({ translator, state, dom: ".app-footer" });
   new Message({ translator, state, dom: ".app-message" });
   new DataEditor({ translator, state, tool, viz, dom: ".header .data-editor" });
-  new Menu({ dom: ".header .app-menu", translator, state, data: cmsData.menu });
-  new MenuMobile(d3.select(".header .menu-mobile"), translator, state.dispatch, { menu: d3.select(".header") });
 
   d3.select("a.logo").on("click", state.resetState);
 
