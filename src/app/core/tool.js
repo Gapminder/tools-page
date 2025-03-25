@@ -8,7 +8,6 @@ import { observable, autorun, toJS, reaction } from "mobx";
 let viz;
 let urlUpdateDisposer;
 const disposers = [];
-const MAIN_MARKERS = ["bubble", "line", "bar", "mountain", "pyramid", "spreadsheet"];
 const PLACEHOLDER = ".vzb-placeholder";
 
 // function getToolPrototype(toolsetEntry) {
@@ -49,8 +48,7 @@ const Tool = function({ cmsData, state, dom }) {
 
     //check if marker datasource is no longer among the configured datasources and kill marker config in that case
     //TODO: go deeper in encoding config and make it more granular
-    const markers = target.model.markers;
-    const markerId = MAIN_MARKERS.find(id => markers[id]);
+    const markerId = toolsetEntry.mainMarker;
     const datasourceIDs = Object.keys(target.model.dataSources);
     if (!datasourceIDs.includes(target.model.markers[markerId].data.source))
       target.model.markers = { [markerId]: { data: { source: datasourceIDs[0] } } };
@@ -152,7 +150,7 @@ const Tool = function({ cmsData, state, dom }) {
       //needed for the old URLs to work when switching to a different default data source
       if (viz.status === "fulfilled") {
         for (const marker in viz.model.markers) {
-          if (!MAIN_MARKERS.includes(marker)) continue;
+          if (marker !== toolsetEntry.mainMarker) continue;
           for (const enc in viz.model.markers[marker].encoding) {
             const dataconfig = viz.model.markers[marker].encoding[enc].data;
 
@@ -169,7 +167,7 @@ const Tool = function({ cmsData, state, dom }) {
     });
     disposers.push(switchDataSourceIfConceptNotFound);
 
-    //googleAnalyticsLoadEvents(viz);
+    //googleAnalyticsLoadEvents(viz, toolsetEntry);
 
 
     urlUpdateDisposer = autorun(() => {
