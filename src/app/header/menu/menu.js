@@ -8,7 +8,7 @@ const HOWTO_IFRAME = `<iframe
   frameborder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
   referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-  </iframe>`
+  </iframe>`;
 
 const Menu = function({ dom, translator, state, data, menuButton, mobileMenuContainer }) {
   const template = `
@@ -24,7 +24,7 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
         </p>
       </div>
     </div>
-  `
+  `;
   const placeHolder = d3.select(dom).html(template);
   const mobileMenu = d3.select(mobileMenuContainer);
   const howToOuter = placeHolder.select(".how-to-outer");
@@ -43,23 +43,21 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
     .on("click", () => toggleHowToMobile());
 
   placeHolder.select(".how-to-close")
-    .on("click", () => toggleHowTo(false))
+    .on("click", () => toggleHowTo(false));
 
   howToOuter
-    .on("click", () => toggleHowTo(false))
+    .on("click", () => toggleHowTo(false));
 
   const hamburgerButton = d3.select(menuButton)
     .on("click", () => toggleMobileMenu());
-      
 
-    
 
   translate();
   state.dispatch.on("translate.menu", () => {
     translate();
   });
 
-  function translate(){
+  function translate() {
     placeHolder.selectAll("a").each(utils.translateNode(translator));
     mobileMenu.selectAll("a").each(utils.translateNode(translator));
   }
@@ -75,7 +73,7 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
 
   }
 
-  function toggleHowToMobile(force){
+  function toggleHowToMobile(force) {
     const howToContentMobile = mobileMenu.select(".howToContentMobile");
 
     if (force !== false && !howToContentMobile.select("iframe").size()) {
@@ -88,7 +86,7 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
     mobileMenu.classed("open", isMobileMenuOpen);
     hamburgerButton.classed("open", isMobileMenuOpen);
   }
-    
+
 
   d3.select(window).on("resize.menu", () => {
     //skip menu resize in fullscreen
@@ -103,7 +101,7 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
   });
 
   //if(!menuItems) return;
-  return
+  return;
 
   const _this = this;
   const templateHtml = `
@@ -166,8 +164,6 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
   const path = "./assets";
 
 
-
-  
   const itemTemplate = template.select(".menu-items .nav-expandable-item");
 
   this.selectedMenuItem = null;
@@ -204,9 +200,6 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
     switchHowTo.call(this);
   });
 
-  
-
-  
 
   // function translate() {
   //   placeHolder
@@ -228,7 +221,6 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
   //     .each(utils.translateNode(translator));
   // }
 
-  
 
   function selectMenuItem(d) {
     _this.selectedMenuItem = d.menu_label === _this.selectedMenuItem ? null : d.menu_label;

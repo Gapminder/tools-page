@@ -106,7 +106,7 @@ const Tool = function({ cmsData, state, dom }) {
           getExternalFileReader: getFileReaderForVizabi
         })
       },
-      model: {markers: {[toolsetEntry.mainMarker]: {data: {source: toolsetEntry.dataSources[0]}}}}
+      model: { markers: { [toolsetEntry.mainMarker]: { data: { source: toolsetEntry.dataSources[0] } } } }
     }, VIZABI_MODEL /* add config from file */, toolconfig.get(tool) || {} /* add config from cms */);
 
     let vizabiStartConfig = deepExtend({}, pageBaseConfig);

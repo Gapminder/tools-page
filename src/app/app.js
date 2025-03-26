@@ -39,7 +39,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
 
   new ChartSwitcherWithIcons({ translator, state, dom: ".header .app-chart-switcher",
     data: cmsData.toolset });
-  new Menu({ translator, state, dom: ".header .menu", 
+  new Menu({ translator, state, dom: ".header .menu",
     data: cmsData.menu, menuButton: ".header .menu-icon", mobileMenuContainer: ".app-mobile-menu" });
   new LanguageSwitcher({ translator, state, dom: ".app-language-switcher",
     data: cmsData.properties?.locales });
