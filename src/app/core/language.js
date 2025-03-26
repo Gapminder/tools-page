@@ -23,10 +23,10 @@ function setLocalePageClasses() {
 
 function translator(key) {
   //get name of language for language switchers and such
-  if(availableLocales.includes(key)) return getLocaleDisplayName(key);
+  if (availableLocales.includes(key)) return getLocaleDisplayName(key);
   const locale = getStateLocale();
-  return dictionary[locale] && dictionary[locale][key] 
-    || dictionary[defaultLocale] && dictionary[defaultLocale][key] 
+  return dictionary[locale] && dictionary[locale][key]
+    || dictionary[defaultLocale] && dictionary[defaultLocale][key]
     || null;
 }
 
