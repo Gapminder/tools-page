@@ -235,6 +235,9 @@ export const VIZABI_MODEL = {
         }
       }
     },
+    "data-warning": {
+      enable: true
+    },
     "tree-menu": {
       "showDataSources": false,
       "folderStrategyByDataset": {

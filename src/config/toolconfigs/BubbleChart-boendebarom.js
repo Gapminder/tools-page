@@ -236,7 +236,7 @@ export const VIZABI_MODEL = {
       }
     },
     "data-warning": {
-      enable: false
+      enable: true
     },
     "tree-menu": {
       "showDataSources": false,
