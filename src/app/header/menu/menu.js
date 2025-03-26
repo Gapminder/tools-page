@@ -19,8 +19,8 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
         <span class="how-to-close button-close">&times;</span>
         <div class="howToContent"></div>
         <p class="nav-faq-help-links">
-          <a target="_blank" href="//static.gapminder.org/GapminderMedia/wp-uploads/Gapminder-Tools-Guide.pdf" data-text="pdf_guide"></a>
-          <a target="_blank" href="//visual-encodings.com" data-text="can_i_show_my_own_data"></a>
+          <a target="_blank" href="assets/guide.pdf" data-text="pdf_guide"></a>
+          <a target="_blank" href="https://vizabi.com" data-text="can_i_show_my_own_data"></a>
         </p>
       </div>
     </div>
