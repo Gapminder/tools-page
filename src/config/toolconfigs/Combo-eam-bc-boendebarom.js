@@ -3,6 +3,10 @@ export const VIZABI_MODEL = {
     markers: {
       bubble: {
         requiredEncodings: [],
+        requiredFields: {
+          "bubbleRequired": ["x", "y", "size"],
+          "mapRequired": ["size"]
+        },
         data: {
           locale: "en",
           source: "boendebarom",
