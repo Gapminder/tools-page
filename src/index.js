@@ -37,5 +37,13 @@ Vizabi.stores.dataSources.createAndAddType("ddfcsv", ddfReader);
 // BW reader integration
 Vizabi.stores.dataSources.createAndAddType("ddfbw", DDFServiceReader.getReader());
 
+// Use preserveDrawingBuffer=true to allow saving canvas as image
+HTMLCanvasElement.prototype.getContext = (function(origFn) {
+  return function(type, attribs, ...args) {
+    const newAttribs = { ...(attribs || {}), preserveDrawingBuffer: true };
+    return origFn.call(this, type, newAttribs, ...args);
+  };
+}) (HTMLCanvasElement.prototype.getContext);
+
 window.js = mobx.toJS;
 App(toolsPage_properties);

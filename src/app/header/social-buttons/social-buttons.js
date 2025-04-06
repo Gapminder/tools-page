@@ -1,5 +1,5 @@
 import * as utils from "../../core/utils";
-import { saveSvg } from "../../core/download-utils.js";
+import "dom-to-image-more";
 
 const SocialButtons = function({ dom, translator, state, bitlyService, locationService }) {
   const templateHtml = `
@@ -108,13 +108,25 @@ const SocialButtons = function({ dom, translator, state, bitlyService, locationS
   }
 
   function download() {
-    d3.selectAll(".vzb-export").each(function(_, i) {
-      const filename = d3.timeFormat("%Y-%m-%d at %H.%M.%S")(new Date())
-        + " - " + toolsPage_toolset.find(f => f.id == state.getTool()).title
-        + " - " + (i + 1);
-
-      saveSvg(d3.select(this), filename + ".svg");
-    });
+    domtoimage
+      .toPng(d3.select(".vzb-placeholder > div").node(), {
+        bgcolor: "#fff",
+        filter: function (node) {
+          return !node?.classList?.contains("vzb-noexport");
+        }
+      })
+      .then(function (dataUrl) {
+        const filename = d3.timeFormat("%Y-%m-%d at %H.%M.%S")(new Date())
+          + " - " + state.getTool()
+          + ".png";
+        const anchor = document.createElement('a');
+        anchor.download = filename;
+        anchor.href = dataUrl;
+        anchor.click();
+      })
+      .catch(function (error) {
+        console.error("oops, something went wrong!", error);
+      });
   }
 
   function getEmbeddedUrl() {
