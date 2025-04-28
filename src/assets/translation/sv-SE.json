@@ -108,6 +108,8 @@
         "dialogs/color/edit-color": "Justera färg",
         "dialogs/color/edit-color-blocked-hint": "Dataset författare tillåter inte färgjustering för",
         "dialogs/find": "Select",
+        "dialogs/find/fold": "Fold to",
+        "dialogs/find/explode": "Explode to",
         "dialogs/presentation": "Look and feel",
         "dialogs/technical": "Technical",
         "datawarning/title/mountainchart": "Income data has large uncertainty!",
