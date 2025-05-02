@@ -2,14 +2,9 @@ export const VIZABI_MODEL = {
   model: {
     markers: {
       bubble: {
-        requiredEncodings: [],
-        requiredFields: {
-          "bubbleRequired": ["x", "y", "size"],
-          "mapRequired": ["size"]
-        },
+        requiredEncodings: ["x", "y", "size"],
         data: {
-          locale: "en",
-          source: "boendebarom",
+          source: "healthatlas",
           space: ["geo", "year"],
           filter: {
             dimensions: { "geo": { "$or": [{ "is--kommun": true }] } }
@@ -47,8 +42,8 @@ export const VIZABI_MODEL = {
             data: {
             },
             scale: {
-              extent: [0, 1],
               modelType: "size",
+              extent: [0, 1],
               allowedTypes: ["linear", "log", "genericLog", "pow", "point"]
             }
           },
@@ -88,7 +83,7 @@ export const VIZABI_MODEL = {
             scale: {
               modelType: "size",
               allowedTypes: ["linear", "log", "genericLog", "pow", "point", "ordinal"],
-              extent: [0, 0.34]
+              extent: [0, 0.22]
             }
           },
           frame: {
@@ -105,33 +100,13 @@ export const VIZABI_MODEL = {
             groupDim: "year",
             show: true
           },
-          "centroid": {
-            data: {
-              space: ["geo", "year"],
-              concept: "geo"
-            }
-          },
-          // "lat": {
-          //   data: {
-          //     space: ["geo"],
-          //     concept: "latitude"
-          //   }
-          // },
-          // "lon": {
-          //   data: {
-          //     space: ["geo"],
-          //     concept: "longitude"
-          //   }
-          // },
-          "color_map": {
-            data: {
-            },
-            scale: {
-              borrowZoom: true,
-              matchEncsToBorrowZoom: ["x", "y"],
-              modelType: "color"
-            }
-          },
+          "repeat": {
+            modelType: "repeat",
+            useConnectedRowsAndColumns: true,
+            row: ["y"],
+            column: ["x"],
+            allowEnc: ["y", "x"]
+          }
         }
       },
       "legend": {
@@ -169,34 +144,10 @@ export const VIZABI_MODEL = {
           map: { data: { concept: "shape_lores_svg" } }
         }
       },
-      "legend_map": {
-        data: {
-          ref: {
-            transform: "entityConceptSkipFilter",
-            path: "markers.bubble.encoding.color_map"
-          }
-        },
-        encoding: {
-          color: {
-            data: {
-              concept: { ref: "markers.bubble.encoding.color_map.data.concept" },
-              constant: { ref: "markers.bubble.encoding.color_map.data.constant" }
-            },
-            scale: {
-              modelType: "color",
-              palette: { ref: "markers.bubble.encoding.color_map.scale.palette" }
-            }
-            //scale: { ref: "markers.bubble.encoding.color.scale" }
-          },
-          name: { data: { concept: "name" } },
-          rank: { data: { concept: "rank" } },
-          map: { data: { concept: "shape_lores_svg" } }
-        }
-      }
     }
   },
   ui: {
-    locale: { id: "sv-SE" },
+    locale: { id: "sv-SE", shortNumberFormat: true },
     layout: { projector: false },
 
     //ui
@@ -206,18 +157,18 @@ export const VIZABI_MODEL = {
     "dialogs": {
       "dialogs": {
         "popup": ["colors", "markercontrols", "moreoptions"],
-        "sidebar": ["colors", "markercontrols", "mapcolors", "size", "zoom"],
+        "sidebar": ["colors", "markercontrols", "size", "zoom"],
         "moreoptions": [
           "opacity",
           "speed",
           "axes",
           "size",
           "colors",
-          "mapcolors",
-          "mapoptions",
           "label",
           "zoom",
           //"technical",
+          "repeat",
+          "presentation",
           "about"
         ]
       },
@@ -248,14 +199,11 @@ export const VIZABI_MODEL = {
       timeInBackground: true,
       yearInTrails: true,
       lockNonSelected: 0,
-      numberFormatSIPrefix: true,
       panWithArrow: true,
       adaptMinMaxZoom: false,
       cursorMode: "arrow",
       zoomOnScrolling: true,
       superhighlightOnMinimapHover: true,
-      splitVertical: true,
-      splitRatio: 0.65,
       whenHovering: {
         showProjectionLineX: true,
         showProjectionLineY: true,
@@ -265,7 +213,7 @@ export const VIZABI_MODEL = {
       labels: {
         enabled: true,
         dragging: true,
-        removeLabelBox: true
+        removeLabelBox: false
       },
       margin: {
         left: 0,
@@ -274,43 +222,12 @@ export const VIZABI_MODEL = {
       decorations: {
         "enabled": true,
         "xAxisGroups": {
-          "income_per_person_gdppercapita_ppp_inflation_adjusted": [
+          "gdp_pcap": [
             { "min": null, "max": 2650, "label": "incomegroups/level1", "label_short": "incomegroups/level1short" },
             { "min": 2650, "max": 8000, "label": "incomegroups/level2", "label_short": "incomegroups/level2short" },
             { "min": 8000, "max": 24200, "label": "incomegroups/level3", "label_short": "incomegroups/level3short" },
             { "min": 24200, "max": null, "label": "incomegroups/level4", "label_short": "incomegroups/level4short" }
           ]
-        }
-      },
-      "map": {
-        "useBivariateColorScaleWithDataFromXY": false,
-        "bivariateColorPalette": "BlPu5",
-        "missingDataColor": false, //"#999" or false for transparent
-        "scale": 1,
-        "preserveAspectRatio": true,
-        "mapEngine": "mapbox",
-        "mapStyle": "mapbox://styles/mapbox/light-v9",
-        "showBubbles": false,
-        "showAreas": true,
-        "showMap": true,
-        "offset": {
-          "top": 0.05,
-          "bottom": -0.12,
-          "left": 0,
-          "right": 0
-        },
-        "path": null,
-        "bounds": {
-          west: 4, north: 69, east: 25, south: 56
-        },
-        "projection": "mercator",
-        topology: {
-          path: "assets/shapes.json",
-          objects: {
-            areas: "shapes",
-            boundaries: false
-          },
-          geoIdProperty: "id",
         }
       }
     },
@@ -321,7 +238,7 @@ export const VIZABI_MODEL = {
       "showDataSources": false,
       "folderStrategyByDataset": {
         "kolada": "spread",
-        "boendebarom": "spread",
+        "healthatlas": "spread",
         "wdi": "folder:other_datasets"
       }
     }

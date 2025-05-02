@@ -1,9 +1,9 @@
 {
-  "boendebarom": {
+  "healthatlas": {
     "modelType": "ddfbw",
     "service": "https://waffle-dev.gapminder.org/v2",
-    "dataset": "boba/master",
-    "name": "boba/master"
+    "dataset": "healthatlas/master",
+    "name": "healthatlas/master"
   },
   "kolada": {
     "modelType": "ddfbw",

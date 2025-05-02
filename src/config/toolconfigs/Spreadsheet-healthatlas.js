@@ -3,7 +3,7 @@ export const VIZABI_MODEL = {
     markers: {
       "spreadsheet": {
         data: {
-          source: "boendebarom",
+          source: "healthatlas",
           space: ["geo", "year"],
           filter: {
             dimensions: { "geo": { "$or": [{ "is--kommun": true }] } }
@@ -69,7 +69,7 @@ export const VIZABI_MODEL = {
       "showDataSources": false,
       "folderStrategyByDataset": {
         "kolada": "spread",
-        "boendebarom": "spread",
+        "healthatlas": "spread",
         "wdi": "folder:other_datasets"
       }
     }
