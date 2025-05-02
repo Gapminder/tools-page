@@ -1,7 +1,7 @@
 {
-  "boendebarom": {
+  "healthatlas": {
     "modelType": "ddfcsv",
-    "path": "https://github.com/open-numbers/ddf--ibfuu--boendebarometer"
+    "path": "https://github.com/open-numbers/ddf--ibfuu--healthatlas"
   },   
   "kolada": {
     "modelType": "ddfcsv",

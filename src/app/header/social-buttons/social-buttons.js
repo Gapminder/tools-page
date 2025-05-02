@@ -63,7 +63,7 @@ const SocialButtons = function({ dom, translator, state, bitlyService, locationS
   function mail() {
     const mailUrl = encodeURIComponent(window.location.href);
     placeHolder.select(".mailLink")
-      .attr("href", `mailto:?subject=Boendebarometern&body=${mailUrl}`)
+      .attr("href", `mailto:?subject=Hälsoatlasen&body=${mailUrl}`)
       .node().click();
   }
 
