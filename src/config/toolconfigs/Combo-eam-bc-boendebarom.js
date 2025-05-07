@@ -134,6 +134,8 @@ export const VIZABI_MODEL = {
               concept: "mean_eftergym_25_64"
             },
             scale: {
+              borrowZoom: true,
+              matchEncsToBorrowZoom: ["x", "y"],
               modelType: "color"
             }
           },
