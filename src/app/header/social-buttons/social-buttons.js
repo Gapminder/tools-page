@@ -88,7 +88,7 @@ const SocialButtons = function({ dom, translator, state, bitlyService, locationS
 
   function setMainLink() {
     const mailUrl = encodeURIComponent(window.location.href);
-    placeHolder.select(".mailLink").attr("href", `mailto:?subject=Gapminder&body=${mailUrl}`);
+    placeHolder.select(".mailLink").attr("href", `mailto:?subject=Boendebarometern&body=${mailUrl}`);
   }
 
   function openWindow(urlTemplate) {
