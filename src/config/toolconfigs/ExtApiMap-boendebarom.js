@@ -173,7 +173,7 @@ export const VIZABI_MODEL = {
     "dialogs": {
       "dialogs": {
         "popup": ["markercontrols", "moreoptions"],
-        "sidebar": ["markercontrols"],
+        "sidebar": ["markercontrols", "zoom"],
         "moreoptions": [
           "opacity",
           "speed",
@@ -183,6 +183,7 @@ export const VIZABI_MODEL = {
           "label",
           "mapcolors",
           "mapoptions",
+          "zoom",
           //"technical",
           //"presentation",
           "about"
