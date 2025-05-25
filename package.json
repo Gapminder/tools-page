@@ -52,7 +52,7 @@
     "dom-to-image-more": "^3.5.0",
     "@gapminder/tools-page-chart-configs": "4.0.1",
     "@vizabi/barrank": "4.1.0",
-    "@vizabi/bubblechart": "5.2.1",
+    "@vizabi/bubblechart": "5.2.2",
     "@vizabi/bubblemap": "4.6.0",
     "@vizabi/reader-ddfcsv": "4.5.2",
     "@vizabi/reader-ddfservice": "^2.3.0",
@@ -60,10 +60,10 @@
     "@vizabi/popbyage": "5.2.0",
     "@vizabi/mountainchart": "7.5.0",
     "@vizabi/core": "1.35.1",
-    "@vizabi/shared-components": "1.51.2",
+    "@vizabi/shared-components": "1.52.1",
     "@vizabi/spreadsheet": "4.0.1",
     "@vizabi/combo": "1.2.0",
-    "@vizabi/extapimap": "5.2.0"
+    "@vizabi/extapimap": "5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
