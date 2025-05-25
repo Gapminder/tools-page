@@ -1,63 +1,42 @@
 import * as utils from "../../core/utils";
 import "dom-to-image-more";
+import * as icons from "../../core/icons.js"
 
 const SocialButtons = function({ dom, translator, state, bitlyService, locationService }) {
   const templateHtml = `
-    <li>
-      <div class="share-text-box" data-text="share"></div>
-    </li>
-    <li>
-      <a class="mail button">
-        <i class="fa fa-envelope-o"></i>
-      </a>
-    </li>
-    <li>
-      <a class="twitter button">
-        <i class="fa fa-twitter"></i>
-      </a>
-    </li>
-    <li>
-      <a class="facebook button">
-        <i class="fa fa-facebook"></i>
-      </a>
-    </li>
-    <li>
-      <a class="link button">
-        <i class="fa fa-link"></i>
-      </a>
-    </li>
-    <li>
-      <a class="download button">
-        <i class="fa fa-download"></i>
-      </a>
-    </li>
-    <li>
-      <a class="button code">
-        <i class="fa fa-code"></i>
-      </a>
-    </li>
+    <li><div class="share-text-box" data-text="share"></div></li>
+    <li><a class="mail button"></a></li>
+    <li><a class="twitter button"></a></li>
+    <li><a class="facebook button"></a></li>
+    <li><a class="link button"></a></li>
+    <li><a class="download button"></a></li>
+    <li><a class="button code"></a></li>
     <a class="mailLink" href="#"></a>
   `;
-  //require("./social-buttons.html");
 
   const placeHolder = d3.select(dom);
   const template = d3.create("div");
   template.html(templateHtml);
 
-  template.select(".share-text-box")
-    .on("click", setMainLink);
   template.select(".mail.button")
-    .on("click", mail);
+    .on("click", mail)
+    .html(icons.ICON_ENVELOPE).select("svg").attr("width", "70%").attr("height", "70%");
   template.select(".twitter.button")
-    .on("click", twitter);
+    .on("click", twitter)
+    .html(icons.ICON_EXTWITTER).select("svg").attr("width", "90%").attr("height", "90%");
   template.select(".facebook.button")
-    .on("click", facebook);
+    .on("click", facebook)
+    .html(icons.ICON_FACEBOOK).select("svg").attr("width", "70%").attr("height", "70%");
   template.select(".link.button")
-    .on("click", shareLink);
+    .on("click", shareLink)
+    .html(icons.ICON_LINK).select("svg").attr("width", "70%").attr("height", "70%");
   template.select(".download.button")
-    .on("click", download);
+    .on("click", download)
+    .html(icons.ICON_DOWNLOAD).select("svg").attr("width", "70%").attr("height", "70%");
   template.select(".code.button")
-    .on("click", getEmbeddedUrl);
+    .on("click", getEmbeddedUrl)
+    .html(icons.ICON_CODE).select("svg").attr("width", "80%").attr("height", "80%");
+
 
   for (const elem of Array.from(template.node().children)) {
     placeHolder.append(() => elem);
@@ -82,13 +61,10 @@ const SocialButtons = function({ dom, translator, state, bitlyService, locationS
   }
 
   function mail() {
-    setMainLink();
-    placeHolder.select(".mailLink").node().click();
-  }
-
-  function setMainLink() {
     const mailUrl = encodeURIComponent(window.location.href);
-    placeHolder.select(".mailLink").attr("href", `mailto:?subject=Boendebarometern&body=${mailUrl}`);
+    placeHolder.select(".mailLink")
+      .attr("href", `mailto:?subject=Boendebarometern&body=${mailUrl}`)
+      .node().click();
   }
 
   function openWindow(urlTemplate) {
