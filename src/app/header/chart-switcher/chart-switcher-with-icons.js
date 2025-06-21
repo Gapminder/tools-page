@@ -1,4 +1,5 @@
 import * as utils from "../../core/utils";
+import * as icons from "../../core/icons.js"
 
 const ChartSwitcherWithIcons = function({ dom, translator, state, data }) {
   const template = `<div class="chart-switcher"></div>`;
@@ -8,7 +9,11 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data }) {
     .selectAll("a")
     .data(data.filter(f => f.tool && !f.hideThumbnail))
     .join("a")
-    .html(d => `<img src="${d.icon}"/><span data-text="${d.id}"></span>`)
+    .each(function(d){
+      const view = d3.select(this)
+      view.html(d.icon_inline ? icons[d.icon_inline] : `<img src="${d.icon}"/>`)
+      view.append("span").attr("data-text", d.id)
+    })
     .on("click", (event, d) => {
       if (state.getTool() === d.id) return;
       state.setTool(d.id);
