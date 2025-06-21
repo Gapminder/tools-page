@@ -21,13 +21,21 @@ export function translateNode(translator) {
     const text = el.attr("data-text");
     const fallback = el.attr("data-text-fallback");
     if (!text) return;
+
+    function applyContent({element, content}){
+      if(content[0] === "<")
+        element.html(content);
+      else
+        element.text(content);
+    }
+
     const textChildNode = Array.from(el.node().childNodes)
       .filter(({ nodeName }) => nodeName === "#text")[0];
-    if (textChildNode) {
-      textChildNode.textContent = translator(text) ?? fallback ?? text;
-    } else {
-      el.text(translator(text) ?? fallback ?? text);
-    }
+
+    applyContent( {
+      element: textChildNode ? d3.select(textChildNode) : el, 
+      content: translator(text) ?? fallback ?? text
+    })
   };
 }
 

@@ -18,12 +18,15 @@
     transition: border-width 0.5s ease-in-out;
     &:hover
       text-decoration none !important
-      border-bottom 3px solid #900 !important
+      border-bottom 3px solid $color-primary !important
     &.selected
-      border-bottom 3px solid #900 
+      border-bottom 3px solid $color-primary
       cursor default      
-    img 
-      height 25px
+    img, svg
+      height 30px
+      width 30px
+      path
+        fill: $color-primary
     span
       +for_breakpoint(small)
         display none
