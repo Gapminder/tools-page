@@ -16,7 +16,7 @@ const Footer = function({ dom, translator, state }) {
       </div>
       <div class="logos-holder">
         <img src="assets/images/uu-logo-red.svg" height="120px">
-        <img src="assets/images/rj_logo.png" height="80px">
+        <img src="assets/images/lf_logo_rgb.png" height="80px">
         <img src="assets/images/gapminder_word_logo.svg" height="40px">
         <img src="assets/images/vizabi-charts-plainsvg.svg" height="120px" style="margin-bottom:20px">
       </div>
