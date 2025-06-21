@@ -187,8 +187,10 @@ export const VIZABI_MODEL = {
         "shortcutForSwitch_allow": ["kommun", "regso"],
       }
     },
-
-
+    "marker-contextmenu": {
+      "primaryDim": "geo",
+      "drilldown": "region.kommun.regso"
+    },
     "chart": {
       show_ticks: true,
       showForecast: false,
