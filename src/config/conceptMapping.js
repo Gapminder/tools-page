@@ -1,6 +1,13 @@
 const toolsPage_conceptMapping =  {
   //If you are adding a new redirect, ctrl+f the concpet you are redirecting from
   //in this file! it might be that one of the old redirects needs to be updated
+  // 2025-07-30 rename poverty indicators
+  extreme_poverty_percent_people_below_215_a_day:
+    {concept: "extreme_poverty_percent_people_below_300_a_day"}
+  poverty_percent_people_below_365_a_day:
+    {concept: "poverty_percent_people_below_420_a_day"}
+  poverty_percent_people_below_685_a_day:
+    {concept: "poverty_percent_people_below_830_a_day"}
   
   // 2025-07-21 moving core indicators 
   child_mortality_0_5_year_olds_dying_per_1000_born:
