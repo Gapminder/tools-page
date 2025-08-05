@@ -3,29 +3,29 @@ const toolsPage_conceptMapping =  {
   //in this file! it might be that one of the old redirects needs to be updated
   // 2025-07-30 rename poverty indicators
   extreme_poverty_percent_people_below_215_a_day:
-    {concept: "extreme_poverty_percent_people_below_300_a_day"}
+    {concept: "extreme_poverty_percent_people_below_300_a_day"},
   poverty_percent_people_below_365_a_day:
-    {concept: "poverty_percent_people_below_420_a_day"}
+    {concept: "poverty_percent_people_below_420_a_day"},
   poverty_percent_people_below_685_a_day:
-    {concept: "poverty_percent_people_below_830_a_day"}
+    {concept: "poverty_percent_people_below_830_a_day"},
   
   // 2025-07-21 moving core indicators 
   child_mortality_0_5_year_olds_dying_per_1000_born:
-    {concept: "u5mr", source: "fasttrack"}
+    {concept: "u5mr", source: "fasttrack"},
   child_mortality_0_5_year_olds_more_years_version_7:
-    {concept: "u5mr", source: "fasttrack"}
+    {concept: "u5mr", source: "fasttrack"},
   gapminder_gini:
-    {concept: "gini_2100", source: "fasttrack"}
+    {concept: "gini_2100", source: "fasttrack"},
   co2_emissions_tonnes_per_person:
-    {concept: "c_emission_cap", source: "fasttrack"}
+    {concept: "c_emission_cap", source: "fasttrack"},
   consumption_co2_emissions_1000_tonnes:
-    {concept: "co2_cons", source: "fasttrack"}
+    {concept: "co2_cons", source: "fasttrack"},
   consumption_emissions_tonnes_per_person:
-    {concept: "co2_pcap_cons", source: "fasttrack"}
+    {concept: "co2_pcap_cons", source: "fasttrack"},
   cumulative_co2_emissions_tonnes:
-    {concept: "co2_cons", source: "fasttrack"}
+    {concept: "co2_cons", source: "fasttrack"},
   yearly_co2_emissions_1000_tonnes:
-    {concept: "co2_cons", source: "fasttrack"}
+    {concept: "co2_cons", source: "fasttrack"},
   
 
   //2024-10-09 moving corruption_perception_index_cpi to fasttrack
