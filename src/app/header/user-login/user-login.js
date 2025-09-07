@@ -1,8 +1,8 @@
 import * as utils from "../../core/utils";
 import { supabaseClient } from "../../core/supabase.service";
 
-const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) {
-  const templateHtml = `  
+const UserLogin = function({ dom, translator, state, data }) {
+  const template = `  
     <div class="user-login-title">Log in</div>
     <div class="user-logged-title">&#x2714</div>
     <div class="user-logged-form-wrapper">
@@ -56,12 +56,14 @@ const UserLogin = function(placeHolder, translator, dispatch, { relatedItems }) 
     </div>
   `;
 
-  const template = d3.create("div");
-  template.html(templateHtml);
+  const placeHolder = d3.select(dom).html(template);
 
-  for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(() => elem);
-  }
+  // const template = d3.create("div");
+  // template.html(templateHtml);
+
+  // for (const elem of Array.from(template.node().children)) {
+  //   placeHolder.append(() => elem);
+  // }
 
   this.isUserLoginOpen = false;
   
