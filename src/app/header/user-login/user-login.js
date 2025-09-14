@@ -119,7 +119,7 @@ const UserLogin = function({ dom, translator, state, data }) {
   });
 
   supabaseClient.auth.onAuthStateChange((event, session) => {
-    console.log(event, session)
+    state.setAuthToken({event, session})
   
     if (event === 'INITIAL_SESSION') {
   

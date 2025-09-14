@@ -2,7 +2,7 @@ import { upgradeUrl } from "./deprecated-url.js";
 import { debounce, deepExtend } from "./utils.js";
 
 const URL_VERSION = "v2";
-const dispatch = d3.dispatch("translate", "toolChanged", "toolStateChangeFromPage", "toolReset", "languageChanged", "projectorChanged", "menuOpen", "menuClose");
+const dispatch = d3.dispatch("translate", "toolChanged", "toolStateChangeFromPage", "toolReset", "languageChanged", "projectorChanged", "menuOpen", "menuClose", "authStateChange");
 
 
 //TODO: We have problem with possible infinite loop of
@@ -11,6 +11,7 @@ let popStateLoopFlag = false;
 const resetPopStateLoopFlag = debounce(() => { popStateLoopFlag = false; }, 500);
 
 let URLI = { ui: {}, model: {} };
+let authToken = null;
 let defaultLoc = null;
 
 function init({ allowedTools, defaultLocale }) {
@@ -29,7 +30,7 @@ function init({ allowedTools, defaultLocale }) {
   const tool = (toolFromUrl && allowedTools.includes(toolFromUrl)) ? toolFromUrl : allowedTools[0];
 
   updateURL({ model: URLI.model, ui: URLI.ui, tool, replaceInsteadPush: true });
-  return { getEmbedded, getTool, resetState, getURLI, getLocale, getProjector, setTool, setLocale, setProjector, updateURL: debouncedUpdateUrl, dispatch };
+  return { getEmbedded, getTool, resetState, getURLI, getLocale, getProjector, setTool, setLocale, setAuthToken, getAuthToken, setProjector, updateURL: debouncedUpdateUrl, dispatch };
 }
 
 
@@ -78,6 +79,9 @@ function pushToHistory({ tool = URLI["chart-type"], ui = URLI.ui, model = URLI.m
   }, "unused mandatory parameter", "#" + encodeUrlHash(urlon.stringify(objectToSerialise)));
 }
 
+function getAuthToken() {
+  return authToken;
+}
 function getURLI() {
   return URLI;
 }
@@ -92,6 +96,10 @@ function getProjector() {
 }
 function getTool() {
   return URLI["chart-type"];
+}
+function setAuthToken({event, session}) {
+  authToken = session?.access_token;
+  dispatch.call("authStateChange", null, event);
 }
 function setLocale(id) {
   if (!id || id === getLocale()) return;
@@ -160,7 +168,7 @@ export {
   pushToHistory,
   resetState,
   getURLI,
-  getEmbedded, getLocale, getProjector, getTool,
-  setLocale, setProjector, setTool,
+  getEmbedded, getLocale, getProjector, getTool, getAuthToken,
+  setLocale, setProjector, setTool, setAuthToken,
   dispatch
 };

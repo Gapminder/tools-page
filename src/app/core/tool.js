@@ -26,7 +26,7 @@ const Tool = function({ cmsData, state, dom }) {
 
 
   // apply data models from configuration to target
-  function applyDataConfigFromUrlStateToTarget(toolsetEntry, urlState, target) {
+  function applyDataConfigFromUrlStateToTarget(toolsetEntry, urlState, authToken, target) {
     if (!target.model.dataSources) target.model.dataSources = {};
     const urlDataConfig = urlState.model?.dataSources;
 
@@ -43,6 +43,7 @@ const Tool = function({ cmsData, state, dom }) {
           target.model.dataSources[ds] = datasources[ds];
         }
         target.model.dataSources[ds].locale = urlState?.ui?.locale || target.ui?.locale;
+        target.model.dataSources[ds].token = authToken;
       });
     }
 
@@ -114,7 +115,7 @@ const Tool = function({ cmsData, state, dom }) {
     if (previousToolId) vizabiStartConfig = applyTransitionConfigs(vizabiStartConfig);
 
     //apply URL configs
-    vizabiStartConfig = applyDataConfigFromUrlStateToTarget(toolsetEntry, state.getURLI(), vizabiStartConfig);
+    vizabiStartConfig = applyDataConfigFromUrlStateToTarget(toolsetEntry, state.getURLI(), state.getAuthToken(), vizabiStartConfig);
     VizabiSharedComponents.Utils.mergeInTarget(vizabiStartConfig, state.getURLI(), /*treat as blocks:*/ ["data.filter"]);
 
     const VIZABI_UI_CONFIG = observable(vizabiStartConfig.ui);
@@ -202,6 +203,15 @@ const Tool = function({ cmsData, state, dom }) {
     });
   }
 
+  function setVizabiUserAuth(){
+    if(!viz?.model?.dataSources) return;
+    const dataSources = Object.values(viz.model.dataSources);
+    const token = state.getAuthToken();
+    dataSources.forEach(ds => {
+      if(ds.reader.setToken) ds.reader.setToken(token);
+    });
+  }
+
   function setVizabiLocale(id) {
     if (viz?.services?.locale) viz.services.locale.id = id;
   }
@@ -229,6 +239,6 @@ const Tool = function({ cmsData, state, dom }) {
       .remove();
   }
 
-  return { setTool, setVizabiToolState, setVizabiLocale, setVizabiProjector };
+  return { setTool, setVizabiToolState, setVizabiLocale, setVizabiProjector, setVizabiUserAuth };
 };
 export default Tool;

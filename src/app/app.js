@@ -58,6 +58,12 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
   
   d3.select("a.logo").on("click", state.resetState);
 
+  state.dispatch.on("authStateChange.app", (event) => {
+    console.log(event);
+    tool.setVizabiUserAuth();
+    if (viz) state.setTool();
+  });
+
   state.dispatch.on("toolChanged.app", ({ id, previousToolId }) => {
     tool.setTool({ id, previousToolId });
   });
