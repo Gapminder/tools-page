@@ -54,7 +54,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
   new Footer({ translator, state, dom: ".app-footer" });
   new Message({ translator, state, dom: ".app-message" });
   new DataEditor({ translator, state, tool, viz, dom: ".header .data-editor" });
-  new UserLogin({ translator, state, dom: ".header .app-user-login" });
+  new UserLogin({ translator, state, dom: ".app-user-login" });
   
   d3.select("a.logo").on("click", state.resetState);
 
