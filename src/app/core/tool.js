@@ -3,7 +3,7 @@ import { getFileReaderForVizabi } from "./language.js";
 import { getTransitionModel } from "./chart-transition.js";
 import { loadJS, deepExtend, diffObject, removeProperties } from "./utils.js";
 import timeLogger from "./timelogger.js";
-import { observable, autorun, toJS, reaction } from "mobx";
+import { observable, autorun, toJS, reaction, runInAction } from "mobx";
 
 let viz;
 let urlUpdateDisposer;
@@ -169,6 +169,21 @@ const Tool = function({ cmsData, state, dom }) {
     });
     disposers.push(switchDataSourceIfConceptNotFound);
 
+    const checkDataSourcesAuth = mobx.autorun(() => {
+      const dataSources = viz.model.dataSources;
+      const dsArray = Object.values(dataSources);
+      if (dsArray.map(ds => ds.state).every(s => s == "fulfilled")) {
+        const messages = [];
+        dsArray.forEach(ds => {
+          if (ds.responseError && ds.responseError.code == "HTTP_401" && ds.responseError.message == "Unauthorized") {
+            messages.push(`You are unable to access to private data source ${ds.config.dataset}. Please login for resolve.`);
+          }
+          if (messages.length) state.dispatch.call("showMessage", null, { message: messages.join("\n")});
+        });
+      }
+    });
+    disposers.push(checkDataSourcesAuth);
+    
     //googleAnalyticsLoadEvents(viz, toolsetEntry);
 
 

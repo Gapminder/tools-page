@@ -52,7 +52,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
   new SocialButtons({ translator, state, dom: ".social-list .app-social-buttons",
     bitlyService: BitlyService(), locationService: LocationService() });
   new Footer({ translator, state, dom: ".app-footer" });
-  new Message({ translator, state, dom: ".app-message" });
+  const message = new Message({ translator, state, dom: ".app-message" });
   new DataEditor({ translator, state, tool, viz, dom: ".header .data-editor" });
   new UserLogin({ translator, state, dom: ".app-user-login" });
   
@@ -81,6 +81,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
   state.dispatch.on("projectorChanged.app", truefalse => {
     tool.setVizabiProjector(truefalse);
   });
+  state.dispatch.on("showMessage.app", ({ message: msg }) => message.showMessage(msg) );
 
 
   viz = await tool.setTool();
