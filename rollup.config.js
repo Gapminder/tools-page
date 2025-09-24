@@ -123,28 +123,6 @@ export default {
       target: "es2020", // bump as high as your audience allows
       legalComments: "none"
     }),
-    // html({
-    //   template: "src/index.html",
-    //   inject: false, // ← stop auto-injecting /toolspage.js, we do it later as ES module
-    //   externals: {
-    //     before: [ 
-    //       // CSS
-    //       { tag: "link", href: "styles.css", rel: "stylesheet" },
-    //       { tag: "link", href: "assets/css/VizabiSharedComponents.css", rel: "stylesheet" },
-    //       { tag: "script", src: "vendor/d3.js" },
-    //       { tag: "script", src: "vendor/mobx.js" },
-    //       { tag: "script", src: "vendor/Vizabi.js" },
-    //       { tag: "script", src: "vendor/VizabiSharedComponents.js" },
-    //       { tag: "script", src: "vendor/supabase.js" }, 
-    //       { tag: "script", src: "vendor/reader-ddfcsv.js" },
-    //       { tag: "script", src: "vendor/reader-ddfservice.js" },
-    //       { tag: "script", src: "vendor/urlon.js" },
-    //     ],
-    //     after: [
-    //       { tag: "script", src: "toolspage.js", type: "module" }
-    //     ],
-    //   }
-    // }),
     PROD && visualizer({ filename: "./build/stats.html" })
   ]
 };
