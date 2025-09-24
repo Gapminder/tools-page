@@ -9,7 +9,7 @@ these keys will be replaced with their corresponding values
 "$" + value + "="
 */
 
-const toolsPage_entitysetMapping = {
+export default {
   "chartTypes": ["bubbles", "map", "linechart", "barrank", "spreadsheet"],
   "entitySets": {
     //"country": "geo"  this moved to upgradeUrlV1toV2.js

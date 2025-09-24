@@ -1,3 +1,8 @@
+import toolsPage_properties from "toolsPage_properties";
+import toolsPage_toolset from "toolsPage_toolset";
+import toolsPage_datasources from "toolsPage_datasources";
+import toolsPage_menuItems from "toolsPage_menuItems";
+
 let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE;
 const resetCache = true;
 const TIMEOUT_MS = 2000; // adjust timeout duration

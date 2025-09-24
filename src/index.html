@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="./assets/fonts/font-awesome.min.css">
   <link href="favicon.png" rel="shortcut icon">
 
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/VizabiSharedComponents.css">
 </head>
  
 <body>
@@ -88,5 +90,17 @@
     <span class="app-footer"></span>
   </div>
 
+
+  <script src="vendor/d3.js"></script>
+  <script src="vendor/mobx.js"></script>
+  <script src="vendor/Vizabi.js"></script>
+  <script src="vendor/VizabiSharedComponents.js"></script>
+  <script src="vendor/supabase.js"></script>
+  <script src="vendor/reader-ddfcsv.js"></script>
+  <script src="vendor/reader-ddfservice.js"></script>
+  <script src="vendor/urlon.js"></script>
+  
+  <!-- ESM entry so dynamic imports work -->
+  <script type="module" src="toolspage.js"></script>
   </body>
 </html>

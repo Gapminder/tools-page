@@ -1,25 +1,16 @@
 
 import { getFileReaderForVizabi } from "./language.js";
 import { getTransitionModel } from "./chart-transition.js";
-import { loadJS, deepExtend, diffObject, removeProperties } from "./utils.js";
+import { loadConfigModule, deepExtend, diffObject, removeProperties } from "./utils.js";
 import timeLogger from "./timelogger.js";
-import { observable, autorun, toJS, reaction, runInAction } from "mobx";
+import { loadTool } from "../../../vizabi-tools.js";
+
+const {observable, toJS, autorun} = mobx;
 
 let viz;
 let urlUpdateDisposer;
 const disposers = [];
 const PLACEHOLDER = ".vzb-placeholder";
-
-// function getToolPrototype(toolsetEntry) {
-//   const tool = toolsetEntry.tool;
-//   const variation = toolsetEntry.toolVariation;
-//   if(!window[tool] || variation && !window[tool][variation] )
-//     return console.error(`
-//       Tool JS code for ${toolsetEntry.tool}${variation ? " and its variation " + variation : ""}
-//       should be available globally on the page and it's not
-//     `)
-//   return variation ? window[tool][variation] : window[tool];
-// }
 
 const Tool = function({ cmsData, state, dom }) {
   const { toolset, datasources, toolconfig } = cmsData;
@@ -74,14 +65,14 @@ const Tool = function({ cmsData, state, dom }) {
 
     //LAZY-LOAD TOOLS JS CODE
     const toolsToLoad = [toolsetEntry.tool].concat(toolsetEntry.toolComponents || []);
-    await Promise.all(toolsToLoad.map(
+    const toolsLoaded = await Promise.all(toolsToLoad.map(
       tool => window[tool]
         ? Promise.resolve()
-        : loadJS(tool.toLowerCase() + (ENV === "production" ? ".min.js" : ".js"), document.body)
+        : loadTool(tool.toLowerCase(), document.body).then(prototype => window[tool] = prototype)
     ));
 
-    const pathToConfig = "config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
-    await loadJS(pathToConfig, document.body, "vzb-tool-config");
+    const pathToConfig = "./config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
+    const VIZABI_MODEL = await loadConfigModule(pathToConfig);
 
     d3.select(".vizabi-placeholder")
       .append("div")

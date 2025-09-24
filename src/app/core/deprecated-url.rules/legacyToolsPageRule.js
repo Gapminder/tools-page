@@ -1,4 +1,4 @@
-import { parseURLHashWithUrlon } from "./../url.js";
+import { parseURLHashWithUrlon } from "./../../core/utils.js";
 
 const rule = {
   test(url) {
@@ -8,12 +8,6 @@ const rule = {
 
   use(url) {
     console.log("OLD URL DETECTED", url);
-
-    function decodeUrlHash(hash) {
-      //replacing %2523 with %23 needed when manual encoding operation of encodeUrlHash()
-      //plus the enforced encoding in some browsers resulted in double encoding
-      return decodeURIComponent(hash.replace(/%2523/g, "%23"));
-    }
 
     const oldState = parseURLHashWithUrlon(url);
     const oldSelect = oldState?.model?.state?.marker?.select;
