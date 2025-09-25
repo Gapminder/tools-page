@@ -1,5 +1,4 @@
-import * as utils from "../../core/utils";
-import { supabaseClient } from "../../core/supabase.service";
+import { supabaseClient } from "./supabase.service";
 
 const UserLogin = function({ dom, translator, state, data }) {
   const template = `  

@@ -5,7 +5,7 @@ import { scrollTo, deepExtend } from "./core/utils";
 import { initTranslator } from "./core/language.js";
 
 
-import UserLogin from "./header/user-login/user-login";
+import UserLogin from "./auth/user-login.js";
 import Menu from "./header/menu/menu.js";
 import Message from "./header/message/message.js";
 import DataEditor from "./header/data-editor/data-editor.js";

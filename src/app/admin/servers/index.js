@@ -1,0 +1,219 @@
+import { initTranslator } from "./../../core/language.js";
+import UserLogin from "./../../auth/user-login.js";
+import * as urlService from "./../../core/url.js";
+import * as cmsService from "./../../core/cms.js";
+import toolsPage_properties from "toolsPage_properties";
+
+import {url, getStatus, getDatasets, getDatasetInfo, sync, syncprogress, timediff} from "./waffle-helpers.js"
+
+let syncStatus = 0;
+
+// Gate: must be logged in
+// async function requireSession() {
+//     const { data: { session }, error } = await supabase.auth.getSession();
+//     if (error) throw error;
+//     if (!session) {
+//       // bounce to main app (adjust if you have a login page)
+//       location.href = "../../";
+//       throw new Error("No session");
+//     }
+//     return session;
+//   }
+
+
+function getHeader({status}){
+  const width = 800;
+  const header = d3.create("div")
+    .attr("style", `font-family: Monospace; text-align: center; padding: 5px; width: ${width}px; pointer-events: none;`)
+    .text(`Small Waffle v${status.server.smallWaffleVersion} ——— DDFCSV Reader v${status.server.DDFCSVReaderVersion} ——— uptime ${timediff(status.server.liveSince, false, false)}`)
+
+  return header.node();
+}
+
+function getStatusBar({status}){
+  const height = 50;
+  const width = 800;
+
+
+
+  const svg = d3.create("svg")
+    .attr("width", width)
+    .attr("height", height)
+
+  const {limit_MB, heapTotal_MB, heapUsed_MB, heapTotal_PCT, heapUsed_PCT} = status.server.memory;
+  const scale = d3.scaleLinear([0, limit_MB], [0, width])
+  
+  svg.append("rect")
+    .attr("x",0)
+    .attr("y",height/2)
+    .attr("width",scale(limit_MB))
+    .attr("height",height/2)
+    .style("fill", "lightgrey")
+
+  svg.append("rect")
+    .attr("x",0)
+    .attr("y",height/2)
+    .attr("width",scale(heapTotal_MB))
+    .attr("height",height/2)
+    .style("fill", "#217fb7")
+
+  svg.append("rect")
+    .attr("x",scale(heapUsed_MB))
+    .attr("y",0)
+    .attr("width", 2)
+    .attr("height",height)
+    .style("fill", "white")
+
+  svg.append("text")
+    .attr("x",5)
+    .attr("y", 20)
+    .style("text-anchor", "start")
+    .style("fill", "black")
+    .style("font-family", "sans-serif")
+    .text(`Heap memory at ${heapTotal_PCT}% of ${limit_MB} MB limit`)
+  
+  return svg.node();
+}
+
+
+// Tiny UI stub (replace with your Observable mock later)
+function getStatusTable({datasets, syncDataset, datasetInfo, timediff}) {
+
+  const table = d3.create("table")
+    .style("max-width", "none");
+
+  table.append("tr")
+    .each(function(){
+      const rowEl = d3.select(this);
+      rowEl.append("th").text("sync")
+      rowEl.append("th").text("slug")
+      rowEl.append("th").text("github link")
+      rowEl.append("th").attr("colspan", 3).html('branches <br/> datapackage version and when last updated')
+    })
+  table.selectAll("tr.dataset")
+    .data(datasets)
+    .enter().append("tr")
+    .attr("class", "dataset")
+    .on("mouseover", function(){d3.select(this).style("background", "#EFF8FF")})
+    .on("mouseout", function(){d3.select(this).style("background", "none")})
+    .each(function(row){
+      const rowEl = d3.select(this);
+      rowEl.append("td")
+        .style("padding-bottom","10px")
+        .append("button") 
+        .on("click", () => syncDataset(row.slug))
+        .html(`<span style="font-size: 1.2em;">↻</span> Sync`)
+      rowEl.append("td")
+        .style("padding-bottom","10px")
+        .style("font-size", "1.25em")
+        .text(row.slug)
+      rowEl.append("td")
+        .html(`<a href="${row.url}">${row.githubRepoId.split("/")[1]}</a> <br/> <span style="color:#bbb"> @${row.githubRepoId.split("/")[0]} </<span>`)
+      rowEl.selectAll("td.branch")
+        .data(row.branches)
+        .attr("class", "branch")
+        .enter().append("td")
+        .style("padding-bottom","10px")
+        .style("font-family","Monospace")
+        .html(b => `${formatBranchCommit(b)} </br> ${formatDataPackage(row.slug, b)}`)
+    })
+
+  function formatDataPackage(slug, branchCommitObject){
+    const info = datasetInfo[slug + " " + getBranch(branchCommitObject)];
+    const version = info.version ? "v"+ info.version : "";
+    const created = info.created ? timediff(info.created) : "";
+    return `<span title="${(info.created+"").split(".")[0].replace("T", " at ")}">📦 ${version} ${created} </span>`
+  }
+  
+  function formatBranchCommit(branchCommitObject){
+    return JSON.stringify(branchCommitObject).replaceAll('"','').replaceAll('{','').replaceAll('}','').replaceAll(':',': ');
+  }
+  
+  function getBranch(branchCommitObject){
+    return Object.keys(branchCommitObject)[0]
+  }
+
+  return table.node();
+}
+
+function getProgressText(){
+  return d3.create("div").style("background-color", "white").html("").node()
+}
+
+async function syncDataset(slug){
+  function setStatusYellow(text) {
+    text = formatSyncEvent(text);
+    syncStatus = d3.create("div").style("background-color", "yellow").html(text).node();
+  }
+  function setStatusGreen(text) {
+    text = formatSyncEvent(text);
+    syncStatus = d3.create("div").style("background-color", "lightgreen").html(text)
+      .transition().duration(5000).style("background-color", "white")
+      .node();
+  }
+  function setStatusNone() {
+    syncStatus = d3.create("div").style("background-color", "white").html("").node();
+    update++;
+  }
+
+  function formatSyncEvent(events) {
+    return events.length > 0 ? events.at(-1).comment : "";
+  }
+
+
+  const syncResponse = await sync(slug);
+  setStatusYellow(syncResponse.events);
+  const interval = setInterval(async ()=>{
+    const syncProgressResponse = await syncprogress();
+    if(syncProgressResponse.ongoing) {
+      setStatusYellow(syncProgressResponse.events);
+    } else {
+      setStatusGreen(syncProgressResponse.events);
+      setTimeout(setStatusNone, 3000);
+      clearInterval(interval);
+    }
+  }, 500);
+  
+}
+
+
+async function renderStatus(element, params){
+  d3.select(element).selectAll("table").remove();
+  const header = getHeader(params);
+  const bar = getStatusBar(params);
+  const table = getStatusTable(params);
+  const progressText = getProgressText(params)
+  element.appendChild(header);
+  element.appendChild(bar);
+  element.appendChild(table);
+  element.appendChild(progressText);
+}
+
+
+
+async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
+  const cmsData = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE });
+  const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.id);
+  const state = urlService.init({ allowedTools, defaultLocale: DEFAULT_LOCALE });
+  const translator = await initTranslator(state, cmsData.properties?.locales);
+
+  new UserLogin({ translator, state, dom: ".app-user-login" });
+
+  state.dispatch.on("authStateChange.app", async (event) => {
+    console.log(event);
+    const token = state.getAuthToken();
+    if (token) {
+      // TODO: point to real waffle endpoint (env or config)
+      const status = await getStatus(token);
+      const datasets = await getDatasets(token);
+      const datasetInfo = await getDatasetInfo(token);
+      renderStatus(document.getElementById("app"), {status, datasets, syncDataset, datasetInfo, timediff});
+      
+    }
+  });
+}
+
+main(toolsPage_properties).catch(err => {
+  console.error(err);
+  d3.select("#app").text(`Error: ${err.message || err}`);
+});

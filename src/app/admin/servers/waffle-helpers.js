@@ -1,0 +1,172 @@
+
+const {observable} = mobx;
+
+let update = 0;
+let refresh = 0;
+
+export const url = "https://tools-page-analytics-server.gapminder.org/";
+
+export async function getEvents() {
+  update; refresh;
+  const events = await d3.json(url + "events/");
+  return events;
+}
+
+export async function getStatus() {
+  update; refresh;
+  const status = await d3.json(url + "status/");
+  return status;
+}
+
+export async function getDatasets() {
+  update; refresh;
+  const status = await getStatus();
+  return status.datasetControlList.map(m => ({
+    ...m, 
+    url: "https://github.com/" + m.githubRepoId,
+    branches: m.branches.map(b => ({[b]: status.availableDatasets[m.slug][b].substr(0,7)}))
+  }));
+}
+
+export async function getDatasetInfo(token) {
+    update; refresh;
+    const datasets = await getDatasets();
+    const promises = []
+    datasets.forEach(dataset => dataset.branches.forEach(branch => promises.push({
+      slug: dataset.slug,
+      branch: Object.keys(branch)[0],
+      promise: d3.json(url + "info/" + dataset.slug + "/" + Object.keys(branch)[0], {headers: {Authorization: `Bearer ${token}`, Accept: "application/json"}})
+    }) ))
+  
+    const resolved = await Promise.all(promises.map(m => m.promise));
+  
+    const result = {};
+    for(let i in resolved) {
+      result[promises[i].slug + " " + promises[i].branch] = resolved[i]
+    }
+    return result
+  }
+
+  export async function sync(slug) {
+    return d3.json(url + "sync/" + (slug || ""))
+  }
+
+  export async function syncprogress() {
+    return d3.json(url + "syncprogress")
+  } 
+
+  export async function getConceptsInDataset(datasetSlug){
+    update; refresh;
+    if (!datasetSlug) return [];
+    const queryString = `_language=en&select_key@=concept;&value@=concept/_type&=domain&=name&=name/_catalog&=name/_short&=tags;;&from=concepts`
+    const response = await d3.json(`${url}${datasetSlug}?${queryString}`);
+    return response.rows.map(c => {
+      const concept = {};
+      c.forEach( (d,i) => concept[response.header[i]] = d );
+      return concept;
+    })
+  }
+
+  export async function getGeosDictionaryInDataset(datasetSlug) {
+    update; refresh;
+    if (!datasetSlug) return {};
+    const queryString = `_language=en&select_key@=geo;&value@=geo&=name&=world/_4region&=is--country;;&from=entities`;
+    const response = await d3.json(`${url}${datasetSlug}?${queryString}`);
+    const entries = response.rows.map(c => {
+      const geo = {};
+      c.forEach( (d,i) => geo[response.header[i]] = d );
+      return [geo.geo, geo];
+    })
+    
+    return Object.fromEntries(entries) 
+  }
+
+  // eventData = {
+  //   const events = await getEvents();
+  //   return events.map(([key, value]) => {
+  //     const parsedQuery = parseQuery(value.queryString);
+  //     return {
+  //       key, 
+  //       ...value, 
+  //       status: "http "+value.status, 
+  //       query: parsedQuery,
+  //       earliest: new Date(value.earliest_ms),
+  //       latest: new Date(value.latest_ms),
+  //       from: parsedQuery?.from,
+  //       nSelectValue: parsedQuery?.select?.value?.length,
+  //       nSelectKey: parsedQuery?.select?.key?.length
+  //     }
+  //   })
+  // }
+
+  // summaryBreakdowns = {
+  //   const data = await eventData;
+    
+  //   const byDatasets = toTidy(d3.rollup(eventData, v => d3.sum(v, d => d.count), d => d.datasetSlug));
+    
+  //   const byStatusCode = toTidy(d3.rollup(eventData, v => d3.sum(v, d => d.count), d => d.status));
+  
+  //   const status = await getStatus();
+  //   const allowed = new Set(status.allowedDatasets.map(m => m.slug));
+  //   const byQueryTypeAndDatasetAndStatus = d3
+  //     .flatRollup(eventData, v => d3.sum(v, d=>d.count), d => d.query?.from || d.type, d => d.datasetSlug, d => d.status)
+  //     .map(([type, dataset, status, count])=>({type, dataset, status, count}))
+  //     .filter(f => allowed.has(f.dataset));
+  
+  //   return {byDatasets, byStatusCode, byQueryTypeAndDatasetAndStatus};
+  // }
+
+
+  // toTidy = (map) => [...map].map(([k,v])=>({k,v}))
+
+  // parseQuery = (queryString = "") => {
+  //   if(queryString[0] !== "_") return null;
+  //   try { return urlon2.parse(queryString) } catch(err) {return null};
+  // }
+
+  // urlon2 = require('urlon@2.1.0/lib/urlon.js').catch(() => window["URLON"])
+
+  export function timediff(time, emo = true, ago = false){
+
+    const parsed = new Date(time)
+    const now = new Date();
+  
+    let attempt;
+  
+    function diff(time, now, counter, limit, fraction, firstLabel, secondLabel, emoSymbol){
+      const count = counter.count(time, now);
+      if (count <= limit) return false;
+      const first = Math.floor(count / fraction);
+      const second = count % fraction;
+      const firstS = (""+first).at(-1) !== "1" && firstLabel.length > 1 ? "s":"";
+      const secondS = (""+second).at(-1) !== "1" && secondLabel.length > 1 ? "s":"";
+      return `${emo ? emoSymbol : ""} ${first}${firstLabel}${firstS} ${second?second:""}${second?secondLabel:""}${second?secondS:""} ${ago ? "ago":""}`
+    }
+  
+    attempt = diff(parsed, now, d3.timeMonth, 12, 12, "year", "month", "🖤")
+    if (attempt) return attempt;
+  
+    attempt = diff(parsed, now, d3.timeWeek, 6*4, 4, "month", "week", "💙")
+    if (attempt) return attempt;
+  
+    attempt = diff(parsed, now, d3.timeWeek, 4, 4, "month", "week", "💜")
+    if (attempt) return attempt;
+  
+    attempt = diff(parsed, now, d3.timeDay, 4*7, 7, "week", "day", "🧡")
+    if (attempt) return attempt;
+  
+    attempt = diff(parsed, now, d3.timeDay, 7, 7, "week", "day", "💗")
+    if (attempt) return attempt;
+  
+    attempt = diff(parsed, now, d3.timeHour, 24, 24, "day", "h", "💖")
+    if (attempt) return attempt;
+  
+    attempt = diff(parsed, now, d3.timeMinute, 60, 60, "h", "m", "❤️‍🔥")
+    if (attempt) return attempt;
+  
+    attempt = diff(parsed, now, d3.timeSecond, 60, 60, "m", "s", "🔥")
+    if (attempt) return attempt;
+  
+    const diffS = d3.timeSecond.count(parsed, now)
+    if (diffS > 1) return (emo ? "🔥🔥🔥 ":"") + diffS + "s" + (ago ? " ago":"")
+  }

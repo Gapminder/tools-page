@@ -38,7 +38,10 @@ const TOOL_CSS = [
 
 export default {
   //perf: true, 
-  input: { toolspage: "src/index.js" },
+  input: { 
+    toolspage: "src/index.js",
+    "admin/servers/index": "src/app/admin/servers/index.js"
+  },
   treeshake: !!PROD,
   output: {
     dir: `build/tools`,
@@ -106,7 +109,8 @@ export default {
         { dest: "build/tools/config", src: "src/config/toolconfigs"},
         { dest: "build/tools/config", src: ["src/config/menu-items.js","src/config/conceptMapping.js","src/config/entitysetMapping.js","src/config/related.json"]},
         //HTML
-        { dest: "build/tools", src: "src/index.html" }
+        { dest: "build/tools", src: "src/index.html" },
+        { dest: "build/tools/admin/servers", src: "src/app/admin/servers/index.html" },
       ],
       copyOnce: PROD, // <-- re-copy on changes in dev
       hook: "writeBundle",
