@@ -8,12 +8,48 @@
   <link rel="stylesheet" href="../../styles.css" />
 </head>
 <body>
-  <div id="app"></div>
-  <div>
-    <div class="user-login-wrapper">
-      <span class="app-user-login"></span>
+
+
+  <div class="admin-page" id="admin">
+    <div class="admin-header">
+      <div class="brand">Tools · Admin</div>
+      <div class="header-spacer"></div>
+      <button class="sidebar-toggle" id="sidebarToggle" title="Toggle sidebar">≡</button>
+    </div>
+  
+    <div class="admin-sidebar">
+      <nav class="nav">
+        <div class="nav-item active" data-route="status">
+          <div class="icon">🖥️</div><div class="label">Server Status</div>
+        </div>
+        <div class="nav-item" data-route="datasets">
+          <div class="icon">🗂️</div><div class="label">Datasets</div>
+        </div>
+        <div class="nav-item" data-route="sync">
+          <div class="icon">🔁</div><div class="label">Sync</div>
+        </div>
+        <div class="nav-item" data-route="acl">
+          <div class="icon">🔐</div><div class="label">ACL</div>
+        </div>
+      </nav>
+  
+      <div class="user-login-wrapper">
+        <div class="avatar" id="userAvatar"></div>
+        <span class="app-user-login" id="userLogin">Not signed in</span>
+      </div>
+    </div>
+  
+    <div class="admin-stage" id="stage">
+      <h1>Server Status</h1>
+      <div class="admin-grid" id="statusGrid">
+      </div>
+      
+
+      <div class="temp"></div>
     </div>
   </div>
+
+  
 
   <!-- Minimal vendor set for this page -->
   <script src="../../vendor/d3.js"></script>

@@ -3,22 +3,12 @@ import UserLogin from "./../../auth/user-login.js";
 import * as urlService from "./../../core/url.js";
 import * as cmsService from "./../../core/cms.js";
 import toolsPage_properties from "toolsPage_properties";
+import { supabaseClient } from "./../../auth/supabase.service";
 
 import {url, getStatus, getDatasets, getDatasetInfo, sync, syncprogress, timediff} from "./waffle-helpers.js"
 
 let syncStatus = 0;
 
-// Gate: must be logged in
-// async function requireSession() {
-//     const { data: { session }, error } = await supabase.auth.getSession();
-//     if (error) throw error;
-//     if (!session) {
-//       // bounce to main app (adjust if you have a login page)
-//       location.href = "../../";
-//       throw new Error("No session");
-//     }
-//     return session;
-//   }
 
 
 function getHeader({status}){
@@ -68,7 +58,7 @@ function getStatusBar({status}){
     .attr("x",5)
     .attr("y", 20)
     .style("text-anchor", "start")
-    .style("fill", "black")
+    .style("fill", "white")
     .style("font-family", "sans-serif")
     .text(`Heap memory at ${heapTotal_PCT}% of ${limit_MB} MB limit`)
   
@@ -178,7 +168,7 @@ async function syncDataset(slug){
 
 
 async function renderStatus(element, params){
-  d3.select(element).selectAll("table").remove();
+  d3.select(element).html("");
   const header = getHeader(params);
   const bar = getStatusBar(params);
   const table = getStatusTable(params);
@@ -207,13 +197,131 @@ async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
       const status = await getStatus(token);
       const datasets = await getDatasets(token);
       const datasetInfo = await getDatasetInfo(token);
-      renderStatus(document.getElementById("app"), {status, datasets, syncDataset, datasetInfo, timediff});
-      
+      renderStatus(document.getElementsByClassName("temp")[0], {status, datasets, syncDataset, datasetInfo, timediff});
+      const serverData = await getServerData(token);
+      renderServers(document.getElementById('statusGrid'), serverData)
     }
   });
 }
 
 main(toolsPage_properties).catch(err => {
   console.error(err);
-  d3.select("#app").text(`Error: ${err.message || err}`);
+  d3.select(".temp").text(`Error: ${err.message || err}`);
+});
+
+
+async function getServerData(token){ 
+  const { data, error } = await supabaseClient
+    .from('servers')
+    .select('*')
+    .neq('id', '__all__');   // or whatever sentinel you chose
+
+  if (error) console.error(error);
+  return data;
+}
+async function renderServers(element, data){
+// example data (replace with live fetch to your Waffle/Supabase combo)
+  statusGrid.innerHTML = "";
+  data.forEach(d => statusGrid.appendChild(card({
+    title: d.id,
+    sub: d.url,
+    badge: {kind: "ok", text: "200"}
+  })))
+}
+
+
+
+// admin.js
+const root = document.getElementById('admin')
+const toggleBtn = document.getElementById('sidebarToggle')
+const statusGrid = document.getElementById('statusGrid')
+
+const collapsedKey = 'admin.sidebar.collapsed'
+if (localStorage.getItem(collapsedKey) === '1') root.classList.add('is-collapsed')
+
+toggleBtn.addEventListener('click', () => {
+  root.classList.toggle('is-collapsed')
+  localStorage.setItem(collapsedKey, root.classList.contains('is-collapsed') ? '1' : '0')
+})
+
+// demo render helpers
+function card({ title, sub, badge }) {
+  const el = document.createElement('div')
+  el.role = "button"; 
+  el.tabindex="0";
+  el["data-id"]="server-1";
+  el.className = 'admin-card';
+  el.innerHTML = `
+    <div class="card-title">${title}</div>
+    <div class="card-sub">${sub ?? ''}</div>
+    <div class="badge ${badge?.kind ?? 'ok'}">${badge?.text ?? 'OK'}</div>
+  `
+  return el
+}
+function row([id, task, status, updated]) {
+  const tr = document.createElement('tr')
+  tr.innerHTML = `<td>${id}</td><td>${task}</td><td>${status}</td><td>${updated}</td>`
+  return tr
+}
+
+
+
+
+// card selection controller
+function makeCardSelectable(container = document) {
+  const cards = [...container.querySelectorAll('.admin-card')];
+
+  const select = (el) => {
+    cards.forEach(c => c.classList.remove('is-selected'));
+    if (el) {
+      el.classList.add('is-selected');
+      el.dispatchEvent(new CustomEvent('cardselect', {
+        bubbles: true,
+        detail: { id: el.dataset.id }
+      }));
+    }
+  };
+
+  const isCard = (el) => el?.classList?.contains('admin-card');
+
+  container.addEventListener('click', (e) => {
+    const target = e.target.closest('.admin-card');
+    if (isCard(target)) select(target);
+  });
+
+  container.addEventListener('keydown', (e) => {
+    const target = e.target.closest('.admin-card');
+    if (!isCard(target)) return;
+
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      select(target);
+    }
+    // optional: arrow key navigation
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = target.nextElementSibling?.classList.contains('admin-card') ? target.nextElementSibling : null;
+      next?.focus();
+    }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prev = target.previousElementSibling?.classList.contains('admin-card') ? target.previousElementSibling : null;
+      prev?.focus();
+    }
+  });
+
+  // expose API
+  return { selectById: (id) => select(cards.find(c => c.dataset.id === id)) };
+}
+
+// usage
+const { selectById } = makeCardSelectable(document.getElementById('statusGrid'));
+// programmatic selection example:
+// selectById('server-1');
+
+// listen for selection
+document.getElementById('statusGrid').addEventListener('cardselect', (e) => {
+  // swap table below, load details, whatever:
+  // e.detail.id
+  // console.log('Selected card:', e.detail.id);
 });

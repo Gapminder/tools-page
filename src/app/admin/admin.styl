@@ -1,0 +1,280 @@
+// admin.styl — dark tech vibes, compact, elegant
+
+// ---------- Theme tokens ----------
+:root
+  --bg-0        #0f1115
+  --bg-1        #141823
+  --bg-2        #1b2030
+  --txt-0       #e6e9ee
+  --txt-1       #b4b9c4
+  --brand       #6ea8fe
+  --good        #3fcf8e
+  --warn        #f0b429
+  --bad         #ef6a6a
+  --line        #2a3142
+  --shadow      rgba(0,0,0,.45)
+
+  --sidebar-w   70px
+  --sidebar-w-min 30px
+  --header-h    56px
+  --radius      12px
+
+*,
+*::before,
+*::after
+  box-sizing border-box
+
+html, body
+  height 100%
+  margin 0
+  background var(--bg-0)
+  color var(--txt-0)
+  font 14px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial
+
+a
+  color var(--brand)
+  text-decoration none
+  &:hover
+    text-decoration underline
+
+// ---------- Layout ----------
+.admin-page
+  display grid
+  grid-template-rows var(--header-h) 1fr
+  grid-template-columns var(--sidebar-w) 1fr
+  min-height 100dvh
+  background var(--bg-0)
+  transition grid-template-columns .2s ease
+
+  &.is-collapsed
+    grid-template-columns var(--sidebar-w-min) 1fr
+
+.admin-header
+  grid-column 1 / -1
+  background linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0)) , var(--bg-1)
+  border-bottom 1px solid var(--line)
+  display flex
+  align-items center
+  gap 10px
+  padding 0 12px
+  position sticky
+  top 0
+  z-index 10
+
+  .brand
+    font-weight 700
+    letter-spacing .3px
+    color var(--txt-0)
+
+  .header-spacer
+    flex 1
+
+  .sidebar-toggle
+    width 32px
+    height 32px
+    display grid
+    place-items center
+    border 1px solid var(--line)
+    border-radius 8px
+    background var(--bg-2)
+    cursor pointer
+    transition transform .15s ease, background .15s ease
+    &:hover
+      transform translateY(-1px)
+      background rgba(255,255,255,.03)
+
+.admin-sidebar
+  grid-row 2
+  background var(--bg-1)
+  border-right 1px solid var(--line)
+  display flex
+  flex-direction column
+  padding 8px 6px
+  gap 6px
+  overflow auto
+
+  // keep login at the bottom
+  .user-login-wrapper
+    margin-top auto
+    padding 8px 6px
+    border-top 1px solid var(--line)
+    display flex
+    align-items center
+    gap 8px
+    .avatar
+      width 24px
+      height 24px
+      border-radius 50%
+      background var(--bg-2)
+      border 1px solid var(--line)
+
+  // nav
+  .nav
+    display flex
+    flex-direction column
+    gap 4px
+
+  .nav-item
+    display grid
+    grid-template-columns 30px 1fr
+    align-items center
+    gap 8px
+    min-height 36px
+    padding 4px 6px
+    border-radius 10px
+    color var(--txt-1)
+    cursor pointer
+    border 1px solid transparent
+    transition background .15s ease, border-color .15s ease, color .15s ease
+    &:hover
+      background rgba(255,255,255,.04)
+      border-color var(--line)
+      color var(--txt-0)
+    &.active
+      background linear-gradient(180deg, rgba(110,168,254,.15), rgba(110,168,254,.02))
+      border-color rgba(110,168,254,.35)
+      color var(--txt-0)
+
+    .icon
+      inline-size 30px
+      block-size 30px
+      display grid
+      place-items center
+      border-radius 8px
+      background var(--bg-2)
+      border 1px solid var(--line)
+      font-size 16px
+
+    .label
+      white-space nowrap
+      overflow hidden
+      text-overflow ellipsis
+
+// collapse label when page collapsed
+.admin-page.is-collapsed .admin-sidebar
+  .nav-item
+    grid-template-columns 30px 0
+  .nav-item .label
+    display none
+
+.admin-stage
+  grid-row 2
+  padding 16px clamp(12px, 2vw, 24px)
+  overflow auto
+  background radial-gradient(1200px 600px at 20% -10%, rgba(110,168,254,.08), transparent 60%), var(--bg-0)
+
+  h1, h2
+    margin 10px 0 8px
+    line-height 1.2
+  h1
+    font-size clamp(18px, 2.4vw, 28px)
+  h2
+    font-size clamp(15px, 2vw, 22px)
+    color var(--txt-1)
+
+  .admin-grid
+    display grid
+    gap 12px
+    grid-template-columns repeat(auto-fill, minmax(260px, 1fr))
+
+ 
+
+  .admin-card
+    position relative
+    cursor pointer
+    transition border-color .15s ease, box-shadow .15s ease, background .15s ease, transform .05s ease
+    outline none
+    background linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)), var(--bg-1)
+    border 1px solid var(--line)
+    border-radius var(--radius)
+    box-shadow 0 4px 16px var(--shadow)
+    padding 12px
+    display flex
+    flex-direction column
+    gap 8px
+
+    .card-title
+      font-weight 600
+      color var(--txt-0)
+    .card-sub
+      color var(--txt-1)
+      font-size 12px
+
+    .badge
+      font-size 11px
+      padding 2px 8px
+      border-radius 999px
+      border 1px solid var(--line)
+      background var(--bg-2)
+      &.ok
+        border-color rgba(63,207,142,.5)
+        color var(--good)
+      &.warn
+        border-color rgba(240,180,41,.5)
+        color var(--warn)
+      &.bad
+        border-color rgba(239,106,106,.5)
+        color var(--bad)
+
+    // interactivity
+    &:hover
+      border-color rgba(110,168,254,.45)
+      background linear-gradient(180deg, rgba(110,168,254,.06), rgba(255,255,255,0)), var(--bg-1)
+
+    &:active
+      transform translateY(1px)
+
+    &:focus-visible
+      box-shadow 0 0 0 2px rgba(110,168,254,.6), 0 6px 20px var(--shadow)
+
+    &.is-selected
+      border-color rgba(110,168,254,.9)
+      box-shadow 0 10px 28px rgba(110,168,254,.15), 0 2px 0 rgba(110,168,254,.35) inset
+      background linear-gradient(180deg, rgba(110,168,254,.12), rgba(255,255,255,0)), var(--bg-1)
+
+    // optional subtle top highlight bar when selected
+    &.is-selected::before
+      content: ""
+      position absolute
+      inset 0 0 auto 0
+      height 3px
+      background linear-gradient(90deg, rgba(110,168,254,.9), rgba(110,168,254,.35))
+      border-top-left-radius var(--radius)
+      border-top-right-radius var(--radius)
+
+
+// tables in stage
+.table
+  width 100%
+  border-collapse collapse
+  font-size 13px
+  th, td
+    padding 8px 10px
+    border-bottom 1px solid var(--line)
+    text-align left
+  th
+    color var(--txt-1)
+    font-weight 600
+    background var(--bg-2)
+    position sticky
+    top 0
+    z-index 1
+  tr:hover td
+    background rgba(255,255,255,.02)
+
+// scrollbars (blink/webkit)
+.admin-sidebar::-webkit-scrollbar,
+.admin-stage::-webkit-scrollbar
+  width 10px
+.admin-sidebar::-webkit-scrollbar-thumb,
+.admin-stage::-webkit-scrollbar-thumb
+  background #202737
+  border 2px solid var(--bg-1)
+  border-radius 10px
+
+// motion accessibility
+@media (prefers-reduced-motion: reduce)
+  .admin-page,
+  .sidebar-toggle,
+  .nav-item
+    transition none
