@@ -6,21 +6,21 @@ let refresh = 0;
 
 export const url = "https://tools-page-analytics-server.gapminder.org/";
 
-export async function getEvents() {
+export async function getEvents(_url = url) {
   update; refresh;
   const events = await d3.json(url + "events/");
   return events;
 }
 
-export async function getStatus() {
+export async function getStatus(token, _url = url) {
   update; refresh;
-  const status = await d3.json(url + "status/");
+  const status = await d3.json(_url + "status/");
   return status;
 }
 
-export async function getDatasets() {
+export async function getDatasets(token, _url = url) {
   update; refresh;
-  const status = await getStatus();
+  const status = await getStatus(token, _url);
   return status.datasetControlList.map(m => ({
     ...m, 
     url: "https://github.com/" + m.githubRepoId,
@@ -28,14 +28,14 @@ export async function getDatasets() {
   }));
 }
 
-export async function getDatasetInfo(token) {
+export async function getDatasetInfo(token, _url = url) {
     update; refresh;
-    const datasets = await getDatasets();
+    const datasets = await getDatasets(token, _url);
     const promises = []
     datasets.forEach(dataset => dataset.branches.forEach(branch => promises.push({
       slug: dataset.slug,
       branch: Object.keys(branch)[0],
-      promise: d3.json(url + "info/" + dataset.slug + "/" + Object.keys(branch)[0], {headers: {Authorization: `Bearer ${token}`, Accept: "application/json"}})
+      promise: d3.json(_url + "info/" + dataset.slug + "/" + Object.keys(branch)[0], {headers: {Authorization: `Bearer ${token}`, Accept: "application/json"}})
     }) ))
   
     const resolved = await Promise.all(promises.map(m => m.promise));

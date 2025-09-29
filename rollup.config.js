@@ -40,7 +40,8 @@ export default {
   //perf: true, 
   input: { 
     toolspage: "src/index.js",
-    "admin/servers/index": "src/app/admin/servers/index.js"
+    "admin/servers/index": "src/app/admin/servers/index.js",
+    "admin/servers/pages": "src/app/admin/servers/pages.js"
   },
   treeshake: !!PROD,
   output: {
@@ -115,7 +116,7 @@ export default {
       copyOnce: PROD, // <-- re-copy on changes in dev
       hook: "writeBundle",
       // ensure file changes trigger copy in --watch
-      watch: ["src/assets/**","src/data/**","src/auth/**","src/config/**","src/favicon.png"]
+      watch: ["src/assets/**","src/data/**","src/auth/**","src/admin/**","src/config/**","src/favicon.png"]
     }),
     replace({
       preventAssignment: true,

@@ -179,7 +179,7 @@ async function renderStatus(element, params){
   element.appendChild(progressText);
 }
 
-
+const sidebarElement = d3.select('.admin-sidebar');
 
 async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
   const cmsData = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE });
@@ -201,6 +201,16 @@ async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
       const serverData = await getServerData(token);
       renderServers(document.getElementById('statusGrid'), serverData)
     }
+  });
+
+  sidebarElement.selectAll(".nav-item").on("click", function(e) {
+    const navEl = d3.select(this);
+    sidebarElement.selectAll(".nav-item").classed("active", false);
+    navEl.classed("active", true);
+
+    d3.selectAll(".admin-stage").style("display", "none");
+    const route = navEl.attr("data-route");
+    d3.select(".admin-stage#" + route).style("display", "block");
   });
 }
 
