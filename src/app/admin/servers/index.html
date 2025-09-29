@@ -25,6 +25,9 @@
         <div class="nav-item" data-route="datasets">
           <div class="icon">🗂️</div><div class="label">Datasets</div>
         </div>
+        <div class="nav-item" data-route="pages">
+          <div class="icon">🗂️</div><div class="label">Pages</div>
+        </div>
         <div class="nav-item" data-route="sync">
           <div class="icon">🔁</div><div class="label">Sync</div>
         </div>
@@ -39,11 +42,20 @@
       </div>
     </div>
   
-    <div class="admin-stage" id="stage">
+    <div class="admin-stage" id="status" style="display: block;">
       <h1>Server Status</h1>
       <div class="admin-grid" id="statusGrid">
       </div>
       
+
+      <div class="temp"></div>
+    </div>
+    <div class="admin-stage" id="pages" style="display: none;">
+      <h1>Pages</h1>
+      <div class="admin-grid" id="statusGrid">
+      </div>
+      <div class="pages"></div>
+      <div class="panels"></div>
 
       <div class="temp"></div>
     </div>
@@ -60,5 +72,6 @@
 
   <!-- Page entry -->
   <script type="module" src="./index.js"></script>
+  <script type="module" src="./pages.js"></script>
 </body>
 </html>

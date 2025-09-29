@@ -4,9 +4,8 @@ const {observable} = mobx;
 let update = 0;
 let refresh = 0;
 
-export const url = "https://tools-page-analytics-server.gapminder.org/";
 
-export async function getEvents() {
+export async function getEvents(url) {
   update; refresh;
   const events = await d3.json(url + "events/");
   return events;
