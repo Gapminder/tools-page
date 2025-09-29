@@ -115,9 +115,9 @@ const getPages = (locale = DEFAULT_LOCALE) => ([
   { docid: DOCID_CMS, sheet: "properties", fallbackContent: toolsPage_properties },
   { docid: DOCID_CMS, sheet: "datasources", fallbackContent: toolsPage_datasources },
   { docid: DOCID_CMS, sheet: "menu", fallbackContent: toolsPage_menuItems },
-  { docid: DOCID_CMS, sheet: "related", fallbackContent: "" },
-  { docid: DOCID_I18N, sheet: `page/${locale}`, type: "language", fallbackPath: `./assets/i18n/${locale}.json` },
-  { docid: DOCID_I18N, sheet: `tools/${locale}`, type: "language", fallbackPath: `./assets/translation/${locale}.json` },
+  { docid: DOCID_CMS, sheet: "related", fallbackContent: "", fallbackPath: `/tools/config/related.json` },
+  { docid: DOCID_I18N, sheet: `page/${locale}`, type: "language", fallbackPath: `/tools/assets/i18n/${locale}.json` },
+  { docid: DOCID_I18N, sheet: `tools/${locale}`, type: "language", fallbackPath: `/tools/assets/translation/${locale}.json` },
 ]);
 
 function setSettings(settings = {}) {
