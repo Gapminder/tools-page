@@ -12,15 +12,15 @@ export async function getEvents() {
   return events;
 }
 
-export async function getStatus() {
+export async function getStatus(url) {
   update; refresh;
   const status = await d3.json(url + "status/");
   return status;
 }
 
-export async function getDatasets() {
+export async function getDatasets(url) {
   update; refresh;
-  const status = await getStatus();
+  const status = await getStatus(url);
   return status.datasetControlList.map(m => ({
     ...m, 
     url: "https://github.com/" + m.githubRepoId,
@@ -28,9 +28,9 @@ export async function getDatasets() {
   }));
 }
 
-export async function getDatasetInfo(token) {
+export async function getDatasetInfo(url, token) {
     update; refresh;
-    const datasets = await getDatasets();
+    const datasets = await getDatasets(url);
     const promises = []
     datasets.forEach(dataset => dataset.branches.forEach(branch => promises.push({
       slug: dataset.slug,

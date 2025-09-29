@@ -11,56 +11,48 @@ let syncStatus = 0;
 
 
 
-function getHeader({status}){
-  const width = 800;
-  const header = d3.create("div")
-    .attr("style", `font-family: Monospace; text-align: center; padding: 5px; width: ${width}px; pointer-events: none;`)
-    .text(`Small Waffle v${status.server.smallWaffleVersion} ——— DDFCSV Reader v${status.server.DDFCSVReaderVersion} ——— uptime ${timediff(status.server.liveSince, false, false)}`)
-
-  return header.node();
-}
-
-function getStatusBar({status}){
-  const height = 50;
-  const width = 800;
 
 
+function getStatusBar(server, width){
+  const height = 30;
+  const textHeight = 27;
+  const barHeight = 3;
 
   const svg = d3.create("svg")
-    .attr("width", width)
-    .attr("height", height)
+    .attr("width", width+"px")
+    .attr("height", height+"px")
 
-  const {limit_MB, heapTotal_MB, heapUsed_MB, heapTotal_PCT, heapUsed_PCT} = status.server.memory;
+  const {limit_MB, heapTotal_MB, heapUsed_MB, heapTotal_PCT, heapUsed_PCT} = server.memory;
   const scale = d3.scaleLinear([0, limit_MB], [0, width])
   
   svg.append("rect")
     .attr("x",0)
-    .attr("y",height/2)
+    .attr("y", textHeight)
     .attr("width",scale(limit_MB))
-    .attr("height",height/2)
-    .style("fill", "lightgrey")
+    .attr("height", barHeight)
+    .style("fill", "#484848")
 
   svg.append("rect")
     .attr("x",0)
-    .attr("y",height/2)
+    .attr("y", textHeight)
     .attr("width",scale(heapTotal_MB))
-    .attr("height",height/2)
-    .style("fill", "#217fb7")
+    .attr("height", barHeight)
+    .style("fill", "#ccc")
 
   svg.append("rect")
     .attr("x",scale(heapUsed_MB))
-    .attr("y",0)
+    .attr("y", textHeight)
     .attr("width", 2)
-    .attr("height",height)
-    .style("fill", "white")
+    .attr("height", barHeight)
+    .style("fill", "#484848") 
 
   svg.append("text")
-    .attr("x",5)
+    .attr("x",0)
     .attr("y", 20)
     .style("text-anchor", "start")
-    .style("fill", "white")
+    .style("fill", "#484848")
     .style("font-family", "sans-serif")
-    .text(`Heap memory at ${heapTotal_PCT}% of ${limit_MB} MB limit`)
+    .text(`Memory used: ${heapUsed_PCT}%, allocated: ${heapTotal_PCT}% of ${limit_MB} MB limit`)
   
   return svg.node();
 }
@@ -169,12 +161,8 @@ async function syncDataset(slug){
 
 async function renderStatus(element, params){
   d3.select(element).html("");
-  const header = getHeader(params);
-  const bar = getStatusBar(params);
   const table = getStatusTable(params);
   const progressText = getProgressText(params)
-  element.appendChild(header);
-  element.appendChild(bar);
   element.appendChild(table);
   element.appendChild(progressText);
 }
@@ -193,13 +181,20 @@ async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
     console.log(event);
     const token = state.getAuthToken();
     if (token) {
-      // TODO: point to real waffle endpoint (env or config)
-      const status = await getStatus(token);
-      const datasets = await getDatasets(token);
-      const datasetInfo = await getDatasetInfo(token);
-      renderStatus(document.getElementsByClassName("temp")[0], {status, datasets, syncDataset, datasetInfo, timediff});
-      const serverData = await getServerData(token);
-      renderServers(document.getElementById('statusGrid'), serverData)
+      const serverList = await getServerData();
+      createServerCards(document.getElementById('statusGrid'), serverList);
+      for await (const server of serverList){
+        const status = await getStatus(server.url);
+        Object.assign(server, {...status})
+        updateServerCard(d3.select("#statusGrid"), server);
+      }
+      if(!serverList.length) return;
+      const selectedServer = serverList[0];
+      
+      const datasets = await getDatasets(selectedServer.url);
+      const datasetInfo = await getDatasetInfo(selectedServer.url, token);
+      renderStatus(document.getElementsByClassName("temp")[0], {datasets, datasetInfo, syncDataset, timediff});
+
     }
   });
 }
@@ -210,24 +205,36 @@ main(toolsPage_properties).catch(err => {
 });
 
 
-async function getServerData(token){ 
+async function getServerData(){ 
   const { data, error } = await supabaseClient
     .from('servers')
     .select('*')
-    .neq('id', '__all__');   // or whatever sentinel you chose
+    .neq('id', '__all__'); 
 
   if (error) console.error(error);
   return data;
 }
-async function renderServers(element, data){
-// example data (replace with live fetch to your Waffle/Supabase combo)
+function createServerCards(element, data){
   statusGrid.innerHTML = "";
   data.forEach(d => statusGrid.appendChild(card({
     title: d.id,
     sub: d.url,
-    badge: {kind: "ok", text: "200"}
+    status: {loading: true}
   })))
 }
+
+function updateServerCard(container, {id, server}){
+  const kind = server ? "ok" : "error";
+    
+  const view = container.select("#" + id);
+  view.select(".badge").attr("class", "badge "+kind).text(kind);
+  if(kind!=="ok") return;
+  view.selectAll(".serverstatus")
+    .text(`Small Waffle v${server.smallWaffleVersion}, DDFCSV Reader v${server.DDFCSVReaderVersion}, uptime ${timediff(server.liveSince, false, false)}`)
+    
+  view.node().appendChild(getStatusBar(server, view.node().clientWidth - 20))
+
+ }
 
 
 
@@ -244,19 +251,19 @@ toggleBtn.addEventListener('click', () => {
   localStorage.setItem(collapsedKey, root.classList.contains('is-collapsed') ? '1' : '0')
 })
 
-// demo render helpers
-function card({ title, sub, badge }) {
+function card({ title, sub, status }) {
+  const kind = status?.server ? "ok" : (status?.loading ? "waiting" : "error");
   const el = document.createElement('div')
   el.role = "button"; 
   el.tabindex="0";
-  el["data-id"]="server-1";
+  el.id=title;
   el.className = 'admin-card';
   el.innerHTML = `
-    <div class="card-title">${title}</div>
+    <div><span class="badge ${kind}">${kind}</span> <span class="card-title">${title}</span></div>
     <div class="card-sub">${sub ?? ''}</div>
-    <div class="badge ${badge?.kind ?? 'ok'}">${badge?.text ?? 'OK'}</div>
+    <div class="serverstatus"></div>
   `
-  return el
+  return el;
 }
 function row([id, task, status, updated]) {
   const tr = document.createElement('tr')

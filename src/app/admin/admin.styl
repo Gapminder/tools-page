@@ -14,8 +14,8 @@
   --line        #2a3142
   --shadow      rgba(0,0,0,.45)
 
-  --sidebar-w   70px
-  --sidebar-w-min 30px
+  --sidebar-w   130px
+  --sidebar-w-min 50px
   --header-h    56px
   --radius      12px
 
@@ -175,7 +175,7 @@ a
   .admin-grid
     display grid
     gap 12px
-    grid-template-columns repeat(auto-fill, minmax(260px, 1fr))
+    grid-template-columns repeat(auto-fill, minmax(400px, 1fr))
 
  
 
@@ -196,23 +196,24 @@ a
     .card-title
       font-weight 600
       color var(--txt-0)
-    .card-sub
+    .card-sub, .serverstatus
       color var(--txt-1)
       font-size 12px
 
     .badge
       font-size 11px
       padding 2px 8px
-      border-radius 999px
+      border-radius 4px
+      margin-rigth: 5px
       border 1px solid var(--line)
       background var(--bg-2)
       &.ok
         border-color rgba(63,207,142,.5)
         color var(--good)
-      &.warn
+      &.waiting
         border-color rgba(240,180,41,.5)
         color var(--warn)
-      &.bad
+      &.error
         border-color rgba(239,106,106,.5)
         color var(--bad)
 
