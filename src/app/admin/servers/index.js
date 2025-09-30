@@ -4,6 +4,7 @@ import * as urlService from "./../../core/url.js";
 import * as cmsService from "./../../core/cms.js";
 import toolsPage_properties from "toolsPage_properties";
 import { supabaseClient } from "./../../auth/supabase.service";
+import {accessControlDialogCreate} from "./accesscontrol-dialog.js";
 
 import {getStatus, getDatasets, getDatasetInfo, sync, syncprogress, timediff} from "./waffle-helpers.js"
 
@@ -59,9 +60,13 @@ function getStatusBar(server, width){
 
 
 // Tiny UI stub (replace with your Observable mock later)
-function getStatusTable({datasets, syncDataset, datasetInfo, timediff}) {
+function getStatusTable({datasets, syncDataset, datasetInfo, timediff, datasetAccessListLimitedToCurrentUser}) {
+
+  const maxBranches = d3.max(datasets, d => d.branches.length);
+  const datasetsByAccess = d3.rollup(datasetAccessListLimitedToCurrentUser, v=>v.length, d=>d.resource, d => d.level);
 
   const table = d3.create("table")
+    .attr("class", "admin-table")
     .style("max-width", "none");
 
   table.append("tr")
@@ -70,21 +75,28 @@ function getStatusTable({datasets, syncDataset, datasetInfo, timediff}) {
       rowEl.append("th").text("sync")
       rowEl.append("th").text("slug")
       rowEl.append("th").text("github link")
-      rowEl.append("th").attr("colspan", 3).html('branches <br/> datapackage version and when last updated')
+      rowEl.append("th").attr("colspan", maxBranches).html('branches <br/> datapackage version and when last updated')
+      rowEl.append("th").text("access")
     })
   table.selectAll("tr.dataset")
     .data(datasets)
     .enter().append("tr")
     .attr("class", "dataset")
-    .on("mouseover", function(){d3.select(this).style("background", "#EFF8FF")})
-    .on("mouseout", function(){d3.select(this).style("background", "none")})
     .each(function(row){
       const rowEl = d3.select(this);
-      rowEl.append("td")
+      const firstCol = rowEl.append("td")
         .style("padding-bottom","10px")
-        .append("button") 
+
+      firstCol.append("button") 
+        .attr("class", "button")
+        .style("margin-bottom", "10px") 
         .on("click", () => syncDataset(row.slug))
         .html(`<span style="font-size: 1.2em;">↻</span> Sync`)
+      firstCol.append("br") 
+      firstCol.append("button") 
+        .attr("class", "button delete")
+        //.on("click", () => syncDataset(row.slug))
+        .html(`Delete`)
       rowEl.append("td")
         .style("padding-bottom","10px")
         .style("font-size", "1.25em")
@@ -97,7 +109,25 @@ function getStatusTable({datasets, syncDataset, datasetInfo, timediff}) {
         .enter().append("td")
         .style("padding-bottom","10px")
         .style("font-family","Monospace")
-        .html(b => `${formatBranchCommit(b)} </br> ${formatDataPackage(row.slug, b)}`)
+        .html(b => `${formatBranchCommit(b)} </br> ${formatDataPackage(row.slug, b)} </br> <span class="button"><span style="font-size: 1.2em;">↻</span> Sync</span> <span class="button delete">Delete</span>`)
+
+      const dba = datasetsByAccess.get(row.slug);
+      if(dba){
+        
+        const td = rowEl.append("td");
+        td.append("div")
+          .style("margin-bottom", "10px") 
+          .text(`👀 ${dba.get("reader") || 0}, ✏️ ${dba.get("editor") || 0}, 👑 ${dba.get("owner") || 0}`)
+          
+          
+        td.append("div").append("button")
+          .attr("class", "button")
+          .text("Edit access")
+          .on("click", async () => {
+            await accessControlDialogCreate({scope: "dataset", resource: row.slug});
+          })
+      } else
+        rowEl.append("td").text("Not an owner")
     })
 
   function formatDataPackage(slug, branchCommitObject){
@@ -167,6 +197,8 @@ async function renderStatus(element, params){
   element.appendChild(progressText);
 }
 
+let selectedServerId = null;
+
 const sidebarElement = d3.select('.admin-sidebar');
 
 async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
@@ -183,6 +215,16 @@ async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
     if (token) {
       const serverList = await getServerData();
       createServerCards(document.getElementById('statusGrid'), serverList);
+
+      const { data, error } = await supabaseClient
+        .from('acl')
+        .select('scope,resource,level')
+        .eq('scope', 'dataset'); 
+
+      if (error) console.error(error);
+      const datasetAccessListLimitedToCurrentUser = data;
+
+      selectedServerId = serverList[0].id;
       for await (const server of serverList){
         const status = await getStatus(server.url);
         Object.assign(server, {...status})
@@ -193,10 +235,12 @@ async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
       
       const datasets = await getDatasets(selectedServer.url);
       const datasetInfo = await getDatasetInfo(selectedServer.url, token);
-      renderStatus(document.getElementsByClassName("temp")[0], {datasets, datasetInfo, syncDataset, timediff});
+       
+      renderStatus(document.getElementsByClassName("temp")[0], {datasets, datasetInfo, syncDataset, timediff, datasetAccessListLimitedToCurrentUser});
 
     }
   });
+
 
   sidebarElement.selectAll(".nav-item").on("click", function(e) {
     const navEl = d3.select(this);
@@ -229,6 +273,7 @@ function createServerCards(element, data){
   data.forEach(d => statusGrid.appendChild(card({
     title: d.id,
     sub: d.url,
+    image: "/tools/assets/images/waffle.png",
     status: {loading: true}
   })))
 }
@@ -239,6 +284,7 @@ function updateServerCard(container, {id, server}){
   const view = container.select("#" + id);
   view.select(".badge").attr("class", "badge "+kind).text(kind);
   if(kind!=="ok") return;
+  view.classed("is-selected", () => id === selectedServerId);
   view.selectAll(".serverstatus")
     .text(`Small Waffle v${server.smallWaffleVersion}, DDFCSV Reader v${server.DDFCSVReaderVersion}, uptime ${timediff(server.liveSince, false, false)}`)
     
@@ -261,7 +307,7 @@ toggleBtn.addEventListener('click', () => {
   localStorage.setItem(collapsedKey, root.classList.contains('is-collapsed') ? '1' : '0')
 })
 
-function card({ title, sub, status }) {
+function card({ title, sub, image, status }) {
   const kind = status?.server ? "ok" : (status?.loading ? "waiting" : "error");
   const el = document.createElement('div')
   el.role = "button"; 
@@ -269,6 +315,7 @@ function card({ title, sub, status }) {
   el.id=title;
   el.className = 'admin-card';
   el.innerHTML = `
+    <img src="${image}"></img>
     <div><span class="badge ${kind}">${kind}</span> <span class="card-title">${title}</span></div>
     <div class="card-sub">${sub ?? ''}</div>
     <div class="serverstatus"></div>
@@ -286,10 +333,10 @@ function row([id, task, status, updated]) {
 
 // card selection controller
 function makeCardSelectable(container = document) {
-  const cards = [...container.querySelectorAll('.admin-card')];
+  const cards = d3.selectAll('.admin-card');
 
   const select = (el) => {
-    cards.forEach(c => c.classList.remove('is-selected'));
+    d3.selectAll('.admin-card').classed("is-selected", false)
     if (el) {
       el.classList.add('is-selected');
       el.dispatchEvent(new CustomEvent('cardselect', {

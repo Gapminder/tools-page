@@ -8,9 +8,12 @@
   --txt-0       #e6e9ee
   --txt-1       #b4b9c4
   --brand       #6ea8fe
+  --brand-dim   rgba(110,168,254,0.2)
   --good        #3fcf8e
+  --good-dim    rgba(63,207,142,0.2)
   --warn        #f0b429
   --bad         #ef6a6a
+  --bad-dim     rgba(239,106,106,0.2)
   --line        #2a3142
   --shadow      rgba(0,0,0,.45)
 
@@ -24,10 +27,10 @@
 *::after
   box-sizing border-box
 
-html, body
+html, body 
   height 100%
   margin 0
-  background var(--bg-0)
+  background-color var(--bg-0) !important
   color var(--txt-0)
   font 14px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial
 
@@ -59,7 +62,6 @@ a
   padding 0 12px
   position sticky
   top 0
-  z-index 10
 
   .brand
     font-weight 700
@@ -192,6 +194,20 @@ a
     display flex
     flex-direction column
     gap 8px
+    min-height: 111px;
+    
+    img
+      width: 14%;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      opacity: 0.8;
+      margin-top: 10px;
+      margin-right: 5px;
+      filter: grayscale(1) contrast(1) brightness(1.4) hue-rotate(320deg);
+    &.is-selected img
+      filter: grayscale(0.5) contrast(1) brightness(1) hue-rotate(320deg);
+
 
     .card-title
       font-weight 600
@@ -238,30 +254,66 @@ a
       content: ""
       position absolute
       inset 0 0 auto 0
-      height 3px
-      background linear-gradient(90deg, rgba(110,168,254,.9), rgba(110,168,254,.35))
+      height 4px
+      background linear-gradient(90deg, rgba(110, 168, 254, 0.0), rgba(110, 168, 254, 0.7), rgba(110, 168, 254, 0)) 
       border-top-left-radius var(--radius)
       border-top-right-radius var(--radius)
 
 
 // tables in stage
-.table
+.admin-table
+  margin-top: 10px
+  margin-bottom: 10px
   width 100%
   border-collapse collapse
   font-size 13px
-  th, td
+  color var(--txt-1)
+  td, th
     padding 8px 10px
     border-bottom 1px solid var(--line)
+    background-color var(--bg-2)
     text-align left
-  th
-    color var(--txt-1)
-    font-weight 600
-    background var(--bg-2)
-    position sticky
-    top 0
-    z-index 1
   tr:hover td
     background rgba(255,255,255,.02)
+
+
+.access-control-dialog 
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  visibility: hidden
+  display: flex
+  align-items: center;
+  justify-content: center;
+  .header 
+    font-size: 16pt;
+    color: var(--txt-0)
+
+  .closecross
+    position: absolute
+    right: 10px
+    top: 10px
+    cursor: pointer;
+    color: var(--txt-1)
+    &:hover
+      color: var(--txt-0)
+
+  .blur
+    position: absolute;
+    width: 100%
+    height: 100%
+
+  .box
+    position: absolute;
+    background: var(--bg-1)
+    opacity: 1
+    width: 80%;
+    height: 80%
+    border: 1px solid white;
+    padding: 10px
+
 
 // scrollbars (blink/webkit)
 .admin-sidebar::-webkit-scrollbar,
@@ -279,3 +331,54 @@ a
   .sidebar-toggle,
   .nav-item
     transition none
+
+
+.form {
+  background: var(--bg-1);
+  border:1px solid var(--line);
+  padding:12px; 
+  display: flex
+  align-items: center;
+  gap:10px;
+}
+.form-grow {flex-grow: 1}
+.form-col { display: inline-block }
+.label { color: var(--txt-1); font-size:12px; }
+.input { width: 100%; padding:10px 12px; border-radius:10px; border:1px solid var(--brand);
+  background: var(--bg-2); color: var(--txt-0); outline: none; }
+.input:focus { box-shadow: 0 0 0 2px rgba(110,168,254,.5); }
+.radio-group { display:flex; gap:8px; flex-wrap:wrap; }
+.radio { display:flex; gap:6px; align-items:center; padding:6px 10px;
+  cursor:pointer; user-select:none; }
+.radio input { accent-color: var(--brand); }
+.radio-label { text-transform: capitalize; color: var(--txt-0); }
+.form-msg { min-height: 18px; font-size: 12px; color: var(--txt-1); }
+.form-msg.is-ok { color: var(--good); }
+.form-msg.is-error { color: var(--bad); }
+
+
+.button.delete
+  color: var(--bad)
+  border: 1px solid var(--bad)
+  &:hover
+    background var(--bad-dim)
+
+.button.addnew
+  color: var(--good)
+  border: 1px solid var(--good)
+  &:hover
+    background var(--good-dim)
+
+.button
+  cursor: pointer
+  border-radius: 4px
+  padding: 2px 4px
+  width: fit-content;
+  background var(--bg-2)
+  color: var(--brand)
+  border: 1px solid var(--brand)
+  &:hover
+    background var(--brand-dim)
+  
+.blurry
+  filter: blur(3px) grayscale(80%);
