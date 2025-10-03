@@ -27,6 +27,17 @@ export async function getDatasets(url) {
   }));
 }
 
+export async function getAvailableDatasets(url) {
+  update; refresh;
+  const status = await getStatus(url);
+  return Object.entries(status.availableDatasets).reduce((result, [key, value]) => {
+    Object.keys(value).forEach(v => {
+      result.push(`${key}/${v}`);
+    })
+    return result;
+  }, []);
+}
+
 export async function getDatasetInfo(url, token) {
     update; refresh;
     const datasets = await getDatasets(url);

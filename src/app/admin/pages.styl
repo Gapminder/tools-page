@@ -1,0 +1,31 @@
+.admin-stage#pages
+  .pages-header
+    display: flex
+
+    .pages-actions
+      margin-left: auto
+
+  .pages-buttons
+    display: flex
+    flex-wrap: wrap
+    >.page-button
+      font-size: 2em
+
+      &.active
+        background-color: white
+
+    .add-form
+      .button
+        font-size: 0.5em
+      .button, input
+        vertical-align: middle
+  .nav-container
+    font-size: 1.4em
+    a.active
+      color: white
+
+  tr.data-row
+    &.add-form, &.edit-form
+      .properties-cell
+        display: flex
+        flex-direction: column
