@@ -75,7 +75,7 @@ function getStatusTable({datasets, syncDataset, datasetInfo, timediff, datasetAc
       rowEl.append("th").text("sync")
       rowEl.append("th").text("slug")
       rowEl.append("th").text("github link")
-      rowEl.append("th").attr("colspan", maxBranches).html('branches <br/> datapackage version and when last updated')
+      rowEl.append("th").attr("colspan", maxBranches).html('branches <br/> when last updated')
       rowEl.append("th").text("access")
     })
   table.selectAll("tr.dataset")
@@ -100,7 +100,7 @@ function getStatusTable({datasets, syncDataset, datasetInfo, timediff, datasetAc
       rowEl.append("td")
         .style("padding-bottom","10px")
         .style("font-size", "1.25em")
-        .text(row.slug)
+        .text((row.is_private ? "🔒 " : "") + row.slug)
       rowEl.append("td")
         .html(`<a href="${row.url}">${row.githubRepoId.split("/")[1]}</a> <br/> <span style="color:#bbb"> @${row.githubRepoId.split("/")[0]} </<span>`)
       rowEl.selectAll("td.branch")
@@ -109,10 +109,12 @@ function getStatusTable({datasets, syncDataset, datasetInfo, timediff, datasetAc
         .enter().append("td")
         .style("padding-bottom","10px")
         .style("font-family","Monospace")
-        .html(b => `${formatBranchCommit(b)} </br> ${formatDataPackage(row.slug, b)} </br> <span class="button"><span style="font-size: 1.2em;">↻</span> Sync</span> <span class="button delete">Delete</span>`)
+        .html(b => `${formatBranchCommit(b)} </br> ${formatDataPackage(row.slug, b)} </br> <span class="button"><span style="font-size: 1.2em;">↻</span></span> <span class="button delete"><span style="font-size: 1.2em;">⤫</span></span>`)
 
       const dba = datasetsByAccess.get(row.slug);
-      if(dba){
+      if(!row.is_private) {
+        rowEl.append("td").text("Public dataset")
+      } else if(dba){
         
         const td = rowEl.append("td");
         td.append("div")
@@ -134,11 +136,11 @@ function getStatusTable({datasets, syncDataset, datasetInfo, timediff, datasetAc
     const info = datasetInfo[slug + " " + getBranch(branchCommitObject)];
     const version = info.version ? "v"+ info.version : "";
     const created = info.created ? timediff(info.created) : "";
-    return `<span title="${(info.created+"").split(".")[0].replace("T", " at ")}">📦 ${version} ${created} </span>`
+    return `<span title="${(info.created+"").split(".")[0].replace("T", " at ")}">${created}</span>`
   }
   
   function formatBranchCommit(branchCommitObject){
-    return JSON.stringify(branchCommitObject).replaceAll('"','').replaceAll('{','').replaceAll('}','').replaceAll(':',': ');
+    return "⼘" + JSON.stringify(branchCommitObject).replaceAll('"','').replaceAll('{','').replaceAll('}','').replaceAll(':',': ');
   }
   
   function getBranch(branchCommitObject){

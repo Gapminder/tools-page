@@ -76,10 +76,12 @@ export async function accessControlDialogCreate({scope, resource}){
 
         const form = content.append('form').attr('class', 'form');
 
-        form.append('div').attr('class', 'form-col')
+        form.append('div').attr('class', 'form-row').text("The invited user needs to be already registered in the service. Invitations are not supported yet.")
+        const formRow = form.append('div').attr('class', 'form-row')
+        formRow.append('div').attr('class', 'form-col')
           .append('label').attr('for', 'acl-email').attr('class', 'label').text('Email');
 
-        form.append('div').attr('class', 'form-col form-grow')
+        formRow.append('div').attr('class', 'form-col form-grow')
           .append('input')
             .attr('type', 'email')
             .attr('id', 'acl-email')
@@ -88,7 +90,7 @@ export async function accessControlDialogCreate({scope, resource}){
             .attr('required', true);
 
         const roles = ['reader','editor','owner'];
-        const roleRow = form.append('div').attr('class', 'form-col role-row')
+        const roleRow = formRow.append('div').attr('class', 'form-col role-row')
           .append('div').attr('class', 'radio-group');
 
         roles.forEach((r, i) => {
@@ -103,11 +105,14 @@ export async function accessControlDialogCreate({scope, resource}){
           item.append('span').attr('class', 'radio-label').text(r);
         });
 
-        form.append('button')
+        formRow.append('button')
             .attr('type', 'submit')
             .attr('class', 'button addnew')
             .text('Grant access');
 
+        form.append('div').attr('class', 'form-row').text("👀 Reader can see the dataset in graphs");
+        form.append('div').attr('class', 'form-row').text("✏️ Editor can also sync the dataset on server");
+        form.append('div').attr('class', 'form-row').text("👑 Owner can also delete the dataset from server plus manage access for other users");
 
         // super-simple email check
         const isEmail = (s) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);

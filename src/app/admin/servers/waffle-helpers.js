@@ -150,33 +150,33 @@ export async function getDatasetInfo(url, token) {
       const second = count % fraction;
       const firstS = (""+first).at(-1) !== "1" && firstLabel.length > 1 ? "s":"";
       const secondS = (""+second).at(-1) !== "1" && secondLabel.length > 1 ? "s":"";
-      return `${emo ? emoSymbol : ""} ${first}${firstLabel}${firstS} ${second?second:""}${second?secondLabel:""}${second?secondS:""} ${ago ? "ago":""}`
+      return `${emo ? emoSymbol + " " : ""}${first}${firstLabel}${firstS} ${second?second:""}${second?secondLabel:""}${second?secondS:""} ${ago ? "ago":""}`
     }
   
-    attempt = diff(parsed, now, d3.timeMonth, 12, 12, "year", "month", "🖤")
+    attempt = diff(parsed, now, d3.timeMonth, 12, 12, " year", " month", "🌚") // over a year ago
     if (attempt) return attempt;
   
-    attempt = diff(parsed, now, d3.timeWeek, 6*4, 4, "month", "week", "💙")
+    attempt = diff(parsed, now, d3.timeWeek, 6*4, 4, " month", " week", "🌑") // over 6x4 weeks ago
     if (attempt) return attempt;
   
-    attempt = diff(parsed, now, d3.timeWeek, 4, 4, "month", "week", "💜")
+    attempt = diff(parsed, now, d3.timeWeek, 4, 4, " month", " week", "🌘") // over 4 weeks ago
     if (attempt) return attempt;
   
-    attempt = diff(parsed, now, d3.timeDay, 4*7, 7, "week", "day", "🧡")
+    attempt = diff(parsed, now, d3.timeDay, 2*7, 7, " week", " day", "🌗") // over 2 weeks ago
     if (attempt) return attempt;
   
-    attempt = diff(parsed, now, d3.timeDay, 7, 7, "week", "day", "💗")
+    attempt = diff(parsed, now, d3.timeDay, 7, 7, " week", " day", "🌖") // over 7 days ago
     if (attempt) return attempt;
   
-    attempt = diff(parsed, now, d3.timeHour, 24, 24, "day", "h", "💖")
+    attempt = diff(parsed, now, d3.timeHour, 24, 24, " day", "h", "🌕") // over 24 hours ago
     if (attempt) return attempt;
   
-    attempt = diff(parsed, now, d3.timeMinute, 60, 60, "h", "m", "❤️‍🔥")
+    attempt = diff(parsed, now, d3.timeMinute, 60, 60, "h", "m", "🔥") // over an hour ago
     if (attempt) return attempt;
   
-    attempt = diff(parsed, now, d3.timeSecond, 60, 60, "m", "s", "🔥")
+    attempt = diff(parsed, now, d3.timeSecond, 60, 60, "m", "s", "🔥🔥") // over 60s ago
     if (attempt) return attempt;
   
     const diffS = d3.timeSecond.count(parsed, now)
-    if (diffS > 1) return (emo ? "🔥🔥🔥 ":"") + diffS + "s" + (ago ? " ago":"")
+    if (diffS > 1) return (emo ? "🔥🔥🔥 ":"") + diffS + "s" + (ago ? " ago":"") // under a minute ago
   }

@@ -309,9 +309,11 @@ a
     position: absolute;
     background: var(--bg-1)
     opacity: 1
+    max-width: 800px;
+    max-height: 800px;
     width: 80%;
     height: 80%
-    border: 1px solid white;
+    border: 1px solid var(--brand-dim);
     padding: 10px
 
 
@@ -334,14 +336,15 @@ a
 
 
 .form {
-  background: var(--bg-1);
+  background: var(--bg-2);
   border:1px solid var(--line);
   padding:12px; 
-  display: flex
-  align-items: center;
+  display: flex;
+  flex-direction: column;
   gap:10px;
 }
 .form-grow {flex-grow: 1}
+.form-row { display: flex; align-items: center; gap:10px;}
 .form-col { display: inline-block }
 .label { color: var(--txt-1); font-size:12px; }
 .input { width: 100%; padding:10px 12px; border-radius:10px; border:1px solid var(--brand);
@@ -355,6 +358,7 @@ a
 .form-msg { min-height: 18px; font-size: 12px; color: var(--txt-1); }
 .form-msg.is-ok { color: var(--good); }
 .form-msg.is-error { color: var(--bad); }
+.form .button {padding:10px 12px; border-radius:10px;}
 
 
 .button.delete
