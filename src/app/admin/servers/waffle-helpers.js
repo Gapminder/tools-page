@@ -1,9 +1,20 @@
 
 const {observable} = mobx;
+import { supabaseClient } from "./../../auth/supabase.service";
+
 
 let update = 0;
 let refresh = 0;
 
+export async function getServerData(){ 
+  const { data, error } = await supabaseClient
+    .from('servers')
+    .select('*')
+    .neq('id', '__all__'); 
+
+  if (error) console.error(error);
+  return data;
+}
 
 export async function getEvents(url) {
   update; refresh;

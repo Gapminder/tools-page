@@ -164,6 +164,9 @@ a
   padding 16px clamp(12px, 2vw, 24px)
   overflow auto
   background radial-gradient(1200px 600px at 20% -10%, rgba(110,168,254,.08), transparent 60%), var(--bg-0)
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   h1, h2
     margin 10px 0 8px
@@ -194,9 +197,13 @@ a
     display flex
     flex-direction column
     gap 8px
-    min-height: 111px;
+    min-height: 139px;
+
+    div
+      z-index 1 //in front of img
     
     img
+      z-index 0
       width: 14%;
       position: absolute;
       right: 0px;
@@ -260,6 +267,17 @@ a
       border-top-right-radius var(--radius)
 
 
+section 
+  .admin-section-header, .admin-section-footer
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .button
+      min-height: 30px;
+    .actionsbox 
+      display: flex;
+      gap: 10px;
+
 // tables in stage
 .admin-table
   margin-top: 10px
@@ -268,6 +286,8 @@ a
   border-collapse collapse
   font-size 13px
   color var(--txt-1)
+  tr, td 
+    position: relative // to position the .crossed element correctly
   td, th
     padding 8px 10px
     border-bottom 1px solid var(--line)
@@ -275,7 +295,14 @@ a
     text-align left
   tr:hover td
     background rgba(255,255,255,.02)
+  td:first-child .button { width: 100%; max-width 60px; };
 
+.crossed {
+  position: absolute; top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><line x1='0' y1='100' x2='100' y2='0' stroke='red' stroke-width='2'/></svg>") center/100% 100% no-repeat;
+}
 
 .access-control-dialog 
   position: absolute
@@ -365,24 +392,73 @@ a
   color: var(--bad)
   border: 1px solid var(--bad)
   &:hover
-    background var(--bad-dim)
+    background linear-gradient(180deg, rgba(239,106,106,.05), rgba(255,255,255,0)), var(--bad-dim)
 
 .button.addnew
   color: var(--good)
   border: 1px solid var(--good)
   &:hover
-    background var(--good-dim)
+    background linear-gradient(180deg, rgba(63,207,142,.05), rgba(255,255,255,0)), var(--good-dim)
 
 .button
   cursor: pointer
   border-radius: 4px
-  padding: 2px 4px
+  padding: 2px 6px
   width: fit-content;
-  background var(--bg-2)
+  background linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0)), var(--bg-2)
   color: var(--brand)
   border: 1px solid var(--brand)
+  &.micro
+    padding: 0px 4px
   &:hover
-    background var(--brand-dim)
+    background linear-gradient(180deg, rgba(110,168,254,.05), rgba(255,255,255,0)), var(--brand-dim)
   
 .blurry
   filter: blur(3px) grayscale(80%);
+
+
+
+
+
+
+
+// hold-delete.styl
+
+.hold-btn
+  position: relative
+  overflow: hidden
+  display: inline-flex
+  align-items: center
+  justify-content: center  
+  background: var(--bg-2)
+  color: var(--bad)
+  font-weight: 600
+  cursor: pointer
+  user-select: none
+  transition: transform .1s ease, background .2s ease
+
+  &:hover
+    background: rgba(239,106,106,.1)
+
+  &:active
+    transform: scale(.97)
+
+  &::before
+    content: ""
+    position: absolute
+    inset: 0
+    background: rgba(239,106,106,.3)
+    transform: scaleX(0)
+    transform-origin: left
+    transition: transform 0s
+    pointer-events: none
+    z-index: 0
+
+  &.is-holding::before
+    transition: transform 1s linear
+    transform: scaleX(1)
+
+  &.is-done
+    background: var(--bad)
+    color: #fff
+    border-color: var(--bad)
