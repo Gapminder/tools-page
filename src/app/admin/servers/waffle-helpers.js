@@ -88,12 +88,15 @@ export async function getDatasetInfo(url, token) {
     return result
   }
 
-  export async function sync(slug) {
-    return d3.json(url + "sync/" + (slug || ""))
+  export async function sync(url, slug, branch) {
+    if (url && slug && branch) return d3.json(`${url}sync/${slug}/${branch}`);
+    if (url && slug) return d3.json(`${url}sync/${slug}`);
+    if (url) return d3.json(`${url}sync`);
+    return console.error("bad params supplied to sync", {url, slug, branch});
   }
 
-  export async function syncprogress() {
-    return d3.json(url + "syncprogress")
+  export async function syncprogress(url) {
+    return d3.json(url + "syncprogress");
   } 
 
   export async function getConceptsInDataset(datasetSlug){

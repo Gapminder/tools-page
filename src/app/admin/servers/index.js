@@ -6,7 +6,7 @@ import toolsPage_properties from "toolsPage_properties";
 import { supabaseClient } from "./../../auth/supabase.service";
 import { skeletonDatasetSection, renderDatasetSection } from "./datasetsTableView.js";
 import { skeletonServerSection, renderServerSection, updateServerCard } from "./serversView.js"; 
-import {getServerData, getWaffle, getStatus, getDatasetInfo, sync, syncprogress} from "./waffle-helpers.js"
+import {getServerData, getWaffle, getStatus, getDatasetInfo} from "./waffle-helpers.js"
 import {augmentD3SelectionPrototypeForEasierSyntax} from "./d3selectionPlugins.js";
 let syncStatus = 0;
 let selectedServerId = null;
@@ -51,11 +51,17 @@ main(toolsPage_properties).catch(err => {
 });
 
 
+const info = (text) => messageEl.class("message").style("display", text ? "block" : "none").html(text);
+const bad = (text) => messageEl.class("message is-error").style("display", text ? "block" : "none").html(text);
+const good = (text) => messageEl.class("message is-ok").style("display", text ? "block" : "none").html(text);
+const progress = (text) => messageEl.class("message is-working").style("display", text ? "block" : "none").html(text);
+let messageEl = null;
 
 function init(){
   const stageEl = d3.select(".admin-stage#servers");
   skeletonServerSection(stageEl, refresh);
   skeletonDatasetSection(stageEl);
+  messageEl = stageEl.append('div').attr('class', 'message');
 }
 
 async function refresh(){
@@ -85,48 +91,23 @@ async function refresh(){
     const datasetInfo = await getDatasetInfo(selectedServer.url, token);
     const supaDatasets = await getWaffle(selectedServerId);
 
-    renderDatasetSection({serverDatasetSlugToBranchToCommitMapping, serverDatasets, supaDatasets, datasetInfo, syncDataset, datasetAccessListLimitedToCurrentUser}, selectedServerId, refresh);
+    renderDatasetSection({
+      serverDatasetSlugToBranchToCommitMapping, 
+      serverDatasets, 
+      supaDatasets, 
+      datasetInfo, 
+      datasetAccessListLimitedToCurrentUser, 
+      selectedServerId, 
+      selectedServerUrl: selectedServer.url,
+      refresh,
+      bad, info, progress, good
+    });
   } else {
     d3.select(".admin-stage#servers").text(`Not logged in or something broken`);
   }
 }
 
 
-async function syncDataset(slug){
-  function setStatusYellow(text) {
-    text = formatSyncEvent(text);
-    syncStatus = d3.create("div").style("background-color", "yellow").html(text).node();
-  }
-  function setStatusGreen(text) {
-    text = formatSyncEvent(text);
-    syncStatus = d3.create("div").style("background-color", "lightgreen").html(text)
-      .transition().duration(5000).style("background-color", "white")
-      .node();
-  }
-  function setStatusNone() {
-    syncStatus = d3.create("div").style("background-color", "white").html("").node();
-    update++;
-  }
-
-  function formatSyncEvent(events) {
-    return events.length > 0 ? events.at(-1).comment : "";
-  }
-
-
-  const syncResponse = await sync(slug);
-  setStatusYellow(syncResponse.events);
-  const interval = setInterval(async ()=>{
-    const syncProgressResponse = await syncprogress();
-    if(syncProgressResponse.ongoing) {
-      setStatusYellow(syncProgressResponse.events);
-    } else {
-      setStatusGreen(syncProgressResponse.events);
-      setTimeout(setStatusNone, 3000);
-      clearInterval(interval);
-    }
-  }, 500);
-  
-}
 
 
 
@@ -146,3 +127,5 @@ toggleBtn.addEventListener('click', () => {
 
 
 //TODO: assume ownership when adding a dataset
+//TODO: make WS survive requests like sync/undefined/
+//TODO add dataset with a typo, start WS, it doesn't load all datasets past the error "opan-numbers/ddf--kolada--dump",

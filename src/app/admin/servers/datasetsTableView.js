@@ -3,22 +3,17 @@ import {timediff} from "./waffle-helpers.js";
 import {buildFormToAddBranch, buildFormToAddDataset} from "./datasetsTableForms.js";
 import { holdButton } from "./ui-library.js";
 import { supabaseClient } from "../../auth/supabase.service";
-
+import { syncDataset }  from "./statusBarView.js";
 
 let container = null;
-let messageEl = null;
 let formEl = null;
 let addNewButtonEl = null;
+let syncAllButtonEl = null;
 
 let branchesMissingFromSupa = {};
 let branchesMissingFromServer = {};
 const isBranchForAddition = (slug, branch) => branch && branchesMissingFromServer[slug] && branchesMissingFromServer[slug][branch]; 
 const isBranchForDeletion = (slug, branch) => branch && branchesMissingFromSupa[slug] && branchesMissingFromSupa[slug][branch]; 
-
-const bad = (text) => messageEl.classed("is-error", true).classed("is-ok", false).style("display",text?"block":"none").html(text);
-const info = (text) => messageEl.classed("is-error", false).classed("is-ok", false).style("display",text?"block":"none").html(text);
-const good = (text) => messageEl.classed("is-error", false).classed("is-ok", true).style("display",text?"block":"none").html(text);
-
 
 function formatDataPackage(datasetInfo, slug, branch){
   const info = datasetInfo[slug + " " + branch];
@@ -27,8 +22,6 @@ function formatDataPackage(datasetInfo, slug, branch){
   const created = info.created ? timediff(info.created) : "";
   return `<span title="${(info.created+"").split(".")[0].replace("T", " at ")}">${created}</span>`
 }
-
-
 
 
 const showAllAddButtons = () => container.selectAll("button.addnew").style("visibility", null);
@@ -80,18 +73,26 @@ export function skeletonDatasetSection(view){
 
   const actionsBox = sectionHeader.append("div").class("actionsbox")
   addNewButtonEl = actionsBox.append("button").class("button addnew").text("✚ Add a new dataset")
-  actionsBox.append("button").class("button").text("↻ Sync all datasets")
-  actionsBox.append("button").class("button").text("⋮")
+  syncAllButtonEl = actionsBox.append("button").class("button").text("↻ Sync all datasets")
+  //actionsBox.append("button").class("button").text("⋮")
 
   container.append("table");
   formEl = container.append('form').attr('class', 'form').style("visibility", "hidden");
 
-  const sectionFooter = container.append("div").class("admin-section-footer");    
-  messageEl = view.append('div').attr('class', 'message');
+  container.append("div").class("admin-section-footer");    
 }
 
 
-export function renderDatasetSection({serverDatasetSlugToBranchToCommitMapping, serverDatasets, supaDatasets, syncDataset, datasetInfo, datasetAccessListLimitedToCurrentUser}, selectedServerId, refresh) {
+export function renderDatasetSection({
+  serverDatasetSlugToBranchToCommitMapping, 
+  serverDatasets, 
+  supaDatasets,
+  datasetInfo, 
+  datasetAccessListLimitedToCurrentUser, 
+  selectedServerId, 
+  selectedServerUrl,
+  refresh, bad, info, progress, good
+}) {
 
     container.select(".admin-section-header").select("h1").text(`Datasets of ${selectedServerId}`);
 
@@ -130,7 +131,7 @@ export function renderDatasetSection({serverDatasetSlugToBranchToCommitMapping, 
         firstCol.append("button") 
           .class("button")
           .style("margin-bottom", "10px") 
-          .on("click", () => syncDataset(dataset.slug))
+          .on("click", () => syncDataset({selectedServerId, selectedServerUrl, slug: dataset.slug, good, info, progress, bad, refresh}))
           .html(`<span style="font-size: 1.2em;">↻</span> Sync`)
         firstCol.append("br") 
         const deleteButton = firstCol.append("button") 
@@ -138,7 +139,7 @@ export function renderDatasetSection({serverDatasetSlugToBranchToCommitMapping, 
           .text(`Delete`)
 
         holdButton(deleteButton, () => {
-          deleteDataset(dataset, selectedServerId, refresh)
+          deleteDataset({dataset, selectedServerId, refresh, bad, info, good})
         });
 
         rowEl.append("td")
@@ -195,13 +196,17 @@ export function renderDatasetSection({serverDatasetSlugToBranchToCommitMapping, 
             view.append("div")
               .style("visibility", () => dataset.branches.length <= 1 ? "hidden" : null)
               .call((group) => {
-                group.append("button").class("button micro").text("↻")
+                group.append("button")
+                  .class("button micro")
+                  .text("↻")
+                  .on("click", () => syncDataset({selectedServerId, selectedServerUrl, slug, branch, good, info, progress, bad, refresh}))
+
                 const deleteButton = group.append("button") 
                   .class("button delete micro hold-btn")
                   .text("✘")
     
                 holdButton(deleteButton, () => {
-                  deleteBranch(branch, dataset, selectedServerId, refresh);
+                  deleteBranch({branch, dataset, selectedServerId, refresh, bad, info, good});
                 });
               })
 
@@ -254,13 +259,19 @@ export function renderDatasetSection({serverDatasetSlugToBranchToCommitMapping, 
         bad,info,good
       }));
 
+      syncAllButtonEl.on("click", () => syncDataset({
+        selectedServerId, 
+        selectedServerUrl,
+        good, info, progress, bad, refresh
+      }))
+
     return container;
   }
 
 
 
 
-async function deleteBranch(branch, dataset, selectedServerId, refresh){
+async function deleteBranch({branch, dataset, selectedServerId, refresh, bad, info, good}){
   if (!branch) 
     return bad("BUG: branch not provided"); //❌
   if (!dataset.branches.filter(f => f!==branch)) 
@@ -278,7 +289,7 @@ async function deleteBranch(branch, dataset, selectedServerId, refresh){
 }
 
 
-async function deleteDataset(dataset, selectedServerId, refresh){
+async function deleteDataset({dataset, selectedServerId, refresh, bad, info, good}){
   if (!dataset) 
     return bad("BUG: daset not provided"); //❌
 
