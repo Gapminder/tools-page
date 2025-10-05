@@ -6,7 +6,7 @@ import toolsPage_properties from "toolsPage_properties";
 import { supabaseClient } from "./../../auth/supabase.service";
 import { skeletonDatasetSection, renderDatasetSection } from "./datasetsTableView.js";
 import { skeletonServerSection, renderServerSection, updateServerCard } from "./serversView.js"; 
-import {getServerData, getWaffle, getStatus, getDatasetInfo} from "./waffle-helpers.js"
+import {getServerData, getWaffle, getStatus, getDatasetInfo, getWaffleDatasources} from "./waffle-helpers.js"
 import {augmentD3SelectionPrototypeForEasierSyntax} from "./d3selectionPlugins.js";
 let syncStatus = 0;
 let selectedServerId = null;
@@ -90,11 +90,13 @@ async function refresh(){
     const serverDatasetSlugToBranchToCommitMapping = selectedServer.availableDatasets;
     const datasetInfo = await getDatasetInfo(selectedServer.url, token);
     const supaDatasets = await getWaffle(selectedServerId);
+    const waffleDatasources = await getWaffleDatasources(selectedServer.url);
 
     renderDatasetSection({
       serverDatasetSlugToBranchToCommitMapping, 
       serverDatasets, 
       supaDatasets, 
+      waffleDatasources,
       datasetInfo, 
       datasetAccessListLimitedToCurrentUser, 
       selectedServerId, 

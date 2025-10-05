@@ -87,6 +87,7 @@ export function renderDatasetSection({
   serverDatasetSlugToBranchToCommitMapping, 
   serverDatasets, 
   supaDatasets,
+  waffleDatasources,
   datasetInfo, 
   datasetAccessListLimitedToCurrentUser, 
   selectedServerId, 
@@ -103,7 +104,9 @@ export function renderDatasetSection({
 
     const maxBranches = d3.max(serverDatasets, d => d.branches.length);
     const datasetsByAccess = d3.rollup(datasetAccessListLimitedToCurrentUser, v=>v.length, d=>d.resource, d => d.level);
+    const usedByHowManyPageDatasources = d3.rollup(waffleDatasources, v => v.length, d => d.reader_properties.dataset);
   
+    console.log(waffleDatasources, usedByHowManyPageDatasources)
     const table = container.select("table")
       .class("admin-table")
       .style("max-width", "none");
@@ -192,6 +195,7 @@ export function renderDatasetSection({
 
             view.append("div").html(formatBranchCommit(branch, slug));
             view.append("div").html(formatDataPackage(datasetInfo, slug, branch));
+            view.append("div").html("·".repeat(usedByHowManyPageDatasources.get(`${slug}/${branch}`) || 0));
 
             view.append("div")
               .style("visibility", () => dataset.branches.length <= 1 ? "hidden" : null)

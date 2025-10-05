@@ -16,6 +16,15 @@ export async function getServerData(){
   return data;
 }
 
+export async function getWaffleDatasources(selectedServerURL){
+  const { data, error } = await supabaseClient
+    .from('datasources')
+    .select("reader_properties")
+    .eq("reader", "ddfbw")
+  if (error) console.error(error);
+  return data.filter(f => f.reader_properties.service === selectedServerURL);
+}
+
 export async function getWaffle(selectedServerId){
   const { data, error } = await supabaseClient
     .from('waffle')
