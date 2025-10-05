@@ -15,6 +15,8 @@ let branchesMissingFromServer = {};
 const isBranchForAddition = (slug, branch) => branch && branchesMissingFromServer[slug] && branchesMissingFromServer[slug][branch]; 
 const isBranchForDeletion = (slug, branch) => branch && branchesMissingFromSupa[slug] && branchesMissingFromSupa[slug][branch]; 
 
+const getDsGithubUrl = (dataset) => `https://github.com/${dataset.githubRepoId}`;
+
 function formatDataPackage(datasetInfo, slug, branch){
   const info = datasetInfo[slug + " " + branch];
   //const version = info.version ? "v"+ info.version : "";
@@ -150,7 +152,7 @@ export function renderDatasetSection({
           .style("font-size", "1.25em")
           .text((dataset.is_private ? "🔒 " : "") + dataset.slug)
         rowEl.append("td")
-          .html(`<a href="${dataset.url}" target="_blank">${dataset.githubRepoId.split("/")[1]}</a> <br/> <span style="color:#546375"> @${dataset.githubRepoId.split("/")[0]} </span> ${dataset.waffleFetcherAppInstallationId ? '<br/> <span style="color: #546375">via Waffle Fetcher ' + dataset.waffleFetcherAppInstallationId + '</span>': ""}`)
+          .html(`<a href="${getDsGithubUrl(dataset)}" target="_blank">${dataset.githubRepoId.split("/")[1]}</a> <br/> <span style="color:#546375"> @${dataset.githubRepoId.split("/")[0]} </span> ${dataset.waffleFetcherAppInstallationId ? '<br/> <span style="color: #546375">via Waffle Fetcher ' + dataset.waffleFetcherAppInstallationId + '</span>': ""}`)
         
         rowEl.append("td")
           .append("button")
