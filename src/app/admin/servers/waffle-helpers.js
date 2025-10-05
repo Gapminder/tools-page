@@ -16,6 +16,24 @@ export async function getServerData(){
   return data;
 }
 
+export async function getWaffle(selectedServerId){
+  const { data, error } = await supabaseClient
+    .from('waffle')
+    .select('*')
+    .in("server", ["__all__", selectedServerId])
+
+  if (error) console.error(error);
+  return data.map(m => ({
+    slug: m.id, 
+    githubRepoId: m.github_repo_id,
+    default_branch: m.default_branch,
+    is_private: m.is_private,
+    waffleFetcherAppInstallationId: m.waffle_fetcher_app_installation_id,
+    branches: m.branches.split(","),
+    host: "supa"
+  }));
+}
+
 export async function getEvents(url) {
   update; refresh;
   const events = await d3.json(url + "events/");
@@ -25,6 +43,8 @@ export async function getEvents(url) {
 export async function getStatus(url) {
   update; refresh;
   const status = await d3.json(url + "status/");
+  if (!status.datasetControlList) status.datasetControlList = status.allowedDatasets
+  status.datasetControlList.forEach(ds => {ds.host = "waffle"})
   return status;
 }
 

@@ -166,7 +166,7 @@ a
   background radial-gradient(1200px 600px at 20% -10%, rgba(110,168,254,.08), transparent 60%), var(--bg-0)
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
 
   h1, h2
     margin 10px 0 8px
@@ -268,6 +268,7 @@ a
 
 
 section 
+  max-width: 1100px;
   .admin-section-header, .admin-section-footer
     display: flex;
     align-items: center;
@@ -297,12 +298,27 @@ section
     background rgba(255,255,255,.02)
   td:first-child .button { width: 100%; max-width 60px; };
 
-.crossed {
-  position: absolute; top: 0; left: 0;
-  width: 100%;
-  height: 100%;
-  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><line x1='0' y1='100' x2='100' y2='0' stroke='red' stroke-width='2'/></svg>") center/100% 100% no-repeat;
-}
+  //disable buttons
+  .for-deletion .button, .for-addition .button:not(.delete)
+      color: var(--txt-1)
+      border-color: var(--txt-1)
+      opacity: 0.5
+      pointer-events: none;
+    
+  .overlay 
+    display: none;
+    cursor: not-allowed;
+    position: absolute; top: 0; left: 0; bottom: 0; right: 0;
+
+  .for-deletion>.overlay
+    display: block;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><line x1='0' y1='100' x2='100' y2='0' stroke='red' stroke-width='2'/></svg>") center/100% 100% no-repeat;
+
+  .for-addition>.overlay
+    display: block;
+    left: 50px; //reveal a bit of the button underneath to undo the addition
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><line x1='0' y1='100' x2='100' y2='0' stroke='green' stroke-width='2'/></svg>") repeat; background-size: 20px 20px;
+  
 
 .access-control-dialog 
   position: absolute
@@ -362,24 +378,29 @@ section
     transition none
 
 
-.form {
+.form 
   background: var(--bg-2);
   border:1px solid var(--line);
   padding:12px; 
   display: flex;
   flex-direction: column;
   gap:10px;
-}
+  input 
+    vertical-align: middle
+
 .form-grow {flex-grow: 1}
-.form-row { display: flex; align-items: center; gap:10px;}
-.form-col { display: inline-block }
+.form-row { display: flex; flex-wrap: wrap; align-items: center; gap:15px;}
+.form-row.collapsed div.collapsable {display:none}
+.form-col { display: flex; align-items: center; gap: 5px;}
 .label { color: var(--txt-1); font-size:12px; }
+.label.advanced:hover { text-decoration: underline; cursor:pointer;}
+.label.advanced::after { content: "▶"; }
+.label.required::after {content: "*"; color: var(--bad); position: relative; top: -6px; left: -2px; }
 .input { width: 100%; padding:10px 12px; border-radius:10px; border:1px solid var(--brand);
   background: var(--bg-2); color: var(--txt-0); outline: none; }
 .input:focus { box-shadow: 0 0 0 2px rgba(110,168,254,.5); }
 .radio-group { display:flex; gap:8px; flex-wrap:wrap; }
-.radio { display:flex; gap:6px; align-items:center; padding:6px 10px;
-  cursor:pointer; user-select:none; }
+.radio { display:flex; gap:6px; align-items:center; padding:6px 10px; cursor:pointer; user-select:none; }
 .radio input { accent-color: var(--brand); }
 .radio-label { text-transform: capitalize; color: var(--txt-0); }
 .form-msg { min-height: 18px; font-size: 12px; color: var(--txt-1); }
@@ -387,6 +408,19 @@ section
 .form-msg.is-error { color: var(--bad); }
 .form .button {padding:10px 12px; border-radius:10px;}
 
+.message.is-ok { color: var(--good); border-color: var(--good); }
+.message.is-error { color: var(--bad); border-color: var(--bad); }
+.message 
+  display: none;
+  z-index: 1;
+  position: fixed;
+  bottom: 30px;
+  width: 50%;
+  padding: 10px;
+  max-width: 900px;
+  background: var(--bg-1)
+  border: 1px solid var(--brand)
+  border-radius: 10px
 
 .button.delete
   color: var(--bad)
@@ -401,7 +435,9 @@ section
     background linear-gradient(180deg, rgba(63,207,142,.05), rgba(255,255,255,0)), var(--good-dim)
 
 .button
+  opacity: 0.8
   cursor: pointer
+  user-select: none
   border-radius: 4px
   padding: 2px 6px
   width: fit-content;
@@ -409,8 +445,10 @@ section
   color: var(--brand)
   border: 1px solid var(--brand)
   &.micro
+    font-size: 1.2em
     padding: 0px 4px
   &:hover
+    opacity: 1
     background linear-gradient(180deg, rgba(110,168,254,.05), rgba(255,255,255,0)), var(--brand-dim)
   
 .blurry

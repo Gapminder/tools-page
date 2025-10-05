@@ -1,23 +1,30 @@
 import {timediff} from "./waffle-helpers.js";
 
+let container = null;
 
-export function renderServerSection(view, data){
 
-  const container = view.append("section");
+export function skeletonServerSection(view, refresh){
+  container = view
+    .selectAll("section#servers")
+    .data([0])
+    .join("section").attr("id", "servers");
+
   const sectionHeader = container.append("div").attr("class", "admin-section-header")
-  sectionHeader.append("h1").text("Servers");
+    sectionHeader.append("h1").text("Servers");
 
   const actionsBox = sectionHeader.append("div").attr("class", "actionsbox")
-  actionsBox.append("button").attr("class", "button").text("⬇⬆ Refresh")
+    actionsBox.append("button").attr("class", "button").text("⬇⬆ Refresh").on("click", refresh)
+
+  const statusGrid = container.append("div").attr("class", "admin-grid");
+}
+
+
+export function renderServerSection(data){
+  const statusGrid = container.select("div.admin-grid");
   
-  const statusGrid = container.append("div").attr("class", "admin-grid")
-  statusGrid.html("");
-  data.forEach(d => statusGrid.append(() => card({
-    title: d.id,
-    sub: d.url,
-    image: "/tools/assets/images/waffle.png",
-    status: {loading: true}
-  })))
+  const cards = statusGrid.selectAll("div.admin-card").data(data, d => d.id);
+  cards.enter().append((d) => card({ title: d.id, sub: d.url, image: "/tools/assets/images/waffle.png", status: {loading: true}}));
+  cards.exit().remove();
 
   makeCardSelectable(statusGrid.node());
 
@@ -27,7 +34,7 @@ export function renderServerSection(view, data){
   });
 }
 
-export function updateServerCard(container, {id, server}, selectedServerId){
+export function updateServerCard({id, server}, selectedServerId){
   const kind = server ? "ok" : "error";
     
   const view = container.select("#" + id);
@@ -37,7 +44,8 @@ export function updateServerCard(container, {id, server}, selectedServerId){
   view.selectAll(".serverstatus")
     .text(`Small Waffle v${server.smallWaffleVersion}, DDFCSV Reader v${server.DDFCSVReaderVersion}, uptime ${timediff(server.liveSince, false, false)}`)
     
-  view.node().appendChild(getStatusBar(server, view.node().clientWidth - 20))
+  view.select("svg").remove();
+  view.append(() => getStatusBar(server, view.node().clientWidth - 20))
 }
 
 function card({ title, sub, image, status }) {

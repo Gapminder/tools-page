@@ -51,7 +51,7 @@ export async function accessControlDialogCreate({scope, resource}){
         rowEl.append("td").text(row.email);
         rowEl.append("td").text(row.parent);
         rowEl.append("td").text(emojifyLevel(row.level));
-        rowEl.append("td").append("span").text("❌")
+        rowEl.append("td").append("button").text("✘")
           .attr("class", "button delete")
           .on("click", async () => {
             const { error } = await supabaseClient.rpc('revoke_acl_by_email', {
@@ -79,7 +79,7 @@ export async function accessControlDialogCreate({scope, resource}){
         form.append('div').attr('class', 'form-row').text("The invited user needs to be already registered in the service. Invitations are not supported yet.")
         const formRow = form.append('div').attr('class', 'form-row')
         formRow.append('div').attr('class', 'form-col')
-          .append('label').attr('for', 'acl-email').attr('class', 'label').text('Email');
+          .append('label').attr('for', 'acl-email').attr('class', 'label required').text('Email');
 
         formRow.append('div').attr('class', 'form-col form-grow')
           .append('input')

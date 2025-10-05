@@ -4,12 +4,17 @@ import * as urlService from "./../../core/url.js";
 import * as cmsService from "./../../core/cms.js";
 import toolsPage_properties from "toolsPage_properties";
 import { supabaseClient } from "./../../auth/supabase.service";
-import { renderDatasetSection } from "./datasetsView.js";
-import { renderServerSection, updateServerCard } from "./serversView.js"; 
-import {getServerData, getStatus, getDatasets, getDatasetInfo, sync, syncprogress} from "./waffle-helpers.js"
-
+import { skeletonDatasetSection, renderDatasetSection } from "./datasetsTableView.js";
+import { skeletonServerSection, renderServerSection, updateServerCard } from "./serversView.js"; 
+import {getServerData, getWaffle, getStatus, getDatasetInfo, sync, syncprogress} from "./waffle-helpers.js"
+import {augmentD3SelectionPrototypeForEasierSyntax} from "./d3selectionPlugins.js";
 let syncStatus = 0;
 let selectedServerId = null;
+let token = null;
+
+
+
+augmentD3SelectionPrototypeForEasierSyntax();
 
 async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
   const cmsData = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE });
@@ -19,39 +24,13 @@ async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
 
   new UserLogin({ translator, state, dom: ".app-user-login" });
 
+  init();
+
   state.dispatch.on("authStateChange.app", async (event) => {
+    if(token === state.getAuthToken()) return console.log(event, "✅ no token change");
     console.log(event);
-    const stageEl = d3.select(".admin-stage#servers");
-    const token = state.getAuthToken();
-    if (token) {
-      stageEl.html("");
-      
-      const serverList = await getServerData();
-      renderServerSection(stageEl, serverList);
-
-      const { data, error } = await supabaseClient
-        .from('acl')
-        .select('scope,resource,level')
-        .eq('scope', 'dataset'); 
-
-      if (error) console.error(error);
-      const datasetAccessListLimitedToCurrentUser = data;
-
-      selectedServerId = serverList[0].id;
-      for await (const server of serverList){
-        const status = await getStatus(server.url);
-        Object.assign(server, {...status})
-        updateServerCard(stageEl, server, selectedServerId);
-      }
-      if(!serverList.length) return;
-      const selectedServer = serverList[0];
-      
-      const datasets = await getDatasets(selectedServer.url);
-      const datasetInfo = await getDatasetInfo(selectedServer.url, token);
-
-      renderDatasetSection(stageEl, {datasets, datasetInfo, syncDataset, datasetAccessListLimitedToCurrentUser});
-       
-    }
+    token = state.getAuthToken();
+    refresh();
   });
 
 
@@ -66,12 +45,51 @@ async function main({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}) {
     d3.select(".admin-stage#" + route).style("display", null);
   });
 }
-
 main(toolsPage_properties).catch(err => {
   console.error(err);
-  d3.select(".temp").text(`Error: ${err.message || err}`);
+  d3.select(".admin-stage#servers").text(`Error: ${err.message || err}`);
 });
 
+
+
+function init(){
+  const stageEl = d3.select(".admin-stage#servers");
+  skeletonServerSection(stageEl, refresh);
+  skeletonDatasetSection(stageEl);
+}
+
+async function refresh(){
+  if (token) {    
+    const serverList = await getServerData();
+    renderServerSection(serverList);
+
+    const { data, error } = await supabaseClient
+      .from('acl')
+      .select('scope,resource,level')
+      .eq('scope', 'dataset'); 
+
+    if (error) console.error(error);
+    const datasetAccessListLimitedToCurrentUser = data;
+
+    selectedServerId = serverList[0].id;
+    for await (const server of serverList){
+      const status = await getStatus(server.url);
+      Object.assign(server, {...status})
+      updateServerCard(server, selectedServerId);
+    }
+    if(!serverList.length) return;
+    const selectedServer = serverList[0];
+    
+    const serverDatasets = selectedServer.datasetControlList;
+    const serverDatasetSlugToBranchToCommitMapping = selectedServer.availableDatasets;
+    const datasetInfo = await getDatasetInfo(selectedServer.url, token);
+    const supaDatasets = await getWaffle(selectedServerId);
+
+    renderDatasetSection({serverDatasetSlugToBranchToCommitMapping, serverDatasets, supaDatasets, datasetInfo, syncDataset, datasetAccessListLimitedToCurrentUser}, selectedServerId, refresh);
+  } else {
+    d3.select(".admin-stage#servers").text(`Not logged in or something broken`);
+  }
+}
 
 
 async function syncDataset(slug){
@@ -125,3 +143,6 @@ toggleBtn.addEventListener('click', () => {
   localStorage.setItem(collapsedKey, root.classList.contains('is-collapsed') ? '1' : '0')
 })
 
+
+
+//TODO: assume ownership when adding a dataset
