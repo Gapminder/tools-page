@@ -25,7 +25,6 @@ const readersPickFields = {
 }
 
 const state = observable({
-  projectId: null,
   pageId: null,
   subpanelId: 'toolset'
 });
@@ -43,11 +42,10 @@ async function getServers(token){
 const panel = d3.select('#pages');
 const pageButtonsContainer = panel.append('div').attr('class', 'pages-buttons');
 
-async function loadPages(projectId) {
+async function loadPages() {
   const { data: pages, error } = await supabase
     .from('pages')
-    .select('*')
-    .eq('project_id', projectId);
+    .select('*');
 
   if (error) {
     console.error('Error fetching pages', error);
@@ -65,7 +63,7 @@ async function loadPages(projectId) {
     .attr("class", "button")
     .text("Add Page")
     .on("click", async () => {
-      PageView.renderAddForm(projectId);
+      PageView.renderAddForm();
     });
   actionsEl.append("span")
     .attr("class", "button")
@@ -99,15 +97,15 @@ async function loadPages(projectId) {
   });
 }
 
-async function addPage(projectId, name) {
+async function addPage(name) {
   const { error } = await supabase
     .from('pages')
-    .insert([{ project_id: projectId, name }]);
+    .insert([{ name }]);
   if (error) {
     console.error('Error adding page', error);
     return;
   }
-  loadPages(projectId);
+  loadPages();
 }
 
 async function deletePage(pageId) {
@@ -119,11 +117,11 @@ async function deletePage(pageId) {
     console.error('Error deleting page', error);
     return;
   }
-  loadPages(state.projectId);
+  loadPages();
 }
 
 const PageView = {
-  renderAddForm(projectId) {
+  renderAddForm() {
     d3.select('.pages-header .pages-actions').style("visibility", "hidden");
     const form = d3.select('.pages-buttons')
       .append('span')
@@ -140,7 +138,7 @@ const PageView = {
         if (name) {
           form.remove();
           d3.select('.pages-header .pages-actions').style("visibility", null);
-          addPage(projectId, name);
+          addPage(name);
         }
       });
     form.append('span')
@@ -169,7 +167,7 @@ const PageView = {
           .attr("class", "button")
           .text("Add Page")
           .on("click", async () => {
-            PageView.renderAddForm(state.projectId);
+            PageView.renderAddForm();
           });
         actionsEl.append("span")
           .attr("class", "button")
@@ -518,5 +516,4 @@ async function loadDatasources(pageId) {
   DataSourceController.loadDatasources(pageId);
 }
 
-state.projectId = 1;
-loadPages(state.projectId);
+loadPages();
