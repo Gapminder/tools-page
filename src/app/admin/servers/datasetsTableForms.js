@@ -30,14 +30,21 @@ const ghLinkPattern = /^https:\/\/github\.com\/([A-Za-z0-9._-]+\/[A-Za-z0-9._-]+
 const numericPattern = /^[0-9]+$/;
 
 
-export function buildFormToAddBranch({formEl, dataset, action, onActionSuccess, onFormInit, onFormDestroy, bad, info, good}){
+export function buildFormToAddBranch({formEl, dataset, getDefaultBranchOnSupa, action, onActionSuccess, onFormInit, onFormDestroy, bad, info, good}){
 
   onFormInit();
   formEl.style("visibility", "visible").selectAll("div").remove();
   info(); //reset message classes and content 
 
-  formEl.append('div').class('form-row')
-    .html(`Add a new branch for ${dataset.slug} dataset`);
+  const rowEl0 = formEl.append('div').class('form-row');
+  rowEl0.append('div').class('form-col form-grow')
+    .text(`Add a new branch for ${dataset.slug} dataset. ⚠️ Adding/removing branches and changing default branch needs a full sync`);
+  rowEl0.append('div').class('form-col closecross')
+    .text("✕").on("click", () => {
+      info(); 
+      formEl.style("visibility", "hidden").selectAll("div").remove();
+      onFormDestroy();
+    })
 
   const rowEl = formEl.append('div').class('form-row');
   rowEl.append('div').class('form-col')
@@ -54,6 +61,16 @@ export function buildFormToAddBranch({formEl, dataset, action, onActionSuccess, 
         .on("blur", () => info());
     });
   rowEl.append('div').class('form-col')
+    .call((group) => {
+      group.append('input')
+        .type("checkbox")
+        .id("defaultness")
+        .property('checked', false)
+        .on("focus", () => info(`Default branch is served when no specific branch is requested. If not set, the first branch couts as default`))
+        .on("blur", () => info());
+      group.append('label').for('defaultness').class('label').text('Default');
+    })
+  rowEl.append('div').class('form-col')
     .append("button")
     .type("submit")
     .class("button addnew")
@@ -65,12 +82,21 @@ export function buildFormToAddBranch({formEl, dataset, action, onActionSuccess, 
 
     const branch = formEl.select('#branch').property('value').trim() || null;
     if(branch && !branchPattern.test(branch)) 
-      return bad(`Branch doesn't pass the vibe check`); //❌
+    return bad(`Branch doesn't pass the vibe check`); //❌
     
-    if(dataset.branches?.includes(branch)) 
-      return bad(`Branch already added`); //❌
+    if(dataset.branches?.includes(branch) && dataset.branches.length === 1) 
+      return bad(`Branch already added and is the only branch`); //❌
 
-    const { error } = await action({ branches: dataset.branches.concat(branch).join(",") });
+    const defaultness = !!formEl.select('#defaultness').property('checked');
+    const defaultOnSupa = getDefaultBranchOnSupa(dataset);
+    const isAlreadyDefault = defaultOnSupa === branch;
+    if(dataset.branches?.includes(branch) && isAlreadyDefault === defaultness) 
+      return bad(`Branch already added and set to be ${defaultness ? "the default" : "not default"}`); //❌
+
+    const default_branch = defaultness ? branch : null;
+    const possiblyUpdateBranches = dataset.branches?.includes(branch) ? {} : {branches: dataset.branches.concat(branch).join(",")};
+    
+    const { error } = await action({ default_branch, ...possiblyUpdateBranches });
 
     if (error) return bad(error.message || "Didn't succeed adding the branch"); //❌
 
@@ -97,8 +123,17 @@ export function buildFormToAddDataset({formEl, datasets, action, onActionSuccess
   formEl.style("visibility", "visible").selectAll("div").remove();
   info(); //reset message classes and content 
 
-  formEl.append('div').class('form-row')
+  const rowEl0 = formEl.append('div').class('form-row');
+  rowEl0.append('div').class('form-col form-grow')
     .html(`Add a new dataset. <span style="color:#546375">Must be a <a href="https://open-numbers.github.io/ddf" target="_blank">DDF CSV dataset</a>. Click around to get hints!</span>`)
+  rowEl0.append('div').class('form-col closecross')
+    .text("✕").on("click", () => {
+      info(); 
+      formEl.style("visibility", "hidden").selectAll("div").remove();
+      onFormDestroy();
+    })
+
+  formEl.append('div').class('form-row')
 
   const formRow = formEl.append('div').class('form-row');
   const formRow2 = formEl.append('div').class('form-row collapsed');
@@ -188,7 +223,7 @@ export function buildFormToAddDataset({formEl, datasets, action, onActionSuccess
         .property('checked', false)
         .on("focus", () => info(`Enable private serving of this data from waffle server, regardless its private/public status on github. TODO (remind angie): You will become the owner and will be able to delegate the access rights further.`))
         .on("blur", () => info());
-      group.append('label').for('private').class('label').text('Make dataset 🔒 private and assume ownership');
+      group.append('label').for('private').class('label').text('🔒 Make dataset private and assume ownership');
     })
 
 

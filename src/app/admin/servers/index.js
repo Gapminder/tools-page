@@ -62,6 +62,7 @@ function init(){
   skeletonServerSection(stageEl, refresh);
   skeletonDatasetSection(stageEl);
   messageEl = stageEl.append('div').attr('class', 'message');
+  stageEl.append('div').attr('class', 'admin-footer');
 }
 
 async function refresh(){

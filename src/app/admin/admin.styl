@@ -18,7 +18,7 @@
   --shadow      rgba(0,0,0,.45)
 
   --sidebar-w   130px
-  --sidebar-w-min 50px
+  --sidebar-w-min 51px
   --header-h    56px
   --radius      12px
 
@@ -40,6 +40,12 @@ a
   &:hover
     text-decoration underline
 
+.closecross
+  cursor: pointer;
+  color: var(--txt-1)
+  &:hover
+    color: var(--txt-0)
+
 // ---------- Layout ----------
 .admin-page
   display grid
@@ -48,9 +54,14 @@ a
   min-height 100dvh
   background var(--bg-0)
   transition grid-template-columns .2s ease
+  height: 100vh;
 
   &.is-collapsed
     grid-template-columns var(--sidebar-w-min) 1fr
+
+.admin-footer
+  width: 100%;
+  min-height: 100px;
 
 .admin-header
   grid-column 1 / -1
@@ -71,20 +82,6 @@ a
   .header-spacer
     flex 1
 
-  .sidebar-toggle
-    width 32px
-    height 32px
-    display grid
-    place-items center
-    border 1px solid var(--line)
-    border-radius 8px
-    background var(--bg-2)
-    cursor pointer
-    transition transform .15s ease, background .15s ease
-    &:hover
-      transform translateY(-1px)
-      background rgba(255,255,255,.03)
-
 .admin-sidebar
   grid-row 2
   background var(--bg-1)
@@ -93,7 +90,27 @@ a
   flex-direction column
   padding 8px 6px
   gap 6px
-  overflow auto
+  overflow hidden
+  position relative
+
+  .sidebar-toggle
+    color: var(--bg-0)
+    font-size: 2em;
+    padding: 0px;
+    top: calc(50% - 32px);
+    position: absolute;
+    right: -1px;
+    width 10px
+    height 64px
+    border 1px solid var(--line)
+    border-top-left-radius: 8px
+    border-bottom-left-radius: 8px
+    background var(--bg-2)
+    cursor pointer
+    transition width .15s ease, background .15s ease
+    &:hover
+      width 16px 
+      background rgba(255,255,255,.03)
 
   // keep login at the bottom
   .user-login-wrapper
@@ -121,8 +138,8 @@ a
     grid-template-columns 30px 1fr
     align-items center
     gap 8px
-    min-height 36px
-    padding 4px 6px
+    min-height 45px
+    padding 4px 4px
     border-radius 10px
     color var(--txt-1)
     cursor pointer
@@ -138,8 +155,8 @@ a
       color var(--txt-0)
 
     .icon
-      inline-size 30px
-      block-size 30px
+      inline-size 28px
+      block-size 28px
       display grid
       place-items center
       border-radius 8px
@@ -162,7 +179,8 @@ a
 .admin-stage
   grid-row 2
   padding 16px clamp(12px, 2vw, 24px)
-  overflow auto
+  overflow-x hidden
+  overflow-y auto
   background radial-gradient(1200px 600px at 20% -10%, rgba(110,168,254,.08), transparent 60%), var(--bg-0)
   display: flex;
   flex-direction: column;
@@ -275,9 +293,6 @@ section
     justify-content: space-between;
     .button
       min-height: 30px;
-    .actionsbox 
-      display: flex;
-      gap: 10px;
 
 // tables in stage
 .admin-table
@@ -297,13 +312,25 @@ section
   tr:hover td
     background rgba(255,255,255,.02)
   td:first-child .button { width: 100%; max-width 60px; };
+  td:first-child .actionsbox {flex-direction: column}  
 
-  //disable buttons
+  td.branch .branchname
+    &::before
+      content: "⼘"
+      width: 0.5em; height: 0.4em;
+      display: inline-block;
+      margin-right: 0.6em;
+    &.default::before
+      border-top: 1px solid var(--txt-1);
+      border-left: 1px solid var(--txt-1);    
+
+  tr.nonremovable
+    .button.delete, .button.addnew
+      display: none
+
+  //disable buttons but make exception to undo the addition action
   .for-deletion .button, .for-addition .button:not(.delete)
-      color: var(--txt-1)
-      border-color: var(--txt-1)
-      opacity: 0.5
-      pointer-events: none;
+    display: none
     
   .overlay 
     display: none;
@@ -315,10 +342,14 @@ section
     background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><line x1='0' y1='100' x2='100' y2='0' stroke='red' stroke-width='2'/></svg>") center/100% 100% no-repeat;
 
   .for-addition>.overlay
+    opacity: 0.6
     display: block;
-    left: 50px; //reveal a bit of the button underneath to undo the addition
-    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><line x1='0' y1='100' x2='100' y2='0' stroke='green' stroke-width='2'/></svg>") repeat; background-size: 20px 20px;
-  
+    left: 30px; //reveal a bit of the button underneath to undo the addition
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><text x='0' y='16' transform='rotate(-45 10 10)' font-family='system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif' font-size='9' fill='green' text-rendering='geometricPrecision'>NEW</text></svg>") repeat;
+    background-size: 20px 20px;   /* matches SVG width/height */
+    background-repeat: repeat;
+    background-origin: padding-box;
+    background-clip: padding-box;
 
 .access-control-dialog 
   position: absolute
@@ -338,10 +369,6 @@ section
     position: absolute
     right: 10px
     top: 10px
-    cursor: pointer;
-    color: var(--txt-1)
-    &:hover
-      color: var(--txt-0)
 
   .blur
     position: absolute;
@@ -412,6 +439,7 @@ section
 .message.is-error { color: var(--bad); border-color: var(--bad); }
 .message.is-working { color: var(--warn); border-color: var(--warn); }
 .message 
+  pointer-events: none
   display: none;
   z-index: 1;
   position: fixed;
@@ -420,8 +448,10 @@ section
   padding: 10px;
   max-width: 900px;
   background: var(--bg-1)
-  border: 1px solid var(--brand)
+  border: 1px solid var(--line)
   border-radius: 10px
+  align-self: end
+  opacity: 0.7
 
 .button.delete
   color: var(--bad)
@@ -456,7 +486,11 @@ section
   filter: blur(3px) grayscale(80%);
 
 
-
+.actionsbox 
+  display: flex;
+  gap: 10px;
+  &.micro
+    gap: 5px;
 
 
 

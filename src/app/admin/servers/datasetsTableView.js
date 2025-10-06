@@ -107,8 +107,9 @@ export function renderDatasetSection({
     const maxBranches = d3.max(serverDatasets, d => d.branches.length);
     const datasetsByAccess = d3.rollup(datasetAccessListLimitedToCurrentUser, v=>v.length, d=>d.resource, d => d.level);
     const usedByHowManyPageDatasources = d3.rollup(waffleDatasources, v => v.length, d => d.reader_properties.dataset);
+    const isDatasetInAllServers = (dataset) => supaDatasets.find(f => f.slug === dataset.slug && f.server === "__all__");
+    const getDefaultBranchOnSupa = (dataset) => supaDatasets.find(f => f.slug === dataset.slug)?.default_branch;
   
-    console.log(waffleDatasources, usedByHowManyPageDatasources)
     const table = container.select("table")
       .class("admin-table")
       .style("max-width", "none");
@@ -123,34 +124,32 @@ export function renderDatasetSection({
         rowEl.append("th").text("access")
       })
     table.selectAll("tr.dataset")
-      .data(serverDatasets)
+      .data(d3.sort(serverDatasets, d => d.slug))
       .enter().append("tr")
       .class("dataset")
       .classed("for-addition", d => d.missingFromServer)
       .classed("for-deletion", d => d.missingFromSupa)
+      .classed("nonremovable", isDatasetInAllServers)
       .each(function(dataset){
         const rowEl = d3.select(this);
-        const firstCol = rowEl.append("td")
-          .style("padding-bottom","10px")
+
+        rowEl.append("td").append("div").class("actionsbox").call(group => {
+          group.append("button") 
+            .class("button")
+            .on("click", () => syncDataset({selectedServerId, selectedServerUrl, slug: dataset.slug, good, info, progress, bad, refresh}))
+            .html(`<span style="font-size: 1.2em;">↻</span> Sync`)
+
+          const deleteButton = group.append("button") 
+            .class("button delete hold-btn")
+            .text(`Delete`)
   
-        firstCol.append("button") 
-          .class("button")
-          .style("margin-bottom", "10px") 
-          .on("click", () => syncDataset({selectedServerId, selectedServerUrl, slug: dataset.slug, good, info, progress, bad, refresh}))
-          .html(`<span style="font-size: 1.2em;">↻</span> Sync`)
-        firstCol.append("br") 
-        const deleteButton = firstCol.append("button") 
-          .class("button delete hold-btn")
-          .text(`Delete`)
-
-        holdButton(deleteButton, () => {
-          deleteDataset({dataset, selectedServerId, refresh, bad, info, good})
-        });
-
+          holdButton(deleteButton, () => deleteDataset({dataset, selectedServerId, refresh, bad, info, good}) );
+        })
+  
         rowEl.append("td")
-          .style("padding-bottom","10px")
           .style("font-size", "1.25em")
           .text((dataset.is_private ? "🔒 " : "") + dataset.slug)
+
         rowEl.append("td")
           .html(`<a href="${getDsGithubUrl(dataset)}" target="_blank">${dataset.githubRepoId.split("/")[1]}</a> <br/> <span style="color:#546375"> @${dataset.githubRepoId.split("/")[0]} </span> ${dataset.waffleFetcherAppInstallationId ? '<br/> <span style="color: #546375">via Waffle Fetcher ' + dataset.waffleFetcherAppInstallationId + '</span>': ""}`)
         
@@ -161,6 +160,7 @@ export function renderDatasetSection({
           .on("click", () => buildFormToAddBranch({
             formEl, 
             dataset, 
+            getDefaultBranchOnSupa,
             action: (args) => {
               return supabaseClient
                 .from('waffle')
@@ -180,7 +180,6 @@ export function renderDatasetSection({
           .class("branch")
           .classed("for-addition", (_, i) => !dataset.missingFromServer && isBranchForAddition(dataset.slug, dataset.branches[i]))
           .classed("for-deletion", (_, i) => !dataset.missingFromSupa && isBranchForDeletion(dataset.slug, dataset.branches[i]))
-          .style("padding-bottom","10px")
           .style("font-family","Monospace")
           .each(function(_,i){
             const branch = dataset.branches[i];
@@ -191,20 +190,23 @@ export function renderDatasetSection({
 
             const formatBranchCommit = (branch, slug) => {
               const commit = (serverDatasetSlugToBranchToCommitMapping[slug]||{})[branch]?.substr(0,7);
-              return `⼘${branch}: ${commit||"NEEDS SYNC"}`
+              return `${branch}: ${commit||"NEEDS SYNC"}`
             }
-            
 
-            view.append("div").html(formatBranchCommit(branch, slug));
+            const isTheOnlyBranch = dataset.branches.length <= 1;
+            const isDefaultBranch = !isTheOnlyBranch && dataset.default_branch === branch;
+
+            view.append("div").class("branchname").classed("default",isDefaultBranch)
+              .attr("title", isDefaultBranch?"⼘ Default branch":"").html(formatBranchCommit(branch, slug));
             view.append("div").html(formatDataPackage(datasetInfo, slug, branch));
             view.append("div").html("·".repeat(usedByHowManyPageDatasources.get(`${slug}/${branch}`) || 0));
 
-            view.append("div")
-              .style("visibility", () => dataset.branches.length <= 1 ? "hidden" : null)
+            view.append("div").class("actionsbox micro")
+              .style("visibility", () => isTheOnlyBranch ? "hidden" : null)
               .call((group) => {
                 group.append("button")
                   .class("button micro")
-                  .text("↻")
+                  .text("↻ sync")
                   .on("click", () => syncDataset({selectedServerId, selectedServerUrl, slug, branch, good, info, progress, bad, refresh}))
 
                 const deleteButton = group.append("button") 
@@ -212,7 +214,7 @@ export function renderDatasetSection({
                   .text("✘")
     
                 holdButton(deleteButton, () => {
-                  deleteBranch({branch, dataset, selectedServerId, refresh, bad, info, good});
+                  deleteBranch({branch, dataset, getDefaultBranchOnSupa, selectedServerId, refresh, bad, info, good});
                 });
               })
 
@@ -277,15 +279,17 @@ export function renderDatasetSection({
 
 
 
-async function deleteBranch({branch, dataset, selectedServerId, refresh, bad, info, good}){
+async function deleteBranch({branch, dataset, getDefaultBranchOnSupa, selectedServerId, refresh, bad, info, good}){
   if (!branch) 
     return bad("BUG: branch not provided"); //❌
   if (!dataset.branches.filter(f => f!==branch)) 
     return bad("Can't delete the last remaining branch. Delete entire dataset instead."); //❌
 
+  const defaultOnSupa = getDefaultBranchOnSupa(dataset);
+  const possiblyResetDefault = defaultOnSupa === branch ? {default_branch: null} : {};
   const { error } = await supabaseClient
     .from('waffle')
-    .update({ branches: dataset.branches.filter(f => f!==branch).join(",") })
+    .update({ branches: dataset.branches.filter(f => f!==branch).join(","), ...possiblyResetDefault })
     .eq('id', dataset.slug)
     .eq('server', selectedServerId)
 

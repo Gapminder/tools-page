@@ -34,6 +34,7 @@ export async function getWaffle(selectedServerId){
   if (error) console.error(error);
   return data.map(m => ({
     slug: m.id, 
+    server: m.server,
     githubRepoId: m.github_repo_id,
     default_branch: m.default_branch,
     is_private: m.is_private,
