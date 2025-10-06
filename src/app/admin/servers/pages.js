@@ -39,7 +39,7 @@ async function getServers(token){
   return data;
 }
 
-const panel = d3.select('#pages');
+const panel = d3.select('.admin-stage#pages .pages');
 const pageButtonsContainer = panel.append('div').attr('class', 'pages-buttons');
 
 async function loadPages() {
