@@ -366,7 +366,7 @@ export const VIZABI_MODEL = {
             data: {
               space: ["person"],
               concept: null,
-              stash: "countries"
+              stash: "country"
             }
           },
           frame: {
