@@ -68,6 +68,7 @@ function init(){
 async function refresh(){
   if (token) {    
     const serverList = await getServerData();
+    if(!serverList.length) return bad("Failed to fetch the server list");
     renderServerSection(serverList);
 
     const { data, error } = await supabaseClient
@@ -78,14 +79,14 @@ async function refresh(){
     if (error) console.error(error);
     const datasetAccessListLimitedToCurrentUser = data;
 
-    selectedServerId = serverList[0].id;
+    selectedServerId = "tools-page-analytics-server";
+    const selectedServer = serverList.find(f => f.slug === "tools-page-analytics-server");
+
     for await (const server of serverList){
       const status = await getStatus(server.url);
       Object.assign(server, {...status})
       updateServerCard(server, selectedServerId);
     }
-    if(!serverList.length) return;
-    const selectedServer = serverList[0];
     
     const serverDatasets = selectedServer.datasetControlList;
     const serverDatasetSlugToBranchToCommitMapping = selectedServer.availableDatasets;
