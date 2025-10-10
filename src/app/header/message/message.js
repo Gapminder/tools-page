@@ -42,7 +42,7 @@ const Message = function({ dom, translator, state }) {
     placeHolder.select("#message-text").html(string);
   }
 
-
+  return { showMessage, closeMessage };
 };
 
 export default Message;

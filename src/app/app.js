@@ -5,6 +5,7 @@ import { scrollTo, deepExtend } from "./core/utils";
 import { initTranslator } from "./core/language.js";
 
 
+import UserLogin from "./auth/user-login.js";
 import Menu from "./header/menu/menu.js";
 import Message from "./header/message/message.js";
 import DataEditor from "./header/data-editor/data-editor.js";
@@ -51,10 +52,17 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
   new SocialButtons({ translator, state, dom: ".social-list .app-social-buttons",
     bitlyService: BitlyService(), locationService: LocationService() });
   new Footer({ translator, state, dom: ".app-footer" });
-  new Message({ translator, state, dom: ".app-message" });
+  const message = new Message({ translator, state, dom: ".app-message" });
   new DataEditor({ translator, state, tool, viz, dom: ".header .data-editor" });
-
+  new UserLogin({ translator, state, dom: ".app-user-login" });
+  
   d3.select("a.logo").on("click", state.resetState);
+
+  state.dispatch.on("authStateChange.app", (event) => {
+    console.log(event);
+    tool.setVizabiUserAuth();
+    if (viz) state.setTool();
+  });
 
   state.dispatch.on("toolChanged.app", ({ id, previousToolId }) => {
     tool.setTool({ id, previousToolId });
@@ -73,6 +81,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
   state.dispatch.on("projectorChanged.app", truefalse => {
     tool.setVizabiProjector(truefalse);
   });
+  state.dispatch.on("showMessage.app", ({ message: msg }) => message.showMessage(msg) );
 
 
   viz = await tool.setTool();

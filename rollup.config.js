@@ -86,6 +86,7 @@ export default {
     copy({
       targets: [
         // UMD JS
+        { dest: "build/vendor", src: vendor("@supabase/supabase-js/dist/umd/supabase.js"), rename: "supabase.js" }, 
         { dest: "build/vendor", src: vendor("urlon/dist/urlon.umd"), rename: "urlon.js" },
         { dest: "build/vendor", src: vendor("@vizabi/reader-ddfservice/dist/reader-ddfservice.js"), rename: "reader-ddfservice.js" },
         { dest: "build/vendor", src: vendor("@vizabi/reader-ddfcsv/dist/reader-ddfcsv.js"), rename: "reader-ddfcsv.js"  },

@@ -17,7 +17,7 @@ const Tool = function({ cmsData, state, dom }) {
 
 
   // apply data models from configuration to target
-  function applyDataConfigFromUrlStateToTarget(toolsetEntry, urlState, target) {
+  function applyDataConfigFromUrlStateToTarget(toolsetEntry, urlState, authToken, target) {
     if (!target.model.dataSources) target.model.dataSources = {};
     const urlDataConfig = urlState.model?.dataSources;
 
@@ -34,6 +34,7 @@ const Tool = function({ cmsData, state, dom }) {
           target.model.dataSources[ds] = datasources[ds];
         }
         target.model.dataSources[ds].locale = urlState?.ui?.locale || target.ui?.locale;
+        target.model.dataSources[ds].token = authToken;
       });
     }
 
@@ -105,7 +106,7 @@ const Tool = function({ cmsData, state, dom }) {
     if (previousToolId) vizabiStartConfig = applyTransitionConfigs(vizabiStartConfig);
 
     //apply URL configs
-    vizabiStartConfig = applyDataConfigFromUrlStateToTarget(toolsetEntry, state.getURLI(), vizabiStartConfig);
+    vizabiStartConfig = applyDataConfigFromUrlStateToTarget(toolsetEntry, state.getURLI(), state.getAuthToken(), vizabiStartConfig);
     VizabiSharedComponents.Utils.mergeInTarget(vizabiStartConfig, state.getURLI(), /*treat as blocks:*/ ["data.filter"]);
 
     const VIZABI_UI_CONFIG = observable(vizabiStartConfig.ui);
@@ -159,6 +160,21 @@ const Tool = function({ cmsData, state, dom }) {
     });
     disposers.push(switchDataSourceIfConceptNotFound);
 
+    const checkDataSourcesAuth = mobx.autorun(() => {
+      const dataSources = viz.model.dataSources;
+      const dsArray = Object.values(dataSources);
+      if (dsArray.map(ds => ds.state).every(s => s == "fulfilled")) {
+        const messages = [];
+        dsArray.forEach(ds => {
+          if (ds.responseError && ds.responseError.code == "HTTP_401" && ds.responseError.message == "Unauthorized") {
+            messages.push(`You are unable to access to private data source ${ds.config.dataset}. Please login for resolve.`);
+          }
+          if (messages.length) state.dispatch.call("showMessage", null, { message: messages.join("\n")});
+        });
+      }
+    });
+    disposers.push(checkDataSourcesAuth);
+    
     //googleAnalyticsLoadEvents(viz, toolsetEntry);
 
 
@@ -193,6 +209,15 @@ const Tool = function({ cmsData, state, dom }) {
     });
   }
 
+  function setVizabiUserAuth(){
+    if(!viz?.model?.dataSources) return;
+    const dataSources = Object.values(viz.model.dataSources);
+    const token = state.getAuthToken();
+    dataSources.forEach(ds => {
+      if(ds.reader.setToken) ds.reader.setToken(token);
+    });
+  }
+
   function setVizabiLocale(id) {
     if (viz?.services?.locale) viz.services.locale.id = id;
   }
@@ -220,6 +245,6 @@ const Tool = function({ cmsData, state, dom }) {
       .remove();
   }
 
-  return { setTool, setVizabiToolState, setVizabiLocale, setVizabiProjector };
+  return { setTool, setVizabiToolState, setVizabiLocale, setVizabiProjector, setVizabiUserAuth };
 };
 export default Tool;

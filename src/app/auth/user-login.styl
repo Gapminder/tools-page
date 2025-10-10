@@ -1,0 +1,134 @@
+@import './../_resources/variables.styl'
+@import './../_resources/mixins.styl'
+
+.app-user-login
+
+  button, span.button
+    appearance: none
+    -webkit-appearance: none
+    -moz-appearance: none
+    border: 0
+    background: none
+    font-size: 1em
+    color:  $color-blue-darker
+    margin: 20px 0
+    cursor: pointer
+    &:hover
+      color: $color-primary;
+
+  &.open
+    .user-login-form-wrapper
+      display: flex
+      z-index: 9999
+
+  &.logged
+    .user-login-title
+      display: none
+    .user-logged-title
+      display: block
+    &.open
+      .user-login-form-wrapper
+        display: none
+      .user-logged-form-wrapper
+        display: flex
+
+  .user-login-title
+    opacity: 0.01;
+
+  .user-login-title, .user-logged-title
+    font-size: .8em
+    padding: 2px 6px
+    text-wrap: nowrap
+    border: $color-primary solid 1px
+    border-radius: 4px
+    cursor: pointer
+
+  .user-logged-title
+    display: none
+    color $color-primary
+    width 30px
+    &:after
+      content '\25BC'
+      padding 0 0 0 4px
+      border-left 1px solid $color-primary
+      color $brand-primary 
+      position absolute
+      right 4px
+
+  .user-logged-form-wrapper
+    display: none
+
+    flex-direction: column;
+    z-index: 1;
+    position: absolute;
+    top: 31px;
+    width: 200px;
+    right: 0px;
+    background-color: #ffffff
+    border: 1px solid $color-primary;
+    color: $brand-primary
+
+    button
+      margin 0
+      padding 2px 10px
+      font-size .9em
+
+    hr
+      width 80%
+
+    .user-logged-name
+      align-self center
+      margin-top 5px
+      margin-bottom 10px
+      font-size .8em
+
+  .user-login-form-wrapper
+    display: none
+
+    position: absolute
+    justify-content: center
+    flex-direction: column
+    align-content: center
+    align-items: center
+    
+    .user-login-close
+      margin-top: -5px
+      margin-right: 4px
+
+    .user-login-form
+      background-color: #ffffff
+
+      .panel
+        display: flex
+        flex-direction: column
+        align-items: center
+        margin: 24px 30px 4px
+
+        label
+          margin-top: 20px
+          align-self: flex-start
+          font-size: .8em
+
+        hr
+          margin-bottom: 0
+          width: 100%
+        .hr-text-center
+          margin-top: -.7em
+          padding: 0 5px
+          background-color: #ffffff
+
+        .login-oauth
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          width: 100%;
+
+      .signup-panel
+        display: none
+
+      &.signup
+        .signup-panel
+          display: flex
+        .login-panel
+          display: none
+
