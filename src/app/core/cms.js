@@ -1,3 +1,8 @@
+import toolsPage_properties from "toolsPage_properties";
+import toolsPage_toolset from "toolsPage_toolset";
+import toolsPage_datasources from "toolsPage_datasources";
+import toolsPage_menuItems from "toolsPage_menuItems";
+
 let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE;
 const resetCache = true;
 const TIMEOUT_MS = 2000; // adjust timeout duration
@@ -110,7 +115,7 @@ const getPages = (locale = DEFAULT_LOCALE) => ([
   { docid: DOCID_CMS, sheet: "properties", fallbackContent: toolsPage_properties },
   { docid: DOCID_CMS, sheet: "datasources", fallbackContent: toolsPage_datasources },
   { docid: DOCID_CMS, sheet: "menu", fallbackContent: toolsPage_menuItems },
-  { docid: DOCID_CMS, sheet: "related", fallbackContent: "" },
+  { docid: DOCID_CMS, sheet: "related", fallbackContent: "", fallbackPath: `./config/related.json` },
   { docid: DOCID_I18N, sheet: `page/${locale}`, type: "language", fallbackPath: `./assets/i18n/${locale}.json` },
   { docid: DOCID_I18N, sheet: `tools/${locale}`, type: "language", fallbackPath: `./assets/translation/${locale}.json` },
 ]);

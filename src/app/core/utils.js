@@ -1,5 +1,29 @@
 /* eslint no-prototype-builtins: "off" */
 
+export function parseURLHashWithUrlon(rawUrl = window.location.toString()) {
+  const hash = rawUrl.includes("#") && rawUrl.substring(rawUrl.indexOf("#") + 1);
+  if (!hash) return {};
+
+  try {
+    return urlon.parse(decodeUrlHash(hash) || "$;");
+  }
+  catch {
+    console.warn("Failed to decode and parse this URL hash:", hash);
+    return {};
+  }
+}
+
+//need to encode symbols like # in color codes because urlon can't handle them properly
+export function encodeUrlHash(hash) {
+  return hash.replace(/=#/g, "=%23"); //replace every # with %23
+}
+
+export function decodeUrlHash(hash) {
+  //replacing %2523 with %23 needed when manual encoding operation of encodeUrlHash()
+  //plus the enforced encoding in some browsers resulted in double encoding # --> %23 --> %2523
+  return decodeURIComponent(hash.replace(/%2523/g, "%23"));
+}
+
 export function scrollTo({ durationLeft = 200, element, complete }) {
   const positionFrom = element.scrollTop;
   const positionTo = 0 - positionFrom;
@@ -39,19 +63,11 @@ export function translateNode(translator) {
   };
 }
 
-export function loadJS(url, location, className) {
-  //url is URL of external file, implementationCode is the code
-  //to be called from the file, location is the location to
-  //insert the <script> element
-  return new Promise((resolve, reject) => {
-    const scriptTag = document.createElement("script");
-    if (className) scriptTag.classList.add(className);
-    scriptTag.src = url;
-    scriptTag.onerror = reject;
-    scriptTag.onload = resolve;
-    scriptTag.onreadystatechange = resolve;
-    location.appendChild(scriptTag);
-  });
+
+export async function loadConfigModule(path) {
+  const url = new URL(path, import.meta.url);
+  const mod = await import(url.href);
+  return mod.VIZABI_MODEL;
 }
 
 

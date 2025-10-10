@@ -1,3 +1,5 @@
+import toolsPage_entitysetMapping from "toolsPage_entitysetMapping";
+
 const rule = {
   test(url) {
     const hashIndex = url.indexOf("#");

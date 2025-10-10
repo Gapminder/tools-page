@@ -1,4 +1,4 @@
-const toolsPage_conceptMapping =  {
+export default {
   //If you are adding a new redirect, ctrl+f the concpet you are redirecting from
   //in this file! it might be that one of the old redirects needs to be updated
 

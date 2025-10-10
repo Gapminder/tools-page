@@ -1,4 +1,5 @@
-import { encodeUrlHash, decodeUrlHash } from "../../url.js";
+import toolsPage_conceptMapping from "toolsPage_conceptMapping";
+import { encodeUrlHash, decodeUrlHash } from "../../../core/utils.js";
 
 const rule = {
   test(url) {

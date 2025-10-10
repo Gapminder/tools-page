@@ -1,5 +1,6 @@
 import { upgradeUrl } from "./deprecated-url.js";
 import { debounce, deepExtend } from "./utils.js";
+import { encodeUrlHash, parseURLHashWithUrlon } from "../core/utils.js";
 
 const URL_VERSION = "v2";
 const dispatch = d3.dispatch("translate", "toolChanged", "toolStateChangeFromPage", "toolReset", "languageChanged", "projectorChanged", "menuOpen", "menuClose");
@@ -120,31 +121,6 @@ function resetState() {
   dispatch.call("toolChanged", null, { id: getTool(), previousToolId: getTool() });
 }
 
-
-function parseURLHashWithUrlon(rawUrl = window.location.toString()) {
-  const hash = rawUrl.includes("#") && rawUrl.substring(rawUrl.indexOf("#") + 1);
-  if (!hash) return {};
-
-  try {
-    return urlon.parse(decodeUrlHash(hash) || "$;");
-  }
-  catch {
-    console.warn("Failed to decode and parse this URL hash:", hash);
-    return {};
-  }
-}
-
-//need to encode symbols like # in color codes because urlon can't handle them properly
-function encodeUrlHash(hash) {
-  return hash.replace(/=#/g, "=%23"); //replace every # with %23
-}
-
-function decodeUrlHash(hash) {
-  //replacing %2523 with %23 needed when manual encoding operation of encodeUrlHash()
-  //plus the enforced encoding in some browsers resulted in double encoding # --> %23 --> %2523
-  return decodeURIComponent(hash.replace(/%2523/g, "%23"));
-}
-
 const debouncedUpdateUrl = debounce(updateURL, 310);
 
 // HANDLE BROWSER BACK-FORWARD BUTTON
@@ -154,9 +130,6 @@ export {
   init,
   URLI,
   debouncedUpdateUrl as updateURL,
-  encodeUrlHash,
-  decodeUrlHash,
-  parseURLHashWithUrlon,
   pushToHistory,
   resetState,
   getURLI,

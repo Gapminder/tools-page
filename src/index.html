@@ -20,6 +20,9 @@
 
   <link href="favicon.png" rel="shortcut icon">
 
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/VizabiSharedComponents.css">
+  <link rel="stylesheet" href="assets/css/mapbox-gl.css">
 </head>
  
 <body>
@@ -31,7 +34,7 @@
       <div class="flow-container" style="justify-content: flex-end">
         <span class="app-chart-switcher"></span>
         <div class="menu-icon"><div class="icon"></div></div>
-      </div>
+      </div>    
     </div>
 
     <div class="app-mobile-menu"></div>
@@ -76,5 +79,17 @@
     <span class="app-footer"></span>
   </div>
 
+
+  <script src="vendor/d3.js"></script>
+  <script src="vendor/mobx.js"></script>
+  <script src="vendor/Vizabi.js"></script>
+  <script src="vendor/VizabiSharedComponents.js"></script>
+  <script src="vendor/reader-ddfcsv.js"></script>
+  <script src="vendor/reader-ddfservice.js"></script>
+  <script src="vendor/urlon.js"></script>
+  <script src="vendor/mapbox-gl.js"></script>
+  
+  <!-- ESM entry so dynamic imports work -->
+  <script type="module" src="toolspage.js"></script>
   </body>
 </html>
