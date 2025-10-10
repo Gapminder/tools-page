@@ -1,13 +1,13 @@
 {
   "boendebarom": {
     "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "service": "https://waffle-dev.gapminder.org/v2",
     "dataset": "boba/master",
     "name": "boba/master"
   },
   "kolada": {
     "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "service": "https://waffle-dev.gapminder.org/v2",
     "dataset": "kolada/main",
     "name": "kolada/main"
   }
