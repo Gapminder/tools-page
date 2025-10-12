@@ -45,7 +45,8 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
         created_at: new Date().toISOString(),
         expires_at: computeExpiryDate(lifetime),
         page_config: pageConfig,
-        href
+        href,
+        url
       }
     ]);
   if (error) {
