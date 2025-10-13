@@ -1,6 +1,6 @@
 {
   "name": "tools-page",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Tools-page",
   "main": "index.js",
   "type": "module",
