@@ -442,3 +442,46 @@ export function removeProperties(obj, array, keyStack = "") {
   return obj;
 }
 
+export function randomSlug(base = "bubbles-") {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz234567';
+  const timestamp = String(new Date().valueOf() - new Date("2025-01-01").valueOf()).substr(0,8)
+  const suffix = Array.from(crypto.getRandomValues(new Uint8Array(2)))
+    .map(x => alphabet[x % alphabet.length])
+    .join('');
+  return base + timestamp + suffix;
+}
+
+// Add this function (computes expiry date from lifetime like "1 week", "1 month", "6 month", "1 year")
+export function computeExpiryDate(lifetime, fromDate = new Date()) {
+  if (!lifetime) return null;
+  const s = String(lifetime).trim().toLowerCase();
+  if (s === 'never') return null;
+
+  const m = s.match(/^(\d+)\s*(day|week|month|year)s?$/);
+  if (!m) return null;
+
+  const n = parseInt(m[1], 10);
+  const unit = m[2];
+
+  const d = new Date(fromDate.getTime());
+
+  switch (unit) {
+    case 'day':
+      d.setDate(d.getDate() + n);
+      break;
+    case 'week':
+      d.setDate(d.getDate() + n * 7);
+      break;
+    case 'month':
+      // setMonth handles month overflow (e.g., adding to Jan 31)
+      d.setMonth(d.getMonth() + n);
+      break;
+    case 'year':
+      d.setFullYear(d.getFullYear() + n);
+      break;
+    default:
+      return null;
+  }
+
+  return d.toISOString();
+}

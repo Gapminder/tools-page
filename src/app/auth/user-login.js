@@ -1,4 +1,4 @@
-import { supabaseClient } from "./supabase.service";
+import { supabaseClient, userLogin, userLogout, userSignup, isLogged } from "./supabase.service";
 
 const UserLogin = function({ dom, translator, state, data }) {
   const template = `  
@@ -199,33 +199,8 @@ const UserLogin = function({ dom, translator, state, data }) {
     placeHolder.classed("logged", logged.isLogged);
   }
 
-  async function userSignup(email, password) {
-    const { data, error } = await supabaseClient.auth.signUp({ email, password });
-    console.log(error, data);
-    return error ? false : true;
-  }
-
-  async function userLogin(email, password) {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-    console.log(error, data);
-    return error ? false : true;
-  }
-
-  async function userLogout() {
-    const { error } = await supabaseClient.auth.signOut();
-    return error ? false : true;
-  }
-
   this.isLogged = false;
 
-  async function isLogged() {
-    const { data, error } = await supabaseClient.auth.getSession();
-    return { 
-      isLogged: data.session && true,
-      session: data.session
-    };
-  }
-  
   async function hashSHA2(string) {
     const utf8 = new TextEncoder().encode(string);
     const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
