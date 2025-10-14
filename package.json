@@ -1,6 +1,6 @@
 {
   "name": "tools-page",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Tools-page",
   "main": "index.js",
   "type": "module",
@@ -56,8 +56,8 @@
     "@vizabi/popbyage": "5.2.0",
     "@vizabi/reader-ddfcsv": "4.5.3",
     "@vizabi/reader-ddfservice": "^2.4.1",
-    "@vizabi/shared-components": "1.55.1",
-    "@vizabi/spreadsheet": "4.0.1",
+    "@vizabi/shared-components": "1.56.0",
+    "@vizabi/spreadsheet": "4.2.0",
     "d3": "^6.7.0",
     "dom-to-image-more": "^3.7.1",
     "mobx": "^5.15.7",

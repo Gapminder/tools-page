@@ -3,13 +3,69 @@ export const VIZABI_MODEL = {
     markers: {
       "spreadsheet": {
         data: {
-          source: "boendebarom"
+          source: "boendebarom",
+          space: ["geo", "year"],
+          filter: {
+            dimensions: { "geo": { "$or": [{ "is--kommun": true }] } }
+          }
+        },
+        encoding: {
+          "show": {
+            modelType: "selection",
+            data: {
+              filter: { dimensions: { "geo": { "$not": { "is--deso": 1 } } } }
+            }
+          },
+          "selected": {
+            modelType: "selection"
+          },
+          "highlighted": {
+            modelType: "selection"
+          },
+          "superhighlighted": {
+            modelType: "selection"
+          },
+          number: {
+            data: {concept: "mean_dispink_20_64"}
+          },
+          label: {
+            data: {
+              modelType: "entityPropertyDataConfig",
+              concept: "name"
+            }
+          },
+          "color": {
+            data: {
+              space: ["geo"],
+              concept: "region"
+            },
+            scale: {
+              modelType: "color",
+              type: "ordinal"
+            }
+          },
         }
       }
     }
   },
   ui: {
-    chart: {},
+    "dialogs": {
+      "markercontrols": {
+        "disableSlice": true,
+        "disableAddRemoveGroups": false,
+        "primaryDim": "geo",
+        "drilldown": "region.kommun.regso",
+        "shortcutForSwitch": true,
+        "shortcutForSwitch_allow": ["kommun", "regso"],
+      },
+    },
+    "marker-contextmenu": {
+      "primaryDim": "geo",
+      "drilldown": "region.kommun.regso"
+    },
+    chart: {
+      opacitySelectDim: 0.3,
+    },
     "tree-menu": {
       "showDataSources": false,
       "folderStrategyByDataset": {

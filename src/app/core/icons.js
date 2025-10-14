@@ -375,3 +375,22 @@ export const VIZABI_MAPANDBUBBLES = `
   </g>
 </svg>
 `
+
+export const VIZABI_SPREADSHEET = `
+   <svg
+      width="330.77466"
+      height="289.53732"
+      viewBox="0 0 330.77466 289.53732"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:svg="http://www.w3.org/2000/svg">
+   
+   <g
+      id="layer-MC0">
+      <path
+         id="rect1"
+         style="fill:#990000;stroke-width:11.3386;paint-order:stroke markers fill;fill-opacity:1"
+         d="M 11.816703,11.159589 V 278.12166 H 319.15596 V 11.159589 Z M 34.706401,51.894591 H 136.83659 V 105.07818 H 34.706401 Z m 123.403259,0 h 58.33074 v 53.183589 h -58.33074 z m 79.60381,0 h 58.32892 V 105.07818 H 237.71347 Z M 34.706401,128.2835 H 136.83659 v 53.18176 H 34.706401 Z m 123.403259,0 h 58.33074 v 53.18176 h -58.33074 z m 79.60381,0 h 58.32892 v 53.18176 H 237.71347 Z M 34.706401,204.67058 H 136.83659 v 53.18359 H 34.706401 Z m 123.403259,0 h 58.33074 v 53.18359 h -58.33074 z m 79.60381,0 h 58.32892 v 53.18359 h -58.32892 z" />
+   </g>
+   </svg>
+`
