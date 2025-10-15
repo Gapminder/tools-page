@@ -189,7 +189,7 @@ const Tool = function({ cmsData, state, dom }) {
       const meaningfulDeltaConfig = Utils.clearEmpties(
         removeProperties(
           diffObject(currentConfig, combinedDefaultConfig),
-          ["highlighted", "superhighlighted", "locale", "range", "frame.scale.domain", "presets", "dragging", "opened", "dataSources"]
+          ["highlighted", "superhighlighted", "range", "frame.scale.domain", "presets", "dragging", "opened", "dataSources"]
         )
       );
 
@@ -220,10 +220,12 @@ const Tool = function({ cmsData, state, dom }) {
 
   function setVizabiLocale(id) {
     if (viz?.services?.locale) viz.services.locale.id = id;
+    if (viz?.ui?.locale) viz.ui.locale.id = id;
   }
 
   function setVizabiProjector(truefalse) {
     if (viz?.services?.layout) viz.services.layout.projector = truefalse;
+    if (viz?.ui?.layout) viz.ui.layout.projector = truefalse;
   }
 
   //cleanup the existing tool

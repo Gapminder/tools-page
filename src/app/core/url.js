@@ -118,13 +118,13 @@ function setProjector(truefalse) {
 function setTool(id = getTool()) {
   const previousToolId = URLI["chart-type"];
   URLI["chart-type"] = id;
-  URLI.ui = { ui: { locale: { id: defaultLoc } } };
+  URLI.ui = { locale: { id: getLocale() || defaultLoc } };
   URLI.model = {};
   pushToHistory();
   dispatch.call("toolChanged", null, { id, previousToolId });
 }
 function resetState() {
-  URLI.ui = { ui: { locale: { id: defaultLoc } } };
+  URLI.ui = { locale: { id: defaultLoc } };
   URLI.model = {};
   pushToHistory();
   dispatch.call("toolChanged", null, { id: getTool(), previousToolId: getTool() });

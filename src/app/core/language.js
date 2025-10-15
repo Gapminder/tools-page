@@ -13,7 +13,7 @@ function getLocaleDisplayName(locale) {
 
 function setLocalePageClasses() {
   const locale = getStateLocale();
-  const langId = locale.split("-")[1];
+  const langId = locale.split("-")[1] || locale; //exception for "en"
   d3.select("html")
     .attr("lang", langId)
     .attr("class", langId);
