@@ -23,20 +23,10 @@
     "dataSources": ["boendebarom", "kolada"],
     "transition": ["select","time"],
     "title": "bubbles",
+    "hideThumbnail": false,
     "image": "assets/images/chart/bubble-chart.png",
     "icon_inline": "VIZABI_BUBBLES",
     "icon": "assets/images/chart/vizabi_bubbles.svg"
-  },
-  {
-    "id": "spreadsheet",
-    "title": "spreadsheet",
-    "image": "assets/images/chart/spreadsheet.png",
-    "dataSources": ["boendebarom", "kolada"],
-    "tool": "Spreadsheet",
-    "toolVariation": "Base",
-    "config": "Spreadsheet-boendebarom",
-    "mainMarker": "spreadsheet",
-    "hideThumbnail": true
   },
   {
     "id": "extapimap",
@@ -51,5 +41,18 @@
     "image": "assets/images/chart/extapimap.png",
     "icon_inline": "VIZABI_MAP",
     "icon": "assets/images/chart/vizabi_map.svg"
+  },
+  {
+    "id": "spreadsheet",
+    "tool": "Spreadsheet",
+    "toolVariation": "Base",
+    "config": "Spreadsheet-boendebarom",
+    "mainMarker": "spreadsheet",
+    "dataSources": ["boendebarom", "kolada"],
+    "title": "spreadsheet",
+    "hideThumbnail": false,
+    "image": "assets/images/chart/spreadsheet.png",
+    "icon_inline": "VIZABI_SPREADSHEET",
+    "icon": "assets/images/chart/vizabi_spreadsheet.svg"
   }
 ]

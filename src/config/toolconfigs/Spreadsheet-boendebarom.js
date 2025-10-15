@@ -26,7 +26,7 @@ export const VIZABI_MODEL = {
             modelType: "selection"
           },
           number: {
-            data: {concept: "mean_dispink_20_64"}
+            data: {}
           },
           label: {
             data: {
@@ -36,8 +36,7 @@ export const VIZABI_MODEL = {
           },
           "color": {
             data: {
-              space: ["geo"],
-              concept: "region"
+              constant: "_default"
             },
             scale: {
               modelType: "color",

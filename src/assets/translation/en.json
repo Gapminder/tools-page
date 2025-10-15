@@ -71,6 +71,7 @@
         "buttons/addgeo": "Add a place",
         "button-play": "Play",
         "button-pause": "Pause",
+        "check/borrowZoom":	"Match min-max to X and Y",
         "check/useBivariateColorScaleWithDataFromXY": "Use bivariate colors based on X, Y",
         "check/useConnectedRowsAndColumns": "Connect rows, connect columns",
         "check/showForecast": "Show forecast",

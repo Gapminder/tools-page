@@ -71,6 +71,7 @@
         "buttons/addgeo": "Add a place",
         "button-play": "Play",
         "button-pause": "Pause",
+        "check/borrowZoom":	"Min-max följer bubbeldiagram",
         "check/useBivariateColorScaleWithDataFromXY": "Bivariat karta",
         "check/useConnectedRowsAndColumns": "Connect rows, connect columns",
         "check/showForecast": "Visa prognosdata",
