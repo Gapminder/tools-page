@@ -1,16 +1,6 @@
-import * as utils from "../../core/utils";
+import {translateNode, getVideoIframeHTMLTemplate} from "../../core/utils";
 
-const HOWTO_IFRAME = `<iframe
-  width="100%"
-  style="aspect-ratio: 16 / 9; border: 1px solid grey;"
-  src="https://www.youtube.com/embed/lSYU5X3ETf8?si=LZpmhJMaMbdXLe5b&rel=0"
-  title="YouTube video player"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-  </iframe>`;
-
-const Menu = function({ dom, translator, state, data, menuButton, mobileMenuContainer }) {
+const Menu = function({ dom, translator, state, data, menuButton, mobileMenuContainer, videoSrc = "" }) {
   const template = `
     <a class="howto-button" data-text="how_to_use"></a>
 
@@ -58,8 +48,8 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
   });
 
   function translate() {
-    placeHolder.selectAll("a").each(utils.translateNode(translator));
-    mobileMenu.selectAll("a").each(utils.translateNode(translator));
+    placeHolder.selectAll("a").each(translateNode(translator));
+    mobileMenu.selectAll("a").each(translateNode(translator));
   }
 
   function toggleHowTo(force) {
@@ -68,7 +58,7 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
     const howToContent = placeHolder.select(".howToContent");
 
     if (isHowToOpen && !howToContent.select("iframe").size()) {
-      howToContent.html(HOWTO_IFRAME);
+      howToContent.html(getVideoIframeHTMLTemplate(videoSrc));
     }
 
   }
@@ -77,7 +67,7 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
     const howToContentMobile = mobileMenu.select(".howToContentMobile");
 
     if (force !== false && !howToContentMobile.select("iframe").size()) {
-      howToContentMobile.html(HOWTO_IFRAME);
+      howToContentMobile.html(getVideoIframeHTMLTemplate(videoSrc));
     }
   }
 
@@ -214,11 +204,11 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
   //     });
 
   //   placeHolder.select(".menu-item.how-to-use-video")
-  //     .each(utils.translateNode(translator));
+  //     .each(translateNode(translator));
   //   placeHolder.select(".menu-item.data-editor-button")
-  //     .each(utils.translateNode(translator));
+  //     .each(translateNode(translator));
   //   placeHolder.selectAll("p.nav-faq-help-links a")
-  //     .each(utils.translateNode(translator));
+  //     .each(translateNode(translator));
   // }
 
 

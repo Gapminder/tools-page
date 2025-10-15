@@ -5,5 +5,7 @@
   "DOCID_CMS": "1Co50oM-GDNcXb2W47JQASUibhpyIH2G2Cub4geW8udM",
   "DOCID_I18N": "1UKBPO0fxxUtreonaYEX5MV2g_kL-zAR6Dr8GlDvHDjE",
   "DEFAULT_LOCALE": "sv-SE",
-  "page_slug": "boendebarometern"
+  "page_slug": "boendebarometern",
+  "HOWTO_VIDEO_LINK": "https://www.youtube.com/embed/lSYU5X3ETf8?si=LZpmhJMaMbdXLe5b&rel=0",
+  "DEMO_VIDEO_LINK": "https://player.vimeo.com/video/1065445795?badge=0&amp;autoplay=1&amp;player_id=0&amp;app_id=58479"
 }

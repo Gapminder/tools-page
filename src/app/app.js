@@ -50,6 +50,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
   new ChartSwitcherWithIcons({ translator, state, dom: ".header .app-chart-switcher",
     data: cmsData.toolset });
   new Menu({ translator, state, dom: ".header .menu",
+    videoSrc: cmsData.properties?.HOWTO_VIDEO_LINK,
     data: cmsData.menu, menuButton: ".header .menu-icon", mobileMenuContainer: ".app-mobile-menu" });
   new LanguageSwitcher({ translator, state, dom: ".app-language-switcher",
     data: cmsData.properties?.locales });
@@ -57,7 +58,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
   //  data: cmsData.toolset });
   new RelatedItems({ translator, state, dom: ".app-related-items .related-block",
     data: cmsData.related });
-  new VideoBlock({ dom: ".video-block" });
+  new VideoBlock({ dom: ".video-block", videoSrc: cmsData.properties?.DEMO_VIDEO_LINK });
   new SocialButtons({ translator, state, dom: ".social-list .app-social-buttons",
     bitlyService: await BitlyService({ state }), locationService: LocationService() });
   new Footer({ translator, state, dom: ".app-footer" });

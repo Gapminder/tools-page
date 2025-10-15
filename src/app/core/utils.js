@@ -485,3 +485,26 @@ export function computeExpiryDate(lifetime, fromDate = new Date()) {
 
   return d.toISOString();
 }
+
+export function getVideoIframeHTMLTemplate(src){
+  if (src.includes("youtube")) return `<iframe
+    width="100%"
+    style="aspect-ratio: 16 / 9; border: 1px solid grey;"
+    src="${src}"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+  </iframe>`;
+
+  if (src.includes("vimeo")) return `<iframe 
+    src="${src}" 
+    frameborder="0" 
+    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
+    style="width:100%;height:100%;" 
+    title="Boendebarometern">
+  </iframe>
+  <script src="https://player.vimeo.com/api/player.js"></script>`
+
+  return "";
+}
