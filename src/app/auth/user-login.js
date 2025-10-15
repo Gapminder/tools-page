@@ -1,6 +1,8 @@
 import { supabaseClient, userLogin, userLogout, userSignup, isLogged } from "./supabase.service";
+import toolsPage_properties from "toolsPage_properties";
 
 const UserLogin = function({ dom, translator, state, data }) {
+  const pageSlug = toolsPage_properties?.page_slug;
   const template = `  
     <div class="user-login-title">Log in</div>
     <div class="user-logged-title">&#x2714</div>
@@ -8,8 +10,9 @@ const UserLogin = function({ dom, translator, state, data }) {
       <span class="user-logged-name"></span>
       <button class="user-logged-logout">Log out</button>
       <hr>
-      <button class="user-logged-dataeditor">Data source editor</button>
-      <button class="user-logged-datasets">Server datasets</button>
+      <span>Data Verkstad:</span>
+      <a href="https://vizabi.com/verkstad?tab=servers${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-dataeditor">Hantera data källor</a>
+      <a href="https://vizabi.com/verkstad?tab=permalinks${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-permalinks">Hantera korta URLs</a>
     </div>
     <div class="user-login-form-wrapper how-to-outer">
       <div class="user-login-form">
@@ -195,6 +198,7 @@ const UserLogin = function({ dom, translator, state, data }) {
     const logged = await isLogged();
     if (logged.isLogged) {
       placeHolder.select(".user-logged-name").text(logged.session.user.email);
+      placeHolder.select(".user-logged-title").text(logged.session.user.email.split("@")[0]);
     }
     placeHolder.classed("logged", logged.isLogged);
   }

@@ -1,18 +1,28 @@
 @import './../_resources/variables.styl'
 @import './../_resources/mixins.styl'
 
+a[target="_blank"]::after {
+  content: "⇱";
+  margin: 0 3px 0 5px;
+  transform: rotate(92deg);
+  transform-origin: center;
+  display: inline-block;
+}
+
 .app-user-login
 
   button, span.button
     appearance: none
     -webkit-appearance: none
     -moz-appearance: none
-    border: 0
     background: none
     font-size: 1em
     color:  $color-blue-darker
     margin: 20px 0
     cursor: pointer
+    border 1px solid $color-primary
+    border-radius: 4px
+    padding 2px 10px
     &:hover
       color: $color-primary;
 
@@ -33,10 +43,7 @@
         display: flex
 
   .user-login-title
-    opacity: 0.01;
-
-  .user-login-title, .user-logged-title
-    font-size: .8em
+    get-font-size(small)
     padding: 2px 6px
     text-wrap: nowrap
     border: $color-primary solid 1px
@@ -44,43 +51,52 @@
     cursor: pointer
 
   .user-logged-title
+    get-font-size(small)
     display: none
     color $color-primary
-    width 30px
+    text-wrap: nowrap
+    cursor: pointer
+    margin-right: 5px;
     &:after
+      font-size: 0.8em
       content '\25BC'
       padding 0 0 0 4px
       border-left 1px solid $color-primary
-      color $brand-primary 
-      position absolute
-      right 4px
+      color $color-primary
+      margin-left 4px
 
   .user-logged-form-wrapper
     display: none
 
     flex-direction: column;
+    align-items: start;
     z-index: 1;
     position: absolute;
-    top: 31px;
+    bottom: 31px;
     width: 200px;
-    right: 0px;
+    right: 20px;
     background-color: #ffffff
     border: 1px solid $color-primary;
-    color: $brand-primary
+    padding: 10px
+    border-radius: 4px
+    gap: 10px
+    get-font-size(small)
 
     button
+      align-self: center;
       margin 0
-      padding 2px 10px
-      font-size .9em
+
+    a 
+      color:  $color-blue-darker
+      text-decoration: underline
+      &:hover
+        color: $color-primary
 
     hr
       width 80%
 
     .user-logged-name
       align-self center
-      margin-top 5px
-      margin-bottom 10px
-      font-size .8em
 
   .user-login-form-wrapper
     display: none
@@ -122,6 +138,8 @@
           flex-direction: row;
           justify-content: space-around;
           width: 100%;
+          .button
+            border: 0
 
       .signup-panel
         display: none
