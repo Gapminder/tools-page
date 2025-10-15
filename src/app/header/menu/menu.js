@@ -144,7 +144,7 @@ const Menu = function({ dom, translator, state, data, menuButton, mobileMenuCont
               <div class="data-editor-instructions">
                 Congrats! You've discovered the hidden button for editing data sources
                 <br/>
-                <a target="_blank" href="https://docs.google.com/document/d/1Ibcuzp5eaQQus515OROzkQxpcvFf3wDU03mFQmrtmV4/preview">How to show data from a generic google spreadsheet ⧉</a>
+                <a target="_blank" href="https://docs.google.com/document/d/1Ibcuzp5eaQQus515OROzkQxpcvFf3wDU03mFQmrtmV4/preview">How to show data from a generic google spreadsheet</a>
               </div>
               <div class="table"></div>
               <p class="data-editor-buttons nav-faq-help-links">

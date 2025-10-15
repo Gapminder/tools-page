@@ -12,6 +12,11 @@ body
   padding 0
   margin 0
 
+a[target="_blank"]:not(.newtab)::after
+  new-tab()
+  opacity: 0.8;
+a[target="_blank"]:not(.newtab):hover::after
+  opacity: 1;
 
 .wrapper
   display block
