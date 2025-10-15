@@ -68,7 +68,7 @@
   "bubble_chart_desc": "This graph shows how long people live and how much money they earn. Click the play button to see how countries have developed since 1800.",
   "maps": "Maps",
   "ranks": "Ranks",
-  "spreadsheet": "Spreadsheet",
+  "spreadsheet": "Table",
   "bubble_map_desc": "This graph shows the population on a map",
   "trends": "Trends",
   "globaltrends": "Global Trends",
@@ -77,7 +77,7 @@
   "pop_by_age_desc": "This graph shows the population by age",
   "dollar_street": "Dollar Street",
   "dollar_street_project": "Dollar Street project",
-  "combo-emap-bc": "Fancy map + Bubbles",
+  "combo-emap-bc": "Map & Bubbles",
   "extapimap": "Fancy map",
   "share": "Share"
 }
