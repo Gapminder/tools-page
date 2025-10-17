@@ -9,7 +9,7 @@ export const VIZABI_MODEL = {
               dimensions: {
                 "geo": {
                   "$or": [{
-                    "geo": { $in: ["world"] }
+                    "geo": { $in: ["americas","europe","africa","asia"] }
                   }]
                 }
               }
@@ -165,7 +165,7 @@ export const VIZABI_MODEL = {
       chart: {
         mode: "smallMultiples",
         stacked: true,
-        inpercent: false,
+        inpercent: true,
         flipSides: true,
         lockActive: true,
         lockNonSelected: 0,
