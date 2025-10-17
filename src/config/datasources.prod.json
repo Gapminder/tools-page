@@ -1,43 +1,43 @@
 {
   "billy": {
     "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "service": "https://small-waffle.gapminder.org/v2",
     "dataset": "billy/master",
     "name": "billy/master"
   },
   "povcalnet": {
     "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "service": "https://small-waffle.gapminder.org/v2",
     "dataset": "povcalnet/master",
     "name": "povcalnet/master"
   },
   "sg": {
     "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "service": "https://small-waffle.gapminder.org/v2",
     "dataset": "sg/master",
     "name": "sg/master"
   },
   "pop": {
     "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "service": "https://small-waffle.gapminder.org/v2",
     "dataset": "population/master",
     "name": "population/master"
   },
   "wdi": {
     "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "service": "https://small-waffle.gapminder.org/v2",
     "dataset": "wdi/master",
     "name": "wdi/master"
   },
   "fasttrack": {
     "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "service": "https://small-waffle.gapminder.org/v2",
     "dataset": "fasttrack/master",
     "name": "fasttrack/master"
   },
   "country_flags": {
     "modelType": "ddfbw",
-    "service": "https://small-waffle.gapminder.org",
+    "service": "https://small-waffle.gapminder.org/v2",
     "dataset": "country-flags",
     "name": "country-flags"
   }
