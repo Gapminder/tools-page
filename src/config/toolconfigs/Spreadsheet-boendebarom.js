@@ -64,6 +64,21 @@ export const VIZABI_MODEL = {
     },
     chart: {
       opacitySelectDim: 0.3,
+      "sendTools": [
+        {
+          "label": "Bubbles (as Y axis)",
+          "icon": "🏀",
+          "tool": "bubbles",
+          "marker": "bubble",
+          "encoding": "y",
+          "selected": "trail"
+        }, {
+          "label": "Map (as area color)",
+          "icon": "🗺",
+          "tool": "extapimap",
+          "marker": "bubble",
+          "encoding": "color_map"
+      }]
     },
     "tree-menu": {
       "showDataSources": false,
