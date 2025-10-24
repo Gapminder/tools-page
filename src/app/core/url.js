@@ -16,19 +16,21 @@ let authToken = null;
 let defaultLoc = null;
 let permalinkHashedToken = null;
 
-function init({ allowedTools, defaultLocale, shortLinkHash }) {
+function init({ allowedTools, defaultLocale, shortLinkHash, shortLinkState = {} }) {
   //keep permalink data
   permalinkHashedToken = shortLinkHash;
   
   //Upgrade raw URL
-  const url = location.href;
-  const upgradedUrl = upgradeUrl(url);
-  if (upgradedUrl !== url)
-    location.replace(upgradedUrl);
+  if(!shortLinkState){
+    const url = location.href;
+    const upgradedUrl = upgradeUrl(url);
+    if (upgradedUrl !== url)
+      location.replace(upgradedUrl);
+  }
 
   //Only then parse URL
   defaultLoc = defaultLocale;
-  URLI = deepExtend({ ui: { locale: { id: defaultLocale } } }, parseURLHashWithUrlon());
+  URLI = deepExtend({ ui: { locale: { id: defaultLocale } } }, shortLinkState, parseURLHashWithUrlon());
 
   //apply defaults
   const toolFromUrl = getTool();

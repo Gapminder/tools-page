@@ -31,15 +31,14 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
   const cmsData = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE });
   const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.id);
 
+  let shortLinkState = {};
   const {slug: shortLinkSlug, hash: shortLinkHash} = await getLinkSlugAndHash(window.location.search);
   if (shortLinkSlug) {
     const linkData = await getLinkData(shortLinkSlug);
-    if (linkData && linkData.href) {
-      location.replace(linkData.href);
-    }
+    if (linkData && linkData.page_config) shortLinkState = linkData.page_config;
   }
-  
-  const state = urlService.init({ allowedTools, defaultLocale: DEFAULT_LOCALE, shortLinkHash });
+
+  const state = urlService.init({ allowedTools, defaultLocale: DEFAULT_LOCALE, shortLinkHash, shortLinkState });
 
   d3.select(".wrapper").classed("embedded-view", state.getEmbedded());
 

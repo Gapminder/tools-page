@@ -12,7 +12,7 @@ export async function getLinkSlugAndHash(url) {
 export async function getLinkData(slug) {
   const { data, error } = await supabaseClient
     .from('links')
-    .select('page_config, href')
+    .select('page_config')
     .eq('slug', slug)
     .maybeSingle();
 
