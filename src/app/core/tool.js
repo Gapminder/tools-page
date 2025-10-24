@@ -34,7 +34,7 @@ const Tool = function({ cmsData, state, dom }) {
           target.model.dataSources[ds] = datasources[ds];
         }
         target.model.dataSources[ds].locale = urlState?.ui?.locale || target.ui?.locale;
-        target.model.dataSources[ds].token = authToken;
+        target.model.dataSources[ds].authToken = authToken;
         target.model.dataSources[ds].permalinkToken = permalinkToken;
       });
     }
