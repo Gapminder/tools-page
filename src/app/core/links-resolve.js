@@ -1,5 +1,5 @@
 import { supabaseClient } from "../auth/supabase.service";
-import { computeExpiryDate, hashSHA2 } from "./utils";
+import { computeExpiryDate, hashSHA2, randomToken } from "./utils";
 
 export async function getLinkSlugAndHash(url) {
   const params = new URLSearchParams(url);
@@ -40,6 +40,9 @@ export async function checkSlugAvailability(slug) {
 }
 
 export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig, href = location.href, privateDs}) {
+  const token = privateDs.length ? randomToken() : "";
+  const urlWithToken = url + (privateDs.length ? `&t=${token}` : "");
+
   const { data: linksUpsertData, error } = await supabaseClient
     .from('links')
     .upsert([
@@ -50,7 +53,7 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
         expires_at: computeExpiryDate(lifetime),
         page_config: pageConfig,
         href,
-        url
+        url: urlWithToken,
       }
     ])
     .select();
@@ -59,12 +62,14 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
     alert("Error saving the link. Please try again.");
   } else {
     if (privateDs.length) {
+      const hashedToken = await hashSHA2(token);
       const { data, error } = await supabaseClient
         .from('acl_links')
         .insert(privateDs.map(ds => ({
           link_id: linksUpsertData[0].id,
           scope: "dataset",
-          resource: ds
+          resource: ds,
+          token_hash: hashedToken
         })));
       if (error) {
         console.error("Error saving the link:", error);
@@ -72,7 +77,7 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
         return;
       }
     }
-    onSave({ url });
+    onSave({ url: urlWithToken } );
   }
 }
 
