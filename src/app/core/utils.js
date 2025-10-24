@@ -451,6 +451,24 @@ export function randomSlug(base = "bubbles-") {
   return base + timestamp + suffix;
 }
 
+export function randomToken(length = 32) {
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz234567';  
+  return Array.from(crypto.getRandomValues(new Uint8Array(length)))
+    .map(x => alphabet[x % alphabet.length])
+    .join('');
+}
+
+export async function hashSHA2(string) {
+  if(!string) return null;
+  const utf8 = new TextEncoder().encode(string);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', utf8);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((bytes) => bytes.toString(16).padStart(2, '0'))
+    .join('');
+  return hashHex;
+}
+
 // Add this function (computes expiry date from lifetime like "1 week", "1 month", "6 month", "1 year")
 export function computeExpiryDate(lifetime, fromDate = new Date()) {
   if (!lifetime) return null;

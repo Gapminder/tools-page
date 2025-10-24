@@ -14,8 +14,12 @@ const resetPopStateLoopFlag = debounce(() => { popStateLoopFlag = false; }, 500)
 let URLI = { ui: {}, model: {} };
 let authToken = null;
 let defaultLoc = null;
+let permalinkHashedToken = null;
 
-function init({ allowedTools, defaultLocale }) {
+function init({ allowedTools, defaultLocale, shortLinkHash }) {
+  //keep permalink data
+  permalinkHashedToken = shortLinkHash;
+  
   //Upgrade raw URL
   const url = location.href;
   const upgradedUrl = upgradeUrl(url);
@@ -31,7 +35,7 @@ function init({ allowedTools, defaultLocale }) {
   const tool = (toolFromUrl && allowedTools.includes(toolFromUrl)) ? toolFromUrl : allowedTools[0];
 
   updateURL({ model: URLI.model, ui: URLI.ui, tool, replaceInsteadPush: true });
-  return { getEmbedded, getTool, resetState, getURLI, getLocale, getProjector, setTool, setLocale, setAuthToken, getAuthToken, setProjector, updateURL: debouncedUpdateUrl, dispatch };
+  return { getEmbedded, getTool, resetState, getURLI, getLocale, getProjector, setTool, setLocale, setAuthToken, getAuthToken, getPermalinkToken, setProjector, updateURL: debouncedUpdateUrl, dispatch };
 }
 
 
@@ -79,7 +83,9 @@ function pushToHistory({ tool = URLI["chart-type"], ui = URLI.ui, model = URLI.m
   //need to encode symbols like # in color codes because urlon can't handle them properly
   }, "unused mandatory parameter", "#" + encodeUrlHash(urlon.stringify(objectToSerialise)));
 }
-
+function getPermalinkToken() {
+  return permalinkHashedToken;
+}
 function getAuthToken() {
   return authToken;
 }
@@ -142,7 +148,7 @@ export {
   pushToHistory,
   resetState,
   getURLI,
-  getEmbedded, getLocale, getProjector, getTool, getAuthToken,
+  getEmbedded, getLocale, getProjector, getTool, getAuthToken, getPermalinkToken,
   setLocale, setProjector, setTool, setAuthToken,
   dispatch
 };

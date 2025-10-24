@@ -1,8 +1,12 @@
 import { supabaseClient } from "../auth/supabase.service";
-import { computeExpiryDate } from "./utils";
+import { computeExpiryDate, hashSHA2 } from "./utils";
 
-export function getLinkSlug(url) {
-  return new URLSearchParams(url).get("for");
+export async function getLinkSlugAndHash(url) {
+  const params = new URLSearchParams(url);
+  const slug = params.get("for");
+  const token = params.get("t");
+  const hash = token ? (await hashSHA2(token)) : null;
+  return {slug, hash};
 }
 
 export async function getLinkData(slug) {
