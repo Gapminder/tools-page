@@ -1,6 +1,6 @@
 import { isLogged } from "../auth/supabase.service";
 import { createShareLinkModal } from "../header/social-buttons/share-link";
-import { checkSlugAvailability, saveSlug } from "./links-resolve";
+import { checkSlugAvailability, getPrivateDsOwned, saveSlug } from "./links-resolve";
 import { randomSlug } from "./utils";
 
 export default async function BitlyService({ state }) {
@@ -16,14 +16,16 @@ export default async function BitlyService({ state }) {
             slug: randomSlug(state.getTool() + "-"),
             baseUrl: location.origin + location.pathname + "?for=",
             checkSlugAvailability,
-            onSave: async({ url, slug, lifetime }) => {
+            getPrivateDsOwned,
+            onSave: async({ url, slug, lifetime, privateDs }) => {
               saveSlug({ 
                 onSave: ({url}) => callback(url), 
                 url, 
                 userId: logged.session.user.id, 
                 slug, 
                 lifetime, 
-                pageConfig: state.getURLI() 
+                pageConfig: state.getURLI(),
+                privateDs
               });
             }
           });

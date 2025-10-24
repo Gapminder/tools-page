@@ -1,3 +1,4 @@
+import { supabaseClient } from "../../auth/supabase.service";
 
 export async function createShareLinkModal(opts = {}) {
   const {
@@ -8,6 +9,7 @@ export async function createShareLinkModal(opts = {}) {
       await new Promise(r => setTimeout(r, 250));
       return !/taken|used/.test(t);
     },
+    getPrivateDsOwned = async () => [],
     onSave = () => {}
   } = opts;
 
@@ -43,6 +45,33 @@ export async function createShareLinkModal(opts = {}) {
   lifetimeOptions.forEach(opt => {
     select.append('option').attr('value', opt).text(opt);
   });
+
+  const privateDsOwned = await getPrivateDsOwned();
+  if (privateDsOwned.length) {
+    const privateDsWrapper = dialog.append("div").attr("class", 'sl-private-ds');
+    privateDsWrapper.append("div").text("Also share the private datasets via the link:");
+    privateDsWrapper.selectAll("input").data(privateDsOwned)
+      .join(enter => {
+        const wrapper = enter.append("span");
+        wrapper.append("input")
+          .attr("type", "checkbox")
+          .attr("id", d => d);
+        wrapper.append("label")
+          .attr("for", d => d)
+          .text(d => d);
+      })
+  }
+
+  function getPrivateDsInputChecked() {
+    const dsArray = [];
+    dialog.select(".sl-private-ds").selectAll("input")
+      .each(function() {
+        if (this.checked) {
+          dsArray.push(d3.select(this).attr("id"));
+        }
+      })
+    return dsArray;
+  }
 
   const actions = dialog.append('div').attr('class', 'sl-actions');
   const btnCancel = actions.append('button').attr('class', 'sl-btn sl-cancel').attr('type', 'button').text('Cancel');
@@ -103,7 +132,7 @@ export async function createShareLinkModal(opts = {}) {
     }
     const url = baseUrl + tok;
     closeModal();
-    onSave({ url, slug: tok, lifetime: life });
+    onSave({ url, slug: tok, lifetime: life, privateDs: getPrivateDsInputChecked() });
   });
 
   function onKeyDown(e) {
