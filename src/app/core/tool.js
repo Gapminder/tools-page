@@ -17,7 +17,7 @@ const Tool = function({ cmsData, state, dom }) {
 
 
   // apply data models from configuration to target
-  function applyDataConfigFromUrlStateToTarget(toolsetEntry, urlState, authToken, target) {
+  function applyDataConfigFromUrlStateToTarget(toolsetEntry, urlState, authToken, permalinkToken, target) {
     if (!target.model.dataSources) target.model.dataSources = {};
     const urlDataConfig = urlState.model?.dataSources;
 
@@ -34,7 +34,8 @@ const Tool = function({ cmsData, state, dom }) {
           target.model.dataSources[ds] = datasources[ds];
         }
         target.model.dataSources[ds].locale = urlState?.ui?.locale || target.ui?.locale;
-        target.model.dataSources[ds].token = authToken;
+        target.model.dataSources[ds].authToken = authToken;
+        target.model.dataSources[ds].permalinkToken = permalinkToken;
       });
     }
 
@@ -106,7 +107,7 @@ const Tool = function({ cmsData, state, dom }) {
     if (previousToolId) vizabiStartConfig = applyTransitionConfigs(vizabiStartConfig);
 
     //apply URL configs
-    vizabiStartConfig = applyDataConfigFromUrlStateToTarget(toolsetEntry, state.getURLI(), state.getAuthToken(), vizabiStartConfig);
+    vizabiStartConfig = applyDataConfigFromUrlStateToTarget(toolsetEntry, state.getURLI(), state.getAuthToken(), state.getPermalinkToken(), vizabiStartConfig);
     VizabiSharedComponents.Utils.mergeInTarget(vizabiStartConfig, state.getURLI(), /*treat as blocks:*/ ["data.filter"]);
 
     const VIZABI_UI_CONFIG = observable(vizabiStartConfig.ui);
@@ -214,7 +215,7 @@ const Tool = function({ cmsData, state, dom }) {
     const dataSources = Object.values(viz.model.dataSources);
     const token = state.getAuthToken();
     dataSources.forEach(ds => {
-      if(ds.reader.setToken) ds.reader.setToken(token);
+      if(ds.reader.setAuthToken) ds.reader.setAuthToken(token);
     });
   }
 
