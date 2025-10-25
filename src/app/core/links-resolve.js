@@ -39,7 +39,7 @@ export async function checkSlugAvailability(slug) {
   return !data;
 }
 
-export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig, href = location.href, privateDs}) {
+export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig, privateDs}) {
   const token = privateDs.length ? randomToken() : "";
   const urlWithToken = url + (privateDs.length ? `&t=${token}` : "");
 
@@ -52,8 +52,7 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
         created_at: new Date().toISOString(),
         expires_at: computeExpiryDate(lifetime),
         page_config: pageConfig,
-        href,
-        url: urlWithToken,
+        url, //don't send the unhashed token to DB, keep only for the user
       }
     ])
     .select();
