@@ -52,6 +52,7 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
         created_at: new Date().toISOString(),
         expires_at: computeExpiryDate(lifetime),
         page_config: pageConfig,
+        note: privateDs.length ? privateDs.join(",") : null,
         url, //don't send the unhashed token to DB, keep only for the user
       }
     ])
