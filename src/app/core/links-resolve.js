@@ -1,5 +1,5 @@
 import { supabaseClient } from "../auth/supabase.service";
-import { computeExpiryDate, hashSHA2, randomToken } from "./utils";
+import { computeExpiryDate, hashSHA2, randomToken, fetchJSON } from "./utils";
 
 export async function getLinkSlugAndHash(url) {
   const params = new URLSearchParams(url);
@@ -52,7 +52,7 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
         created_at: new Date().toISOString(),
         expires_at: computeExpiryDate(lifetime),
         page_config: pageConfig,
-        note: privateDs.length ? privateDs.join(",") : null,
+        note: privateDs.length ? privateDs.map(ds => ds.slug).join(",") : null,
         url, //don't send the unhashed token to DB, keep only for the user
       }
     ])
@@ -68,33 +68,49 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
         .insert(privateDs.map(ds => ({
           link_id: linksUpsertData[0].id,
           scope: "dataset",
-          resource: ds,
+          resource: ds.slug,
           token_hash: hashedToken
         })));
       if (error) {
         console.error("Error saving the link:", error);
         alert("Error saving the acl for private datasets. Please try again.");
         return;
+      } else {
+        syncAclForDatasets(privateDs, 2000);
       }
     }
     onSave({ url: urlWithToken } );
   }
 }
 
+function syncAclForDatasets(privateDs, defer) {
+  setTimeout(() => {  
+    const serverUrlsWithoutApiVersion = new Set(privateDs.map(ds => {
+    const url = new URL(ds.serverUrl);
+    return url.protocol + '//' + url.host + "/";
+    }));
+    Promise.all(Array.from(serverUrlsWithoutApiVersion).map(serverUrl => 
+      fetchJSON(
+        `${serverUrl}synconly/acl/`, 
+        {headers: {Authorization: `Bearer ${supabaseClient.changedAccessToken}`, Accept: "application/json"}} 
+      )
+    )).then(results => console.info("Synced ACLs on servers:", results));
+  }, defer);
+}
+
 function getDsDatasets() {
   return Object.values(viz.model.dataSources)
-    .map(ds => ds.config.dataset)
-    .filter(ds=>ds)
-    .map(ds => ds.split("/")[0])
+    .filter(ds=>ds.config.modelType === "ddfbw")
+    .map(ds => ({ serverUrl: ds.config.service, slug: ds.config.dataset.split("/")[0] }));
 }
 
 async function callRpcIsOwnerAcl(dsArray) {
   return Promise.all(dsArray.map(ds => supabaseClient.rpc('is_owner_acl', { 
     s: "dataset",
-    r: ds
-  }).then(({ data, error }) => ([ds, data]))));
+    r: ds.slug
+  }).then(({ data, error }) => ({...ds, isOwner: data}))));
 }
 
 export async function getPrivateDsOwned() {
-  return  (await callRpcIsOwnerAcl(getDsDatasets())).filter(([ds, isOwner]) => isOwner).map(([ds]) => ds);
+  return  (await callRpcIsOwnerAcl(getDsDatasets())).filter(({isOwner}) => isOwner);
 }

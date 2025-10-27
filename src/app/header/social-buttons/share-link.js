@@ -50,7 +50,7 @@ export async function createShareLinkModal(opts = {}) {
   if (privateDsOwned.length) {
     const privateDsWrapper = dialog.append("div").attr("class", 'sl-private-ds');
     privateDsWrapper.append("div").text("Also share the private datasets via the link:");
-    privateDsWrapper.selectAll("input").data(privateDsOwned)
+    privateDsWrapper.selectAll("input").data(privateDsOwned.map(ds => ds.slug))
       .join(enter => {
         const wrapper = enter.append("span");
         wrapper.append("input")
@@ -63,14 +63,14 @@ export async function createShareLinkModal(opts = {}) {
   }
 
   function getPrivateDsInputChecked() {
-    const dsArray = [];
+    const checkedSlugs = new Set();
     dialog.select(".sl-private-ds").selectAll("input")
       .each(function() {
         if (this.checked) {
-          dsArray.push(d3.select(this).attr("id"));
+          checkedSlugs.add(d3.select(this).attr("id"));
         }
       })
-    return dsArray;
+    return privateDsOwned.filter(ds => checkedSlugs.has(ds.slug));
   }
 
   const actions = dialog.append('div').attr('class', 'sl-actions');

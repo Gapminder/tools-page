@@ -504,6 +504,8 @@ export function computeExpiryDate(lifetime, fromDate = new Date()) {
   return d.toISOString();
 }
 
+export async function fetchJSON(url, options){ let ok, error; await d3.json(url, options).then(d => ok = d).catch(e => error = e); return {ok, error}; }
+
 export function getVideoIframeHTMLTemplate(src){
   if (src.includes("youtube")) return `<iframe
     width="100%"
