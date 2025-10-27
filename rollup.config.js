@@ -23,6 +23,7 @@ const vendor = (p) => require.resolve(p);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROD = process.env.NODE_ENV === "production";
 const STAGE = process.env.NODE_ENV === "stage";
+const DEV  = process.env.NODE_ENV === "development";
 const envSuffix = PROD ? "prod" : (STAGE ? "stage" : "dev");
 
 const TOOL_CSS = [
@@ -49,6 +50,8 @@ export default {
     entryFileNames: `[name].js`,
     chunkFileNames: `[name].js`,
     sourcemap: PROD || STAGE,
+    preserveModules: DEV,
+    preserveModulesRoot: DEV ? "src" : null,
   },
   plugins: [
     progress(),
@@ -76,11 +79,12 @@ export default {
     json({ namedExports: false, compact: PROD || STAGE }),
     stylus({
       include: ["**/*.styl"],
-      sourcemap: true
+      sourcemap: PROD || STAGE
     }),
     postcss({
       include: ["**/app*.css"],
       extract: "styles.css",
+      sourcemap: PROD || STAGE,
       plugins: [postcssUrl({ filter: ({url}) => url.startsWith("/"), url: ({url}) => url.replace(/^\//,"") }), autoprefixer()]
     }),
     copy({
@@ -123,7 +127,7 @@ export default {
       ENV: JSON.stringify(process.env.NODE_ENV || "development"),
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
     }),
-    esbuild({
+    PROD && esbuild({
       minify: PROD || STAGE,
       keepNames: true, // prevent renaming of class/function identifiers
       target: "es2020", // bump as high as your audience allows

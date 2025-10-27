@@ -72,7 +72,7 @@ const Tool = function({ cmsData, state, dom }) {
         : loadTool(tool.toLowerCase(), document.body).then(prototype => window[tool] = prototype)
     ));
 
-    const pathToConfig = "./config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
+    const pathToConfig = "/config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
     const VIZABI_MODEL = await loadConfigModule(pathToConfig);
 
     d3.select(".vizabi-placeholder")
