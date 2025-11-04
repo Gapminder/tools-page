@@ -8,7 +8,6 @@ import { initTranslator } from "./core/language.js";
 import UserLogin from "./auth/user-login.js";
 import Menu from "./header/menu/menu.js";
 import Message from "./header/message/message.js";
-import DataEditor from "./header/data-editor/data-editor.js";
 
 // import menuItems from "./core/menu-items";
 import BitlyService from "./core/bitly.service"; //TODO REFACTOR
@@ -62,7 +61,6 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en" } = {}
     bitlyService: await BitlyService({ state }), locationService: LocationService() });
   new Footer({ translator, state, dom: ".app-footer" });
   const message = new Message({ translator, state, dom: ".app-message" });
-  new DataEditor({ translator, state, tool, viz, dom: ".header .data-editor" });
   new UserLogin({ translator, state, dom: ".app-user-login" });
   
   d3.select("a.logo").on("click", state.resetState);
