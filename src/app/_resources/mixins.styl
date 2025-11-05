@@ -1,5 +1,22 @@
 //complementary mixins
-@import 'variables.styl'
+
+// helper -> emits var(--token[, fallback])
+css-var(name, fallback = null)
+  if fallback == null
+    unquote('var(--' + name + ')')
+  else
+    unquote('var(--' + name + ', ' + fallback + ')')
+
+// emit defaults into :root
+:root
+  for name, fallback in themeTokens
+    {unquote('--' + name)}: fallback
+    
+for name, fallback in themeTokens
+  // dynamically assign $color-primary = css-var('color-primary', #990000), etc.
+  // Stylus doesn't support dynamic variable names, so use a lookup hash instead:
+  define('$' + name, css-var(name, fallback), true)
+
 
 :root
   --header-height: $header-height-xlarge
@@ -10,14 +27,13 @@
 
 media_queries = {
   small : "only screen and (max-width: $small-screen)",
-  small-landscape  : "only screen and (max-width: $small-screen) and (orientation: landscape)",
   medium : "only screen and (min-width: $small-screen + 1) and (max-width: $large-screen - 1)",
   large : "only screen and (min-width: $large-screen)",
   xlarge : "only screen and (min-width: $xlarge-screen)",
+  xxlarge : "only screen and (min-width: $xxlarge-screen)",
+  xxxlarge : "only screen and (min-width: $xxxlarge-screen)",
   not-large : "only screen and (max-width: $large-screen - 1)",
-  not-small : "only screen and (min-width: $small-screen + 1)",
-  tablet : "only screen and (min-width: 601px) and (max-width: 800px)",
-  desktop : "only screen and (min-width: 801px)"
+  not-small : "only screen and (min-width: $small-screen + 1)"
 }
 
 for_breakpoint(breakpoints)
@@ -30,89 +46,64 @@ for_breakpoint(breakpoints)
 
 
 
-box-sizing(m)
-  -webkit-box-sizing m
-  -moz-box-sizing m
-  box-sizing m
-
-border-radius(n)
-  -webkit-border-radius n
-  -moz-border-radius n
-  border-radius n
-
-columns(k)
-  -webkit-columns k
-  -moz-columns k
-  columns k
-
-flex-direction(value)
-  -webkit-flex-direction value
-  -ms-flex-direction value
-  flex-direction value
-
-
-//TODO: cleanup - copied from bootstrap
-
-// Creates a wrapper for a series of columns
-make-row($gutter = $grid-gutter-width)
-  margin-left: ceil($gutter / -2)
-  margin-right: floor($gutter / -2)
-  clearfix()
-
-clearfix()
-  &:before,
-  &:after
-    content: " "
-    display: table
-  &:after
-    clear: both
-
-// Generate the medium columns
-make-md-column($columns, $gutter = $grid-gutter-width)
-  position: relative
-  min-height: 1px
-  padding-left: ($gutter / 2)
-  padding-right: ($gutter / 2)
-  margin 0
-  @media (min-width: ($small-screen + 1))
-    float: left
-    width: percentage($columns / $grid-columns)
-
-get-global-margin-left()
+get-global-padding-left()
   @media (max-width: $small-screen)
-    margin-left: 10px
+    padding-left: 10px
   @media (min-width: $large-screen)
-    margin-left: calc(5px + 0.015 * (100vw - 290px))
-  margin-left: 20px
+    padding-left: 20px
+  padding-left: 15px
 
-get-global-margin-right()
+get-global-padding-right()
   @media (max-width: $small-screen)
-    margin-right: 10px
+    padding-right: 10px
   @media (min-width: $large-screen)
-    margin-right: calc(5px + 0.015 * (100vw - 290px))
-  margin-right: 20px
-  
+    padding-right: 20px
+  padding-right: 15px
+
 get-font-size(size)
   if size == small
     @media (max-width: $small-screen)
-      font-size: 10px
-    @media (min-width: $large-screen)
-      font-size: 15px
-    font-size: 12px
-  else if size == large
-    @media (max-width: $small-screen)
-      font-size: 18px
-    @media (min-width: $large-screen)
-      font-size: 24px
-    font-size: 20px
-  else 
-    @media (max-width: $small-screen)
       font-size: 12px
     @media (min-width: $large-screen)
+      font-size: 16px
+    @media (min-width: $xlarge-screen)
       font-size: 18px
-    font-size: 16px
+    font-size: 14px // medium
+  else if size == medium
+    @media (max-width: $small-screen)
+      font-size: 14px
+    @media (min-width: $large-screen)
+      font-size: 18px
+    @media (min-width: $xlarge-screen)
+      font-size: 20px
+    font-size: 16px // medium
+  else if size == large
+    @media (max-width: $small-screen)
+      font-size: 16px
+    @media (min-width: $large-screen)
+      font-size: 20px
+    @media (min-width: $xlarge-screen)
+      font-size: 22px
+    font-size: 18px // medium
+  else if size == xlarge
+    @media (max-width: $small-screen)
+      font-size: 20px
+    @media (min-width: $large-screen)
+      font-size: 24px
+    @media (min-width: $xlarge-screen)
+      font-size: 26px
+    @media (min-width: $xxlarge-screen)
+      font-size: 28px
+    @media (min-width: $xxxlarge-screen)
+      font-size: 30px
+    font-size: 22px // medium
+  else 
+    font-size: 16px // medium default
+
+
 
 button-box()
+  cursor pointer
   background $color-primary
   margin 5px 0
   border-radius (4px)
@@ -125,17 +116,36 @@ button-box()
   path
     fill white
 
-nav-faq-help-links()
-  a
-    white-space nowrap
-    font-size $font-size-header-regular
-    text-transform none
-    letter-spacing normal
-    margin-right 15px
-    color $color-blue-darker
-    font-family $theme-font-light
-    &:hover
-      color $color-primary
+closecross()
+  position: absolute;
+  cursor: pointer;
+  top: 10px;
+  right: 10px;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 999px;
+  text-align: center;
+  line-height: 1.5em;
+  &:hover
+    text-decoration: none;
+    background-color: $color-primary;
+    color: $color-background;
+
+greyout()
+  position fixed
+  //display: flex //set by caller
+  justify-content: center
+  flex-direction: column
+  align-content: center
+  align-items: center
+  z-index 5
+  left 0
+  top 0
+  width 100%
+  height 100%
+  overflow auto
+  background-color rgba(0,0,0,0.4)
+  z-index: 9999
 
 new-tab()
   content: "⎋";
@@ -144,3 +154,6 @@ new-tab()
   transform: rotate(92deg);
   transform-origin: center;
   display: inline-block;
+  opacity 0.7
+  &:hover
+    opacity 1

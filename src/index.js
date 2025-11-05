@@ -1,4 +1,4 @@
-import "./app/app.styl";
+import "./app/index.styl";
 import "./app/d3extensions.js";
 import App from "./app/app.js";
 import toolsPage_properties from "toolsPage_properties";

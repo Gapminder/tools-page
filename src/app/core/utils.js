@@ -25,6 +25,7 @@ export function decodeUrlHash(hash) {
 }
 
 export function scrollTo({ durationLeft = 200, element, complete }) {
+  if(!element) return;
   const positionFrom = element.scrollTop;
   const positionTo = 0 - positionFrom;
 
@@ -506,12 +507,11 @@ export function computeExpiryDate(lifetime, fromDate = new Date()) {
 
 export async function fetchJSON(url, options){ let ok, error; await d3.json(url, options).then(d => ok = d).catch(e => error = e); return {ok, error}; }
 
-export function getVideoIframeHTMLTemplate(src){
+export function getVideoIframeHTMLTemplate(src, title="Embedded video"){
   if (src.includes("youtube")) return `<iframe
-    width="100%"
-    style="aspect-ratio: 16 / 9; border: 1px solid grey;"
+    style="width:100%;height:100%;aspect-ratio:16 / 9;border:1px solid grey;"
     src="${src}"
-    title="YouTube video player"
+    title="${title}"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
@@ -522,9 +522,20 @@ export function getVideoIframeHTMLTemplate(src){
     frameborder="0" 
     allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
     style="width:100%;height:100%;" 
-    title="Boendebarometern">
+    title="${title}">
   </iframe>
   <script src="https://player.vimeo.com/api/player.js"></script>`
 
   return "";
+}
+
+export function mailtoUrl({ to, subject, body, cc, bcc }) {
+  const params = new URLSearchParams();
+  if (subject) params.set("subject", subject);
+  if (body) params.set("body", body);
+  if (cc) params.set("cc", cc);
+  if (bcc) params.set("bcc", bcc);
+  const toList = Array.isArray(to) ? to.join(",") : (to || "");
+  const qs = params.toString();
+  return `mailto:${toList}${qs ? `?${qs}` : ""}`;
 }

@@ -1,18 +1,25 @@
 import * as utils from "../core/utils";
 
-const RelatedItems = function({ dom, translator, state, data }) {
+const RelatedItems = function({ dom, translator, state, data, getTheme }) {
   const template = `  
     <div class="related-heading" data-text="popular"></div>
-    <div class="related-container">
-      <ul class="related-items"></ul>
+    <div class="too-related-block">
+      <div class="related-items"></div>
     </div>
   `;
 
-  const placeHolder = d3.select(dom).html(template);
-  placeHolder.select("ul.related-items")
-    .selectAll("li")
+  const CLASS = "RelatedItems";
+  const theme = getTheme(CLASS) || {};
+  const placeHolder = d3.select(dom);
+  if(!placeHolder || placeHolder.empty()) return;   
+  placeHolder.html(template);
+  if(theme.style)
+    Object.entries(theme.style).forEach( ([key, value]) => placeHolder.style(key, value) );
+  
+  placeHolder.select(".related-items")
+    .selectAll("div")
     .data(data)
-    .join("li")
+    .join("div")
     .attr("class", "related-item")
     .html(d => `
       <a class="newtab" rel="noopener" href="${d.link}" target="_blank">

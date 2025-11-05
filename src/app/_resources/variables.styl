@@ -1,70 +1,35 @@
-$color-primary := #990000; //UPPSALA UNIVERSITET
-$color-grey := #ccc; //UPPSALA UNIVERSITET
-$color-grey-medium := #b2b2b2;
-$color-grey-light := #ECEBE9;
-$color-black := #222222;
-$color-blue-dark := #607889;
-$color-blue-darker := #425663;
-$color-blue-barely-visible := #f5f9fb;
-$color-footer-text := #666;
-$color-footer-link := $color-blue-dark;
+$small-screen = 768px //at most
+$large-screen = 1024px //at least
+$xlarge-screen = 1366px //at least
+$xxlarge-screen = 1600px //at least
+$xxxlarge-screen = 1920px //at least
 
-$body-min-width := 250px;
-$header-height-small := 32px;
-$header-height-large := 32px;
-$header-height-xlarge := 50px;
+// tokens
+themeTokens = {
+  "color-primary": #990000,
+  "color-grey": #ccc,
+  "color-grey-medium": #b2b2b2,
+  "color-grey-light": #ECEBE9,
+  "color-black": #222222,
+  "color-blue-dark": #607889,
+  "color-blue-darker": #425663,
+  "color-blue-barely-visible": #f5f9fb,
+  "color-footer-text": #666,
+  "color-background": #fff,
+  "color-footer-link": #607889,
+  "color-logotext": #990000,
+  "color-menutext": #222222,
+  "color-chartswitchertext": #990000,
+  "body-min-width": 250px,
+  "header-height-small": 32px,
+  "header-height-large": 32px,
+  "header-height-xlarge": 50px,
+  'theme-font-heading': unquote('"Brand Sans Heading", var(--fallback-font-heading)')
+  'theme-font-body': unquote('"Brand Sans Body", var(--fallback-font-body)')
+  'theme-font-mono': unquote('"Brand Mono", var(--fallback-font-mono)')
+}
 
-$small-screen := 850px;
-$large-screen := 1025px;
-$xlarge-screen := 1650px;
-
-$size-column := 230px;
-
-// fonts;
-// --------------------------------------------------
-
-$font-fallback := "Lucida Sans Unicode", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
-
-$theme-font-thin := "Work Sans Light", $font-fallback;
-$theme-font-thin-italic := "Work Sans Light Italic", $font-fallback;
-$theme-font-light := "Work Sans Light", $font-fallback;
-$theme-font-light-italic := "Work Sans Light Italic", $font-fallback;
-
-$theme-font-regular := "Work Sans Regular", $font-fallback;
-$theme-font-regular-italic := "Work Sans Regular Italic", $font-fallback;
-$theme-font-medium := "Work Sans Medium", $font-fallback;
-$theme-font-medium-italic := "Work Sans Medium Italic", $font-fallback;
-
-$theme-font-bold := "Work Sans Bold", $font-fallback;
-$theme-font-bold-italic := "Work Sans Bold Italic", $font-fallback;
-$theme-font-black := "Work Sans Black", $font-fallback;
-$theme-font-black-italic := "Work Sans Black Italic", $font-fallback;
-
-$theme-font-monospace-regular := "Courier Prime", $font-fallback;
-$theme-font-monospace-bold := "Courier Prime Bold", $font-fallback;
-
-
-
-
-
-// Navbar
-// --------------------------------------------------
-
-$grid-columns := 12 !default;
-$grid-gutter-width := 0px !default;
-
-$navbar-height := 34px;
-$navbar-height-mobile := 50px;
-$navbar-height-tablet-portrait := 128px;
-
-$navbar-border-radius := 0;
-$navbar-border-size := 2px;
-$navbar-border-color := $color-primary;
-
-$navbar-default-bg := white;
-$navbar-default-border := $color-grey-light;
-$navbar-default-link-color := $color-primary;
-
-
-$font-size-header-regular := 16px;
-$font-size-header-small := 13px;
+:root
+  --fallback-font-heading: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif
+  --fallback-font-body: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif
+  --fallback-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", "Noto Sans Mono", monospace

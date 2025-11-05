@@ -1,120 +1,122 @@
-@import './../_resources/variables.styl'
-@import './../_resources/mixins.styl'
 
-.app-related-items
-  get-global-margin-left()
-  get-global-margin-right()
-  display flex
-  flex-wrap: wrap-reverse
-  margin-top: 30px
-  margin-bottom: 30px
+.too-related-items
+  margin-top 30px
+  margin-bottom 30px
+  display grid
   gap 30px
-  align-items flex-end
+  align-items start
 
-.related-block
-  flex: 2
+  // 2 columns, 2:1 ratio both tracks can shrink to 0
+  grid-template-columns minmax(0, 2fr) minmax(0, 1fr)
 
-.video-block
-  flex: 1
-  margin-top: 0.7em
-  min-width: 300px
-  max-height: 342px
-  max-width: 608px
-  aspect-ratio 16/9
-  position: relative
-  display: flex
-  align-items: center
-  background-color: #333
-  img
-    width: 100%
-    aspect-ratio 16/9
-    cursor: pointer
-
-.related-heading
-  font-size: 2em
-  color $color-footer-text
-  margin-bottom: 0.7em
-
-.related-container
-  margin 0
-  padding 0
-  +for_breakpoint(small)
-    padding 20px 10px 20px 0
-
-.related-items
-  list-style none
-  margin 0
-  padding 0
-  box-sizing(border-box)
   +for_breakpoint(xlarge)
-    columns(2 20px)
+    grid-template-columns minmax(0, 3fr) minmax(0, 1fr)
 
-.related-item
-  box-sizing(border-box)
-  display inline-block
-  width 100%
-  padding 0
-  margin-bottom 20px
+  // 1 column on smaller screens can shrink to 0
+  +for_breakpoint(not-large)
+    grid-template-columns minmax(0, 1fr)
+    justify-items center
+    .too-end
+      grid-row 1
+    .too-start
+      grid-row 2
 
-  +for_breakpoint(small)
-    padding 0px
-    margin-bottom 10px
+  //everything shrinkable
+  .too-start, .too-end, div, span
+    min-width 0   
 
-  a
-    //display(flex)
-    flex-direction(row)
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    text-decoration none
-    color $color-black
+  .related-heading
+    get-font-size(xlarge)
+    font-family $theme-font-heading
+    color $color-footer-text
+    margin-bottom 0.7em
+    +for_breakpoint(not-large)
+      text-align center
 
-    &:hover .title
-      color $color-blue-dark
-      text-decoration underline
-
-  a.newtab span.title::after
-    new-tab()
-
-.related-item-thumbnail
-  -webkit-flex-shrink 0
-  -moz-flex-shrink 0
-  -ms-flex-negative 0
-  flex-shrink 0
-  width 160px
-  height auto
-
-  +for_breakpoint(medium)
-    width 130px
-    
-  +for_breakpoint(small)
-    width 100px
-
-  img
+  .too-video-block
+    justify-self stretch // ensure the grid item spans the track
     width 100%
-    height auto
-    border 1px solid $color-grey-light
-    border-radius (3px)
-    box-shadow 0 1px 20px rgba(0, 0, 0, 0.03), 0 1px 10px rgba(0, 0, 0, 0.12)
 
-.related-item-info
-  display inline-block
-  flex 1
-  line-height 1.2
-  padding-right 15px
-  position relative
-  margin-left 20px
+    .video
+      width 100%  
+      margin-top 0.7em
+      max-height 342px
+      max-width 600px
+      aspect-ratio 16/9
+      position relative
+      display block
+      background-color #333
+      img
+        width 100%
+        aspect-ratio 16/9
+        cursor pointer
 
-  .title, .subtitle
-    display block
+  .too-related-block
+    margin 0
+    padding 0
+    +for_breakpoint(small)
+      padding 20px 10px 20px 0
 
-  .title
-    margin-bottom: 5px
-    font-family $theme-font-light
-    get-font-size(large)
+    .related-items
+      margin 0
+      padding 0
+      display grid
+      gap 20px
+      grid-template-columns repeat(auto-fill, minmax(300px, 1fr))
+      +for_breakpoint(large)
+        grid-template-columns repeat(auto-fill, minmax(400px, 1fr))
+      +for_breakpoint(xlarge)
+        grid-template-columns repeat(auto-fill, minmax(450px, 1fr))
 
-  .subtitle
-    get-font-size(medium)
-    font-style italic
-    color #808080
+      .related-item
+        a
+          display flex
+          flex-direction row
+          text-decoration none
+          color $color-black
+
+          &:hover .title
+            color $color-blue-dark
+            text-decoration underline
+
+        a.newtab span.title::after
+          new-tab()
+
+        .related-item-thumbnail
+          flex-shrink 0
+          width 160px
+          height auto
+
+          +for_breakpoint(medium)
+            width 130px
+            
+          +for_breakpoint(small)
+            width 100px
+
+          img
+            width 100%
+            height auto
+            border 1px solid $color-grey-light
+            border-radius (3px)
+            box-shadow 0 1px 20px rgba(0, 0, 0, 0.03), 0 1px 10px rgba(0, 0, 0, 0.12)
+
+        .related-item-info
+          display inline-block
+          flex 1
+          line-height 1.2
+          padding-right 15px
+          position relative
+          margin-left 20px
+
+          .title, .subtitle
+            display block
+
+          .title
+            margin-bottom 5px
+            font-family $theme-font-heading
+            get-font-size(large)
+
+          .subtitle
+            get-font-size(medium)
+            font-style italic
+            color #808080

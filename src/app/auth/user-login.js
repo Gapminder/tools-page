@@ -1,7 +1,8 @@
 import { supabaseClient, userLogin, userLogout, userSignup, isLogged } from "./supabase.service";
 import toolsPage_properties from "toolsPage_properties";
+import { ICON_GITHUB, ICON_GOOGLE } from "../core/icons";
 
-const UserLogin = function({ dom, translator, state, data }) {
+const UserLogin = function({ dom, translator, state, data, getTheme}) {
   const pageSlug = toolsPage_properties?.page_slug;
   const template = `  
     <div class="user-login-title">Log in</div>
@@ -14,9 +15,9 @@ const UserLogin = function({ dom, translator, state, data }) {
       <a href="https://vizabi.com/verkstad?tab=servers${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-dataeditor">Hantera data källor</a>
       <a href="https://vizabi.com/verkstad?tab=permalinks${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-permalinks">Hantera korta URLs</a>
     </div>
-    <div class="user-login-form-wrapper how-to-outer">
+    <div class="user-login-form-wrapper">
       <div class="user-login-form">
-        <span class="user-login-close button-close">×</span>
+        <a class="user-login-close">✕</a>
         <span>
           <form class="panel signup-panel">
             <span>Sign up</span>
@@ -42,12 +43,8 @@ const UserLogin = function({ dom, translator, state, data }) {
             <button class="button button-login">Log in</button>
             
             <span class="login-oauth">
-              <span class="button button-google-login">
-                <i class="fa fa-2x fa-google"></i>
-              </span>
-              <span  class="button button-github-login">
-                <i class="fa fa-2x fa-github"></i>
-              </span>
+              <span class="button button-google-login">${ICON_GOOGLE}</span>
+              <span class="button button-github-login">${ICON_GITHUB}</span>
             </span>
             <hr>
             <span class="hr-text-center">or</span>
@@ -58,7 +55,14 @@ const UserLogin = function({ dom, translator, state, data }) {
     </div>
   `;
 
-  const placeHolder = d3.select(dom).html(template);
+  const CLASS = "UserLogin";
+  const theme = getTheme(CLASS) || {};
+  const placeHolder = d3.select(dom);
+  if(!placeHolder || placeHolder.empty()) return;   
+  placeHolder.html(template);
+  if(theme.style)
+    Object.entries(theme.style).forEach( ([key, value]) => placeHolder.style(key, value) );
+
 
   // const template = d3.create("div");
   // template.html(templateHtml);

@@ -1,69 +1,56 @@
-@import './../_resources/variables.styl'
-@import './../_resources/mixins.styl'
-
-.footer-container
-  background-color $color-grey
+.too-footer
+  background-color $color-grey  
   color $color-footer-text
-  position: relative
+  position relative
   display flex
-  gap: 20px
-  flex-wrap: wrap
+  align-items center
+  gap 20px
+  flex-wrap wrap
   padding 20px
   justify-content space-evenly
 
-  .menu-holder
-    display block
-    padding: 0px
-    max-width: 650px;
-
-    .general-menu
-      get-font-size(small)
-      font-family $theme-font-regular
-
-    .main-menu
-      get-font-size(small)
-      font-family $theme-font-light
-      margin-top 5px
-      line-height: 1.7em
-
-    .bottom-header
-      font-size: 2em
-      margin-bottom: 0.7em
-
-    .bottom-text
-      margin-bottom: 1em
-
   .logos-holder
-    padding: 0px
-    position: relative
+    min-width 0
+    padding 0px
+    position relative
     display flex
     flex-direction row
     align-items center    
     gap 40px
     flex-wrap wrap
     justify-content center
+    a, img, svg
+      max-height 120px
+      height 100%
 
-  ul
-    font-weight bold
-    list-style none
-    margin 0
-    padding 0
+  .menu-holder
+    display block
+    padding 0px
+    max-width 650px
 
-    li
-      padding-right 15px
+    .bottom-header
+      get-font-size(xlarge)
+      font-family $theme-font-heading
+      margin-bottom 0.7em
 
+  .bottom-text
+      margin-bottom 1em
+
+    .line1, .line2
+      margin-bottom 10px
+
+    .line1 a, .line2 a
+      margin-right 15px
+      white-space nowrap
+      letter-spacing 0.05em
+      font-variant all-petite-caps
       +for_breakpoint(small)
-        padding-right 5px
+        margin-right 10px
 
-      +for_breakpoint(not-small)
-        display inline
+    a
+      color $color-footer-link
+      text-decoration underline
+      text-underline-offset 0.12em
 
-  a
-    display inline-block
-    color $color-footer-link
-    text-decoration underline
-    text-underline-offset 0.12em
-    font-variant all-petite-caps
-
-    &:hover
-      color $color-primary
+      &:hover
+        color $color-primary

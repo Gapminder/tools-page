@@ -1,0 +1,56 @@
+.too-chart-switcher-with-icons
+  .chart-switcher
+    height var(--header-height)
+    get-font-size(small)
+    position relative
+    display flex
+    &:hover
+      a.selected
+        border-bottom 3px solid $color-background 
+    a
+      color $color-chartswitchertext
+      cursor pointer
+      padding 0px 7px 0px 3px
+      display flex
+      align-items center
+      white-space nowrap
+      border-bottom 3px solid $color-background 
+      transition border-color 0.2s ease-in-out
+      &:hover
+        text-decoration none !important
+        border-bottom 3px solid $color-primary !important
+      &.selected
+        border-bottom 3px solid $color-primary
+        cursor default
+      img, svg
+        height 30px
+        width 30px
+        path, circle, rect
+          fill $color-primary
+      span
+        +for_breakpoint(small)
+          display none
+
+
+.too-chart-switcher
+  position relative
+  get-font-size(small)
+
+  .chart-switcher-options
+    position absolute
+    width 90px
+    background-color $color-background 
+    top 20px
+    left 0px
+    z-index 300
+    border 1px solid $color-primary
+    border-radius 4px
+    white-space normal
+    padding 7px
+    .selected
+      a
+        color $color-primary
+    div
+      padding 3px
+      a
+        cursor pointer

@@ -6,6 +6,145 @@
   "DOCID_I18N": "1OXCxxeQQ60ctgROSVjpHaiHtAt99eBkf4fdD0fBzUig",
   "DEFAULT_LOCALE": "sv-SE",
   "page_slug": "boendebarometern",
-  "HOWTO_VIDEO_LINK": "https://www.youtube.com/embed/lSYU5X3ETf8?si=LZpmhJMaMbdXLe5b&rel=0",
-  "DEMO_VIDEO_LINK": "https://player.vimeo.com/video/1065445795?badge=0&amp;autoplay=1&amp;player_id=0&amp;app_id=58479"
+  "theme": {
+    "meta": {
+      "title": "Boendebarometern",
+      "description": "Kunskap på grannskapsnivå i Sverige",
+      "favicon": "assets/images/favicon-uu.png",
+      "socialImage": "assets/images/social-share.png",
+      "type": "website"
+    },
+    "variables": {
+      "color-primary": "#990000",
+      "color-grey": "#ccc",
+      "color-grey-medium": "#b2b2b2",
+      "color-grey-light": "#ECEBE9",
+      "color-black": "#222222",
+      "color-blue-dark": "#607889",
+      "color-blue-darker": "#425663",
+      "color-blue-barely-visible": "#f5f9fb",
+      "color-footer-text": "#666",
+      "color-background": "#fff",
+      "color-footer-link": "#607889",
+      "color-logotext": "#990000",
+      "color-menutext": "#222222",
+      "color-chartswitchertext": "#990000",
+      "body-min-width": "250px",
+      "header-height-small": "32px",
+      "header-height-large": "32px",
+      "header-height-xlarge": "50px"
+    },
+    "fonts": {
+      "Brand Sans Body": [
+        {"weight":400, "style":"normal", "url": "assets/fonts/WorkSans-Regular.woff2"}
+      ],
+      "Brand Sans Heading": [
+        {"weight":500, "style":"normal", "url": "assets/fonts/WorkSans-Regular.woff2"}
+      ],
+      "Brand Mono": [
+        {"weight":400, "style":"normal", "url": "assets/fonts/courier-prime-sans.woff2"}
+      ]
+    },
+    "layout": {
+      ".too-header": ["too-start", "too-middle", "too-end"],
+      ".too-toolbox": ["too-start", "too-end"],
+      ".too-related-items": ["too-start", "too-end"],
+      ".too-header .too-start": ["too-logo"],
+      ".too-header .too-middle": ["too-menu"],
+      ".too-header .too-end": ["too-chart-switcher-with-icons"],
+      ".too-toolbox .too-start": ["too-social-buttons", "too-language-button"],
+      ".too-toolbox .too-middle": [],
+      ".too-toolbox .too-end": ["too-login-button"],
+      ".too-related-items .too-start": ["too-related-block"],
+      ".too-related-items .too-end": ["too-video-block"]
+    },
+    "style": {
+      ".too-related-items": {"display": "grid"}
+    },
+    "Logo": {
+      "image": " //ICON_GAPMINDER //global https url or local/path or ICON_ID",
+      "text": "Boendebarometern",
+      "url": "https://boendebarometern.uu.se",
+      "resetStateOnClick": true,
+      "style": {"letter-spacing": "0.05em"}
+    },
+    "SeeAlso": {
+      "style": {"display": "flex", "justify-content": "space-evenly"}
+    },
+    "VideoBlock": {
+      "videoUrl": "https://player.vimeo.com/video/1065445795?badge=0&amp;autoplay=1&amp;player_id=0&amp;app_id=58479",
+      "placeholderImageUrl": "assets/images/ibf_video_thumb.png",
+      "text": "Avsnitt: Kunskap på grannskapsnivå",
+      "title": "Boendebarometern video"
+    },
+    "Menu": {
+      "videoUrl": "https://www.youtube.com/embed/lSYU5X3ETf8?si=LZpmhJMaMbdXLe5b&rel=0"
+    },
+    "UserLogin": {
+      "style": {"display": "block"}
+    },
+    "SocialButtons": {
+      "title": "Boendebarometern"
+    },
+    "Footer": {
+      "heading": "bottom-header",
+      "caption": "bottom-text",
+      "line1": [{
+        "url": "https://gapminder.org/for-teachers/",
+        "text": "for_teachers"
+      },{
+        "url": "https:https://docs.google.com/document/d/1bzTWStFYAq2Oj9kV3vm261Dj9FW8C2tS7Jwj1wtTn1Q",
+        "text": "help_to_translate"
+      }],
+      "line2": [{
+        "url": "https://gapminder.org/about/",
+        "text": "about"
+      },{
+        "url": "https://gapminder.org/about/press-room/contact/",
+        "text": "contact"
+      },{
+        "url": "https://gapminder.org/news/",
+        "text": "blog"
+      },{
+        "url": "https://gapminder.org/donations/",
+        "text": "donate"
+      },{
+        "url": "https://gapminder.org/privacy/terms-of-use/",
+        "text": "terms"
+      },{
+        "url": "https://gapminder.org/about/press-room/",
+        "text": "media"
+      },{
+        "url": "https://gapminder.org/faq_frequently_asked_questions/",
+        "text": "help"
+      },{
+        "url": "https://vizabi.org/tutorials/",
+        "text": "labs"
+      },{
+        "url": "https://github.com/Gapminder/tools-page/issues",
+        "text": "report_problem"
+      }],
+      "logos": [{
+        "url": "https://www.uu.se/institution/bostads-och-urbanforskning/",
+        "image": "assets/images/uu-logo-red.svg",
+        "style": {"height": "120px"}
+      },{
+        "url": "https://www.lansforsakringar.se/stockholm/privat/om-oss/hallbarhet--forskning/forskning/om-forskningsfonden/",
+        "image": "assets/images/lf_logo_rgb.png",
+        "style": {"height": "80px"}
+      },{
+        "url": "https://www.gapminder.org/",
+        "image": "assets/images/gapminder_word_logo.svg",
+        "style": {"height": "40px"}
+      },{
+        "url": "https://vizabi.com/",
+        "image": "assets/images/vizabi-charts-plainsvg.svg",
+        "style": {"height": "120px", "margin-bottom":"20px"} 
+      }]
+    }
+  }
 }
+
+
+
+

@@ -1,166 +1,108 @@
-@import './../_resources/fonts.styl'
-@import './../_resources/variables.styl'
-@import './../_resources/mixins.styl'
+*
+  box-sizing border-box
 
 html, body
   height 100%
+  text-rendering optimizeLegibility
+  font-variant-numeric tabular-nums slashed-zero
 
 body
   background-color white
-  font-family $theme-font-regular
+  font-family $theme-font-body
+  get-font-size(medium)
   min-width $body-min-width
   padding 0
   margin 0
 
 a[target="_blank"]:not(.newtab)::after
   new-tab()
-  opacity: 0.8;
 a[target="_blank"]:not(.newtab):hover::after
-  opacity: 1;
+  opacity 1
 
-.wrapper
+a
+  color $color-black
+  user-select none
+  text-decoration none
+  display inline-block
+  cursor pointer
+  &:hover
+    text-decoration underline
+
+.too-wrapper
   display block
   position relative
   height 100%
-  overflow auto
-  -webkit-overflow-scrolling touch
+  width 100%
+  overflow-y auto
+  overflow-x hidden
+  max-width 100vw
 
   +for_breakpoint(small)
     position static
     min-height auto
+
+.too-stage
+  padding 0
+  width 100%
+  height "calc(100% - %s - 45px)" % var(--header-height)
+  +for_breakpoint(medium)
+    height "calc(100% - %s - 9px)" % var(--header-height)
+  +for_breakpoint(small)
+    height "calc(100% - %s - 5px)" % var(--header-height)
+  background white
+  position relative
+  .vizabi-placeholder
+    height 100% 
+    width 100%
+
+
+.too-toolbox, .too-related-items, .too-see-also, .too-footer
+  max-width 100vw
+  get-global-padding-left()
+  get-global-padding-right()
+  
+.too-header, .too-toolbox
+  display flex
+  align-items center
+  justify-content space-between
+  gap 10px
+  .too-start, .too-middle, .too-end
+    display flex
+    align-items center
+    gap 10px
+
+.too-header
+  max-width 100vw
+  height var(--header-height)
+  get-global-padding-left()
+  +for_breakpoint(small)
+    get-global-padding-right()
+
+
+.too-toolbox
+  height 50px
+  background-color #f5f9fb
+
+.too-header-divider
+  background-color $color-primary
+  height 2px
+  margin 0
+  padding 0
+  width 100%
+
+
+
+.embedded-view .too-header,
+.embedded-view .too-header-divider,
+.embedded-view .too-see-also,
+.embedded-view .too-related-items,
+.embedded-view .too-footer
+  display none
+.embedded-view .too-stage
+  height 100%
 
 .hidden
   display none !important
 
 .invisible
   visibility hidden
-
-.app-line-under-chart
-  height: 50px
-  background-color: #f5f9fb
-  display: flex
-  align-items: center
-  justify-content: start
-  .social
-    get-global-margin-left()
-  .login 
-    margin-left: auto; // a hack to align the item right in a flex container
-    get-global-margin-right();
-
-.social-list
-  list-style none
-  /*margin 0 100px 0 0*/
-  margin 0
-  padding 0
-  float right
-  /*+for_breakpoint(medium)
-    margin-right 100px*/
-
-.heading-2
-  margin 0
-  margin-bottom 10px
-  font-family $theme-font-regular
-  get-font-size(medium)
-  line-height 1.4
-  text-transform uppercase
-  letter-spacing 0.07em
-  text-shadow rgba(0,0,0,.01) 0 0 1px;
-
-.loader-wrapper
-  box-sizing(border-box)
-  position(fixed, var(--header-height) 0 0 0)
-  background-color white
-  padding 10px
-  text-align center
-  z-index 111111
-
-.loader
-  animation-duration(0.75s)
-  animation-iteration-count(infinite)
-  animation-name(rotate-continuous)
-  animation-timing-function(linear)
-  size(25px)
-  border 5px solid #ccc
-  border-right-color transparent
-  border-radius (50%)
-  display none
-  float right
-  margin auto
-  position absolute
-  top 50%
-  left 50%
-
-.loading
-  .loader
-    display block
-
-.vzb-tool
-  font-family $theme-font-regular !important
-
-  .vzb-datetime-background
-    font-family $theme-font-monospace-regular
-
-.vzb-tool-buttonlist, .vzb-dialog-zoom-buttonlist, .vzb-tool-dialogs, .vzb-sidebar, .vzb-dialog-checkbox label:before
-  background-color white !important
-
-.vzb-dialogs-dialog.vzb-sidebar
-  margin: 5px 0 2px -5px !important
-  
-.vzb-dialog-shadow
-  border-top none !important
-  border-bottom none !important
-  
-.more
-  padding 20px
-  box-sizing(border-box)
-  display flex
-  flex-wrap wrap
-
-  +for_breakpoint(small)
-    padding 20px 0
-
-  +for_breakpoint(not-small)
-    padding-top 0
-
-  ul.social-list
-    //display none
-
-    +for_breakpoint(small)
-      justify-content center
-
-.about
-  display flex
-  flex-direction column
-  align-items center
-  flex 1 35%
-  order 1
-  box-sizing(border-box)
-
-  +for_breakpoint(small)
-    background #f2fafc
-    width 100%
-    .heading-2
-      display none
-
-
-
-
-.connections
-  display flex
-  flex 1 100%
-  order 3
-  flex-direction column
-  align-items flex-end
-
-  +for_breakpoint(small)
-    align-items center
-
-.embedded-view .header,
-.embedded-view .header-divider,
-.embedded-view .app-see-also,
-.embedded-view .app-related-items,
-.embedded-view .more
-.embedded-view .app-footer
-  display none
-.embedded-view .column.main
-  height 100%

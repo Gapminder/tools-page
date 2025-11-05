@@ -6,6 +6,20 @@ let getStateLocale;
 const dictionary = {};
 
 function getLocaleDisplayName(locale) {
+  /*
+    longest locale Display names
+    "azərbaycan"
+    "Belarusian"
+    "Australian"
+    "Macedonian"
+    "Nederlands"
+    "slovenčina"
+    "українська"
+    "Kinyarwanda"
+    "slovenščina"
+    "Luxembourgish"
+    "Österreichisches"
+  */
   const languageId = locale.split("-")[0];
   const dn = new Intl.DisplayNames([languageId], { type: "language" });
   return dn.of(locale).split(" ")[0];

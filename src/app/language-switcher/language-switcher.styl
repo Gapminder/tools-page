@@ -1,0 +1,50 @@
+
+.too-language-button
+  .lang-wrapper
+    float right
+    display inline-block
+    margin 0
+    position relative
+    get-font-size(small)
+    padding 2px 6px 2px 0.6em
+    border 1px solid $color-primary 
+    border-radius 4px
+    cursor pointer
+    .lang-current
+      display block
+      padding-right 1.5em
+      opacity 1
+      text-transform capitalize
+      &:after
+        content '\25BC'
+        padding 0 0 0 4px
+        border-left 1px solid $color-primary
+        color $color-primary 
+        position absolute
+        right 4px
+    ul
+      position absolute
+      list-style none
+      z-index 10
+      left -1px
+      border 1px solid $color-primary
+      top 18px
+      margin 0
+      border-top none
+      background #fff
+      padding 8px 0 2px 0
+      width 100%
+      li
+        text-transform capitalize
+        text-align right
+        padding 4px 8px
+        border-bottom 1px dotted $color-primary
+        margin 0 4px
+        &:last-child
+          border-bottom none
+    ul.selected
+      display block
+    &:after
+      clear both
+
+

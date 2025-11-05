@@ -1,15 +1,17 @@
 import * as utils from "../core/utils";
 
-const SeeAlso = function({ dom, translator, state, data }) {
-  const template = `
-    <div class="see-also-block">
-      <h2 class="heading-2 see-also-heading" data-text="other_tools"></h2>
-      <div class="other-tools-container"></div>
-    </div>
-  `;
+const SeeAlso = function({ dom, translator, state, data, getTheme }) {
+  const template = ``;
 
-  const placeHolder = d3.select(dom).html(template);
-  const items = placeHolder.select(".other-tools-container").selectAll(".other-tools-item")
+  const CLASS = "SeeAlso";
+  const theme = getTheme(CLASS) || {};
+  const placeHolder = d3.select(dom);
+  if(!placeHolder || placeHolder.empty()) return;   
+  placeHolder.html(template);
+  if(theme.style)
+    Object.entries(theme.style).forEach( ([key, value]) => placeHolder.style(key, value) );
+  
+  const items = placeHolder.selectAll(".other-tools-item")
     .data(data)
     .join("div")
     .attr("class", "other-tools-item")
@@ -22,10 +24,8 @@ const SeeAlso = function({ dom, translator, state, data }) {
     `)
     .on("click", (event, d) => {
       utils.scrollTo({
-        element: d3.select(".wrapper").node(),
-        complete: () => {
-          state.setTool(d.id);
-        }
+        element: d3.select(".too-wrapper").node(),
+        complete: () => state.setTool(d.id)
       });
 
     });

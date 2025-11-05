@@ -1,0 +1,17 @@
+
+.too-logo 
+  display flex
+  align-items center
+  justify-content space-between
+  flex-wrap nowrap
+  .text
+    color $color-logotext
+    get-font-size(small)
+  .image
+    position relative
+    height var(--header-height)
+    svg, img
+      height 100%
+      aspect-ratio 1 / 1
+      path, circle, rect
+        fill $color-primary

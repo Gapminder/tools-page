@@ -1,0 +1,352 @@
+
+.too-menu
+  +for_breakpoint(small)
+    display none
+.too-mobile-menu
+  +for_breakpoint(not-small)
+    display none
+
+.menu-items
+  position relative //to position expanded menu
+  display flex
+  align-items center
+  gap 15px
+  +for_breakpoint(medium)
+    gap 10px
+
+  .menu-item
+    cursor pointer
+    display flex
+    align-items center
+
+    a
+      color $color-menutext
+      &:hover
+        color $color-primary
+        text-decoration none
+
+    .icon
+      position relative
+      height var(--header-height)
+      svg, img
+        height 100%
+        aspect-ratio 1 / 1
+        path, circle, rect
+          fill $color-primary
+
+    >.heading
+      get-font-size(small)
+      font-weight lighter
+      font-variant all-petite-caps
+      letter-spacing 0.05em
+      color $color-menutext
+      text-wrap nowrap
+
+    +for_breakpoint(not-small)
+      &:hover .expanded,
+      .expanded:hover
+        z-index 55
+        display grid !important
+
+      
+
+
+
+
+    .how-to-use-video
+      &.active
+        background-color white
+        color $color-primary
+
+        & + .nav-expanded
+          z-index 55
+          display block !important
+
+      +for_breakpoint(not-small)
+        & + .nav-expanded
+          border 0
+          padding 0
+
+    .expanded
+      display none
+      gap 20px
+      grid-template-columns repeat(auto-fill, minmax(300px, 1fr))
+
+      border-top-left-radius 3px
+      border-top-right-radius 3px
+      background-color white
+      border-top 2px solid white
+      border-left 2px solid $color-primary
+      border-right 2px solid $color-primary
+      border-bottom 2px solid $color-primary
+      
+      padding 30px 10px 20px 10px
+      position absolute
+      max-width 700px
+      width 50vw
+      left 0
+      top var(--header-height)
+
+      +for_breakpoint(medium)
+        gap 15px
+
+      .grid-item 
+        display flex
+        align-items start
+        gap 5px
+
+      .icon
+        height 75px
+
+      .heading
+        font-weight lighter
+        margin-bottom 5px
+        font-family $theme-font-heading
+        get-font-size(large)
+
+      .caption
+        get-font-size(small)
+
+
+.howto-outer
+  greyout()
+  display none
+
+
+
+
+  +for_breakpoint(not-small)
+    //position fixed !important
+    //left 20px !important
+    //width 90% !important
+
+  +for_breakpoint(small)
+    //position absolute
+    left 0
+    //width 400px
+
+.how-to-frame
+  border 1px solid grey
+  +for_breakpoint(not-small)
+    width 100%
+    height 100%
+    min-height 480px
+  +for_breakpoint(small)
+    width 96vw
+    height 54vw
+
+
+
+
+
+
+
+.how-to-content
+  text-align center
+  width 100%
+
+  +for_breakpoint(not-small)
+    background-color #fefefe
+    margin 40px auto
+    padding 20px
+    border 1px solid #888
+    width 80%
+    max-width 1100px
+
+.button-close
+  +for_breakpoint(small)
+    display none
+
+  color $color-blue-darker
+  float right
+  margin-top -15px
+
+.button-close:hover,
+.button-close:focus
+  color $color-primary
+  text-decoration none
+  cursor pointer
+
+
+.too-mobile-menu
+  padding-bottom 10px
+  padding-top 10px
+  display none
+  &.open 
+    display block
+
+
+
+.howToContentMobile
+  margin-top 10px
+
+.mobile-share-menu-item
+  display flex !important
+  justify-content center
+
+  a.menu-item:hover
+    cursor default !important
+
+
+.how-to-content
+  .nav-faq-help-links
+    white-space nowrap
+    text-transform none
+    letter-spacing normal
+    margin-right 15px
+    color $color-blue-darker
+    &:hover
+      color $color-primary
+
+.how-to-use-video
+  &:hover
+    color $color-primary!important
+  +for_breakpoint(small)
+    position relative
+    span
+      display none
+  +for_breakpoint(not-small)
+    position relative
+    top 0
+    span
+      display inline-block
+      width 26px
+      color #fff
+      background $color-primary
+      border none
+      get-font-size(medium)
+      border-radius (4px)
+      outline none
+      height 22px
+      line-height 22px
+      padding 0
+      text-align center
+      margin-top -22px
+      margin-right 10px
+      margin-left 0px
+      margin-bottom -2px
+      padding-left 5px
+      path
+        fill white
+
+
+
+  // .navigation
+  //   white-space nowrap
+  //   overflow hidden
+  //   flex 1.0 0 0px
+  //   min-width 130px
+  //   +for_breakpoint(small)
+  //     flex none
+  //     order -2
+  //     padding 3px
+
+  //   .header-title
+  //     overflow hidden
+  //     background-image url(/assets/images/logo.png)
+  //     background-repeat no-repeat
+  //     background-position center center
+  //     width 170px
+  //     background-size 100%
+  //     color white
+  //     float left
+  //     line-height var(--header-height)
+  //     margin 0
+  //     +for_breakpoint(small)
+  //       height 30px
+    
+  //   img
+  //     padding-right 3px
+  //     position relative
+  //     top 2px
+
+  // .how-to-use
+  //   flex 2 0 0px
+  //   min-width 320px
+  //   +for_breakpoint(small)
+  //     flex none
+  //     width 100%
+
+  // .social
+  //   flex 1.5 0 0px
+  //   min-width 160px
+    
+  //   .flow-container
+  //     justify-content flex-end
+    
+  //   +for_breakpoint(small)
+  //     flex none
+  //     width 100%
+      
+  //     .flow-container
+  //       justify-content center
+
+  //       .social-list
+  //         margin 5px
+
+  // .language
+  //   flex none
+    
+  //   +for_breakpoint(small)
+  //     order -1
+  //     .lang-wrapper
+  //       margin 10px
+
+  // .menu-mobile
+  //   align-self flex-end
+  //   flex 1 0 0px
+  //   min-width 100px
+
+  //   +for_breakpoint(not-small)
+  //     display none
+
+  //   cursor pointer
+  //   transition-duration 0.5s
+
+  //   .social-share-icon
+  //     margin 4px
+  //     button-box()
+  //     i
+  //       position relative
+  //       top 1px
+
+.hamburger-button
+  +for_breakpoint(not-small)
+    display none
+
+  position relative
+  margin 4px 4px 4px 4px
+  height 20px
+
+  .icon
+    transition-duration 0.2s
+    width 30px
+    height 3px
+    background-color $color-primary
+    top 10px
+    position relative
+
+    &:before, &:after
+      transition-duration 0.5s
+      background-color $color-primary
+      position absolute
+      content ""
+      width 30px
+      height 3px
+
+    &:before
+      top -7px
+
+    &:after
+      top 7px
+
+  &.open .icon
+    background-color transparent
+    &:before, &:after
+      top 0
+
+    &:before
+      transform rotate(-45deg)
+
+    &:after
+      transform rotate(45deg)

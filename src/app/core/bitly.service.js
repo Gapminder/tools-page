@@ -1,5 +1,5 @@
 import { isLogged } from "../auth/supabase.service";
-import { createShareLinkModal } from "../header/social-buttons/share-link";
+import { createShareLinkModal } from "../social-buttons/share-link";
 import { checkSlugAvailability, getPrivateDsOwned, saveSlug } from "./links-resolve";
 import { randomSlug } from "./utils";
 

@@ -1,40 +1,66 @@
 import * as utils from "../core/utils";
+import * as icons from "../core/icons.js"
 
-const Footer = function({ dom, translator, state }) {
+const Footer = function({ dom, translator, state, getTheme }) {
   const template = `
-    <div class="footer-container">
-      <div class="footer-container menu-holder">
-        <div class="bottom-header" data-text="bottom-header"></div>
-        <div class="bottom-text" data-text="bottom-text"></div>
-        <div class="general-menu">
-          <ul class="nav">
-            <li>
-            </li>
-          </ul>
-        </div>
-          
-      </div>
-      <div class="logos-holder">
-        <img src="assets/images/uu-logo-red.svg" height="120px">
-        <img src="assets/images/lf_logo_rgb.png" height="80px">
-        <img src="assets/images/gapminder_word_logo.svg" height="40px">
-        <img src="assets/images/vizabi-charts-plainsvg.svg" height="120px" style="margin-bottom:20px">
-      </div>
-
+    <div class="menu-holder">
+      <div class="bottom-header"></div>
+      <div class="bottom-text"></div>
+      <div class="line1"></div>
+      <div class="line2"></div>
     </div>
+    <div class="logos-holder"></div>
+
   `;
 
-  const placeHolder = d3.select(dom).html(template);
+  const CLASS = "Footer";
+  const theme = getTheme(CLASS) || {};
+  const placeHolder = d3.select(dom);
+  if(!placeHolder || placeHolder.empty()) return;   
+  placeHolder.html(template);
+  if(theme.style)
+    Object.entries(theme.style).forEach( ([key, value]) => placeHolder.style(key, value) );
+  
+
+  if(theme.heading)
+    placeHolder.select(".bottom-header").attr("data-text", theme.heading);
+  if(theme.caption)
+    placeHolder.select(".bottom-text").attr("data-text", theme.caption);
+
+  if(theme.line1)
+    placeHolder.select(".line1").selectAll("a")
+      .data(theme.line1)
+      .join("a")
+      .attr("href", d => d.url || "")
+      .attr("data-text", d => d.text || "");
+
+  if(theme.line2)
+    placeHolder.select(".line2").selectAll("a")
+      .data(theme.line2)
+      .join("a")
+      .attr("href", d => d.url || "")
+      .attr("data-text", d => d.text || "");
+
+  if(theme.logos)
+    placeHolder.select(".logos-holder").selectAll("a")
+      .data(theme.logos.filter(f => f.image))
+      .join("a")
+      .attr("href", d => d.url || "")
+      .html(d => icons[d.image] || `<img src="${d.image}"/>`)
+      .each(function(d) {
+        const view = d3.select(this);
+        if(d.style)
+          Object.entries(d.style).forEach( ([key, value]) => view.style(key, value) );
+      });
 
   translate();
-  state.dispatch.on("translate.footer", () => {
-    translate();
-  });
+  state.dispatch.on("translate.footer", translate);
 
   function translate() {
     placeHolder.select(".bottom-header").each(utils.translateNode(translator));
     placeHolder.select(".bottom-text").each(utils.translateNode(translator));
-    placeHolder.selectAll("ul.nav li span").each(utils.translateNode(translator));
+    placeHolder.selectAll(".line1 a").each(utils.translateNode(translator));
+    placeHolder.selectAll(".line2 a").each(utils.translateNode(translator));
   }
 
 };

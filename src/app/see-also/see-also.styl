@@ -1,35 +1,23 @@
-@import './../_resources/variables.styl'
-@import './../_resources/mixins.styl'
 
-.see-also-block
-  width 100%
+.too-see-also
   background-color $color-blue-barely-visible
 
-.see-also-heading
-  display none
-  color #68b4cd
-  text-transform uppercase
-  letter-spacing 0.07em
-  get-font-size(small)
-  padding 5px 0 0 0
-  get-global-margin-left()
-
-.other-tools-container
   margin 0
-  get-global-margin-left()
-  padding 15px 40px 0 0
+  padding-top 15px 
+  padding-bottom 15px 
   +for_breakpoint(small)
-    padding 10px 20px 0 0
+    padding-top 10px 
+    padding-bottom 10px 
   display flex
   flex-wrap wrap
   justify-content flex-start
-  gap: 40px
+  gap 40px
 
   & > .other-tools-item
     margin 0
     width 128px
     text-align center
-    padding-bottom: 15px
+    padding-bottom 15px
 
     & > a
       transition(all 0.1s)
@@ -40,7 +28,7 @@
       cursor pointer
       text-decoration none
       max-width 400px
-      box-shadow 0 1px 11px rgba(0, 0, 0, 0.05), 0 1px 6px rgba(0, 0, 0, 0.18)
+      box-shadow 1px 1px 11px rgba(0, 0, 0, 0.05), 1px 1px 6px rgba(0, 0, 0, 0.18)
 
       .title
         color #808285
@@ -54,7 +42,8 @@
         height auto
 
       &:hover
-        transform translateY(-3px) skew(-2deg,0deg)
+        transform scale(1.02,1.02) translateY(-2px) skew(-1deg,0deg)
+        box-shadow 2px 2px 11px rgba(0, 0, 0, 0.05), 2px 2px 6px rgba(0, 0, 0, 0.18)
 
         & > .title
           color $color-blue-dark

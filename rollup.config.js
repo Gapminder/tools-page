@@ -82,7 +82,7 @@ export default {
       sourcemap: PROD || STAGE
     }),
     postcss({
-      include: ["**/app*.css"],
+      include: ["**/index*.css"],
       extract: "styles.css",
       sourcemap: PROD || STAGE,
       plugins: [postcssUrl({ filter: ({url}) => url.startsWith("/"), url: ({url}) => url.replace(/^\//,"") }), autoprefixer()]
@@ -109,7 +109,6 @@ export default {
         { dest: "build", src: "src/assets" },
         { dest: "build", src: "src/data" },
         { dest: "build", src: "src/auth" },
-        { dest: "build", src: "src/favicon.png" },
         
         //configs
         { dest: "build/config", src: "src/config/toolconfigs"},
