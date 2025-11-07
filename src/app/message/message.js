@@ -20,9 +20,7 @@ const Message = function({ dom, translator, state }) {
   }
 
   translate();
-  state.dispatch.on("translate.message", () => {
-    translate();
-  });
+  state.dispatch.on("translate.message", translate);
 
 
   function translate() {

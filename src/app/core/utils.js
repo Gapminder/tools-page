@@ -508,25 +508,68 @@ export function computeExpiryDate(lifetime, fromDate = new Date()) {
 export async function fetchJSON(url, options){ let ok, error; await d3.json(url, options).then(d => ok = d).catch(e => error = e); return {ok, error}; }
 
 export function getVideoIframeHTMLTemplate(src, title="Embedded video"){
-  if (src.includes("youtube")) return `<iframe
-    style="width:100%;height:100%;aspect-ratio:16 / 9;border:1px solid grey;"
-    src="${src}"
-    title="${title}"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-  </iframe>`;
+  // ensure YT API can pause: add enablejsapi=1&origin=...
+  const addParam = (u, k, v) => {
+    const url = new URL(u, location.origin);
+    if (!url.searchParams.has(k)) url.searchParams.set(k, v);
+    return url.toString();
+  };
+
+  if (src.includes("youtube")) {
+    const yt = addParam(addParam(src, "enablejsapi", "1"), "origin", location.origin);
+    return `<iframe
+      style="width:100%;height:100%;aspect-ratio:16/9;border:0"
+      src="${yt}"
+      title="${title}"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+  }
 
   if (src.includes("vimeo")) return `<iframe 
     src="${src}" 
-    frameborder="0" 
-    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" 
-    style="width:100%;height:100%;" 
-    title="${title}">
-  </iframe>
-  <script src="https://player.vimeo.com/api/player.js"></script>`
+    style="width:100%;height:100%;border:0"
+    title="${title}"
+    allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+    allowfullscreen></iframe>
+  <script src="https://player.vimeo.com/api/player.js"></script>`;
 
   return "";
+}
+
+// Stop playback for embedded iframes (YT/Vimeo), with hard fallback
+export function stopEmbeddedVideo(containerOrIframe) {
+  const iframe = containerOrIframe?.tagName === 'IFRAME'
+    ? containerOrIframe
+    : containerOrIframe?.querySelector?.('iframe');
+  if (!iframe) return;
+
+  const src = iframe.getAttribute('src') || "";
+
+  // Try YouTube postMessage API
+  if (/youtube\.com|youtu\.be/.test(src)) {
+    try {
+      iframe.contentWindow?.postMessage(JSON.stringify({
+        event: 'command',
+        func: 'pauseVideo',
+        args: []
+      }), '*');
+    } catch (e) {}
+  }
+
+  // Try Vimeo API (player.js) or postMessage
+  if (/vimeo\.com/.test(src)) {
+    try {
+      if (window.Vimeo && window.Vimeo.Player) {
+        new window.Vimeo.Player(iframe).pause().catch(()=>{});
+      } else {
+        iframe.contentWindow?.postMessage({ method: 'pause' }, '*');
+      }
+    } catch (e) {}
+  }
+
+  // Hard fallback: unload/remove the iframe
+  try { iframe.src = 'about:blank'; } catch (e) {}
+  try { iframe.remove(); } catch (e) {}
 }
 
 export function mailtoUrl({ to, subject, body, cc, bcc }) {

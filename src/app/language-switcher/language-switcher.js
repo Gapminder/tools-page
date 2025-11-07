@@ -3,24 +3,24 @@ const LanguageSwitcher = function({ dom, translator, state, data, getTheme }) {
   const template = `
     <div class="lang-wrapper">
       <div class="lang-current"></div>
-      <ul hidden></ul>
+      <ul></ul>
     </div>
   `;
 
   const CLASS = "LanguageSwitcher";
   const theme = getTheme(CLASS) || {};
-  const placeHolder = d3.select(dom);
-  if(!placeHolder || placeHolder.empty()) return;   
-  placeHolder.html(template);
+  const placeHolders = d3.selectAll(dom);
+  if(!placeHolders || placeHolders.empty()) return;   
+  placeHolders.html(template);
   if(theme.style)
-    Object.entries(theme.style).forEach( ([key, value]) => placeHolder.style(key, value) );
+    Object.entries(theme.style).forEach( ([key, value]) => placeHolders.style(key, value) );
 
-  const items = placeHolder.select("ul").selectAll("li")
+  const items = placeHolders.select("ul").selectAll("li")
     .data(data)
     .join("li")
     .text(d => translator(d))
     .on("click", (event, d) => {
-      toggleMenu.call(this, false);
+      toggleMenu(false);
       state.setLocale(d);
     });
 
@@ -32,27 +32,27 @@ const LanguageSwitcher = function({ dom, translator, state, data, getTheme }) {
 
   function updateSelected(id = state.getLocale()) {
     items.classed("selected", d => d === id);
-    placeHolder.select(".lang-current")
-      .text(translator(id));
+    placeHolders.selectAll(".lang-current").text(translator(id));
   }
 
 
   // MENU OPENING LOGIC
   // open menu
-  const switcher = placeHolder.select(".lang-current")
-    .on("click", () => toggleMenu.call(this));
+  const switchers = placeHolders.select(".lang-current")
+    .on("click", () => toggleMenu());
+
+  let isMenuOpen = false;
 
   // hide menu on resize or click outside
-  d3.select(window).on("resize.languageSwitcher", () => toggleMenu.call(this, false));
+  d3.select(window).on("resize.languageSwitcher", () => toggleMenu(false));
   d3.select(window).on("click.languageSwitcher", event => {
-    if (this.isMenuOpen && event.target && (event.target !== switcher.node())) {
-      toggleMenu.call(this, false);
-    }
+    if (isMenuOpen && event.target && !switchers.nodes().includes(event.target))
+      toggleMenu(false);
   });
 
-  function toggleMenu(show) {
-    this.isMenuOpen = (show === true || show === false) ? show : !this.isMenuOpen;
-    placeHolder.select("ul").attr("hidden", this.isMenuOpen ? null : true);
+  function toggleMenu(force) {
+    isMenuOpen = force ?? !isMenuOpen;
+    placeHolders.selectAll("ul").classed("open", isMenuOpen);
   }
 
 };

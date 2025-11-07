@@ -40,6 +40,7 @@ a
   +for_breakpoint(small)
     position static
     min-height auto
+    scrollbar-width none
 
 .too-stage
   padding 0
@@ -77,11 +78,14 @@ a
   get-global-padding-left()
   +for_breakpoint(small)
     get-global-padding-right()
-
+    .too-middle 
+      display none
 
 .too-toolbox
   height 50px
-  background-color #f5f9fb
+  background-color $color-barely-visible
+  +for_breakpoint(small)
+    display none
 
 .too-header-divider
   background-color $color-primary

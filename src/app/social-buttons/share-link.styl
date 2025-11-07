@@ -1,20 +1,12 @@
 .sl-overlay
-  position fixed
-  inset 0
-  background rgba(0,0,0,0.35)
   display flex
-  align-items center
-  justify-content center
-  z-index 10000
-  color #333
+  greyout()
 
   .sl-dialog
-    background #fff
-    border 2px solid #999
+    dialog-box()
     width 520px
     max-width 95%
     padding 16px
-    border-radius 4px
 
     .sl-title
       font-weight 700

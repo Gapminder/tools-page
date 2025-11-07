@@ -1,7 +1,7 @@
-import * as utils from "../core/utils";
+import * as utils from "../core/utils.js"
 import * as icons from "../core/icons.js"
 
-const Logo = function({ dom, getTheme, state }) {
+const Logo = function({ translator, dom, getTheme, state }) {
   const template = `<span class="image"></span><a class="text"></a>`;
   
   const CLASS = "Logo";
@@ -15,15 +15,24 @@ const Logo = function({ dom, getTheme, state }) {
   const imageEl = placeHolder.select(".image");
   const textEl = placeHolder.select(".text");
 
-  if(theme.image) 
-    imageEl.html(icons[theme.image] || `<img src="${theme.image}"/>`);
-  if(theme.text) 
-    textEl.text(theme.text);
-  if(theme.url) 
-    textEl.attr("href", theme.url);
-  if(theme.resetStateOnClick)
+  const { image, text, textHover, url, resetStateOnClick } = theme;
+  if(image) 
+    imageEl.html(icons[image] || `<img src="${image}"/>`);
+  if(text) {
+    textEl.attr("data-text", text);
+    translate();
+  }
+  if(url) 
+    textEl.attr("href", url);
+  if(resetStateOnClick)
     placeHolder.on("click", state.resetState );
 
+  translate();
+  state.dispatch.on("translate.logo", translate);
+
+  function translate() {
+    textEl.each(utils.translateNode(translator));
+  }
 };
 
 export default Logo;

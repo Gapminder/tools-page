@@ -1,0 +1,66 @@
+.too-howto
+  .icon-heading-pair
+    cursor pointer
+    display flex
+    align-items center
+    gap 3px
+
+  .icon-heading-pair>.heading
+    get-font-size(small)
+    .too-mobile-menu & {
+      get-font-size(xlarge)
+    }
+    font-weight lighter
+    font-variant all-petite-caps
+    letter-spacing 0.05em
+    text-wrap nowrap
+
+  .icon
+    position relative
+    height var(--header-height)
+    svg, img
+      height 100%
+      aspect-ratio 1 / 1
+      path, circle, rect
+        fill $color-primary
+  a
+    color $color-menutext
+    &:hover
+      color $color-primary
+      text-decoration none
+
+.too-howto-dialog
+  greyout()
+  display none
+  +for_breakpoint(not-small)
+    justify-content start
+
+  .howto-content
+    dialog-box()
+    top var(--header-height)
+    padding 45px 20px 20px 20px
+    width 80%
+    max-width 1100px
+    +for_breakpoint(small)
+      width 100%
+      padding 40px 0px 20px 0px
+      border none
+      top 0
+
+    .howto-close
+      closecross()
+
+    .howto-video
+      text-align center
+      width 100%
+
+    .links 
+      text-align center
+      a
+        white-space nowrap
+        text-transform none
+        letter-spacing normal
+        margin-right 15px
+        color $color-blue-darker
+        &:hover
+          color $color-primary

@@ -1,11 +1,12 @@
 
 .too-language-button
   .lang-wrapper
-    float right
     display inline-block
     margin 0
     position relative
     get-font-size(small)
+    .too-mobile-menu &
+      get-font-size(large)
     padding 2px 6px 2px 0.6em
     border 1px solid $color-primary 
     border-radius 4px
@@ -23,28 +24,31 @@
         position absolute
         right 4px
     ul
+      display none
+      &.open
+        display block
       position absolute
       list-style none
-      z-index 10
+      z-index 300
       left -1px
       border 1px solid $color-primary
-      top 18px
+      border-bottom-left-radius: 4px
+      border-bottom-right-radius: 4px
+      top 19px
       margin 0
       border-top none
-      background #fff
+      background $color-background
       padding 8px 0 2px 0
-      width 100%
+      width calc(100% + 2px)
       li
+        cursor pointer
         text-transform capitalize
-        text-align right
         padding 4px 8px
         border-bottom 1px dotted $color-primary
         margin 0 4px
+        &:hover
+          text-decoration: underline
         &:last-child
           border-bottom none
-    ul.selected
-      display block
-    &:after
-      clear both
-
+      
 

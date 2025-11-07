@@ -58,6 +58,7 @@ export default function ThemeService(theme = {}) {
     }
     //apply styles
     for(let [selector, styles] of Object.entries(_theme.style)){
+      if (selector === " //" || selector === " //comment") continue;
       if (typeof selector === "string" && selector.startsWith(".too-")){
         for(let [key, value] of Object.entries(styles)){
           wrapper.select(selector).style(key, value);

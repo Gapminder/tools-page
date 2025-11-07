@@ -102,23 +102,6 @@ export default {
         }
       ],
       "heading": "about"
-    },
-    {
-      "id": "menu-item-4",
-      "heading": "how_to_use",
-      "icon": "ICON_VIDEO",
-      "children": [
-        {
-          "id": "menu-item-41",
-          "url": "assets/guide.pdf",          
-          "heading": "pdf_guide"
-        },
-        {
-          "id": "menu-item-42",
-          "url": "https://vizabi.com",          
-          "heading": "can_i_show_my_own_data"
-        }
-      ]
     }
   ],
   "heading": null

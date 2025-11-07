@@ -1,61 +1,53 @@
 import * as utils from "../core/utils";
-import "dom-to-image-more";
+import domtoimage from "dom-to-image-more";
 import * as icons from "../core/icons.js"
 
 const SocialButtons = function({ dom, translator, state, bitlyService, locationService, getTheme }) {
-  const templateHtml = `
+  const template = `
     <span class="share-text" data-text="share"></span>
-    <span><a class="mail button"></a></span>
-    <span><a class="twitter button"></a></span>
-    <span><a class="facebook button"></a></span>
-    <span><a class="link button"></a></span>
-    <span><a class="download button"></a></span>
-    <span><a class="button code"></a></span>
+    <span><a class="mail button">${icons.ICON_ENVELOPE}</a></span>
+    <span><a class="twitter button">${icons.ICON_EXTWITTER}</a></span>
+    <span><a class="facebook button">${icons.ICON_FACEBOOK}</a></span>
+    <span><a class="link button">${icons.ICON_LINK}</a></span>
+    <span><a class="download button">${icons.ICON_DOWNLOAD}</a></span>
+    <span><a class="button code">${icons.ICON_CODE}</a></span>
   `;
 
   const CLASS = "SocialButtons";
   const theme = getTheme(CLASS) || {};
-  const placeHolder = d3.select(dom);
-  if(!placeHolder || placeHolder.empty()) return;   
-
+  const placeHolders = d3.selectAll(dom);
+  if(!placeHolders || placeHolders.empty()) return;   
+  placeHolders.html(template);
   if(theme.style)
-    Object.entries(theme.style).forEach( ([key, value]) => placeHolder.style(key, value) );
+    Object.entries(theme.style).forEach( ([key, value]) => placeHolders.style(key, value) );
 
-  const template = d3.create("div");
-  template.html(templateHtml);
 
-  template.select(".mail.button")
+  placeHolders.select(".mail.button")
     .on("click", mail)
-    .html(icons.ICON_ENVELOPE).select("svg").attr("width", "70%").attr("height", "70%");
-  template.select(".twitter.button")
+    .select("svg").attr("width", "70%").attr("height", "70%");
+  placeHolders.select(".twitter.button")
     .on("click", twitter)
-    .html(icons.ICON_EXTWITTER).select("svg").attr("width", "90%").attr("height", "90%");
-  template.select(".facebook.button")
+    .select("svg").attr("width", "90%").attr("height", "90%");
+  placeHolders.select(".facebook.button")
     .on("click", facebook)
-    .html(icons.ICON_FACEBOOK).select("svg").attr("width", "70%").attr("height", "70%");
-  template.select(".link.button")
+    .select("svg").attr("width", "70%").attr("height", "70%");
+  placeHolders.select(".link.button")
     .on("click", shareLink)
-    .html(icons.ICON_LINK).select("svg").attr("width", "70%").attr("height", "70%");
-  template.select(".download.button")
+    .select("svg").attr("width", "70%").attr("height", "70%");
+  placeHolders.select(".download.button")
     .on("click", download)
-    .html(icons.ICON_DOWNLOAD).select("svg").attr("width", "70%").attr("height", "70%");
-  template.select(".code.button")
+    .select("svg").attr("width", "70%").attr("height", "70%");
+  placeHolders.select(".code.button")
     .on("click", getEmbeddedUrl)
-    .html(icons.ICON_CODE).select("svg").attr("width", "80%").attr("height", "80%");
+    .select("svg").attr("width", "80%").attr("height", "80%");
 
 
-  for (const elem of Array.from(template.node().children)) {
-    placeHolder.append(() => elem);
-  }
 
   translate();
-  state.dispatch.on("translate.socialButtons", () => {
-    translate();
-  });
+  state.dispatch.on("translate.socialButtons", translate);
 
   function translate() {
-    placeHolder.select(".share-text")
-      .each(utils.translateNode(translator));
+    placeHolders.select(".share-text").each(utils.translateNode(translator));
   }
 
   function twitter() {

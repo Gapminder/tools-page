@@ -2,99 +2,106 @@ import { supabaseClient, userLogin, userLogout, userSignup, isLogged } from "./s
 import toolsPage_properties from "toolsPage_properties";
 import { ICON_GITHUB, ICON_GOOGLE } from "../core/icons";
 
-const UserLogin = function({ dom, translator, state, data, getTheme}) {
+const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsDom}) {
   const pageSlug = toolsPage_properties?.page_slug;
-  const template = `  
-    <div class="user-login-title">Log in</div>
+  const templateForButton = `  
+    <button class="user-login-title">Log in</button>
     <div class="user-logged-title">&#x2714</div>
-    <div class="user-logged-form-wrapper">
-      <span class="user-logged-name"></span>
-      <button class="user-logged-logout">Log out</button>
-      <hr>
-      <span>Data Verkstad:</span>
-      <a href="https://vizabi.com/verkstad?tab=servers${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-dataeditor">Hantera data källor</a>
-      <a href="https://vizabi.com/verkstad?tab=permalinks${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-permalinks">Hantera korta URLs</a>
-    </div>
-    <div class="user-login-form-wrapper">
-      <div class="user-login-form">
-        <a class="user-login-close">✕</a>
-        <span>
-          <form class="panel signup-panel">
-            <span>Sign up</span>
-            <label for="email"><b>E-mail</b></label>
-            <input type="email" placeholder="Enter email" name="email" required>
-
-            <label for="psw"><b>Choose Password</b></label>
-            <input id="signup-psw" type="password" placeholder="Enter Password" name="psw" required minlength="6">
-
-            <label for="psw2"><b>Confirm New Password</b></label>
-            <input id="signup-psw2" type="password" placeholder="Enter Password" name="psw2" required minlength="6">
-
-            <button class="button button-signup">Create account</button>
-          </form>
-          <form class="panel login-panel">
-            <span>Log in</span>
-            <label for="email"><b>E-mail</b></label>
-            <input type="email" placeholder="Enter email" name="email" required>
-
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required minlength="6">
-
-            <button class="button button-login">Log in</button>
-            
-            <span class="login-oauth">
-              <span class="button button-google-login">${ICON_GOOGLE}</span>
-              <span class="button button-github-login">${ICON_GITHUB}</span>
-            </span>
-            <hr>
-            <span class="hr-text-center">or</span>
-            <span class="button button-switch-signup">Sign up</span>
-          </form>
-        </span>
+  `;
+  const templateForForms = `
+    <div class="user-logged-form">
+      <a class="user-login-close">✕</a>
+      <div class="panel">
+        <span class="user-logged-name"></span>
+        <button class="user-logged-logout">Log out</button>
+        <hr>
+        <span>Data Verkstad:</span>
+        <a href="https://vizabi.com/verkstad?tab=servers${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-dataeditor">Hantera data källor</a>
+        <a href="https://vizabi.com/verkstad?tab=permalinks${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-permalinks">Hantera korta URLs</a>
       </div>
+    </div>
+    <div class="user-login-form">
+        <a class="user-login-close">✕</a>
+
+        <form class="panel signup-panel">
+          <span>Sign up</span>
+          <label for="email"><b>E-mail</b></label>
+          <input type="email" placeholder="Enter email" name="email" required>
+
+          <label for="psw"><b>Choose Password</b></label>
+          <input id="signup-psw" type="password" placeholder="Enter Password" name="psw" required minlength="6">
+
+          <label for="psw2"><b>Confirm New Password</b></label>
+          <input id="signup-psw2" type="password" placeholder="Enter Password" name="psw2" required minlength="6">
+
+          <button class="button-signup">Create account</button>
+        </form>
+
+        <form class="panel login-panel">
+          <span>Log in</span>
+          <label for="email"><b>E-mail</b></label>
+          <input type="email" placeholder="Enter email" name="email" required>
+
+          <label for="psw"><b>Password</b></label>
+          <input type="password" placeholder="Enter Password" name="psw" required minlength="6">
+
+          <button class="button-login">Log in</button>
+          
+          <span class="login-oauth">
+            <span class="button button-google-login">${ICON_GOOGLE}</span>
+            <span class="button button-github-login">${ICON_GITHUB}</span>
+          </span>
+          <hr>
+          <span class="hr-text-center">or</span>
+          <button type="button" class="button-switch-signup">Sign up</button>
+        </form>
+
     </div>
   `;
 
   const CLASS = "UserLogin";
   const theme = getTheme(CLASS) || {};
-  const placeHolder = d3.select(dom);
-  if(!placeHolder || placeHolder.empty()) return;   
-  placeHolder.html(template);
+  const buttonPlaceHolders = d3.selectAll(dom);
+  if(!buttonPlaceHolders || buttonPlaceHolders.empty()) return;   
+  buttonPlaceHolders.html(templateForButton);
   if(theme.style)
-    Object.entries(theme.style).forEach( ([key, value]) => placeHolder.style(key, value) );
+    Object.entries(theme.style).forEach( ([key, value]) => buttonPlaceHolders.style(key, value) );
 
 
-  // const template = d3.create("div");
-  // template.html(templateHtml);
+  const formsPlaceHolder = d3.select(loginFormsDom);
+  if(!formsPlaceHolder || formsPlaceHolder.empty()) return;   
+  formsPlaceHolder.html(templateForForms);
 
-  // for (const elem of Array.from(template.node().children)) {
-  //   placeHolder.append(() => elem);
-  // }
 
   this.isUserLoginOpen = false;
   
-  placeHolder.select(".user-logged-title").on("click", () => {
+  buttonPlaceHolders.select(".user-logged-title").on("click", () => {
     switchUserLogin.call(this);
   });
 
-  placeHolder.select(".user-logged-logout").on("click", async () => {
+  formsPlaceHolder.select(".user-logged-logout").on("click", async () => {
     if (await userLogout()) {
       switchUserLogin.call(this);
       updateUserLogin();
     }
   });
 
-  placeHolder.select(".user-login-title").on("click", () => {
-    placeHolder.select(".user-login-form").classed("signup", false);
+  buttonPlaceHolders.select(".user-login-title").on("click", () => {
+    formsPlaceHolder.select(".user-login-form").classed("signup", false);
     switchUserLogin.call(this);
   });
 
-  placeHolder.select(".user-login-close").on("click", () => switchUserLogin.call(this));
-  placeHolder.select(".button-switch-signup").on("click", ()=> {
-    placeHolder.select(".user-login-form").classed("signup", true);
+  //click exactly on greyed out area closes the menu
+  formsPlaceHolder.on("click", (event) => {
+    if (event.target === formsPlaceHolder.node()) switchUserLogin.call(this)
+  });
+  formsPlaceHolder.selectAll(".user-login-close").on("click", () => switchUserLogin.call(this));
+  formsPlaceHolder.select(".button-switch-signup").on("click", (event)=> {
+    event.preventDefault(); //prevent login-form from complaining
+    formsPlaceHolder.select(".user-login-form").classed("signup", true);
   });
 
-  placeHolder.select(".signup-panel").on("submit", async event => {
+  formsPlaceHolder.select(".signup-panel").on("submit", async event => {
     event.preventDefault();
     const data = new FormData(event.target);
     if (await userSignup(data.get("email"), data.get("psw"))) {
@@ -103,7 +110,7 @@ const UserLogin = function({ dom, translator, state, data, getTheme}) {
     }
   });
 
-  placeHolder.select(".login-panel").on("submit", async event => {
+  formsPlaceHolder.select(".login-panel").on("submit", async event => {
     event.preventDefault();
     const data = new FormData(event.target);
     if (await userLogin(data.get("email"), data.get("psw"))) {
@@ -112,13 +119,13 @@ const UserLogin = function({ dom, translator, state, data, getTheme}) {
     };
   });
 
-  placeHolder.select("#signup-psw").on("input", (event) => {
+  formsPlaceHolder.select("#signup-psw").on("input", (event) => {
     const data = new FormData(event.target.form);
-    placeHolder.select("#signup-psw2").node()
+    formsPlaceHolder.select("#signup-psw2").node()
       .setCustomValidity(data.get("psw") !== data.get("psw2") ? "Passwords should be equal" : "");
   });
 
-  placeHolder.select("#signup-psw2").on("input", (event) => {
+  formsPlaceHolder.select("#signup-psw2").on("input", (event) => {
     const data = new FormData(event.target.form);
     event.target.setCustomValidity("");
     event.target.setCustomValidity(data.get("psw") !== data.get("psw2") ? "Passwords should be equal" : "");
@@ -148,7 +155,7 @@ const UserLogin = function({ dom, translator, state, data, getTheme}) {
     }
   })
 
-  placeHolder.select(".button-github-login").on("click", async () => {
+  formsPlaceHolder.select(".button-github-login").on("click", async () => {
       const { data, error } = await supabaseClient.auth.signInWithOAuth({
         provider: 'github',
         options: {
@@ -164,7 +171,7 @@ const UserLogin = function({ dom, translator, state, data, getTheme}) {
       updateUserLogin();
   });
 
-  placeHolder.select(".button-google-login").on("click", async () => {
+  formsPlaceHolder.select(".button-google-login").on("click", async () => {
       const { data, error } = await supabaseClient.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -195,16 +202,17 @@ const UserLogin = function({ dom, translator, state, data, getTheme}) {
   
   function switchUserLogin(force) {
     this.isUserLoginOpen = force || force === false ? force : !this.isUserLoginOpen;
-    placeHolder.classed("open", this.isUserLoginOpen);
+    formsPlaceHolder.classed("open", this.isUserLoginOpen);
   }
 
   async function updateUserLogin() {
     const logged = await isLogged();
     if (logged.isLogged) {
-      placeHolder.select(".user-logged-name").text(logged.session.user.email);
-      placeHolder.select(".user-logged-title").text(logged.session.user.email.split("@")[0]);
+      formsPlaceHolder.select(".user-logged-name").text(logged.session.user.email);
+      buttonPlaceHolders.select(".user-logged-title").text(logged.session.user.email.split("@")[0]);
     }
-    placeHolder.classed("logged", logged.isLogged);
+    buttonPlaceHolders.classed("logged", logged.isLogged);
+    formsPlaceHolder.classed("logged", logged.isLogged);
   }
 
   this.isLogged = false;

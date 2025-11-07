@@ -37,6 +37,9 @@
   get-font-size(small)
 
   .chart-switcher-options
+    display none
+    &.open
+      display block
     position absolute
     width 90px
     background-color $color-background 
@@ -45,12 +48,14 @@
     z-index 300
     border 1px solid $color-primary
     border-radius 4px
-    white-space normal
+    white-space nowrap
     padding 7px
-    .selected
-      a
-        color $color-primary
     div
-      padding 3px
-      a
-        cursor pointer
+      cursor pointer
+      padding 5px 3px
+      border-bottom 1px dotted $color-primary
+      &:last-child
+          border-bottom none
+      &.selected
+        color $color-primary
+        

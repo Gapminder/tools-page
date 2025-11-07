@@ -6,13 +6,13 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data, getTheme
 
   const CLASS = "ChartSwitcherWithIcons";
   const theme = getTheme(CLASS) || {};
-  const placeHolder = d3.select(dom);
-  if(!placeHolder || placeHolder.empty()) return;   
-  placeHolder.html(template);
+  const placeHolders = d3.selectAll(dom);
+  if(!placeHolders || placeHolders.empty()) return;   
+  placeHolders.html(template);
   if(theme.style)
-    Object.entries(theme.style).forEach( ([key, value]) => placeHolder.style(key, value) );
+    Object.entries(theme.style).forEach( ([key, value]) => placeHolders.style(key, value) );
   
-  const items = placeHolder.select(".chart-switcher")
+  const items = placeHolders.select(".chart-switcher")
     .selectAll("a")
     .data(data.filter(f => f.tool && !f.hideThumbnail))
     .join("a")
@@ -29,16 +29,14 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data, getTheme
   translate();
   updateSelected();
 
-  state.dispatch.on("translate.chartSwitcher", () => {
-    translate();
-  });
+  state.dispatch.on("translate.chartSwitcherWithIcons", translate);
 
-  state.dispatch.on("toolChanged.chartSwitcher", ({ id, previousToolId }) => {
+  state.dispatch.on("toolChanged.chartSwitcherWithIcons", ({ id }) => {
     updateSelected(id);
   });
 
   function translate() {
-    placeHolder.selectAll("a span").each(utils.translateNode(translator));
+    placeHolders.selectAll("a span").each(utils.translateNode(translator));
   }
 
   function updateSelected(id = state.getTool()) {

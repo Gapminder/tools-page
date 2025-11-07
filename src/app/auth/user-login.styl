@@ -1,52 +1,20 @@
 .too-login-button
-
-  button, span.button
-    appearance none
-    -webkit-appearance none
-    -moz-appearance none
-    background none
-    color  $color-blue-darker
-    margin 20px 0
-    cursor pointer
-    border 1px solid $color-primary
-    border-radius 4px
-    padding 2px 10px
-    &:hover
-      color $color-primary
-
-  &.open
-    .user-login-form-wrapper
-      display flex
-
   &.logged
     .user-login-title
       display none
     .user-logged-title
       display block
-    &.open
-      .user-login-form-wrapper
-        display none
-      .user-logged-form-wrapper
-        display flex
 
-  .user-login-title
-    get-font-size(small)
+  .user-login-title, .user-logged-title
+    button()
     padding 2px 6px
-    text-wrap nowrap
-    border $color-primary solid 1px
-    border-radius 4px
-    cursor pointer
+    get-font-size(small)
+    .too-mobile-menu &
+      get-font-size(large)
+
 
   .user-logged-title
-    get-font-size(small)
     display none
-    color $color-primary
-    text-wrap nowrap
-    cursor pointer
-    margin-right 5px
-    border 1px solid $color-primary 
-    padding 2px 6px
-    border-radius 4px
     &:after
       content '\25BC'
       padding 0 0 0 4px
@@ -54,90 +22,94 @@
       color $color-primary
       margin-left 4px
 
-  .user-logged-form-wrapper
-    display none
 
-    flex-direction column
-    align-items start
-    z-index 1
-    position absolute
-    bottom 31px
-    width 200px
-    right 20px
-    background-color #ffffff
-    border 1px solid $color-primary
-    padding 10px
-    border-radius 4px
-    gap 10px
-    get-font-size(small)
-
-    button
-      align-self center
-      margin 0
-
-    a 
-      color  $color-blue-darker
-      text-decoration underline
-      &:hover
-        color $color-primary
-
-    hr
-      width 80%
-
-    .user-logged-name
-      align-self center
-
-  .user-login-form-wrapper
-    greyout()
-    display none
-    position fixed
-
+.too-login-forms
+  display none
+  greyout()
+  &.open
+    display flex
     .user-login-form
-      position relative
-      background-color #ffffff
-      border 1px solid $color-primary
-      border-radius 4px
-
-      .user-login-close
-        closecross()
-
-      .panel
-        display flex
-        flex-direction column
-        align-items center
-        margin 24px 30px 4px
-
-        label
-          margin-top 20px
-          align-self flex-start
-          get-font-size(small)
-
-        hr
-          margin-bottom 0
-          width 100%
-        .hr-text-center
-          margin-top -.7em
-          padding 0 5px
-          background-color #ffffff
-
-        .login-oauth
-          display flex
-          flex-direction row
-          justify-content space-around
-          width 100%
-          .button
-            border 0
-            height 50px
-            svg, img
-              width 100%
-              height 100%
-
-      .signup-panel
+      display block
+    .user-logged-form
+      display none
+    &.logged
+      .user-login-form
         display none
+      .user-logged-form
+        display block
 
-      &.signup
-        .signup-panel
-          display flex
-        .login-panel
-          display none
+
+  button
+    button()
+  
+  .user-login-close
+    closecross()
+    get-font-size(medium)
+
+  .user-logged-form, .user-login-form
+    dialog-box()
+    display none
+    min-width 250px
+    padding 20px 10px
+    .panel
+      display flex
+      flex-direction column
+      gap 10px
+      input, label, button
+        get-font-size(medium)
+
+  .user-logged-form
+    .panel
+      align-items start
+
+      button, .user-logged-name
+        align-self center
+
+      a 
+        color  $color-blue-darker
+        text-decoration underline
+        &:hover
+          color $color-primary
+      hr
+        width 80%      
+
+  .user-login-form
+    .panel
+      align-items center
+
+      button
+        margin 20px 0
+
+      label
+        margin-top 20px
+        align-self flex-start
+
+      hr
+        margin-bottom 0
+        width 100%
+      .hr-text-center
+        margin-top -1.4em
+        padding 0 5px
+        background-color $color-background
+
+      .login-oauth
+        display flex
+        flex-direction row
+        justify-content space-around
+        width 100%
+        .button
+          border 0
+          height 50px
+          svg, img
+            width 100%
+            height 100%
+
+    .signup-panel
+      display none
+
+    &.signup
+      .signup-panel
+        display flex
+      .login-panel
+        display none
 

@@ -34,9 +34,7 @@ const RelatedItems = function({ dom, translator, state, data, getTheme }) {
     );
 
   translate();
-  state.dispatch.on("translate.relatedItems", () => {
-    translate();
-  });
+  state.dispatch.on("translate.relatedItems", translate);
 
   function translate() {
     placeHolder.select(".related-heading").each(utils.translateNode(translator));
