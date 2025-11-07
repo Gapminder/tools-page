@@ -14,16 +14,16 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data, getTheme
   
   const items = placeHolders.select(".chart-switcher")
     .selectAll("a")
-    .data(data.filter(f => f.tool && !f.hideThumbnail))
+    .data(data.filter(f => f.tool && !f.hide_thumbnail))
     .join("a")
     .each(function(d){
       const view = d3.select(this)
       view.html(d.icon_inline ? icons[d.icon_inline] : `<img src="${d.icon}"/>`)
-      view.append("span").attr("data-text", d.id)
+      view.append("span").attr("data-text", d.tool_id)
     })
     .on("click", (event, d) => {
-      if (state.getTool() === d.id) return;
-      state.setTool(d.id);
+      if (state.getTool() === d.tool_id) return;
+      state.setTool(d.tool_id);
     });
 
   translate();
@@ -40,7 +40,7 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data, getTheme
   }
 
   function updateSelected(id = state.getTool()) {
-    items.classed("selected", d => d.id === id);
+    items.classed("selected", d => d.tool_id === id);
   }
 
 

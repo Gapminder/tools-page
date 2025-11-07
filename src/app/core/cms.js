@@ -2,8 +2,9 @@ import toolsPage_properties from "toolsPage_properties";
 import toolsPage_toolset from "toolsPage_toolset";
 import toolsPage_datasources from "toolsPage_datasources";
 import toolsPage_menuItems from "toolsPage_menuItems";
+import { supabaseClient } from "../auth/supabase.service";
 
-let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE;
+let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, PAGE_ID;
 const resetCache = true;
 const TIMEOUT_MS = 2000; // adjust timeout duration
 
@@ -22,9 +23,13 @@ const validation = {
 const parsing = page => {
   const parsers = {
     "toolset": defaultParser,
-    "toolconfig": groupedParser,
+    "toolconfig": data => new Map(data.map(d => [d.tool_id, d.json])),//groupedParser,
     "properties": data => arrayToObject(defaultParser(data)),
-    "datasources": arrayToObject,
+    "datasources": data => arrayToObject(data.map(d => Object.assign(d.reader_properties, {
+      key: d.ds_id,
+      modelType: d.reader,
+      name: d.reader_properties.dataset
+    }))),
   };
   return page.type === "language" ? parseLanguageStrings : (parsers[page.sheet] || donothing);
 };
@@ -43,14 +48,15 @@ function groupedParser(data) {
 }
 
 function forceAnArray(string) {
-  return string.split(",").filter(f => f).map(m => ducktypeAndParseValue(m));
+  return string ? string.split(",").filter(f => f).map(m => ducktypeAndParseValue(m)) : [];
 }
 
 function defaultParser(data) {
   return data.map(entry => {
     const result = {};
     for (const key of Object.keys(entry)) {
-      if (["dataSources", "toolComponents"].includes(key)) result[key] = forceAnArray(entry[key]);
+      if (["tool_components"].includes(key)) result[key] = forceAnArray(entry[key]);
+      else if (["datasources"].includes(key)) result[key] = entry[key].map(m => m.ds_id);
       else
         result[key] = ducktypeAndParseValue(entry[key]);
     }
@@ -64,11 +70,12 @@ function parseLanguageStrings(data) {
   ));
 }
 
-function arrayToObject(data) {
-  return Object.fromEntries(data.map(entry => ([entry.key, entry.hasOwnProperty("value") ? entry.value : entry])));
+function arrayToObject(data, key) {
+  return Object.fromEntries(data.map(entry => ([entry[key ? key : "key"], entry.hasOwnProperty("value") ? entry.value : entry])));
 }
 
 function ducktypeAndParseValue(value, { arrays = true, booleans = true, numbers = true, trim = true } = {}) {
+  if (typeof value !== "string") return value;
   //null
   if (value === "" || value === "null")
     return null;
@@ -110,12 +117,12 @@ function nestObject(flat) {
 
 
 const getPages = (locale = DEFAULT_LOCALE) => ([
-  { docid: DOCID_CMS, sheet: "toolconfig", fallbackContent: new Map() },
-  { docid: DOCID_CMS, sheet: "toolset", fallbackContent: toolsPage_toolset },
+  { dataGet: getToolConfigs, docid: DOCID_CMS, sheet: "toolconfig", fallbackContent: new Map() },
+  { dataGet: getToolset, docid: DOCID_CMS, sheet: "toolset", fallbackContent: toolsPage_toolset },
   { docid: DOCID_CMS, sheet: "properties", fallbackContent: toolsPage_properties },
-  { docid: DOCID_CMS, sheet: "datasources", fallbackContent: toolsPage_datasources },
-  { docid: DOCID_CMS, sheet: "menu", fallbackContent: toolsPage_menuItems },
-  { docid: DOCID_CMS, sheet: "related", fallbackContent: "", fallbackPath: `./config/related.json` },
+  { dataGet: getDatasources, docid: DOCID_CMS, sheet: "datasources", fallbackContent: toolsPage_datasources },
+  { dataGet: getMenu, docid: DOCID_CMS, sheet: "menu", fallbackContent: toolsPage_menuItems },
+  { dataGet: getRelated, docid: DOCID_CMS, sheet: "related", fallbackContent: "", fallbackPath: `./config/related.json` },
   { docid: DOCID_I18N, sheet: `page/${locale}`, type: "language", fallbackPath: `./assets/i18n/${locale}.json` },
   { docid: DOCID_I18N, sheet: `tools/${locale}`, type: "language", fallbackPath: `./assets/translation/${locale}.json` },
 ]);
@@ -124,9 +131,10 @@ function setSettings(settings = {}) {
   DOCID_CMS = settings.DOCID_CMS;
   DOCID_I18N = settings.DOCID_I18N;
   DEFAULT_LOCALE = settings.DEFAULT_LOCALE;
+  PAGE_ID = settings.PAGE_ID;
 }
 function getSettings() {
-  return { DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE };
+  return { DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, PAGE_ID };
 }
 
 function getCacheID(page) {
@@ -154,7 +162,7 @@ function loadSheet(page) {
       reject(new Error("Timeout"));
     }, TIMEOUT_MS);
 
-    d3.csv(remoteUrl)
+    (page.dataGet ? page.dataGet(page.pageId) : d3.csv(remoteUrl))
       .then(data => {
         if (timedOut) return; // ignore result if already timed out
         clearTimeout(timer);
@@ -198,7 +206,7 @@ async function load(settings) {
   setSettings(settings);
   const pages = getPages();
   return Promise.all(
-    pages.map(page => loadSheet(page))
+    pages.map(page => loadSheet({...page, pageId: settings.PAGE_ID}))
   ).then(response => {
     const result = Object.fromEntries(pages.map((page, i) => ([page.sheet, response[i]])));
     console.log("All sheets loaded:", result);
@@ -208,6 +216,82 @@ async function load(settings) {
   });
 }
 
-export { load, loadSheet, getSettings };
+async function getPageId(href) {
+  const { data, error } = await supabaseClient
+    .rpc('get_page_id', {
+      href
+    });
+  if (error) {
+    console.error(error);
+    return;
+  } else {
+    console.log(data);
+    return data;
+  }
+}
+
+async function getToolset(pageId) {
+  const { data, error } = await supabaseClient
+    .from("tools")
+    .select("*, datasources(ds_id)")
+    .eq("page_id", pageId)
+    .order("rank");
+  if (error) {
+    throw(error);
+  } else {
+    return data;
+  }
+}
+
+async function getToolConfigs(pageId) {
+  const { data, error } = await supabaseClient
+    .from("configs")
+    .select("tool_id, config, json")
+    .eq("page_id", pageId)
+  if (error) {
+    throw(error);
+  } else {
+    return data;
+  }
+}
+
+async function getDatasources(pageId) {
+  const { data, error } = await supabaseClient
+    .from("datasources")
+    .select("*")
+    .eq("page_id", pageId)
+  if (error) {
+    throw(error);
+  } else {
+    return data;
+  }
+}
+
+async function getRelated(pageId) {
+  const { data, error } = await supabaseClient
+    .from("related")
+    .select("*")
+    .eq("page_id", pageId)
+    .order("rank");
+  if (error) {
+    throw(error);
+  } else {
+    return data;
+  }
+}
+
+async function getMenu(pageId) {
+  const { data, error } = await supabaseClient
+    .from("pages")
+    .select("menu")
+    .eq("id", pageId)
+  if (error) {
+    throw(error);
+  } else {
+    return data;
+  }
+}
+
+export { load, loadSheet, getSettings, getPageId };
 
 

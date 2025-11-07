@@ -26,7 +26,7 @@ const Tool = function({ cmsData, state, dom }) {
     } else {
       //bring data configs from a separate config file to the page config (those mentioned in toolset)
 
-      const dataSourcesId = toolsetEntry.dataSources || Object.keys(datasources);
+      const dataSourcesId = toolsetEntry.datasources || Object.keys(datasources);
       dataSourcesId.forEach(ds => {
         if (!datasources[ds]) {
           console.warn(`Could not find data config with key ${ds} in datasources file`);
@@ -41,7 +41,7 @@ const Tool = function({ cmsData, state, dom }) {
 
     //check if marker datasource is no longer among the configured datasources and kill marker config in that case
     //TODO: go deeper in encoding config and make it more granular
-    const markerId = toolsetEntry.mainMarker;
+    const markerId = toolsetEntry.main_marker;
     const datasourceIDs = Object.keys(target.model.dataSources);
     if (!datasourceIDs.includes(target.model.markers[markerId]?.data?.source))
       target.model.markers = { [markerId]: { data: { source: datasourceIDs[0] } } };
@@ -55,8 +55,8 @@ const Tool = function({ cmsData, state, dom }) {
     //init gtag if (gtag) gtag("config", poduction ...
     const tool = id || state.getTool();
 
-    const toolsetEntry = toolset.find(f => f.id === tool);
-    const toolsetEntryPrevious = toolset.find(f => f.id === state.getTool());
+    const toolsetEntry = toolset.find(f => f.tool_id === tool);
+    const toolsetEntryPrevious = toolset.find(f => f.tool_id === state.getTool());
 
     cleanupPreviousTool();
 
@@ -65,7 +65,7 @@ const Tool = function({ cmsData, state, dom }) {
     timeLogger.add("FULL");
 
     //LAZY-LOAD TOOLS JS CODE
-    const toolsToLoad = [toolsetEntry.tool].concat(toolsetEntry.toolComponents || []);
+    const toolsToLoad = [toolsetEntry.tool].concat(toolsetEntry.tool_components || []);
     const toolsLoaded = await Promise.all(toolsToLoad.map(
       tool => window[tool]
         ? Promise.resolve()
@@ -99,7 +99,7 @@ const Tool = function({ cmsData, state, dom }) {
           getExternalFileReader: getFileReaderForVizabi
         })
       },
-      model: { markers: { [toolsetEntry.mainMarker]: { data: { source: toolsetEntry.dataSources[0] } } } }
+      model: { markers: { [toolsetEntry.main_marker]: { data: { source: toolsetEntry.datasources[0] } } } }
     }, VIZABI_MODEL /* add config from file */, toolconfig.get(tool) || {} /* add config from cms */);
 
     let vizabiStartConfig = deepExtend({}, pageBaseConfig);
@@ -114,7 +114,7 @@ const Tool = function({ cmsData, state, dom }) {
     const VIZABI_LOCALE = observable(vizabiStartConfig.ui.locale);
     const VIZABI_LAYOUT = observable(vizabiStartConfig.ui.layout);
 
-    const ToolPrototype =  toolsetEntry.toolVariation ? window[toolsetEntry.tool][toolsetEntry.toolVariation] : window[toolsetEntry.tool];
+    const ToolPrototype =  toolsetEntry.tool_variation ? window[toolsetEntry.tool][toolsetEntry.tool_variation] : window[toolsetEntry.tool];
     viz = new ToolPrototype({
       Vizabi,
       placeholder: PLACEHOLDER,
@@ -125,7 +125,7 @@ const Tool = function({ cmsData, state, dom }) {
       default_ui: pageBaseConfig.ui,
       options: {
         showLoading: true,
-        toolComponents: toolsetEntry.toolComponents ? toolsetEntry.toolComponents.map(toolComponent => window[toolComponent].Base) : undefined
+        toolComponents: toolsetEntry.tool_components ? toolsetEntry.tool_components.map(toolComponent => window[toolComponent].Base) : undefined
       }
     });
 
@@ -144,7 +144,7 @@ const Tool = function({ cmsData, state, dom }) {
       //needed for the old URLs to work when switching to a different default data source
       if (viz.status === "fulfilled") {
         for (const marker in viz.model.markers) {
-          if (marker !== toolsetEntry.mainMarker) continue;
+          if (marker !== toolsetEntry.main_marker) continue;
           for (const enc in viz.model.markers[marker].encoding) {
             const dataconfig = viz.model.markers[marker].encoding[enc].data;
 

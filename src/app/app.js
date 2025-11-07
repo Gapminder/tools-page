@@ -27,10 +27,18 @@ import Logo from "./logo/logo.js";
 
 let viz;
 
+function getPageFromParam(url) {
+  const params = new URLSearchParams(url);
+  return params.get("page");
+}
+
 const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", theme } = {}) {
 
-  const cmsData = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE });
-  const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.id);
+  const page = getPageFromParam(window.location.search);
+  const PAGE_ID = await cmsService.getPageId(page ? page : (window.location.origin + window.location.pathname));
+
+  const cmsData = await cmsService.load({ PAGE_ID, DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE });
+  const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.tool_id);
 
   let shortLinkState = {};
   const {slug: shortLinkSlug, hash: shortLinkHash} = await getLinkSlugAndHash(window.location.search);
