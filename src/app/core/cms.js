@@ -23,7 +23,7 @@ const validation = {
 const parsing = page => {
   const parsers = {
     "toolset": defaultParser,
-    "toolconfig": data => new Map(data.map(d => [d.tool_id, d.json])),//groupedParser,
+    "toolconfig": data => new Map(data.map(d => [d.tool_id, d.config])),//groupedParser,
     "properties": data => arrayToObject(defaultParser(data)),
     "datasources": data => arrayToObject(data.map(d => Object.assign(d.reader_properties, {
       key: d.ds_id,
@@ -225,7 +225,6 @@ async function getPageId(href) {
     console.error(error);
     return;
   } else {
-    console.log(data);
     return data;
   }
 }
@@ -246,7 +245,7 @@ async function getToolset(pageId) {
 async function getToolConfigs(pageId) {
   const { data, error } = await supabaseClient
     .from("configs")
-    .select("tool_id, config, json")
+    .select("tool_id, config")
     .eq("page_id", pageId)
   if (error) {
     throw(error);

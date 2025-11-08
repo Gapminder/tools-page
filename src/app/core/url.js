@@ -3,7 +3,7 @@ import { debounce, deepExtend } from "./utils.js";
 import { encodeUrlHash, parseURLHashWithUrlon } from "../core/utils.js";
 
 const URL_VERSION = "v2";
-const dispatch = d3.dispatch("translate", "toolChanged", "toolStateChangeFromPage", "toolReset", "languageChanged", "projectorChanged", "menuOpen", "menuClose", "authStateChange", "showMessage");
+const dispatch = d3.dispatch("translate", "toolChanged", "toolStateChangeFromPage", "toolReset", "languageChanged", "projectorChanged", "menuOpen", "menuClose", "authStateChange", "showMessage", "setDefaultConfig");
 
 
 //TODO: We have problem with possible infinite loop of

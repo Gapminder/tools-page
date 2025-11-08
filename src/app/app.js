@@ -24,6 +24,7 @@ import Footer from "./footer/footer.js";
 import Tool from "./core/tool.js";
 import { getLinkData, getLinkSlugAndHash } from "./core/links-resolve.js";
 import Logo from "./logo/logo.js";
+import DefaultConfigService from "./core/default-config.service.js";
 
 let viz;
 
@@ -35,9 +36,10 @@ function getPageFromParam(url) {
 const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", theme } = {}) {
 
   const page = getPageFromParam(window.location.search);
-  const PAGE_ID = await cmsService.getPageId(page ? page : (window.location.origin + window.location.pathname));
+  const pageSlug = page ? page : (window.location.origin + window.location.pathname)
+  const pageId = await cmsService.getPageId(pageSlug);
 
-  const cmsData = await cmsService.load({ PAGE_ID, DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE });
+  const cmsData = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, PAGE_ID: pageId });
   const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.tool_id);
 
   let shortLinkState = {};
@@ -101,6 +103,8 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", theme
   const message = new Message({
     getTheme, translator, state, dom: ".too-message" 
   });
+  const defaultConfigService = await DefaultConfigService({ state, pageSlug, pageId, defaultConfigs: cmsData.toolconfig });
+
 
   state.dispatch.on("authStateChange.app", (event) => {
     console.log(event);
@@ -127,6 +131,9 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", theme
   });
   state.dispatch.on("showMessage.app", ({ message: msg }) => message.showMessage(msg) );
 
+  state.dispatch.on("setDefaultConfig", () => {
+    defaultConfigService.setDefaultConfig();
+  })
 
   viz = await tool.setTool();
   return viz;
