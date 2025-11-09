@@ -27,8 +27,7 @@ const parsing = page => {
     "properties": data => arrayToObject(defaultParser(data)),
     "datasources": data => arrayToObject(data.map(d => Object.assign(d.reader_properties, {
       key: d.ds_id,
-      modelType: d.reader,
-      name: d.reader_properties.dataset
+      modelType: d.reader
     }))),
   };
   return page.type === "language" ? parseLanguageStrings : (parsers[page.sheet] || donothing);
