@@ -18,6 +18,10 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
         <span>Data Verkstad:</span>
         <a href="https://vizabi.com/verkstad?tab=servers${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-dataeditor">Hantera data källor</a>
         <a href="https://vizabi.com/verkstad?tab=permalinks${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-permalinks">Hantera korta URLs</a>
+        <div class="panel user-logged-set-config">
+          <span>Page default config:</span>
+          <button class="button">Make current page state as the default config</button>
+        </div>      
       </div>
     </div>
     <div class="user-login-form">
@@ -193,6 +197,11 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
     updateUserLogin();
 
   })
+
+  formsPlaceHolder.select(".user-logged-set-config button").on("click", () => {
+    state.dispatch.call("setDefaultConfig");
+    formsPlaceHolder.classed("open", false);
+  });
 
   function openPopup(src, title, width, height) {
     var left = (screen.width - width) / 2;
