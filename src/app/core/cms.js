@@ -55,8 +55,7 @@ function defaultParser(data) {
   return data.map(entry => {
     const result = {};
     for (const key of Object.keys(entry)) {
-      if (["tool_components"].includes(key)) result[key] = forceAnArray(entry[key]);
-      else if (["datasources"].includes(key)) result[key] = entry[key].map(m => m.ds_id);
+      if (["dataSources", "toolComponents"].includes(key)) result[key] = forceAnArray(entry[key]);
       else
         result[key] = ducktypeAndParseValue(entry[key]);
     }
@@ -238,7 +237,21 @@ async function getToolset(pageId) {
   if (error) {
     throw(error);
   } else {
-    return data;
+    return data.map(m => ({
+      id: m.tool_id,
+      tool: m.tool,
+      config: m.config,
+      title: m.title,
+      image: m.image,
+      icon: m.icon,
+      icon_inline: m.icon_inline,
+      transition: m.transition,
+      mainMarker: m.main_marker,
+      toolVariation: m.tool_variation,
+      toolComponents: m.tool_components,
+      hideThumbnail: m.hide_thumbnail,
+      dataSources: m.datasources.map(ds => ds.ds_id).join(",")
+    }));
   }
 }
 

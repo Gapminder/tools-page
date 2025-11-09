@@ -40,7 +40,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", theme
   const pageId = await cmsService.getPageId(pageSlug);
 
   const cmsData = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, PAGE_ID: pageId });
-  const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.tool_id);
+  const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.id);
 
   let shortLinkState = {};
   const {slug: shortLinkSlug, hash: shortLinkHash} = await getLinkSlugAndHash(window.location.search);

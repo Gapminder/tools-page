@@ -25,7 +25,7 @@ const ChartSwitcher = function({ dom, translator, state, data, getTheme}) {
     .html(`<a rel="noopener"></a>`) //href="${tool.url || getLink(tool.id)}"
     .on("click", (event, d) => {
       toggleMenu.call(this, false);
-      state.setTool(d.tool_id);
+      state.setTool(d.id);
     });
 
   translate();
@@ -39,15 +39,15 @@ const ChartSwitcher = function({ dom, translator, state, data, getTheme}) {
   });
 
   function translate() {
-    const activeTool = data.find(({ tool_id }) => tool_id === state.getTool());
+    const activeTool = data.find(({ id }) => id === state.getTool());
     placeHolders.selectAll(".chart-switcher-button")
-      .text(translator(activeTool.title || activeTool.tool_id) || (activeTool.title || activeTool.tool_id));
+      .text(translator(activeTool.title || activeTool.id) || (activeTool.title || activeTool.id));
     placeHolders.selectAll(".chart-switcher-options div")
-      .select("a").text(d => translator(d.title || d.tool_id) || (d.title || d.tool_id));
+      .select("a").text(d => translator(d.title || d.id) || (d.title || d.id));
   }
 
   function updateSelected(id = state.getTool()) {
-    items.classed("selected", d => d.tool_id === id);
+    items.classed("selected", d => d.id === id);
     //placeHolders.selectAll(".lang-current").text(translator(id));
   }
 
