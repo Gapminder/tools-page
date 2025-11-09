@@ -8,14 +8,14 @@ const toolsPage_conceptMapping =  {
     {concept: "poverty_percent_people_below_420_a_day"},
   poverty_percent_people_below_685_a_day:
     {concept: "poverty_percent_people_below_830_a_day"},
-  
-  // 2025-07-21 moving core indicators 
+
+  // 2025-07-21 moving core indicators (updated 2025-11-09)
   child_mortality_0_5_year_olds_dying_per_1000_born:
-    {concept: "u5mr", source: "fasttrack"},
+    {concept: "child_mortality_0_5_year_olds_dying_per_1000_born", source: "fasttrack"},
   child_mortality_0_5_year_olds_more_years_version_7:
-    {concept: "u5mr", source: "fasttrack"},
+    {concept: "child_mortality_0_5_year_olds_dying_per_1000_born", source: "fasttrack"},
   gapminder_gini:
-    {concept: "gini_2100", source: "fasttrack"},
+    {concept: "gini", source: "fasttrack"},
   co2_emissions_tonnes_per_person:
     {concept: "c_emission_cap", source: "fasttrack"},
   consumption_co2_emissions_1000_tonnes:
@@ -26,7 +26,7 @@ const toolsPage_conceptMapping =  {
     {concept: "co2_cons", source: "fasttrack"},
   yearly_co2_emissions_1000_tonnes:
     {concept: "co2_cons", source: "fasttrack"},
-  
+
 
   //2024-10-09 moving corruption_perception_index_cpi to fasttrack
   corruption_perception_index_cpi_pre2012:
@@ -35,9 +35,9 @@ const toolsPage_conceptMapping =  {
     {concept: "corruption_perception_index_cpi", source: "fasttrack"},
 
   //2024-08-15 moving more from SG to fasttrack
-  children_per_woman_total_fertility: 
+  children_per_woman_total_fertility:
     {concept: "children_per_woman_total_fertility", source: "fasttrack" },
-  children_per_woman_total_fertility_with_projections: 
+  children_per_woman_total_fertility_with_projections:
     {concept: "children_per_woman_total_fertility", source: "fasttrack" },
 
   population_aged_0_14_years_both_sexes_percent:
