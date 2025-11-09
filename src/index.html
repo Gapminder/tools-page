@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <base href="__BASE_HREF_TO_BE_REPLACED_BY_ROLLUP__">
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -17,10 +19,10 @@
   <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
   <meta http-equiv="pragma" content="no-cache" />
 
-  <link rel="preload" as="font" href="assets/fonts/courier-prime-sans.woff2" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="assets/css/VizabiSharedComponents.css">
-  <link rel="stylesheet" href="assets/css/mapbox-gl.css">
+  <link rel="preload" as="font" href="./assets/fonts/courier-prime-sans.woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./assets/css/VizabiSharedComponents.css">
+  <link rel="stylesheet" href="./assets/css/mapbox-gl.css">
 </head>
  
 <body>
@@ -49,17 +51,17 @@
   </div>
 
 
-  <script src="vendor/d3.js"></script>
-  <script src="vendor/mobx.js"></script>
-  <script src="vendor/Vizabi.js"></script>
-  <script src="vendor/VizabiSharedComponents.js"></script>
-  <script src="vendor/supabase.js"></script>
-  <script src="vendor/reader-ddfcsv.js"></script>
-  <script src="vendor/reader-ddfservice.js"></script>
-  <script src="vendor/urlon.js"></script>
-  <script src="vendor/mapbox-gl.js"></script>
+  <script src="./vendor/d3.js"></script>
+  <script src="./vendor/mobx.js"></script>
+  <script src="./vendor/Vizabi.js"></script>
+  <script src="./vendor/VizabiSharedComponents.js"></script>
+  <script src="./vendor/supabase.js"></script>
+  <script src="./vendor/reader-ddfcsv.js"></script>
+  <script src="./vendor/reader-ddfservice.js"></script>
+  <script src="./vendor/urlon.js"></script>
+  <script src="./vendor/mapbox-gl.js"></script>
   
   <!-- ESM entry so dynamic imports work -->
-  <script type="module" src="toolspage.js"></script>
+  <script type="module" src="./toolspage.js"></script>
   </body>
 </html>

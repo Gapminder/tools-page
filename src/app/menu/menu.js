@@ -1,6 +1,6 @@
 import {translateNode} from "../core/utils";
 import * as icons from "../core/icons.js";
-
+import { resolveAssetUrl } from "../core/utilsForAssetPaths.js";
 
 const Menu = function({ getTheme, translator, state, dom, data}) {
   const template = `<div class="menu-items"></div>`;
@@ -26,7 +26,7 @@ const Menu = function({ getTheme, translator, state, dom, data}) {
       if(itemGroupData.icon)
         iconHeading.append("span")
           .attr("class", "icon")
-          .html(icons[itemGroupData.icon] || `<img src="${itemGroupData.icon}"/>`);
+          .html(icons[itemGroupData.icon] || `<img src="${resolveAssetUrl(itemGroupData.icon)}"/>`);
       iconHeading.append("a")
           .attr("class", "heading")
           .attr("data-text", itemGroupData.heading);
@@ -41,7 +41,7 @@ const Menu = function({ getTheme, translator, state, dom, data}) {
         .attr("class", "grid-item")
         .each(function(itemData){
           const view = d3.select(this);
-          if (itemData.icon) view.append("div").attr("class", "icon").html(icons[itemData.icon] || `<img src="${itemData.icon}"/>`);
+          if (itemData.icon) view.append("div").attr("class", "icon").html(icons[itemData.icon] || `<img src="${resolveAssetUrl(itemData.icon)}"/>`);
 
           const text = view.append("div").attr("class", "text")
           if (itemData.heading) text.append("div").attr("class", "heading").attr("data-text", itemData.heading);

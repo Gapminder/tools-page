@@ -1,5 +1,6 @@
 import * as utils from "../core/utils.js"
 import * as icons from "../core/icons.js"
+import { resolveAssetUrl } from "../core/utilsForAssetPaths.js";
 
 const Logo = function({ translator, dom, getTheme, state }) {
   const template = `<span class="image"></span><a class="text"></a>`;
@@ -17,7 +18,7 @@ const Logo = function({ translator, dom, getTheme, state }) {
 
   const { image, text, textHover, url, resetStateOnClick } = theme;
   if(image) 
-    imageEl.html(icons[image] || `<img src="${image}"/>`);
+    imageEl.html(icons[image] || `<img src="${resolveAssetUrl(image)}"/>`);
   if(text) {
     textEl.attr("data-text", text);
     translate();

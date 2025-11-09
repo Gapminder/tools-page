@@ -13,29 +13,29 @@ const loaders = {
 };
 
 const TOOL_CSS_HREF = {
-  //linechart:     "assets/css/linechart.css",
-  //barrank:       "assets/css/barrank.css",
-  bubblechart:   "assets/css/bubblechart.css",
-  //bubblemap:     "assets/css/bubblemap.css",
-  //mountainchart: "assets/css/mountainchart.css",
-  //popbyage:      "assets/css/popbyage.css",
-  spreadsheet:   "assets/css/spreadsheet.css",
-  combo:         "assets/css/combo.css",
-  extapimap:     "assets/css/extapimap.css",
+  //linechart:     "./assets/css/linechart.css",
+  //barrank:       "./assets/css/barrank.css",
+  bubblechart:   "./assets/css/bubblechart.css",
+  //bubblemap:     "./assets/css/bubblemap.css",
+  //mountainchart: "./assets/css/mountainchart.css",
+  //popbyage:      "./assets/css/popbyage.css",
+  spreadsheet:   "./assets/css/spreadsheet.css",
+  combo:         "./assets/css/combo.css",
+  extapimap:     "./assets/css/extapimap.css",
 };
 
-function loadCSS(name) {
+function loadCSS(name, resolveAssetUrl) {
   const href = TOOL_CSS_HREF[name];
   if (!href) return;
   if (document.querySelector(`link[data-tool-css="${name}"]`)) return;
   const link = document.createElement("link");
   link.rel = "stylesheet";
-  link.href = href;            // relative to build/tools/
+  link.href = resolveAssetUrl(href);
   link.dataset.toolCss = name; // guard against duplicates
   document.head.appendChild(link);
 }
 
-export async function loadTool(name) {
-  loadCSS(name);
+export async function loadTool(name, resolveAssetUrl) {
+  loadCSS(name, resolveAssetUrl);
   return loaders[name]?.() ?? Promise.reject(new Error(`Unknown tool: ${name}`)); 
 }

@@ -1,7 +1,8 @@
 
 import { getFileReaderForVizabi } from "./language.js";
 import { getTransitionModel } from "./chart-transition.js";
-import { loadConfigModule, deepExtend, diffObject, removeProperties } from "./utils.js";
+import { deepExtend, diffObject, removeProperties } from "./utils.js";
+import { loadConfigModule, resolveAssetUrl } from "./utilsForAssetPaths.js";
 import timeLogger from "./timelogger.js";
 import { loadTool } from "../../../vizabi-tools.js";
 
@@ -69,10 +70,10 @@ const Tool = function({ cmsData, state, dom }) {
     const toolsLoaded = await Promise.all(toolsToLoad.map(
       tool => window[tool]
         ? Promise.resolve()
-        : loadTool(tool.toLowerCase(), document.body).then(prototype => window[tool] = prototype)
+        : loadTool(tool.toLowerCase(), resolveAssetUrl).then(prototype => window[tool] = prototype)
     ));
 
-    const pathToConfig = "/config/toolconfigs/" + (toolsetEntry.config || toolsetEntry.tool) + ".js";
+    const pathToConfig = `config/toolconfigs/${toolsetEntry.config || toolsetEntry.tool}.js`;
     const VIZABI_MODEL = await loadConfigModule(pathToConfig);
 
     d3.select(".vizabi-placeholder")
@@ -95,7 +96,7 @@ const Tool = function({ cmsData, state, dom }) {
         }),
         locale: deepExtend({}, VizabiSharedComponents.LocaleService.DEFAULTS, {
           placeholder: PLACEHOLDER,
-          path: "assets/translation/",
+          path: resolveAssetUrl("assets/translation/"),
           getExternalFileReader: getFileReaderForVizabi
         })
       },

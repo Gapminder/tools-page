@@ -1,5 +1,6 @@
 import * as utils from "../core/utils";
 import * as icons from "../core/icons.js"
+import { resolveAssetUrl } from "../core/utilsForAssetPaths.js";
 
 const Footer = function({ dom, translator, state, getTheme }) {
   const template = `
@@ -46,7 +47,7 @@ const Footer = function({ dom, translator, state, getTheme }) {
       .data(theme.logos.filter(f => f.image))
       .join("a")
       .attr("href", d => d.url || "")
-      .html(d => icons[d.image] || `<img src="${d.image}"/>`)
+      .html(d => icons[d.image] || `<img src="${resolveAssetUrl(d.image)}"/>`)
       .each(function(d) {
         const view = d3.select(this);
         if(d.style)

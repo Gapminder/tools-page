@@ -1,4 +1,5 @@
 import path from "node:path";
+import fs from "node:fs";
 import { fileURLToPath } from "node:url";
 import replace from "@rollup/plugin-replace";
 import resolve from "@rollup/plugin-node-resolve";
@@ -25,6 +26,20 @@ const PROD = process.env.NODE_ENV === "production";
 const STAGE = process.env.NODE_ENV === "stage";
 const DEV  = process.env.NODE_ENV === "development";
 const envSuffix = PROD ? "prod" : (STAGE ? "stage" : "dev");
+const BASE = process.env.BASE || (DEV ? '/' : null);
+if (PROD && !BASE) {
+  console.error('\x1b[95m%s\x1b[0m', `🛑 STOP! Setting BASE is required for a production build:\n
+  • BASE=./ will work in folders but NOT support page slugs
+  • BASE=/ will work for root only and support page slugs 
+  • BASE=/folder/ would give you both, but then you must know the folder
+
+  Example: BASE=/tools/ npm run build
+
+  will work for https://gapminder.org/tools/possibleslug
+  use that if you are fixing tools page in panik, otherwise
+  Read more about BASE parameter and page slugs in readme.md\n`);
+  process.exit(1);
+}
 
 const TOOL_CSS = [
   "@vizabi/linechart/build/linechart.css",
@@ -114,7 +129,7 @@ export default {
         { dest: "build/config", src: "src/config/toolconfigs"},
         { dest: "build/config", src: ["src/config/menu-items.js","src/config/conceptMapping.js","src/config/entitysetMapping.js","src/config/related.json"]},
         //HTML
-        { dest: "build", src: "src/index.html" },
+        { dest: "build", src: "src/index.html", transform: (contents) => contents.toString().replace(/__BASE_HREF_TO_BE_REPLACED_BY_ROLLUP__/g, BASE) }
       ],
       copyOnce: PROD || STAGE, // <-- re-copy on changes in dev
       hook: "writeBundle",
@@ -132,6 +147,20 @@ export default {
       target: "es2020", // bump as high as your audience allows
       legalComments: "none"
     }),
-    PROD && visualizer({ filename: "./build/stats.html" })
+    PROD && visualizer({ filename: "./build/stats.html" }),
+    {
+      name: 'verify-base-href',
+      closeBundle() {
+        const htmlPath = path.join(__dirname, "build/index.html");
+        if (!fs.existsSync(htmlPath)) 
+          return console.warn("[verify] build/index.html not found yet");
+        const html = fs.readFileSync(htmlPath, "utf8");
+        if (html.includes("__BASE_HREF_TO_BE_REPLACED_BY_ROLLUP__")) {
+          console.error("[verify] ❌ Placeholder still present in build/index.html");
+          throw new Error("BASE placeholder not replaced");
+        }
+        console.log('\x1b[32m%s\x1b[0m', `✅ Page built with <base href="${BASE}">`);
+      }
+    }
   ]
 };

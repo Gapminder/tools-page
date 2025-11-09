@@ -65,11 +65,6 @@ export function translateNode(translator) {
 }
 
 
-export async function loadConfigModule(path) {
-  const url = new URL(path, import.meta.url);
-  const mod = await import(url.href);
-  return mod.VIZABI_MODEL;
-}
 
 
 // Returns a function, that, as long as it continues to be invoked, will not

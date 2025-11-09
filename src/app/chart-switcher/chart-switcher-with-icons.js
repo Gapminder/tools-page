@@ -1,5 +1,6 @@
 import * as utils from "../core/utils";
 import * as icons from "../core/icons.js"
+import { resolveAssetUrl } from "../core/utilsForAssetPaths.js";
 
 const ChartSwitcherWithIcons = function({ dom, translator, state, data, getTheme }) {
   const template = `<div class="chart-switcher"></div>`;
@@ -18,7 +19,7 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data, getTheme
     .join("a")
     .each(function(d){
       const view = d3.select(this)
-      view.html(d.icon_inline ? icons[d.icon_inline] : `<img src="${d.icon}"/>`)
+      view.html(d.icon_inline ? icons[d.icon_inline] : `<img src="${resolveAssetUrl(d.icon)}"/>`)
       view.append("span").attr("data-text", d.id)
     })
     .on("click", (event, d) => {

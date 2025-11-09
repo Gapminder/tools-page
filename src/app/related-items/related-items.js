@@ -1,4 +1,5 @@
 import * as utils from "../core/utils";
+import { resolveAssetUrl } from "../core/utilsForAssetPaths";
 
 const RelatedItems = function({ dom, translator, state, data, getTheme }) {
   const template = `  
@@ -24,7 +25,7 @@ const RelatedItems = function({ dom, translator, state, data, getTheme }) {
     .html(d => `
       <a class="newtab" rel="noopener" href="${d.link}" target="_blank">
         <div class="related-item-thumbnail">
-          <img src="${d.image}">
+          <img src="${resolveAssetUrl(d.image)}">
         </div>
         <div class="related-item-info">
           <span class="title" data-text="related-${d._id}-title" data-text-fallback="${d.title}"></span>

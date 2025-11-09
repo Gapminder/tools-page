@@ -1,4 +1,5 @@
 import {translateNode, getVideoIframeHTMLTemplate, stopEmbeddedVideo} from "../core/utils";
+import { resolveAssetUrl } from "../core/utilsForAssetPaths.js";
 import * as icons from "../core/icons.js";
 
 
@@ -14,10 +15,7 @@ const Howto = function({ getTheme, translator, state, dom, howtoDialogDom}) {
     <div class="howto-content">
       <a class="howto-close">✕</a>
       <div class="howto-video"></div>
-      <p class="links">
-        <a target="_blank" href="assets/guide.pdf" data-text="pdf_guide"></a>
-        <a target="_blank" href="https://vizabi.com" data-text="can_i_show_my_own_data"></a>
-      </p>
+      <p class="links"></p>
     </div>
   `
 
@@ -30,6 +28,14 @@ const Howto = function({ getTheme, translator, state, dom, howtoDialogDom}) {
     Object.entries(theme.style).forEach( ([key, value]) => buttons.style(key, value) );
 
   const dialog = d3.select(howtoDialogDom).html(dialogTemplate);
+
+  if (theme.links && theme.links.length)
+    dialog.select(".links").selectAll("a")
+      .data(theme.links)
+      .join("a")
+      .attr("href", d => resolveAssetUrl(d.url))
+      .attr("target", "_blank")
+      .attr("data-text", d => d.text);
 
   translate();
   state.dispatch.on("translate.menu", translate);
