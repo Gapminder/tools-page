@@ -1,11 +1,11 @@
 import { supabaseClient } from "../auth/supabase.service";
 import { deepExtend } from "./utils";
 
-export default async function DefaultConfigService({ state, pageId, pageSlug, defaultConfigs }) {
-  async function IsPageOwner(page) {
+export default async function DefaultConfigService({ state, pageId, site, pageSlug, defaultConfigs }) {
+  async function IsPageOwner(site, pageSlug) {
     const { data, error } = await supabaseClient.rpc('is_owner_acl', { 
       s: "page",
-      r: page
+      r: pageSlug ? site + "/" + pageSlug : site
     });
     if (error) {
       console.log("Error: ", error);
@@ -33,7 +33,7 @@ export default async function DefaultConfigService({ state, pageId, pageSlug, de
 
   return {
     async setDefaultConfig() {
-      if (await IsPageOwner(pageSlug)) {
+      if (await IsPageOwner(site, pageSlug)) {
         const tool = state.getTool();
         const defaultConfig = defaultConfigs.get(tool);
         const { model, ui } = state.getURLI();

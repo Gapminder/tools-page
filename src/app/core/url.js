@@ -12,11 +12,12 @@ let popStateLoopFlag = false;
 const resetPopStateLoopFlag = debounce(() => { popStateLoopFlag = false; }, 500);
 
 let URLI = { ui: {}, model: {} };
+let _pageSlug = null;
 let authToken = null;
 let defaultLoc = null;
 let permalinkHashedToken = null;
 
-function init({ allowedTools, defaultLocale, shortLinkHash, shortLinkState = {} }) {
+function init({ allowedTools, defaultLocale, shortLinkHash, shortLinkState = {}, pageSlug }) {
   //keep permalink data
   permalinkHashedToken = shortLinkHash;
   
@@ -27,6 +28,8 @@ function init({ allowedTools, defaultLocale, shortLinkHash, shortLinkState = {} 
     if (upgradedUrl !== url)
       location.replace(upgradedUrl);
   }
+
+  _pageSlug = pageSlug;
 
   //Only then parse URL
   defaultLoc = defaultLocale;
@@ -83,7 +86,7 @@ function pushToHistory({ tool = URLI["chart-type"], ui = URLI.ui, model = URLI.m
     model: deepExtend({}, model, true),
     ui: deepExtend({}, model, true),
   //need to encode symbols like # in color codes because urlon can't handle them properly
-  }, "unused mandatory parameter", "#" + encodeUrlHash(urlon.stringify(objectToSerialise)));
+  }, "unused mandatory parameter", (_pageSlug ? _pageSlug + "/" : "") + "#" + encodeUrlHash(urlon.stringify(objectToSerialise)));
 }
 function getPermalinkToken() {
   return permalinkHashedToken;

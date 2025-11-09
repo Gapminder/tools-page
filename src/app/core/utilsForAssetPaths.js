@@ -16,6 +16,18 @@
 */
 
 
+export function getPageSlug() {
+  // Last non-empty path segment is the possible slug
+  const segments = location.pathname.replace(/\/$/, '').split('/').filter(Boolean);
+  const possibleSlug = segments.length ? segments.at(-1) : null;
+  const baseHref = getBaseHref();
+  // Null if root or matches base href
+  if (!possibleSlug || baseHref.endsWith(possibleSlug) || baseHref.endsWith(possibleSlug + "/"))
+    return null;
+  else
+    return possibleSlug;
+}
+
 export function getBaseHref() {
   const baseEl = document.querySelector('base[href]');
   return baseEl?.href || document.baseURI;

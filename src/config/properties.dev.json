@@ -5,7 +5,7 @@
   "DOCID_CMS": "1hLX-RzuZfmluKl_jfhfNUaJhmwOmVhP9pZfuY2brZgE",
   "DOCID_I18N": "1OXCxxeQQ60ctgROSVjpHaiHtAt99eBkf4fdD0fBzUig",
   "DEFAULT_LOCALE": "sv-SE",
-  "page_slug": "boendebarometern",
+  "site": "boendebarometern",
   "theme": {
     "meta": {
       "title": "Boendebarometern",

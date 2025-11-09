@@ -25,21 +25,14 @@ import Tool from "./core/tool.js";
 import { getLinkData, getLinkSlugAndHash } from "./core/links-resolve.js";
 import Logo from "./logo/logo.js";
 import DefaultConfigService from "./core/default-config.service.js";
+import {getPageSlug}  from "./core/utilsForAssetPaths.js"; 
 
 let viz;
 
-function getPageFromParam(url) {
-  const params = new URLSearchParams(url);
-  return params.get("page");
-}
+const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site, theme } = {}) {
 
-const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", theme } = {}) {
-
-  const page = getPageFromParam(window.location.search);
-  const pageSlug = page ? page : (window.location.origin + window.location.pathname)
-  const pageId = await cmsService.getPageId(pageSlug);
-
-  const cmsData = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, PAGE_ID: pageId });
+  const pageSlug = getPageSlug();
+  const {cmsData, pageId} = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, site, pageSlug });
   const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.id);
 
   let shortLinkState = {};
@@ -49,7 +42,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", theme
     if (linkData && linkData.page_config) shortLinkState = linkData.page_config;
   }
 
-  const state = urlService.init({ allowedTools, defaultLocale: DEFAULT_LOCALE, shortLinkHash, shortLinkState });
+  const state = urlService.init({ allowedTools, defaultLocale: DEFAULT_LOCALE, shortLinkHash, shortLinkState, pageSlug });
 
   d3.select(".wrapper").classed("embedded-view", state.getEmbedded());
 
@@ -103,7 +96,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", theme
   const message = new Message({
     getTheme, translator, state, dom: ".too-message" 
   });
-  const defaultConfigService = await DefaultConfigService({ state, pageSlug, pageId, defaultConfigs: cmsData.toolconfig });
+  const defaultConfigService = await DefaultConfigService({ state, site, pageSlug, pageId, defaultConfigs: cmsData.toolconfig });
 
 
   state.dispatch.on("authStateChange.app", (event) => {

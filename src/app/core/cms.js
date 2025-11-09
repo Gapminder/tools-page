@@ -4,7 +4,7 @@ import toolsPage_datasources from "toolsPage_datasources";
 import toolsPage_menuItems from "toolsPage_menuItems";
 import { supabaseClient } from "../auth/supabase.service";
 
-let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, PAGE_ID;
+let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE;
 const resetCache = true;
 const TIMEOUT_MS = 2000; // adjust timeout duration
 
@@ -130,10 +130,9 @@ function setSettings(settings = {}) {
   DOCID_CMS = settings.DOCID_CMS;
   DOCID_I18N = settings.DOCID_I18N;
   DEFAULT_LOCALE = settings.DEFAULT_LOCALE;
-  PAGE_ID = settings.PAGE_ID;
 }
 function getSettings() {
-  return { DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, PAGE_ID };
+  return { DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE };
 }
 
 function getCacheID(page) {
@@ -203,28 +202,31 @@ function loadSheet(page) {
 
 async function load(settings) {
   setSettings(settings);
+  const pageId = await getPageId(settings.site, settings.pageSlug);
   const pages = getPages();
   return Promise.all(
-    pages.map(page => loadSheet({...page, pageId: settings.PAGE_ID}))
+    pages.map(page => loadSheet({...page, pageId}))
   ).then(response => {
-    const result = Object.fromEntries(pages.map((page, i) => ([page.sheet, response[i]])));
-    console.log("All sheets loaded:", result);
-    return result;
+    const cmsData = Object.fromEntries(pages.map((page, i) => ([page.sheet, response[i]])));
+    console.log("All sheets loaded:", cmsData);
+    return {pageId, cmsData};
   }).catch(err => {
     console.error("Error loading one or more sheets:", err);
   });
 }
 
-async function getPageId(href) {
+async function getPageId(site, pageSlug) {
   const { data, error } = await supabaseClient
-    .rpc('get_page_id', {
-      href
-    });
+    .from("pages")
+    .select("id")
+    .eq("site", site)
+    .eq("slug", pageSlug || "__home__")
+    .single();
   if (error) {
     console.error(error);
     return;
   } else {
-    return data;
+    return data && data.id;
   }
 }
 
