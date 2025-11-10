@@ -19,8 +19,8 @@ const Footer = function({ dom, translator, state, getTheme }) {
   const placeHolder = d3.select(dom);
   if(!placeHolder || placeHolder.empty()) return;   
   placeHolder.html(template);
-  if(theme.style)
-    Object.entries(theme.style).forEach( ([key, value]) => placeHolder.style(key, value) );
+  const style = theme.style || {display: "none"};
+  if(style) Object.entries(style).forEach( ([key, value]) => placeHolder.style(key, value) );
   
 
   if(theme.heading)
