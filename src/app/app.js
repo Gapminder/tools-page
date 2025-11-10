@@ -29,7 +29,7 @@ import {getPageSlug}  from "./core/utilsForAssetPaths.js";
 
 let viz;
 
-const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site, theme } = {}) {
+const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site } = {}) {
 
   const pageSlug = getPageSlug();
   const {cmsData, pageId} = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, site, pageSlug });
@@ -46,12 +46,13 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site,
 
   d3.select(".wrapper").classed("embedded-view", state.getEmbedded());
 
-  const translator = await initTranslator(state, cmsData.properties?.locales);
+  const translator = await initTranslator(state, cmsData.locales);
   const bitlyService = await BitlyService({ state });
   const locationService = LocationService();
   const tool = new Tool({ cmsData, state, dom: ".vizabi-placeholder" });
   
-  const {applyTheme, getTheme} = new ThemeService(theme);
+  
+  const {applyTheme, getTheme} = new ThemeService(cmsData);
   applyTheme(".too-wrapper");
 
   new Logo({
@@ -73,7 +74,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site,
     getTheme, translator, state, dom: ".too-social-buttons", bitlyService, locationService
   });
   new LanguageSwitcher({
-    getTheme, translator, state, dom: ".too-language-button", data: cmsData.properties?.locales 
+    getTheme, translator, state, dom: ".too-language-button", data: cmsData.locales 
   });
   new UserLogin({
     getTheme, translator, state, dom: ".too-login-button", loginFormsDom: ".too-login-forms"
@@ -91,7 +92,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site,
     getTheme, translator, state, dom: ".too-video-block" 
   });
   new Footer({
-    getTheme, translator, state, dom: ".too-footer" 
+    getTheme, translator, state, dom: ".too-footer", data: {links: cmsData.footer_links, logos: cmsData.footer_logos}
   });
   const message = new Message({
     getTheme, translator, state, dom: ".too-message" 

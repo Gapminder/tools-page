@@ -2,7 +2,7 @@ import * as utils from "../core/utils";
 import * as icons from "../core/icons.js"
 import { resolveAssetUrl } from "../core/utilsForAssetPaths.js";
 
-const Footer = function({ dom, translator, state, getTheme }) {
+const Footer = function({ dom, translator, state, getTheme, data }) {
   const template = `
     <div class="menu-holder">
       <div class="bottom-header"></div>
@@ -28,23 +28,23 @@ const Footer = function({ dom, translator, state, getTheme }) {
   if(theme.caption)
     placeHolder.select(".bottom-text").attr("data-text", theme.caption);
 
-  if(theme.line1)
+  if(data.links) {
     placeHolder.select(".line1").selectAll("a")
-      .data(theme.line1)
+      .data(data.links.filter(f => f.line === 1 || !f.line))
       .join("a")
       .attr("href", d => d.url || "")
       .attr("data-text", d => d.text || "");
 
-  if(theme.line2)
     placeHolder.select(".line2").selectAll("a")
-      .data(theme.line2)
+      .data(data.links.filter(f => f.line === 2 || !f.line))
       .join("a")
       .attr("href", d => d.url || "")
       .attr("data-text", d => d.text || "");
+  }
 
-  if(theme.logos)
+  if(data.logos)
     placeHolder.select(".logos-holder").selectAll("a")
-      .data(theme.logos.filter(f => f.image))
+      .data(data.logos.filter(f => f.image))
       .join("a")
       .attr("href", d => d.url || "")
       .html(d => icons[d.image] || `<img src="${resolveAssetUrl(d.image)}"/>`)

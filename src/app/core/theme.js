@@ -1,7 +1,26 @@
-let _theme = {};
+let _theme_components = null;
+let _theme_meta = null;
+let _theme_layout = null;
+let _theme_fonts = null;
+let _theme_style = null;
+let _theme_variables = null;
 
-export default function ThemeService(theme = {}) {
-  _theme = theme;
+const DEFAULT_LAYOUT = {
+  ".too-header": ["too-start"],
+  ".too-header .too-start": ["too-chart-switcher"]
+}
+const DEFAULT_STYLE = {
+  ".too-related-items": {"display": "none"},
+  ".hamburger-button": {"display": "none"}
+}
+
+export default function ThemeService({theme_components, theme_meta, theme_layout, theme_fonts, theme_style, theme_variables} = {}) {
+  _theme_components = theme_components;
+  _theme_meta = theme_meta;
+  _theme_layout = theme_layout;
+  _theme_fonts = theme_fonts;
+  _theme_style = theme_style;
+  _theme_variables = theme_variables;
 
   function parseValue(str){
     /* vlues in form of:
@@ -49,69 +68,69 @@ export default function ThemeService(theme = {}) {
     const wrapper = d3.select(selector);
 
     //append DOM elements
-    for(let [selector, value] of Object.entries(_theme.layout)){
-      if (typeof selector === "string" && selector.startsWith(".too-") && Array.isArray(value)){
-        for(let itemToAppend of value){
-          wrapper.select(selector).append("div").attr("class", itemToAppend);
+    const layout = _theme_layout && Object.keys(_theme_layout).length > 0 ? _theme_layout : DEFAULT_LAYOUT;
+    if(layout)
+      for(let [selector, value] of Object.entries(layout)){
+        if (typeof selector === "string" && selector.startsWith(".too-") && Array.isArray(value)){
+          for(let itemToAppend of value){
+            wrapper.select(selector).append("div").attr("class", itemToAppend);
+          }
         }
       }
-    }
     //apply styles
-    for(let [selector, styles] of Object.entries(_theme.style)){
-      if (selector === " //" || selector === " //comment") continue;
-      if (typeof selector === "string" && selector.startsWith(".too-")){
-        for(let [key, value] of Object.entries(styles)){
+    const style = _theme_style && Object.keys(_theme_style).length > 0 ? _theme_style : DEFAULT_STYLE;
+    if(style || DEFAULT_STYLE)
+      for(let [selector, styles] of Object.entries(style || DEFAULT_STYLE)){
+        if (typeof selector !== "string" || selector.trim().startsWith("//")) continue;
+        for(let [key, value] of Object.entries(styles))
           wrapper.select(selector).style(key, value);
-        }
       }
-    }
 
-    if(_theme.meta?.favicon)
-      d3.select("head").append("link").attr("rel", "shortcut icon").attr("href", _theme.meta.favicon);
+    if(_theme_meta?.favicon)
+      d3.select("head").append("link").attr("rel", "shortcut icon").attr("href", _theme_meta.favicon);
     
     // Open Graph meta tags
     d3.select("head").append("meta").attr("property", "og:url").attr("content", location.href);
-    if(_theme.meta?.socialImage)
-      d3.select("head").append("meta").attr("property", "og:image").attr("content", location.origin + "/" + _theme.meta.socialImage);
-    if(_theme.meta?.title)
-      d3.select("head").append("meta").attr("property", "og:title").attr("content", _theme.meta.title);
-    if(_theme.meta?.description)
-      d3.select("head").append("meta").attr("property", "og:description").attr("content", _theme.meta.description);
-    if(_theme.meta?.type)
-      d3.select("head").append("meta").attr("property", "og:type").attr("content", _theme.meta.type);
+    if(_theme_meta?.socialImage)
+      d3.select("head").append("meta").attr("property", "og:image").attr("content", location.origin + "/" + _theme_meta.socialImage);
+    if(_theme_meta?.title)
+      d3.select("head").append("meta").attr("property", "og:title").attr("content", _theme_meta.title);
+    if(_theme_meta?.description)
+      d3.select("head").append("meta").attr("property", "og:description").attr("content", _theme_meta.description);
+    if(_theme_meta?.type)
+      d3.select("head").append("meta").attr("property", "og:type").attr("content", _theme_meta.type);
     
     // Twitter Card meta tags
     d3.select("head").append("meta").attr("name", "twitter:card").attr("content", "summary_large_image");
-    if(_theme.meta?.socialImage)
-      d3.select("head").append("meta").attr("name", "twitter:image").attr("content", location.origin + "/" + _theme.meta.socialImage);
-    if(_theme.meta?.title)
-      d3.select("head").append("meta").attr("name", "twitter:title").attr("content", _theme.meta.title);
-    if(_theme.meta?.description)
-      d3.select("head").append("meta").attr("name", "twitter:description").attr("content", _theme.meta.description);
+    if(_theme_meta?.socialImage)
+      d3.select("head").append("meta").attr("name", "twitter:image").attr("content", location.origin + "/" + _theme_meta.socialImage);
+    if(_theme_meta?.title)
+      d3.select("head").append("meta").attr("name", "twitter:title").attr("content", _theme_meta.title);
+    if(_theme_meta?.description)
+      d3.select("head").append("meta").attr("name", "twitter:description").attr("content", _theme_meta.description);
 
-    if(_theme.meta?.title)
-      d3.select("head").append("title").text( _theme.meta.title );
-    if(_theme.meta?.description)
-      d3.select("head").append("meta").attr("name", "description").attr("content", _theme.meta.description);
+    if(_theme_meta?.title)
+      d3.select("head").append("title").text( _theme_meta.title );
+    if(_theme_meta?.description)
+      d3.select("head").append("meta").attr("name", "description").attr("content", _theme_meta.description);
 
 
 
-    if(_theme.variables)
-      emitCSS( getVariablesCSS(_theme.variables), "theme-variables" );
+    if(_theme_variables)
+      emitCSS( getVariablesCSS(_theme_variables), "theme-variables" );
 
-    if(_theme.fonts)
-      emitCSS( getFontCSS(_theme.fonts), "theme-fonts" );
+    if(_theme_fonts)
+      emitCSS( getFontCSS(_theme_fonts), "theme-fonts" );
   }
 
-  function getTheme(part) {
+  function getTheme(component) {
+    if (!component || !_theme_components || !_theme_components[component]) return {};
+
     const result = {}
-    if (part && _theme[part]) {
-      for(let [key, value] of Object.entries(_theme[part])){
-        result[key] = parseValue(value);
-      }
-      return result;
-    }
-    return _theme[part];
+    for(let [key, value] of Object.entries(theme_components[component]))
+      result[key] = parseValue(value);
+
+    return result;
   }
 
   return {applyTheme, getTheme};

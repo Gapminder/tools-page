@@ -4,7 +4,7 @@ import toolsPage_datasources from "toolsPage_datasources";
 import toolsPage_menuItems from "toolsPage_menuItems";
 import { supabaseClient } from "../auth/supabase.service";
 
-let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE;
+let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, SITE, PAGE_SLUG;
 const resetCache = true;
 const TIMEOUT_MS = 2000; // adjust timeout duration
 
@@ -16,8 +16,17 @@ const validation = {
   toolset: data => data && data.length > 0,
   properties: data => data && data.length > 0,
   datasources: data => data && data.length > 0,
-  menu: data => data && data.length > 0,
   related: data => !!data,
+  theme_components: data => !!data,
+  menu_items: data => !!data,
+  footer_links: data => Array.isArray(data),
+  footer_logos: data => Array.isArray(data),
+  theme_meta: data => !!data,
+  theme_layout: data => !!data,
+  theme_fonts: data => !!data,
+  theme_style: data => !!data,
+  theme_variables: data => !!data,
+  locales: data => Array.isArray(data),
 };
 
 const parsing = page => {
@@ -115,23 +124,35 @@ function nestObject(flat) {
 
 
 const getPages = (locale = DEFAULT_LOCALE) => ([
-  { dataGet: getToolConfigs, docid: DOCID_CMS, sheet: "toolconfig", fallbackContent: new Map() },
-  { dataGet: getToolset, docid: DOCID_CMS, sheet: "toolset", fallbackContent: toolsPage_toolset },
-  { docid: DOCID_CMS, sheet: "properties", fallbackContent: toolsPage_properties },
-  { dataGet: getDatasources, docid: DOCID_CMS, sheet: "datasources", fallbackContent: toolsPage_datasources },
-  { dataGet: getMenu, docid: DOCID_CMS, sheet: "menu", fallbackContent: toolsPage_menuItems },
-  { dataGet: getRelated, docid: DOCID_CMS, sheet: "related", fallbackContent: "", fallbackPath: `./config/related.json` },
-  { docid: DOCID_I18N, sheet: `page/${locale}`, type: "language", fallbackPath: `./assets/i18n/${locale}.json` },
-  { docid: DOCID_I18N, sheet: `tools/${locale}`, type: "language", fallbackPath: `./assets/translation/${locale}.json` },
+  {getFromDB: getToolConfigs, docid: DOCID_CMS, sheet: "toolconfig", fallbackContent: new Map()},
+  {getFromDB: getToolset, docid: DOCID_CMS, sheet: "toolset", fallbackContent: toolsPage_toolset},
+
+  {getFromDB: getThemeComponents, docid: DOCID_CMS, sheet: "theme_components", fallbackContent: toolsPage_properties.theme_components || {} },
+  {getFromDB: getMenuItems, docid: DOCID_CMS, sheet: "menu_items", fallbackContent: toolsPage_properties.menu_items || {} },
+  {getFromDB: getFooterLinks, docid: DOCID_CMS, sheet: "footer_links", fallbackContent: toolsPage_properties.footer_links || [] },
+  {getFromDB: getFooterLogos, docid: DOCID_CMS, sheet: "footer_logos", fallbackContent: toolsPage_properties.footer_logos || [] },
+  {getFromDB: getThemeMeta, docid: DOCID_CMS, sheet: "theme_meta", fallbackContent: toolsPage_properties.theme_meta || {} },
+  {getFromDB: getThemeLayout, docid: DOCID_CMS, sheet: "theme_layout", fallbackContent: toolsPage_properties.theme_layout || {} },
+  {getFromDB: getThemeFonts, docid: DOCID_CMS, sheet: "theme_fonts", fallbackContent: toolsPage_properties.theme_fonts || {} },
+  {getFromDB: getThemeStyle, docid: DOCID_CMS, sheet: "theme_style", fallbackContent: toolsPage_properties.theme_style || {} },
+  {getFromDB: getThemeVariables, docid: DOCID_CMS, sheet: "theme_variables", fallbackContent: toolsPage_properties.theme_variables || {} },
+  {getFromDB: getLocales, docid: DOCID_CMS, sheet: "locales", fallbackContent: toolsPage_properties.locales || [] },
+
+  {getFromDB: getDatasources, docid: DOCID_CMS, sheet: "datasources", fallbackContent: toolsPage_datasources},
+  {getFromDB: getRelated, docid: DOCID_CMS, sheet: "related", fallbackContent: "", fallbackPath: `./config/related.json` },
+  {docid: DOCID_I18N, sheet: `page/${locale}`, type: "language", fallbackPath: `./assets/i18n/${locale}.json` },
+  {docid: DOCID_I18N, sheet: `tools/${locale}`, type: "language", fallbackPath: `./assets/translation/${locale}.json` }
 ]);
 
 function setSettings(settings = {}) {
   DOCID_CMS = settings.DOCID_CMS;
   DOCID_I18N = settings.DOCID_I18N;
   DEFAULT_LOCALE = settings.DEFAULT_LOCALE;
+  SITE = settings.site;
+  PAGE_SLUG = settings.pageSlug;
 }
 function getSettings() {
-  return { DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE };
+  return { DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, SITE, PAGE_SLUG};
 }
 
 function getCacheID(page) {
@@ -159,13 +180,13 @@ function loadSheet(page) {
       reject(new Error("Timeout"));
     }, TIMEOUT_MS);
 
-    (page.dataGet ? page.dataGet(page.pageId) : d3.csv(remoteUrl))
+    (page.getFromDB ? page.getFromDB(page.pageId) : d3.csv(remoteUrl))
       .then(data => {
         if (timedOut) return; // ignore result if already timed out
         clearTimeout(timer);
         // Validate remote content if a validator exists for this sheet.
         if (validation[sheet] && !validation[sheet](data)) {
-          reject(new Error("Validation failed for remote sheet"));
+          reject(new Error(`Validation failed for remote configuration sheet ${sheet}`));
         } else {
           const parsedResult = parsing(page)(data);
           cache[getCacheID(page)] = parsedResult;
@@ -188,13 +209,13 @@ function loadSheet(page) {
     return d3.json(localUrl)
       .then(data => {
         if (validation[sheet] && !validation[sheet](data)) {
-          throw new Error(`Validation failed for local fallback of sheet "${sheet}"`);
+          throw new Error(`Validation failed for local fallback of configuration sheet "${sheet}"`);
         }
         cache[getCacheID(page)] = data;
         return data;
       })
       .catch(err => {
-        console.error(`Error loading local sheet ${localUrl}`, err);
+        console.error(`Error loading local configuration sheet ${localUrl}`, err);
       });
   });
 }
@@ -207,27 +228,46 @@ async function load(settings) {
     pages.map(page => loadSheet({...page, pageId}))
   ).then(response => {
     const cmsData = Object.fromEntries(pages.map((page, i) => ([page.sheet, response[i]])));
-    console.log("All sheets loaded:", cmsData);
     return {pageId, cmsData};
   }).catch(err => {
     console.error("Error loading one or more sheets:", err);
   });
 }
 
-async function getPageId(site, pageSlug) {
+let pageInfoCache = null;
+async function getCachedPageInfo(site = SITE, pageSlug = PAGE_SLUG) {
+  if (pageInfoCache) return pageInfoCache;
+  if(!site) return null;
   const { data, error } = await supabaseClient
     .from("pages")
-    .select("id")
+    .select("*")
     .eq("site", site)
     .eq("slug", pageSlug || "__home__")
     .single();
-  if (error) {
-    console.error(error);
-    return;
-  } else {
-    return data && data.id;
-  }
+
+  if (error) return console.error(error);
+  pageInfoCache = data;
+  return data;
 }
+
+async function getPageId(site, pageSlug) {
+  const info = await getCachedPageInfo(site, pageSlug);
+  return info && info.id;
+}
+
+
+async function getThemeComponents() {const info = await getCachedPageInfo(); return info && info.theme_components;}
+async function getMenuItems() {const info = await getCachedPageInfo(); return info && info.menu_items;}
+async function getFooterLinks() {const info = await getCachedPageInfo(); return info && info.footer_links;}
+async function getFooterLogos() {const info = await getCachedPageInfo(); return info && info.footer_logos;}
+async function getThemeMeta() {const info = await getCachedPageInfo(); return info && info.theme_meta;}
+async function getThemeLayout() {const info = await getCachedPageInfo(); return info && info.theme_layout;}
+async function getThemeFonts() {const info = await getCachedPageInfo(); return info && info.theme_fonts;}
+async function getThemeStyle() {const info = await getCachedPageInfo(); return info && info.theme_style;}
+async function getThemeVariables() {const info = await getCachedPageInfo(); return info && info.theme_variables;}
+async function getLocales() {const info = await getCachedPageInfo(); return info && info.locales ;}
+
+
 
 async function getToolset(pageId) {
   const { data, error } = await supabaseClient
@@ -293,17 +333,6 @@ async function getRelated(pageId) {
   }
 }
 
-async function getMenu(pageId) {
-  const { data, error } = await supabaseClient
-    .from("pages")
-    .select("menu")
-    .eq("id", pageId)
-  if (error) {
-    throw(error);
-  } else {
-    return data;
-  }
-}
 
 export { load, loadSheet, getSettings, getPageId };
 
