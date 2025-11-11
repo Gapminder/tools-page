@@ -21,6 +21,7 @@ export async function createShareLinkModal(opts = {}) {
     .append('div')
     .attr('class', 'sl-dialog')
 
+  dialog.append('a').attr('class', 'sl-close').text('✕').on('click', closeModal);
   dialog.append('div').attr('class', 'sl-title').text('Share a link');
 
   const urlRow = dialog.append('div').attr('class', 'sl-column');
@@ -74,7 +75,6 @@ export async function createShareLinkModal(opts = {}) {
   }
 
   const actions = dialog.append('div').attr('class', 'sl-actions');
-  const btnCancel = actions.append('button').attr('class', 'sl-btn sl-cancel').attr('type', 'button').text('Cancel');
   const btnSave = actions.append('button').attr('class', 'sl-btn sl-save').attr('type', 'button').text('Save and close');
 
   let checkId = 0;
@@ -118,8 +118,6 @@ export async function createShareLinkModal(opts = {}) {
     document.removeEventListener('keydown', onKeyDown);
     overlay.remove();
   }
-
-  btnCancel.on('click', () => closeModal());
 
   btnSave.on('click', async () => {
     const tok = slugInput.node().value.trim();

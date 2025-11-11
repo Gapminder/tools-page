@@ -7,10 +7,14 @@
     width 520px
     max-width 95%
     padding 16px
+    get-font-size(small)
+
+    .sl-close
+      closecross()
 
     .sl-title
-      font-weight 700
       margin-bottom 8px
+      get-font-size(large)
 
     .sl-column
       margin 10px 0
@@ -21,7 +25,8 @@
       display flex
       align-items center
       gap 8px
-      margin-bottom 8px
+      margin-bottom 12px
+      
 
     .sl-base
       max-width 60%
@@ -30,7 +35,6 @@
     .sl-private-ds
       display flex
       flex-direction column
-      get-font-size(small)
       span
         margin-top 2px
         label
@@ -46,7 +50,6 @@
       border-radius 4px
 
     .sl-availability
-      get-font-size(medium)
       height 0
 
     .sl-availability.ok
@@ -56,7 +59,6 @@
       color #b80000
 
     .sl-label
-      get-font-size(medium)
       margin-bottom 6px
 
     .sl-select
@@ -70,20 +72,8 @@
       display flex
       gap 12px
       margin-top 14px
+      justify-content center
 
     .sl-btn
-      padding 8px 18px
-      border-radius 4px
-      border 1px solid #999
-      cursor pointer
-      font-weight 600
-      background #fff
-
-    .sl-btn.sl-cancel
-      background #f7cfcf
-      border-color #d88
-
-    .sl-btn.sl-save
-      background #cff7d0
-      border-color #6c9
-      flex 1
+      button()
+      get-font-size(large)
