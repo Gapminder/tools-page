@@ -32,6 +32,18 @@ export default function ThemeService({theme_components, theme_meta, theme_layout
     return value.trim();
   }
 
+  function getGenericCSSfromObject(obj){
+    return Object.entries(obj)
+      .filter(([selector]) => typeof selector === "string" && !selector.trim().startsWith("//"))
+      .map(([selector, styles]) => {
+        const declarations = Object.entries(styles)
+          .map(([prop, value]) => `  ${prop}: ${value};`)
+          .join('\n');
+        return `${selector} {\n${declarations}\n}`;
+      })
+      .join('\n\n');
+  }
+
   function getVariablesCSS(variables, scope=":root"){
     const lines = Object.entries(variables).map(([k, v]) => `--${k}: ${v};`);
     return `${scope}{${lines.join("")}}`;
@@ -77,14 +89,11 @@ export default function ThemeService({theme_components, theme_meta, theme_layout
           }
         }
       }
-    //apply styles
+    
+    //apply styles via CSS
     const style = _theme_style && Object.keys(_theme_style).length > 0 ? _theme_style : DEFAULT_STYLE;
-    if(style || DEFAULT_STYLE)
-      for(let [selector, styles] of Object.entries(style || DEFAULT_STYLE)){
-        if (typeof selector !== "string" || selector.trim().startsWith("//")) continue;
-        for(let [key, value] of Object.entries(styles))
-          wrapper.select(selector).style(key, value);
-      }
+    if(style)
+      emitCSS(getGenericCSSfromObject(style), "theme-style");
 
     if(_theme_meta?.favicon)
       d3.select("head").append("link").attr("rel", "shortcut icon").attr("href", _theme_meta.favicon);
