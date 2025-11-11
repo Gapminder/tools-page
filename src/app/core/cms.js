@@ -4,7 +4,7 @@ import toolsPage_datasources from "toolsPage_datasources";
 import toolsPage_menuItems from "toolsPage_menuItems";
 import { supabaseClient } from "../auth/supabase.service";
 
-let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, SITE, PAGE_SLUG;
+let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, SITE, PAGE_SLUG, PAGE_ID;
 const resetCache = true;
 const TIMEOUT_MS = 2000; // adjust timeout duration
 
@@ -124,24 +124,25 @@ function nestObject(flat) {
 
 
 const getPages = (locale = DEFAULT_LOCALE) => ([
-  {getFromDB: getToolConfigs, docid: DOCID_CMS, sheet: "toolconfig", fallbackContent: new Map()},
-  {getFromDB: getToolset, docid: DOCID_CMS, sheet: "toolset", fallbackContent: toolsPage_toolset},
+  {getFromDB: getToolConfigs, sheet: "toolconfig", fallbackContent: new Map()},
+  {getFromDB: getToolset, sheet: "toolset", fallbackContent: toolsPage_toolset},
 
-  {getFromDB: getThemeComponents, docid: DOCID_CMS, sheet: "theme_components", fallbackContent: toolsPage_properties.theme_components || {} },
-  {getFromDB: getMenuItems, docid: DOCID_CMS, sheet: "menu_items", fallbackContent: toolsPage_properties.menu_items || {} },
-  {getFromDB: getFooterLinks, docid: DOCID_CMS, sheet: "footer_links", fallbackContent: toolsPage_properties.footer_links || [] },
-  {getFromDB: getFooterLogos, docid: DOCID_CMS, sheet: "footer_logos", fallbackContent: toolsPage_properties.footer_logos || [] },
-  {getFromDB: getThemeMeta, docid: DOCID_CMS, sheet: "theme_meta", fallbackContent: toolsPage_properties.theme_meta || {} },
-  {getFromDB: getThemeLayout, docid: DOCID_CMS, sheet: "theme_layout", fallbackContent: toolsPage_properties.theme_layout || {} },
-  {getFromDB: getThemeFonts, docid: DOCID_CMS, sheet: "theme_fonts", fallbackContent: toolsPage_properties.theme_fonts || {} },
-  {getFromDB: getThemeStyle, docid: DOCID_CMS, sheet: "theme_style", fallbackContent: toolsPage_properties.theme_style || {} },
-  {getFromDB: getThemeVariables, docid: DOCID_CMS, sheet: "theme_variables", fallbackContent: toolsPage_properties.theme_variables || {} },
-  {getFromDB: getLocales, docid: DOCID_CMS, sheet: "locales", fallbackContent: toolsPage_properties.locales || [] },
+  {getFromDB: getThemeComponents, sheet: "theme_components", fallbackContent: toolsPage_properties.theme_components || {} },
+  {getFromDB: getMenuItems, sheet: "menu_items", fallbackContent: toolsPage_menuItems || {} },
+  {getFromDB: getFooterLinks, sheet: "footer_links", fallbackContent: toolsPage_properties.footer_links || [] },
+  {getFromDB: getFooterLogos, sheet: "footer_logos", fallbackContent: toolsPage_properties.footer_logos || [] },
+  {getFromDB: getThemeMeta, sheet: "theme_meta", fallbackContent: toolsPage_properties.theme_meta || {} },
+  {getFromDB: getThemeLayout, sheet: "theme_layout", fallbackContent: toolsPage_properties.theme_layout || {} },
+  {getFromDB: getThemeFonts, sheet: "theme_fonts", fallbackContent: toolsPage_properties.theme_fonts || {} },
+  {getFromDB: getThemeStyle, sheet: "theme_style", fallbackContent: toolsPage_properties.theme_style || {} },
+  {getFromDB: getThemeVariables, sheet: "theme_variables", fallbackContent: toolsPage_properties.theme_variables || {} },
+  {getFromDB: getLocales, sheet: "locales", fallbackContent: toolsPage_properties.locales || [] },
 
-  {getFromDB: getDatasources, docid: DOCID_CMS, sheet: "datasources", fallbackContent: toolsPage_datasources},
-  {getFromDB: getRelated, docid: DOCID_CMS, sheet: "related", fallbackContent: "", fallbackPath: `./config/related.json` },
-  {docid: DOCID_I18N, sheet: `page/${locale}`, type: "language", fallbackPath: `./assets/i18n/${locale}.json` },
-  {docid: DOCID_I18N, sheet: `tools/${locale}`, type: "language", fallbackPath: `./assets/translation/${locale}.json` }
+  {getFromDB: getDatasources, sheet: "datasources", fallbackContent: toolsPage_datasources},
+  {getFromDB: getRelated, sheet: "related", fallbackContent: "", fallbackPath: `./config/related.json` },
+
+  {getFromDB: getDefaultLocalePackageForPage, locale, sheet: `page/${locale}`, fallbackPath: `./assets/i18n/${locale}.json` },
+  {getFromDB: getDefaultLocalePackageForVizabi, locale, sheet: `vizabi/${locale}`, fallbackPath: `./assets/translation/${locale}.json` }
 ]);
 
 function setSettings(settings = {}) {
@@ -152,7 +153,7 @@ function setSettings(settings = {}) {
   PAGE_SLUG = settings.pageSlug;
 }
 function getSettings() {
-  return { DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, SITE, PAGE_SLUG};
+  return { DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, SITE, PAGE_SLUG, PAGE_ID};
 }
 
 function getCacheID(page) {
@@ -180,7 +181,7 @@ function loadSheet(page) {
       reject(new Error("Timeout"));
     }, TIMEOUT_MS);
 
-    (page.getFromDB ? page.getFromDB(page.pageId) : d3.csv(remoteUrl))
+    (page.getFromDB ? page.getFromDB(page.pageId, page.locale) : d3.csv(remoteUrl))
       .then(data => {
         if (timedOut) return; // ignore result if already timed out
         clearTimeout(timer);
@@ -222,13 +223,15 @@ function loadSheet(page) {
 
 async function load(settings) {
   setSettings(settings);
-  const pageId = await getPageId(settings.site, settings.pageSlug);
+  const {id, locales} = await getCachedPageInfo(settings.site, settings.pageSlug);
+  if (locales && locales.length > 0) DEFAULT_LOCALE = locales[0];
+  if (id) PAGE_ID = id;
   const pages = getPages();
   return Promise.all(
-    pages.map(page => loadSheet({...page, pageId}))
+    pages.map(page => loadSheet({...page, pageId: id, locale: DEFAULT_LOCALE}))
   ).then(response => {
     const cmsData = Object.fromEntries(pages.map((page, i) => ([page.sheet, response[i]])));
-    return {pageId, cmsData};
+    return {pageId: id, cmsData};
   }).catch(err => {
     console.error("Error loading one or more sheets:", err);
   });
@@ -245,16 +248,13 @@ async function getCachedPageInfo(site = SITE, pageSlug = PAGE_SLUG) {
     .eq("slug", pageSlug || "__home__")
     .single();
 
-  if (error) return console.error(error);
+  if (error) {
+    console.error(error);
+    return {};
+  }
   pageInfoCache = data;
   return data;
 }
-
-async function getPageId(site, pageSlug) {
-  const info = await getCachedPageInfo(site, pageSlug);
-  return info && info.id;
-}
-
 
 async function getThemeComponents() {const info = await getCachedPageInfo(); return info && info.theme_components;}
 async function getMenuItems() {const info = await getCachedPageInfo(); return info && info.menu_items;}
@@ -333,7 +333,47 @@ async function getRelated(pageId) {
   }
 }
 
+async function getDefaultLocalePackageForPage(pageId, locale) {
+  return getLocalePackage({pageId, locale, scope: "page"});
+}
 
-export { load, loadSheet, getSettings, getPageId };
+async function getDefaultLocalePackageForVizabi(pageId, locale) {
+  return getLocalePackage({pageId, locale, scope: "vizabi"});
+}
+
+async function getLocalePackage({pageId = PAGE_ID, locale = DEFAULT_LOCALE, scope} = {}) {
+  if (!scope) throw new Error("loadLocalePackage: missing the required parameter 'scope'");
+  const { data, error } = await supabaseClient
+    .from("translations")
+    .select("spec")
+    .eq("scope", scope)
+    .eq("page_id", pageId)
+    .eq("locale", locale)
+    .single();
+
+  if (error) {
+    throw(error);
+  } else {
+    return data.spec;
+  }
+}
+
+async function loadLocalePackage(locale, scope) {
+  let getFromDB, sheet, fallbackPath;
+  if (scope === "page") {
+    getFromDB = getDefaultLocalePackageForPage;
+    sheet = `page/${locale}`;
+    fallbackPath = `./assets/i18n/${locale}.json`;
+  } else if (scope === "vizabi") {
+    getFromDB = getDefaultLocalePackageForVizabi;
+    sheet = `vizabi/${locale}`;
+    fallbackPath = `./assets/translation/${locale}.json`;
+  } else {
+    throw new Error("loadLocalePackage: missing the required parameter 'scope'");
+  }
+  return loadSheet({getFromDB, sheet: `${scope}/${locale}`, fallbackPath})
+}
+
+export { load, getSettings, loadLocalePackage };
 
 
