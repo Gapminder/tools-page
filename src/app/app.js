@@ -46,7 +46,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
 
   d3.select(".wrapper").classed("embedded-view", state.getEmbedded());
 
-  const translator = await initTranslator(state, cmsData.locales);
+  const {translator, getLocaleName} = await initTranslator(state, cmsData.locales);
   const bitlyService = await BitlyService({ state });
   const locationService = LocationService();
   const tool = new Tool({ cmsData, state, dom: ".vizabi-placeholder" });
@@ -74,7 +74,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
     getTheme, translator, state, dom: ".too-social-buttons", bitlyService, locationService
   });
   new LanguageSwitcher({
-    getTheme, translator, state, dom: ".too-language-button", data: cmsData.locales 
+    getTheme, getLocaleName, state, dom: ".too-language-button", data: cmsData.locales 
   });
   new UserLogin({
     getTheme, translator, state, dom: ".too-login-button", loginFormsDom: ".too-login-forms"

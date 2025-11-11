@@ -5,7 +5,8 @@ let availableLocales;
 let getStateLocale;
 const dictionary = {};
 
-function getLocaleDisplayName(locale) {
+function getLocaleName(locale) {
+  //get name of language for language switchers and such
   /*
     longest locale Display names
     "azərbaycan"
@@ -36,8 +37,6 @@ function setLocalePageClasses() {
 }
 
 function translator(key) {
-  //get name of language for language switchers and such
-  if (availableLocales.includes(key)) return getLocaleDisplayName(key);
   const locale = getStateLocale();
   return dictionary[locale] && dictionary[locale][key]
     || dictionary[defaultLocale] && dictionary[defaultLocale][key]
@@ -54,7 +53,7 @@ async function initTranslator(state, locales) {
   if (locale !== defaultLocale) dictionary[locale] = await cms.loadLocalePackage(locale, "page");
 
   setLocalePageClasses();
-  return translator;
+  return {translator, getLocaleName};
 }
 
 function getFileReaderForVizabi(locale) {

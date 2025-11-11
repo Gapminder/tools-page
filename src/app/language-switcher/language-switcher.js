@@ -1,5 +1,5 @@
 
-const LanguageSwitcher = function({ dom, translator, state, data, getTheme }) {
+const LanguageSwitcher = function({ dom, getLocaleName, state, data, getTheme }) {
   const template = `
     <div class="lang-wrapper">
       <div class="lang-current"></div>
@@ -18,7 +18,7 @@ const LanguageSwitcher = function({ dom, translator, state, data, getTheme }) {
   const items = placeHolders.select("ul").selectAll("li")
     .data(data)
     .join("li")
-    .text(d => translator(d))
+    .text(d => getLocaleName(d))
     .on("click", (event, d) => {
       toggleMenu(false);
       state.setLocale(d);
@@ -32,7 +32,7 @@ const LanguageSwitcher = function({ dom, translator, state, data, getTheme }) {
 
   function updateSelected(id = state.getLocale()) {
     items.classed("selected", d => d === id);
-    placeHolders.selectAll(".lang-current").text(translator(id));
+    placeHolders.selectAll(".lang-current").text(getLocaleName(id) || "Language");
   }
 
 
