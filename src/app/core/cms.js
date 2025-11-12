@@ -150,7 +150,8 @@ function setSettings(settings = {}) {
   DOCID_I18N = settings.DOCID_I18N;
   DEFAULT_LOCALE = settings.DEFAULT_LOCALE;
   SITE = settings.site;
-  PAGE_SLUG = settings.pageSlug;
+  PAGE_SLUG = settings.pageSlug
+  PAGE_ID = settings.id;
 }
 function getSettings() {
   return { DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, SITE, PAGE_SLUG, PAGE_ID};
@@ -222,16 +223,16 @@ function loadSheet(page) {
 }
 
 async function load(settings) {
-  setSettings(settings);
   const {id, locales} = await getCachedPageInfo(settings.site, settings.pageSlug);
-  if (locales && locales.length > 0) DEFAULT_LOCALE = locales[0];
-  if (id) PAGE_ID = id;
+  if (locales && locales.length > 0) settings.DEFAULT_LOCALE = locales[0];
+  if (id) settings.id = id;
+  setSettings(settings);
   const pages = getPages();
   return Promise.all(
     pages.map(page => loadSheet({...page, pageId: id, locale: DEFAULT_LOCALE}))
   ).then(response => {
     const cmsData = Object.fromEntries(pages.map((page, i) => ([page.sheet, response[i]])));
-    return {pageId: id, cmsData};
+    return {pageId: id, cmsData, defaultLocale: DEFAULT_LOCALE};
   }).catch(err => {
     console.error("Error loading one or more sheets:", err);
   });

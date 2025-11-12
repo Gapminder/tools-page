@@ -32,7 +32,7 @@ let viz;
 const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site } = {}) {
 
   const pageSlug = getPageSlug();
-  const {cmsData, pageId} = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, site, pageSlug });
+  const {cmsData, pageId, defaultLocale} = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, site, pageSlug });
   const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.id);
 
   let shortLinkState = {};
@@ -42,7 +42,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
     if (linkData && linkData.page_config) shortLinkState = linkData.page_config;
   }
 
-  const state = urlService.init({ allowedTools, defaultLocale: DEFAULT_LOCALE, shortLinkHash, shortLinkState, pageSlug });
+  const state = urlService.init({ allowedTools, defaultLocale, shortLinkHash, shortLinkState, pageSlug });
 
   d3.select(".wrapper").classed("embedded-view", state.getEmbedded());
 
@@ -65,7 +65,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
     getTheme, translator, state, dom: ".too-chart-switcher-with-icons", data: cmsData.toolset 
   });
   new Menu({
-    getTheme, translator, state, dom: ".too-menu", data: cmsData.menu 
+    getTheme, translator, state, dom: ".too-menu", data: cmsData.menu_items 
   });
   new Howto({
     getTheme, translator, state, dom: ".too-howto", howtoDialogDom: ".too-howto-dialog"
