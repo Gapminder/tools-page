@@ -286,6 +286,7 @@ async function getToolset(pageId) {
       title: m.title,
       image: m.image,
       icon: m.icon,
+      url: m.url,
       icon_inline: m.icon_inline,
       transition: m.transition,
       mainMarker: m.main_marker,

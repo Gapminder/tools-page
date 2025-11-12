@@ -24,6 +24,7 @@ const SeeAlso = function({ dom, translator, state, data, getTheme }) {
       </a>
     `)
     .on("click", (event, d) => {
+      if (d.url) return window.open(d.url, "_blank");
       utils.scrollTo({
         element: d3.select(".too-wrapper").node(),
         complete: () => state.setTool(d.id)
