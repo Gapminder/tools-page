@@ -320,6 +320,75 @@ export function diffObject(obj2, obj1) {
   return diff;
 }
 
+/*
+ * Returns the resulting object of the difference between two objects
+ * @param {Object} obj2
+ * @param {Object} obj1
+ * @returns {Object}
+ */
+export function diffObjectWithEmptyArrayMark(obj2, obj1) {
+  const diff = {};
+  forEach(obj1, (value, key) => {
+    if (!obj2.hasOwnProperty(key) && isPlainObject(value)) {
+      diff[key] = diffObjectWithEmptyArrayMark({}, value);
+    }
+  });
+  forEach(obj2, (value, key) => {
+    if (!obj1.hasOwnProperty(key)) {
+      diff[key] = value;
+    } else if (value !== obj1[key]) {
+      if (isPlainObject(value) && isPlainObject(obj1[key])) {
+        if (isEmpty(value)) {
+          if (!isEmpty(obj1[key])) {
+            diff[key] = {};
+          }
+        } else {
+          const d = diffObjectWithEmptyArrayMark(value, obj1[key]);
+          if (Object.keys(d).length > 0) {
+            diff[key] = d;
+          }
+        }
+      } else if (!isArray(value) || !isArray(obj1[key]) || !deepArrayEqualsWithEmptyArrayMark(value, obj1[key])) {
+        diff[key] = value;
+      }
+    }
+  });
+  return diff;
+}
+
+function deepArrayEqualsWithEmptyArrayMark(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) {
+    if (a.length === 0) {
+      a.__saveEmptyArray__ = true;
+    };
+    return false;
+  };
+  for (let i = 0; i < a.length; ++i) {
+    if (isPlainObject(a[i]) && isPlainObject(b[i])) {
+      if (!comparePlainObjects(a[i], b[i])) return false;
+    } else if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
+export function clearEmptiesAndEmptyArrayMark(obj) {
+  for (const key in obj) {
+    if (!obj[key] || typeof obj[key] !== "object" || obj[key] instanceof Date) {
+      continue; // If null or not an object, skip to the next iteration
+    }
+
+    // The property is an object
+    clearEmptiesAndEmptyArrayMark(obj[key]); // <-- Make a recursive call on the nested object
+    if (Object.keys(obj[key]).length === 0) {
+      delete obj[key]; // The object had no properties, so delete that property
+    } else if (isArray(obj[key]) && obj[key].__saveEmptyArray__) {
+      delete obj[key].__saveEmptyArray__;
+    }
+  }
+  return obj;
+}
 
 /*
  * loops through an object or array

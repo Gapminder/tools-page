@@ -1,7 +1,7 @@
 
 import { getFileReaderForVizabi } from "./language.js";
 import { getTransitionModel } from "./chart-transition.js";
-import { deepExtend, diffObject, removeProperties } from "./utils.js";
+import { clearEmptiesAndEmptyArrayMark, deepExtend, diffObject, diffObjectWithEmptyArrayMark, removeProperties } from "./utils.js";
 import { loadConfigModule, resolveAssetUrl } from "./utilsForAssetPaths.js";
 import timeLogger from "./timelogger.js";
 import { loadTool } from "../../../vizabi-tools.js";
@@ -188,9 +188,9 @@ const Tool = function({ cmsData, state, dom }) {
         ui: toJS(VIZABI_UI_CONFIG, { recurseEverything: true })
       };
 
-      const meaningfulDeltaConfig = Utils.clearEmpties(
+      const meaningfulDeltaConfig = clearEmptiesAndEmptyArrayMark(
         removeProperties(
-          diffObject(currentConfig, combinedDefaultConfig),
+          diffObjectWithEmptyArrayMark(currentConfig, combinedDefaultConfig),
           ["highlighted", "superhighlighted", "range", "frame.scale.domain", "presets", "dragging", "opened", "dataSources"]
         )
       );
