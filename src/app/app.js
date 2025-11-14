@@ -24,7 +24,7 @@ import Footer from "./footer/footer.js";
 import Tool from "./core/tool.js";
 import { getLinkData, getLinkSlugAndHash } from "./core/links-resolve.js";
 import Logo from "./logo/logo.js";
-import DefaultConfigService from "./core/default-config.service.js";
+import PreferentialConfigService from "./core/default-config.service.js";
 import {getPageSlug}  from "./core/utilsForAssetPaths.js"; 
 
 let viz;
@@ -97,7 +97,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
   const message = new Message({
     getTheme, translator, state, dom: ".too-message" 
   });
-  const defaultConfigService = await DefaultConfigService({ state, site, pageSlug, pageId, defaultConfigs: cmsData.toolconfig });
+  const preferentialConfigService = await PreferentialConfigService({ state, site, pageSlug, pageId, defaultConfigs: cmsData.toolconfig });
 
 
   state.dispatch.on("authStateChange.app", (event) => {
@@ -125,8 +125,11 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
   });
   state.dispatch.on("showMessage.app", ({ message: msg }) => message.showMessage(msg) );
 
-  state.dispatch.on("setDefaultConfig", () => {
-    defaultConfigService.setDefaultConfig();
+  state.dispatch.on("setPreferentialConfig", () => {
+    preferentialConfigService.setPreferentialConfig();
+  })
+  state.dispatch.on("restorePreferentialConfig", () => {
+    preferentialConfigService.restorePreferentialConfig();
   })
 
   viz = await tool.setTool();

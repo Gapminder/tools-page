@@ -73,7 +73,8 @@ const Tool = function({ cmsData, state, dom }) {
         : loadTool(tool.toLowerCase(), resolveAssetUrl).then(prototype => window[tool] = prototype)
     ));
 
-    const pathToConfig = `config/toolconfigs/${toolsetEntry.config || toolsetEntry.tool}.js`;
+    const pathToConfig = `config/toolconfigs/${toolsetEntry.config || toolsetEntry.tool}.js`
+      .replace(/\.js\.js$/, '.js'); // Fix a possible mistake of double .js extension
     const VIZABI_MODEL = await loadConfigModule(pathToConfig);
 
     d3.select(".vizabi-placeholder")
@@ -101,7 +102,7 @@ const Tool = function({ cmsData, state, dom }) {
         })
       },
       model: { markers: { [toolsetEntry.mainMarker]: { data: { source: toolsetEntry.dataSources[0] } } } }
-    }, VIZABI_MODEL /* add config from file */, toolconfig.get(tool) || {} /* add config from cms */);
+    }, VIZABI_MODEL /* add config from file */, toolconfig.preferential.get(tool) || toolconfig.essential.get(tool) || {} /* add config from cms */);
 
     let vizabiStartConfig = deepExtend({}, pageBaseConfig);
 

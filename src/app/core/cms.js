@@ -32,7 +32,10 @@ const validation = {
 const parsing = page => {
   const parsers = {
     "toolset": defaultParser,
-    "toolconfig": data => new Map(data.map(d => [d.tool_id, d.config])),//groupedParser,
+    "toolconfig": data => ({
+      essential: d3.rollup(data.filter(f => f.type === "essential"), v => v[0] && v[0].config, d=> d.tool_id),
+      preferential: d3.rollup(data.filter(f => f.type === "preferential"), v => v[0] && v[0].config, d=> d.tool_id)
+    }), 
     "properties": data => arrayToObject(defaultParser(data)),
     "datasources": data => arrayToObject(data.map(d => Object.assign(d.reader_properties, {
       key: d.ds_id,
@@ -124,7 +127,7 @@ function nestObject(flat) {
 
 
 const getPages = (locale = DEFAULT_LOCALE) => ([
-  {getFromDB: getToolConfigs, sheet: "toolconfig", fallbackContent: new Map()},
+  {getFromDB: getToolConfigs, sheet: "toolconfig", fallbackContent: {preferential: new Map(), essential: new Map()} },
   {getFromDB: getToolset, sheet: "toolset", fallbackContent: toolsPage_toolset},
 
   {getFromDB: getThemeComponents, sheet: "theme_components", fallbackContent: toolsPage_properties.theme_components || {} },
@@ -301,7 +304,7 @@ async function getToolset(pageId) {
 async function getToolConfigs(pageId) {
   const { data, error } = await supabaseClient
     .from("configs")
-    .select("tool_id, config")
+    .select("tool_id, type, config")
     .eq("page_id", pageId)
   if (error) {
     throw(error);

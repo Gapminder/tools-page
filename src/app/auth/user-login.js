@@ -19,8 +19,9 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
         <a href="https://vizabi.com/verkstad?tab=servers${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-dataeditor">Hantera data källor</a>
         <a href="https://vizabi.com/verkstad?tab=permalinks${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-permalinks">Hantera korta URLs</a>
         <div class="panel user-logged-set-config">
-          <span>Page default config:</span>
-          <button class="button">Make current page state as the default config</button>
+          <span>Start view:</span>
+          <button class="button save">Save current view as preferential</button>
+          <button class="button restore">Reset preferential view</button>
         </div>      
       </div>
     </div>
@@ -198,8 +199,12 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
 
   })
 
-  formsPlaceHolder.select(".user-logged-set-config button").on("click", () => {
-    state.dispatch.call("setDefaultConfig");
+  formsPlaceHolder.select(".user-logged-set-config button.save").on("click", () => {
+    state.dispatch.call("setPreferentialConfig");
+    formsPlaceHolder.classed("open", false);
+  });
+  formsPlaceHolder.select(".user-logged-set-config button.restore").on("click", () => {
+    state.dispatch.call("restorePreferentialConfig");
     formsPlaceHolder.classed("open", false);
   });
 
