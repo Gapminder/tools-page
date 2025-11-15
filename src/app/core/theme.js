@@ -6,13 +6,17 @@ let _theme_style = null;
 let _theme_variables = null;
 
 const DEFAULT_LAYOUT = {
-  ".too-header": ["too-start"],
-  ".too-header .too-start": ["too-chart-switcher"]
+  ".too-header": ["too-start", "too-end"],
+  ".too-header .too-start": ["too-chart-switcher"],
+  ".too-header .too-end": ["too-login-button"]
 }
 const DEFAULT_STYLE = {
   ".too-related-items": {"display": "none"},
   ".hamburger-button": {"display": "none"}
 }
+const DEFAULT_FONTS = {
+  "Brand Mono": [{"url": "assets/fonts/courier-prime-sans.woff2"}]
+};
 
 export default function ThemeService({theme_components, theme_meta, theme_layout, theme_fonts, theme_style, theme_variables} = {}) {
   _theme_components = theme_components;
@@ -128,8 +132,9 @@ export default function ThemeService({theme_components, theme_meta, theme_layout
     if(_theme_variables)
       emitCSS( getVariablesCSS(_theme_variables), "theme-variables" );
 
-    if(_theme_fonts)
-      emitCSS( getFontCSS(_theme_fonts), "theme-fonts" );
+    const fonts = _theme_layout && Object.keys(_theme_fonts).length > 0 ? _theme_fonts : DEFAULT_FONTS;
+    if(fonts)
+      emitCSS( getFontCSS(fonts), "theme-fonts" );
   }
 
   function getTheme(component) {
