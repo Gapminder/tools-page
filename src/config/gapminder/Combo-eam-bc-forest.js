@@ -8,19 +8,11 @@ export const VIZABI_MODEL = {
           "mapRequired": ["size"]
         },
         data: {
-          locale: "en",
-          source: "boendebarom",
-          space: ["geo", "year"],
-          filter: {
-            dimensions: { "geo": { "$or": [{ "is--kommun": true }] } }
-          }
+          locale: "en"
         },
         encoding: {
           "show": {
-            modelType: "selection",
-            data: {
-              filter: { dimensions: { "geo": { "$not": { "is--deso": 1 } } } }
-            }
+            modelType: "selection"
           },
           "selected": {
             modelType: "selection",
@@ -68,7 +60,7 @@ export const VIZABI_MODEL = {
           },
           "color": {
             data: {
-              constant: "_default"
+              concept: "region"
             },
             scale: {
               modelType: "color",
@@ -94,7 +86,6 @@ export const VIZABI_MODEL = {
           frame: {
             modelType: "frame",
             speed: 200,
-            value: "2022",
             splash: true,
             data: {
               concept: "year"
@@ -226,8 +217,8 @@ export const VIZABI_MODEL = {
         "disableAddRemoveGroups": false,
         "primaryDim": "geo",
         "drilldown": "region.kommun.regso",
-        "shortcutForSwitch": true,
-        "shortcutForSwitch_allow": ["kommun", "regso"],
+        "shortcutForSwitch": false,
+        "shortcutForSwitch_allow": [],
       }
     },
     "marker-contextmenu": {
@@ -246,7 +237,7 @@ export const VIZABI_MODEL = {
       opacitySelectDim: 0.3,
       opacityRegular: 0.8,
       timeInBackground: true,
-      yearInTrails: true,
+      //yearInTrails: true,
       lockNonSelected: 0,
       numberFormatSIPrefix: true,
       panWithArrow: true,
@@ -321,7 +312,7 @@ export const VIZABI_MODEL = {
       "showDataSources": false,
       "folderStrategyByDataset": {
         "kolada": "spread",
-        "boendebarom": "spread",
+        "boba": "spread",
         "wdi": "folder:other_datasets"
       }
     }

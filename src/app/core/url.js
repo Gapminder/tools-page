@@ -1,4 +1,4 @@
-import { upgradeUrl } from "./deprecated-url.js";
+import URLUpgrader from "./deprecated-url.js";
 import { debounce, deepExtend } from "./utils.js";
 import { encodeUrlHash, parseURLHashWithUrlon } from "../core/utils.js";
 
@@ -17,14 +17,15 @@ let authToken = null;
 let defaultLoc = null;
 let permalinkHashedToken = null;
 
-function init({ allowedTools, defaultLocale, shortLinkHash, shortLinkState = {}, pageSlug }) {
+function init({ allowedTools, defaultLocale, conceptMapping, entitysetMapping, shortLinkHash, shortLinkState = {}, pageSlug }) {
   //keep permalink data
   permalinkHashedToken = shortLinkHash;
   
   //Upgrade raw URL
   if(!shortLinkState){
     const url = location.href;
-    const upgradedUrl = upgradeUrl(url);
+    const urlUpgrader = new URLUpgrader({conceptMapping, entitysetMapping});
+    const upgradedUrl = urlUpgrader.upgradeUrl(url);
     if (upgradedUrl !== url)
       location.replace(upgradedUrl);
   }

@@ -1,7 +1,6 @@
-import toolsPage_conceptMapping from "toolsPage_conceptMapping";
 import { encodeUrlHash, decodeUrlHash } from "../../../core/utils.js";
 
-const rule = {
+const getRule = (conceptMapping) => ({
   test(url) {
     const hashIndex = url.indexOf("#");
     if (hashIndex == -1) return false;
@@ -16,7 +15,7 @@ const rule = {
       return false;
     }
 
-    return findInState(state, toolsPage_conceptMapping);
+    return findInState(state, conceptMapping);
   },
 
   use(url) {
@@ -25,11 +24,11 @@ const rule = {
     const hash = url.substr(hashIndex + 1);
 
     const state = urlon.parse(decodeUrlHash(hash) || "$;");
-    const newState = replaceInState(state, toolsPage_conceptMapping);
+    const newState = replaceInState(state, conceptMapping);
 
     return hashPrefix + "#" + encodeUrlHash(urlon.stringify(newState));
   }
-};
+});
 
 function findInState(state, conceptMapping) {
   return Object.entries(state).some(([key, value]) => {
@@ -58,4 +57,4 @@ function replaceInState(state, conceptMapping) {
   return newState;
 }
 
-export default rule;
+export default getRule;

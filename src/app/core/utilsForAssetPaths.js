@@ -65,9 +65,14 @@ export function resolveAssetUrl(p) {
 }
 
 export async function loadConfigModule(path) {
-  const href = resolvePublicUrl(path);
-  // keep the comment even on Rollup; harmless and prevents some bundlers from trying to pre-bundle
-  const mod = await import(/* @vite-ignore */ href);
-  return mod.VIZABI_MODEL;
+  try {
+    const href = resolvePublicUrl(path);
+    // keep the comment even on Rollup; harmless and prevents some bundlers from trying to pre-bundle
+    const mod = await import(/* @vite-ignore */ href);
+    return mod.VIZABI_MODEL;
+  } catch (err) {
+    console.warn(`Failed to load config module from ${path}:`, err.message);
+    return {};
+  }
 }
 

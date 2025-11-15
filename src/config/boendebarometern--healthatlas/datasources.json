@@ -1,0 +1,18 @@
+[{
+  "ds_id": "healthatlas",
+  "reader": "ddfbw",
+  "reader_properties": {
+    "url": "https://waffle-dev.gapminder.org",
+    "dataset": "healthatlas",
+    "branch": "master"
+  }
+},{
+  "ds_id": "kolada",
+  "reader": "ddfbw",
+  "reader_properties": {
+    "url": "https://waffle-dev.gapminder.org",
+    "dataset": "kolada",
+    "branch": "main"
+  }
+}]
+

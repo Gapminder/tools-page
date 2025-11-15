@@ -13,7 +13,7 @@ let urlUpdateDisposer;
 const disposers = [];
 const PLACEHOLDER = ".vzb-placeholder";
 
-const Tool = function({ cmsData, state, dom }) {
+const Tool = function({ cmsData, state, dom, site, pageSlug }) {
   const { toolset, datasources, toolconfig } = cmsData;
 
 
@@ -73,11 +73,7 @@ const Tool = function({ cmsData, state, dom }) {
         : loadTool(tool.toLowerCase(), resolveAssetUrl).then(prototype => window[tool] = prototype)
     ));
 
-    const pathToConfig = `config/toolconfigs/${toolsetEntry.config || toolsetEntry.tool}.js`
-      .replace(/\.js\.js$/, '.js'); // Fix a possible mistake of double .js extension
-    const VIZABI_MODEL = await loadConfigModule(pathToConfig);
-
-    d3.select(".vizabi-placeholder")
+    d3.select(dom)
       .append("div")
       .attr("class", "vzb-placeholder")
       .attr("style", "width: 100%; height: 100%;");
@@ -89,6 +85,13 @@ const Tool = function({ cmsData, state, dom }) {
       return deepExtend({}, pageConfig, transitionModel, true); //true --> overwrite by empty
     }
 
+    const pathToFallbackLocalConfig = `config${site ? "/"+site : ""}${pageSlug ? "--"+pageSlug : ""}/${toolsetEntry.tool}.js`;
+
+    const customConfig = 0
+      || toolconfig.preferential.get(tool) //try preferential config from CMS first
+      || toolconfig.essential.get(tool) //if empty, try essential config from CMS
+      || await loadConfigModule(pathToFallbackLocalConfig)
+      || {}; // fallback to local file
 
     const pageBaseConfig = deepExtend({
       ui: {
@@ -102,7 +105,7 @@ const Tool = function({ cmsData, state, dom }) {
         })
       },
       model: { markers: { [toolsetEntry.mainMarker]: { data: { source: toolsetEntry.dataSources[0] } } } }
-    }, VIZABI_MODEL /* add config from file */, toolconfig.preferential.get(tool) || toolconfig.essential.get(tool) || {} /* add config from cms */);
+    }, customConfig);
 
     let vizabiStartConfig = deepExtend({}, pageBaseConfig);
 

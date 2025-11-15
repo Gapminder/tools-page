@@ -1,8 +1,6 @@
 import toolsPage_properties from "toolsPage_properties";
-import toolsPage_toolset from "toolsPage_toolset";
-import toolsPage_datasources from "toolsPage_datasources";
-import toolsPage_menuItems from "toolsPage_menuItems";
 import { supabaseClient } from "../auth/supabase.service";
+import { resolveAssetUrl } from "./utilsForAssetPaths.js";
 
 let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, SITE, PAGE_SLUG, PAGE_ID;
 const resetCache = true;
@@ -52,21 +50,22 @@ function groupedParser(data) {
       //special case for frame values, which remain remain strings like vizabi expects
       //otherwise this gives unnecessary URL state as types don't match
       if (key.endsWith("encoding.frame.value")) return { key, value: ducktypeAndParseValue(value, { numbers: false }) };
-      if (key.endsWith("space")) return { key, value: forceAnArray(value) };
+      if (key.endsWith("space")) return { key, value: ensureArray(value) };
       return { key, value: ducktypeAndParseValue(value) };
     }))),
     d => d["tool_id"]);
 }
 
-function forceAnArray(string) {
-  return string ? string.split(",").filter(f => f).map(m => ducktypeAndParseValue(m)) : [];
+function ensureArray(arg) {
+  if(Array.isArray(arg)) return arg;
+  return arg ? arg.split(",").filter(f => f).map(m => ducktypeAndParseValue(m)) : [];
 }
 
 function defaultParser(data) {
   return data.map(entry => {
     const result = {};
     for (const key of Object.keys(entry)) {
-      if (["dataSources", "toolComponents"].includes(key)) result[key] = forceAnArray(entry[key]);
+      if (["dataSources", "toolComponents"].includes(key)) result[key] = ensureArray(entry[key]);
       else
         result[key] = ducktypeAndParseValue(entry[key]);
     }
@@ -126,27 +125,33 @@ function nestObject(flat) {
 }
 
 
-const getPages = (locale = DEFAULT_LOCALE) => ([
-  {getFromDB: getToolConfigs, sheet: "toolconfig", fallbackContent: {preferential: new Map(), essential: new Map()} },
-  {getFromDB: getToolset, sheet: "toolset", fallbackContent: toolsPage_toolset},
+const getPages = (locale = DEFAULT_LOCALE, site = SITE, pageSlug = PAGE_SLUG) => {
+  const configFolder = `config${site ? "/"+site : ""}${pageSlug ? "--"+pageSlug : ""}`;
+  return [
+    {getFromDB: getToolConfigs, sheet: "toolconfig", fallbackContent: {preferential: new Map(), essential: new Map()} },
+    
+    {getFromDB: getThemeComponents, sheet: "theme_components", fallbackContent: toolsPage_properties.theme_components || {} },
+    {getFromDB: getMenuItems, sheet: "menu_items", fallbackContent: toolsPage_properties.menu_items || {} },
+    {getFromDB: getFooterLinks, sheet: "footer_links", fallbackContent: toolsPage_properties.footer_links || [] },
+    {getFromDB: getFooterLogos, sheet: "footer_logos", fallbackContent: toolsPage_properties.footer_logos || [] },
+    {getFromDB: getThemeMeta, sheet: "theme_meta", fallbackContent: toolsPage_properties.theme_meta || {} },
+    {getFromDB: getThemeLayout, sheet: "theme_layout", fallbackContent: toolsPage_properties.theme_layout || {} },
+    {getFromDB: getThemeFonts, sheet: "theme_fonts", fallbackContent: toolsPage_properties.theme_fonts || {} },
+    {getFromDB: getThemeStyle, sheet: "theme_style", fallbackContent: toolsPage_properties.theme_style || {} },
+    {getFromDB: getThemeVariables, sheet: "theme_variables", fallbackContent: toolsPage_properties.theme_variables || {} },
+    {getFromDB: getLocales, sheet: "locales", fallbackContent: toolsPage_properties.locales || [] },
+    
+    {getFromDB: getToolset, sheet: "toolset", fallbackPath: configFolder+"/toolset.json"},
+    {getFromDB: getDatasources, sheet: "datasources", fallbackPath: configFolder+"/datasources.json"},
+    {getFromDB: getRelated, sheet: "related", fallbackPath: configFolder+"/related.json" },
 
-  {getFromDB: getThemeComponents, sheet: "theme_components", fallbackContent: toolsPage_properties.theme_components || {} },
-  {getFromDB: getMenuItems, sheet: "menu_items", fallbackContent: toolsPage_menuItems || {} },
-  {getFromDB: getFooterLinks, sheet: "footer_links", fallbackContent: toolsPage_properties.footer_links || [] },
-  {getFromDB: getFooterLogos, sheet: "footer_logos", fallbackContent: toolsPage_properties.footer_logos || [] },
-  {getFromDB: getThemeMeta, sheet: "theme_meta", fallbackContent: toolsPage_properties.theme_meta || {} },
-  {getFromDB: getThemeLayout, sheet: "theme_layout", fallbackContent: toolsPage_properties.theme_layout || {} },
-  {getFromDB: getThemeFonts, sheet: "theme_fonts", fallbackContent: toolsPage_properties.theme_fonts || {} },
-  {getFromDB: getThemeStyle, sheet: "theme_style", fallbackContent: toolsPage_properties.theme_style || {} },
-  {getFromDB: getThemeVariables, sheet: "theme_variables", fallbackContent: toolsPage_properties.theme_variables || {} },
-  {getFromDB: getLocales, sheet: "locales", fallbackContent: toolsPage_properties.locales || [] },
+    {getFromDB: getConceptMapping, sheet: "concept_mapping", fallbackPath: configFolder+"/conceptMapping.json" },
+    {getFromDB: getEntityMapping, sheet: "entity_mapping", fallbackPath: configFolder+"/entityMapping.json" },
 
-  {getFromDB: getDatasources, sheet: "datasources", fallbackContent: toolsPage_datasources},
-  {getFromDB: getRelated, sheet: "related", fallbackContent: "", fallbackPath: `./config/related.json` },
-
-  {getFromDB: getDefaultLocalePackageForPage, locale, sheet: `page/${locale}`, fallbackPath: `./assets/i18n/${locale}.json` },
-  {getFromDB: getDefaultLocalePackageForVizabi, locale, sheet: `vizabi/${locale}`, fallbackPath: `./assets/translation/${locale}.json` }
-]);
+    {getFromDB: getDefaultLocalePackageForPage, locale, sheet: `page/${locale}`, fallbackPath: `assets/i18n/${locale}.json` },
+    {getFromDB: getDefaultLocalePackageForVizabi, locale, sheet: `vizabi/${locale}`, fallbackPath: `assets/translation/${locale}.json` }
+  ]
+};
 
 function setSettings(settings = {}) {
   DOCID_CMS = settings.DOCID_CMS;
@@ -175,7 +180,7 @@ function loadSheet(page) {
   const docid = page.docid;
   const cacheSuffix = resetCache ? `&cache=${new Date()}` : "";
   const remoteUrl = `https://docs.google.com/spreadsheets/d/${docid}/gviz/tq?tqx=out:csv&sheet=${sheet}${cacheSuffix}`;
-  const localUrl = page.fallbackPath || `./config/${sheet}.json`;
+  const localUrl = resolveAssetUrl(page.fallbackPath || `config/${sheet}.json`);
 
   // Attempt remote load with timeout
   const remoteLoad = new Promise((resolve, reject) => {
@@ -216,8 +221,9 @@ function loadSheet(page) {
         if (validation[sheet] && !validation[sheet](data)) {
           throw new Error(`Validation failed for local fallback of configuration sheet "${sheet}"`);
         }
-        cache[getCacheID(page)] = data;
-        return data;
+        const parsedResult = parsing(page)(data);
+        cache[getCacheID(page)] = parsedResult;
+        return parsedResult;
       })
       .catch(err => {
         console.error(`Error loading local configuration sheet ${localUrl}`, err);
@@ -254,6 +260,7 @@ async function getCachedPageInfo(site = SITE, pageSlug = PAGE_SLUG) {
 
   if (error) {
     console.error(error);
+    pageInfoCache = {};
     return {};
   }
   pageInfoCache = data;
@@ -270,6 +277,8 @@ async function getThemeFonts() {const info = await getCachedPageInfo(); return i
 async function getThemeStyle() {const info = await getCachedPageInfo(); return info && info.theme_style;}
 async function getThemeVariables() {const info = await getCachedPageInfo(); return info && info.theme_variables;}
 async function getLocales() {const info = await getCachedPageInfo(); return info && info.locales ;}
+async function getConceptMapping() {const info = await getCachedPageInfo(); return info && info.concept_mapping;}
+async function getEntityMapping() {const info = await getCachedPageInfo(); return info && info.entity_mapping;}
 
 
 

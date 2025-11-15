@@ -1,14 +1,18 @@
-{
-  "boendebarom": {
-    "modelType": "ddfbw",
+[{
+  "ds_id": "boba",
+  "reader": "ddfbw",
+  "reader_properties": {
     "url": "https://waffle-dev.gapminder.org",
     "dataset": "boba",
     "branch": "master"
-  },
-  "kolada": {
-    "modelType": "ddfbw",
+  }
+},{
+  "ds_id": "kolada",
+  "reader": "ddfbw",
+  "reader_properties": {
     "url": "https://waffle-dev.gapminder.org",
     "dataset": "kolada",
     "branch": "main"
   }
-}
+}]
+

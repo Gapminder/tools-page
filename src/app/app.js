@@ -4,7 +4,6 @@ import ThemeService from "./core/theme.js";
 
 import { initTranslator } from "./core/language.js";
 
-// import menuItems from "./core/menu-items";
 import BitlyService from "./core/bitly.service"; //TODO REFACTOR
 import LocationService from "./core/location.service"; //TODO REFACTOR
 
@@ -33,7 +32,6 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
 
   const pageSlug = getPageSlug();
   const {cmsData, pageId, defaultLocale} = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, site, pageSlug });
-  const allowedTools = cmsData.toolset.filter(f => !!f.tool).map(m => m.id);
 
   let shortLinkState = {};
   const {slug: shortLinkSlug, hash: shortLinkHash} = await getLinkSlugAndHash(window.location.search);
@@ -42,14 +40,22 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
     if (linkData && linkData.page_config) shortLinkState = linkData.page_config;
   }
 
-  const state = urlService.init({ allowedTools, defaultLocale, shortLinkHash, shortLinkState, pageSlug });
+  const state = urlService.init({ 
+    allowedTools: cmsData.toolset.filter(f => !!f.tool).map(m => m.id), 
+    defaultLocale, 
+    conceptMapping: cmsData.concept_mapping, 
+    entitysetMapping: cmsData.entityset_mapping, 
+    shortLinkHash, 
+    shortLinkState,
+    pageSlug 
+  });
 
   d3.select(".wrapper").classed("embedded-view", state.getEmbedded());
 
   const {translator, getLocaleName} = await initTranslator(state, cmsData.locales);
   const bitlyService = await BitlyService({ state });
   const locationService = LocationService();
-  const tool = new Tool({ cmsData, state, dom: ".vizabi-placeholder" });
+  const tool = new Tool({ cmsData, state, dom: ".vizabi-placeholder", site, pageSlug });
   
   
   const {applyTheme, getTheme} = new ThemeService(cmsData);

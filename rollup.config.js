@@ -23,9 +23,8 @@ const vendor = (p) => require.resolve(p);
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROD = process.env.NODE_ENV === "production";
-const STAGE = process.env.NODE_ENV === "stage";
 const DEV  = process.env.NODE_ENV === "development";
-const envSuffix = PROD ? "prod" : (STAGE ? "stage" : "dev");
+const envSuffix = PROD ? "prod" : "dev";
 const BASE = process.env.BASE || (DEV ? '/' : null);
 if (PROD && !BASE) {
   console.error('\x1b[95m%s\x1b[0m', `🛑 STOP! Setting BASE is required for a production build:\n
@@ -58,13 +57,13 @@ export default {
   input: { 
     toolspage: "src/index.js"
   },
-  treeshake: PROD || STAGE,
+  treeshake: PROD,
   output: {
     dir: `build`,
     format: "esm", // ESM for the web
     entryFileNames: `[name].js`,
     chunkFileNames: `[name].js`,
-    sourcemap: PROD || STAGE,
+    sourcemap: PROD,
     preserveModules: DEV,
     preserveModulesRoot: DEV ? "src" : null,
   },
@@ -74,11 +73,10 @@ export default {
     alias({
       entries: [
         { find: "toolsPage_properties",  replacement: path.resolve(__dirname, "src/config", `properties.${envSuffix}.json`) },
-        { find: "toolsPage_toolset",     replacement: path.resolve(__dirname, "src/config", `toolset.${envSuffix}.json`) },
-        { find: "toolsPage_datasources", replacement: path.resolve(__dirname, "src/config", `datasources.${envSuffix}.json`) },
-        { find: "toolsPage_menuItems", replacement: path.resolve(__dirname, "src/config", `menu-items.js`) },
-        { find: "toolsPage_conceptMapping", replacement: path.resolve(__dirname, "src/config", `conceptMapping.js`) },
-        { find: "toolsPage_entitysetMapping", replacement: path.resolve(__dirname, "src/config", `entitysetMapping.js`) },
+        // { find: "toolsPage_toolset",     replacement: path.resolve(__dirname, "src/config", `toolset.${envSuffix}.json`) },
+        // { find: "toolsPage_datasources", replacement: path.resolve(__dirname, "src/config", `datasources.${envSuffix}.json`) },
+        // { find: "toolsPage_conceptMapping", replacement: path.resolve(__dirname, "src/config", `conceptMapping.js`) },
+        // { find: "toolsPage_entitysetMapping", replacement: path.resolve(__dirname, "src/config", `entitysetMapping.js`) },
         // node builtin -> empty
         { find: "fs", replacement: path.resolve(__dirname, "src/shims/empty.js") },
       ]
@@ -91,15 +89,15 @@ export default {
     }),
     resolve({ browser: true, preferBuiltins: false }),
     commonjs(),
-    json({ namedExports: false, compact: PROD || STAGE }),
+    json({ namedExports: false, compact: PROD }),
     stylus({
       include: ["**/*.styl"],
-      sourcemap: PROD || STAGE
+      sourcemap: PROD
     }),
     postcss({
       include: ["**/index*.css"],
       extract: "styles.css",
-      sourcemap: PROD || STAGE,
+      sourcemap: PROD,
       plugins: [postcssUrl({ filter: ({url}) => url.startsWith("/"), url: ({url}) => url.replace(/^\//,"") }), autoprefixer()]
     }),
     copy({
@@ -109,8 +107,8 @@ export default {
         { dest: "build/vendor", src: vendor("urlon/dist/urlon.umd"), rename: "urlon.js" },
         { dest: "build/vendor", src: vendor("@vizabi/reader-ddfservice/dist/reader-ddfservice.js"), rename: "reader-ddfservice.js" },
         { dest: "build/vendor", src: vendor("@vizabi/reader-ddfcsv/dist/reader-ddfcsv.js"), rename: "reader-ddfcsv.js"  },
-        { dest: "build/vendor", src: vendor(PROD || STAGE ? "d3/dist/d3.min.js" : "d3/dist/d3.js"), rename: "d3.js" },
-        { dest: "build/vendor", src: vendor(PROD || STAGE ? "mobx/lib/mobx.umd.min.js" : "mobx/lib/mobx.umd.js"), rename: "mobx.js" },
+        { dest: "build/vendor", src: vendor(PROD ? "d3/dist/d3.min.js" : "d3/dist/d3.js"), rename: "d3.js" },
+        { dest: "build/vendor", src: vendor(PROD ? "mobx/lib/mobx.umd.min.js" : "mobx/lib/mobx.umd.js"), rename: "mobx.js" },
         // MAPBOX
         { dest: "build/vendor", src: vendor("mapbox-gl/dist/mapbox-gl.js"), rename: "mapbox-gl.js" },
         { dest: "build/assets/css", src: require.resolve("mapbox-gl/dist/mapbox-gl.css") },
@@ -126,12 +124,11 @@ export default {
         { dest: "build", src: "src/auth" },
         
         //configs
-        { dest: "build/config", src: "src/config/toolconfigs"},
-        { dest: "build/config", src: ["src/config/menu-items.js","src/config/conceptMapping.js","src/config/entitysetMapping.js","src/config/related.json"]},
+        { dest: "build", src: "src/config"},
         //HTML
         { dest: "build", src: "src/index.html", transform: (contents) => contents.toString().replace(/__BASE_HREF_TO_BE_REPLACED_BY_ROLLUP__/g, BASE) }
       ],
-      copyOnce: PROD || STAGE, // <-- re-copy on changes in dev
+      copyOnce: PROD, // <-- re-copy on changes in dev
       hook: "writeBundle",
       // ensure file changes trigger copy in --watch
       watch: ["src/**/*.js", "src/**/*.html", "src/**/*.styl"]
@@ -142,7 +139,7 @@ export default {
       "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development"),
     }),
     PROD && esbuild({
-      minify: PROD || STAGE,
+      minify: PROD,
       keepNames: true, // prevent renaming of class/function identifiers
       target: "es2020", // bump as high as your audience allows
       legalComments: "none"
