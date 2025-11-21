@@ -1,6 +1,66 @@
 const toolsPage_conceptMapping = {
   //If you are adding a new redirect, ctrl+f the concpet you are redirecting from
   //in this file! it might be that one of the old redirects needs to be updated
+
+  // 2025-11-21 rename OECD indicators
+  aid_given_2007_us: {
+    concept: "aid_given_2023_us",
+  },
+  aid_given_per_person_2007_us: {
+    concept: "aid_given_per_person_2023_us",
+  },
+
+  // 2025-11-21 murder/traffic death rates by age group removed
+  murdered_15_29_per_100000_people: {
+    concept: "murder_per_100000_people",
+  },
+  murdered_30_44_per_100000_people: {
+    concept: "murder_per_100000_people",
+  },
+  murdered_45_59_per_100000_people: {
+    concept: "murder_per_100000_people",
+  },
+  murdered_60plus_per_100000_people: {
+    concept: "murder_per_100000_people",
+  },
+  murdered_children_0_14_per_100000_people: {
+    concept: "murder_per_100000_people",
+  },
+  traffic_mortality_15_29_per_100000_people: {
+    concept: "traffic_deaths_per_100000_people",
+  },
+  traffic_mortality_30_44_per_100000_people: {
+    concept: "traffic_deaths_per_100000_people",
+  },
+  traffic_mortality_45_59_per_100000_people: {
+    concept: "traffic_deaths_per_100000_people",
+  },
+  traffic_mortality_60plus_per_100000_people: {
+    concept: "traffic_deaths_per_100000_people",
+  },
+  traffic_mortality_children_0_14_per_100000_people: {
+    concept: "traffic_deaths_per_100000_people",
+  },
+
+  // 2025-11-21 suicide rate's age groups removed
+  suicide_age_0_14_per_100000_people: {
+    concept: "suicide_per_100000_people",
+  },
+  suicide_age_45_59_per_100000_people: {
+    concept: "suicide_age_45_54_per_100000_people",
+  },
+  suicide_age_30_44_per_100000_people: {
+    concept: "suicide_age_30_49_per_100000_people",
+  },
+  suicide_age_60plus_per_100000_people: {
+    concept: "suicide_age_85plus_per_100000_people",
+  },
+
+  // 2025-11-21 fix a typo
+  other_infections_deaths_in_children_1_59_months_per_1000_birt: {
+    concept: "other_infections_deaths_in_children_1_59_months_per_1000_births",
+  },
+
   // 2025-07-30 rename poverty indicators
   extreme_poverty_percent_people_below_215_a_day: {
     concept: "extreme_poverty_percent_people_below_300_a_day",
