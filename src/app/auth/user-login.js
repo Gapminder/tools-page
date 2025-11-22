@@ -136,7 +136,7 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
     event.target.setCustomValidity(data.get("psw") !== data.get("psw2") ? "Passwords should be equal" : "");
   });
 
-  supabaseClient.auth.onAuthStateChange((event, session) => {
+  if(supabaseClient) supabaseClient.auth.onAuthStateChange((event, session) => {
     state.setAuthToken({event, session})
   
     if (event === 'INITIAL_SESSION') {
@@ -161,6 +161,7 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
   })
 
   formsPlaceHolder.select(".button-github-login").on("click", async () => {
+    if(!supabaseClient) return console.error("Supabase is not configured");
       const { data, error } = await supabaseClient.auth.signInWithOAuth({
         provider: 'github',
         options: {
@@ -177,6 +178,7 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
   });
 
   formsPlaceHolder.select(".button-google-login").on("click", async () => {
+    if(!supabaseClient) return console.error("Supabase is not configured");
       const { data, error } = await supabaseClient.auth.signInWithOAuth({
       provider: 'google',
       options: {

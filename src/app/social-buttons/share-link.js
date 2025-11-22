@@ -1,4 +1,3 @@
-import { supabaseClient } from "../auth/supabase.service";
 
 export async function createShareLinkModal(opts = {}) {
   const {

@@ -10,6 +10,7 @@ export async function getLinkSlugAndHash(url) {
 }
 
 export async function getLinkData(slug) {
+  if (!supabaseClient) return null;
   const { data, error } = await supabaseClient
     .from('links')
     .select('page_config')
@@ -25,6 +26,7 @@ export async function getLinkData(slug) {
 }
 
 export async function checkSlugAvailability(slug) {
+  if (!supabaseClient) return false;
   const { data, error } = await supabaseClient
     .from('links')
     .select('id')
@@ -43,6 +45,7 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
   const token = privateDs.length ? randomToken() : "";
   const urlWithToken = url + (privateDs.length ? `&t=${token}` : "");
 
+  if (!supabaseClient) return false;
   const { data: linksUpsertData, error } = await supabaseClient
     .from('links')
     .upsert([

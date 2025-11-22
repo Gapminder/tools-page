@@ -250,6 +250,7 @@ async function load(settings) {
 let pageInfoCache = null;
 async function getCachedPageInfo(site = SITE, pageSlug = PAGE_SLUG) {
   if (pageInfoCache) return pageInfoCache;
+  if (!supabaseClient) return {};
   if(!site) return null;
   const { data, error } = await supabaseClient
     .from("pages")
@@ -283,6 +284,7 @@ async function getEntityMapping() {const info = await getCachedPageInfo(); retur
 
 
 async function getToolset(pageId) {
+  if (!supabaseClient) throw new Error("Supabase is not configured");
   const { data, error } = await supabaseClient
     .from("tools")
     .select("*, datasources(ds_id)")
@@ -311,6 +313,7 @@ async function getToolset(pageId) {
 }
 
 async function getToolConfigs(pageId) {
+  if (!supabaseClient) throw new Error("Supabase is not configured");
   const { data, error } = await supabaseClient
     .from("configs")
     .select("tool_id, type, config")
@@ -323,6 +326,7 @@ async function getToolConfigs(pageId) {
 }
 
 async function getDatasources(pageId) {
+  if (!supabaseClient) throw new Error("Supabase is not configured");
   const { data, error } = await supabaseClient
     .from("datasources")
     .select("*")
@@ -335,6 +339,7 @@ async function getDatasources(pageId) {
 }
 
 async function getRelated(pageId) {
+  if (!supabaseClient) throw new Error("Supabase is not configured");
   const { data, error } = await supabaseClient
     .from("related")
     .select("*")
@@ -356,6 +361,7 @@ async function getDefaultLocalePackageForVizabi(pageId, locale) {
 }
 
 async function getLocalePackage({pageId = PAGE_ID, locale = DEFAULT_LOCALE, scope} = {}) {
+  if (!supabaseClient) throw new Error("Supabase is not configured");
   if (!scope) throw new Error("loadLocalePackage: missing the required parameter 'scope'");
   const { data, error } = await supabaseClient
     .from("translations")

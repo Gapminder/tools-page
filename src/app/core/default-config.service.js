@@ -15,6 +15,7 @@ export default async function PreferentialConfigService({ state, pageId, site, p
   }
 
   async function savePreferentialConfigToCMS({tool, newConfig}) {
+    if (!supabaseClient) return false;
     const { data, error } = await supabaseClient
       .from("configs")
       .upsert({
