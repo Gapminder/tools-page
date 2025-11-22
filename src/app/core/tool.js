@@ -85,7 +85,7 @@ const Tool = function({ cmsData, state, dom, site, pageSlug }) {
       return deepExtend({}, pageConfig, transitionModel, true); //true --> overwrite by empty
     }
 
-    const pathToFallbackLocalConfig = `config${site ? "/"+site : ""}${pageSlug ? "--"+pageSlug : ""}/${toolsetEntry.tool}.js`;
+    const pathToFallbackLocalConfig = `config${site ? "/"+site : ""}${pageSlug ? "--"+pageSlug : ""}/${toolsetEntry.id}.js`;
 
     const customConfig = 0
       || toolconfig.preferential.get(tool) //try preferential config from CMS first

@@ -20,7 +20,7 @@ export const VIZABI_MODEL = {
             "data": { "concept": "lex" },
             "scale": {
               "domain": [0, 100],
-              "zoomed": [19, 86],
+              "zoomed": [19, 86]
             }
           },
           "x": {
@@ -28,7 +28,7 @@ export const VIZABI_MODEL = {
             "scale": {
               "domain": [300, 180000],
               "zoomed": [400, 96000],
-              "type": "log",
+              "type": "log"
             }
           },
           "color": {
