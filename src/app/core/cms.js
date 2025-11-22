@@ -212,10 +212,10 @@ function loadSheet(page) {
   // Fallback to local file if remote load fails for any reason.
   return remoteLoad.catch(err => {
     if (page.fallbackContent) {
-      console.warn(`Remote load for sheet "${sheet}" failed: ${err.message}. Falling back to local content`, page.fallbackContent);
+      console.warn(`🛢 Remote load for sheet "${sheet}" failed: ${err.message}. Falling back to local content`, page.fallbackContent);
       return Promise.resolve(page.fallbackContent);
     }
-    console.warn(`Remote load for sheet "${sheet}" failed: ${err.message}. Falling back to local file: ${localUrl}`);
+    console.warn(`🛢 Remote load for sheet "${sheet}" failed: ${err.message}. Falling back to local file: ${localUrl}`);
     return d3.json(localUrl)
       .then(data => {
         if (validation[sheet] && !validation[sheet](data)) {
