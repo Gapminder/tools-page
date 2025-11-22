@@ -24,7 +24,6 @@ const vendor = (p) => require.resolve(p);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROD = process.env.NODE_ENV === "production";
 const DEV  = process.env.NODE_ENV === "development";
-const envSuffix = PROD ? "prod" : "dev";
 const BASE = process.env.BASE || (DEV ? '/' : null);
 if (PROD && !BASE) {
   console.error('\x1b[95m%s\x1b[0m', `🛑 STOP! Setting BASE is required for a production build:\n
@@ -72,11 +71,8 @@ export default {
     del({ targets: "build/*", runOnce: true }),
     alias({
       entries: [
-        { find: "toolsPage_properties",  replacement: path.resolve(__dirname, "src/config", `properties.${envSuffix}.json`) },
-        // { find: "toolsPage_toolset",     replacement: path.resolve(__dirname, "src/config", `toolset.${envSuffix}.json`) },
-        // { find: "toolsPage_datasources", replacement: path.resolve(__dirname, "src/config", `datasources.${envSuffix}.json`) },
-        // { find: "toolsPage_conceptMapping", replacement: path.resolve(__dirname, "src/config", `conceptMapping.js`) },
-        // { find: "toolsPage_entitysetMapping", replacement: path.resolve(__dirname, "src/config", `entitysetMapping.js`) },
+        // inject env-specific properties config into the build
+        { find: "toolsPage_properties",  replacement: path.resolve(__dirname, "src/config", `properties.json`) },
         // node builtin -> empty
         { find: "fs", replacement: path.resolve(__dirname, "src/shims/empty.js") },
       ]

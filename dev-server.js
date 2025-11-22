@@ -9,7 +9,7 @@ const PORT = 4200;
 // Virtual slug rewrite: /slug/* -> serve from root
 app.use((req, res, next) => {
   // if path starts with known virtual segments, strip them
-  const slug = ['healthatlas', 'education', 'housing', 'gapminder', 'test']; // add your test slugs
+  const slug = ['healthatlas', 'stage', 'dev', 'gapminder', 'test']; // add your test slugs
   const seg = req.path.split('/').filter(Boolean)[0];
   if (slug.includes(seg)) {
     req.url = req.url.replace(`/${seg}`, '') || '/';
