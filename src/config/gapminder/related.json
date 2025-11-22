@@ -1,1 +1,58 @@
-[]
+[
+ {
+   "related_id": "related1",
+   "link": "https://www.gapminder.org/answers/how-many-are-rich-and-how-many-are-poor/",
+   "image": "assets/images/answers/poor_rich.png",
+   "title": "related1-title",
+   "subtitle": "related1-subtitle",
+   "rank": 1
+ },
+ {
+   "related_id": "related2",
+   "link": "https://www.gapminder.org/answers/how-reliable-is-the-world-population-forecast/",
+   "image": "assets/images/answers/population_forecast.png",
+   "title": "related2-title",
+   "subtitle": "related2-subtitle",
+   "rank": 2
+ },
+ {
+   "related_id": "related3",
+   "link": "https://www.gapminder.org/answers/will-saving-poor-children-lead-to-overpopulation/",
+   "image": "assets/images/answers/overpopulation.png",
+   "title": "related3-title",
+   "subtitle": "related3-subtitle",
+   "rank": 3
+ },
+ {
+   "related_id": "related4",
+   "link": "https://www.gapminder.org/answers/how-does-income-relate-to-life-expectancy/",
+   "image": "assets/images/answers/life_expectancy.png",
+   "title": "related4-title",
+   "subtitle": "related4-subtitle",
+   "rank": 4
+ },
+ {
+   "related_id": "related5",
+   "link": "https://www.gapminder.org/answers/how-did-babies-per-woman-change-in-the-world/",
+   "image": "assets/images/answers/babies_per_woman.png",
+   "title": "related5-title",
+   "subtitle": "related5-subtitle",
+   "rank": 5
+ },
+ {
+   "related_id": "related6",
+   "link": "https://www.gapminder.org/fw/world-health-chart/",
+   "image": "assets/images/answers/gapminder_world_2013_v5.jpg",
+   "title": "related6-title",
+   "subtitle": "related6-subtitle",
+   "rank": 6
+ },
+ {
+   "related_id": "related7",
+   "link": "https://www.gapminder.org/answers/how-did-the-world-population-change/",
+   "image": "assets/images/answers/world_population.png",
+   "title": "related7-title",
+   "subtitle": "related7-subtitle",
+   "rank": 7
+ }
+]
