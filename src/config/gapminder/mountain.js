@@ -1,109 +1,109 @@
 export const VIZABI_MODEL = {
-  model: {
-    presets: [
+  "model": {
+    "presets": [
       [{
-        icon: "show_countries--stack_none--facet_none",
-        mode: "show",
-        loosePath: ["geo", "$or", 0, "geo", "$in"],
-        config: {
-          data: {
-            filter: {
-              dimensions: { 
+        "icon": "show_countries--stack_none--facet_none",
+        "mode": "show",
+        "loosePath": ["geo", "$or", 0, "geo", "$in"],
+        "config": {
+          "data": {
+            "filter": {
+              "dimensions": { 
                 "geo": { 
                   "$or": [{
-                    "geo": { $in: ["usa", "chn", "rus", "nga"] } 
+                    "geo": { "$in": ["usa", "chn", "rus", "nga"] } 
                   }]
                 }
               }
             }
           },
-          encoding: {
-            order: { direction: "asc", data: { concept: null, constant: "none" } },
-            stack: { data: { constant: "none" } },
-            facet_row: { data: { constant: "none" } }
+          "encoding": {
+            "order": { "direction": "asc", "data": { "concept": null, "constant": "none" } },
+            "stack": { "data": { "constant": "none" } },
+            "facet_row": { "data": { "constant": "none" } }
           }
         }
       }, {
-        icon: "show_countries--stack_region--facet_none",
-        mode: "select",
-        config: {
-          data: {
-            filter: { dimensions: { "geo": { "$or": [{ "un_state": true }] } } }
+        "icon": "show_countries--stack_region--facet_none",
+        "mode": "select",
+        "config": {
+          "data": {
+            "filter": { "dimensions": { "geo": { "$or": [{ "un_state": true }] } } }
           },
-          encoding: {
-            order: {direction: "asc", data: { concept: null, constant: "none" } },
-            stack: { data: { ref: "markers.mountain.config.encoding.color.data" } },
-            facet_row: { data: { constant: "none" } }
+          "encoding": {
+            "order": {"direction": "asc", "data": { "concept": null, "constant": "none" } },
+            "stack": { "data": { "ref": "markers.mountain.config.encoding.color.data" } },
+            "facet_row": { "data": { "constant": "none" } }
           }
         }
       }, {
-        icon: "show_regions--stack_none--facet_none",
-        mode: "none",
-        groupPath: ["geo", "$or"],
-        config: {
-          data: {
-            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }]} } }
+        "icon": "show_regions--stack_none--facet_none",
+        "mode": "none",
+        "groupPath": ["geo", "$or"],
+        "config": {
+          "data": {
+            "filter": { "dimensions": { "geo": { "$or": [{ "is--world_4region": true }]} } }
           },
-          encoding: {
-            order: { direction: "asc", data: { concept: null, constant: "none" } },
-            stack: { data: { constant: "none" } },
-            facet_row: { data: { constant: "none" } }
+          "encoding": {
+            "order": { "direction": "asc", "data": { "concept": null, "constant": "none" } },
+            "stack": { "data": { "constant": "none" } },
+            "facet_row": { "data": { "constant": "none" } }
           }
         }
       }],
 
 
       [{
-        icon: "show_countries--stack_all--facet_none",
-        mode: "select",
-        config: {
-          data: {
-            filter: { dimensions: { "geo": { "$or": [{ "un_state": true }] } } }
+        "icon": "show_countries--stack_all--facet_none",
+        "mode": "select",
+        "config": {
+          "data": {
+            "filter": { "dimensions": { "geo": { "$or": [{ "un_state": true }] } } }
           },
-          encoding: {
-            order: { direction: "asc", data: { concept: null, constant: "none" } },
-            stack: { data: { constant: "all" } },
-            facet_row: { data: { constant: "none" } }
+          "encoding": {
+            "order": { "direction": "asc", "data": { "concept": null, "constant": "none" } },
+            "stack": { "data": { "constant": "all" } },
+            "facet_row": { "data": { "constant": "none" } }
           }
         }
       }, {
-        icon: "show_regions--stack_all--facet_none",
-        mode: "none",
-        groupPath: ["geo", "$or"],
-        config: {
-          data: {
-            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }]} } }
+        "icon": "show_regions--stack_all--facet_none",
+        "mode": "none",
+        "groupPath": ["geo", "$or"],
+        "config": {
+          "data": {
+            "filter": { "dimensions": { "geo": { "$or": [{ "is--world_4region": true }]} } }
           },
-          encoding: {
-            order: { direction: "asc", data: { concept: null, constant: "none" } },
-            stack: { data: { constant: "all" } },
-            facet_row: { data: { constant: "none" } }
+          "encoding": {
+            "order": { "direction": "asc", "data": { "concept": null, "constant": "none" } },
+            "stack": { "data": { "constant": "all" } },
+            "facet_row": { "data": { "constant": "none" } }
           }
         }
       }, {
-        icon: "show_world--stack_all--facet_none",
-        mode: "none",
-        config: {
-          data: {
-            filter: { dimensions: { "geo": { "$or": [{ "is--global": true } ] } } }
+        "icon": "show_world--stack_all--facet_none",
+        "mode": "none",
+        "config": {
+          "data": {
+            "filter": { "dimensions": { "geo": { "$or": [{ "is--global": true } ] } } }
           },
-          encoding: {
-            order: { direction: "asc", data: { concept: null, constant: "none" } },
-            stack: { data: { constant: "all" } },
-            facet_row: { data: { constant: "none" } }
+          "encoding": {
+            "order": { "direction": "asc", "data": { "concept": null, "constant": "none" } },
+            "stack": { "data": { "constant": "all" } },
+            "facet_row": { "data": { "constant": "none" } }
           }
         }
       }],
 
 
       [{
-        icon: "show_geo--stack_all--facet_isness",
-        mode: "show",
-        loosePath: ["geo", "$or", 0, "geo", "$in"],
-        config: {
-          data: {
-            filter: { 
-              dimensions: { 
+        "icon": "show_geo--stack_all--facet_isness",
+        "mode": "show",
+        "loosePath": ["geo", "$or", 0, "geo", "$in"],
+        "config": {
+          "data": {
+            "filter": { 
+              "dimensions": { 
                 "geo": {
                   "$or": [{
                     "geo": { "$in": ["africa", "americas", "asia", "europe"] }
@@ -112,54 +112,54 @@ export const VIZABI_MODEL = {
               }
             }
           },
-          encoding: {
-            order: {
-              direction: { ref: {
-                path: "markers.mountain.data.filter",
-                transform: "orderDirection"
+          "encoding": {
+            "order": {
+              "direction": { "ref": {
+                "path": "markers.mountain.data.filter",
+                "transform": "orderDirection"
               }},
-              data: { constant: null, concept: "geo" }
+              "data": { "constant": null, "concept": "geo" }
             },
-            stack: { data: { constant: "all" } },
-            facet_row: { data: { concept: "is--", exceptions: { "is--country": "geo" }, space: ["geo"] } }
+            "stack": { "data": { "constant": "all" } },
+            "facet_row": { "data": { "concept": "is--", "exceptions": { "is--country": "geo" }, "space": ["geo"] } }
           }
         }
       }, {
-        icon: "show_regions--stack_all--facet_regions",
-        mode: "none",
-        groupPath: ["geo", "$or"],
-        config: {
-          data: {
-            filter: { dimensions: { "geo": { "$or": [{ "is--world_4region": true }]} } }
+        "icon": "show_regions--stack_all--facet_regions",
+        "mode": "none",
+        "groupPath": ["geo", "$or"],
+        "config": {
+          "data": {
+            "filter": { "dimensions": { "geo": { "$or": [{ "is--world_4region": true }]} } }
           },
-          encoding: {
-            order: { direction: "asc", data: { concept: "rank", constant: null } },
-            stack: { data: { constant: "all" } },
-            facet_row: { data: { ref: "markers.mountain.config.encoding.color.data" } }
+          "encoding": {
+            "order": { "direction": "asc", "data": { "concept": "rank", "constant": null } },
+            "stack": { "data": { "constant": "all" } },
+            "facet_row": { "data": { "ref": "markers.mountain.config.encoding.color.data" } }
           }
         }
       }, {
-        icon: "show_countries--stack_all--facet_regions",
-        mode: "select",
-        config: {
-          data: {
-            filter: { dimensions: { "geo": { "$or": [{ "un_state": true }] } } }
+        "icon": "show_countries--stack_all--facet_regions",
+        "mode": "select",
+        "config": {
+          "data": {
+            "filter": { "dimensions": { "geo": { "$or": [{ "un_state": true }] } } }
           },
-          encoding: {
-            order: { direction: "asc", data: { concept: "rank", constant: null } },
-            stack: { data: { constant: "all" } },
-            facet_row: { data: { ref: "markers.mountain.config.encoding.color.data" } }
+          "encoding": {
+            "order": { "direction": "asc", "data": { "concept": "rank", "constant": null } },
+            "stack": { "data": { "constant": "all" } },
+            "facet_row": { "data": { "ref": "markers.mountain.config.encoding.color.data" } }
           }
         }
       }],
     ],
-    markers: {
+    "markers": {
       "mountain": {
-        data: {
-          source: "povcalnet",
-          space: ["geo", "time"],
-          filter: {
-            dimensions: {
+        "data": {
+          "source": "povcalnet",
+          "space": ["geo", "time"],
+          "filter": {
+            "dimensions": {
               "geo": { 
                 "$or": [{
                   "geo": { "$in": ["africa", "americas", "asia", "europe"]}
@@ -179,40 +179,40 @@ export const VIZABI_MODEL = {
             }
           }
         },
-        requiredEncodings: ["shapedata", "facet_row"],
-        encoding: {
+        "requiredEncodings": ["shapedata", "facet_row"],
+        "encoding": {
           "show": {
-            modelType: "selection",
-            data: {
-              filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
+            "modelType": "selection",
+            "data": {
+              "filter": { "dimensions": { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
             }
           },
           "order": {
-            modelType: "order",
-            direction: { ref: {
-              path: "markers.mountain.data.filter",
-              transform: "orderDirection"
+            "modelType": "order",
+            "direction": { "ref": {
+              "path": "markers.mountain.data.filter",
+              "transform": "orderDirection"
             }},
-            data: { constant: null, concept: "geo" }
+            "data": { "constant": null, "concept": "geo" }
           },
           "selected": {
-            modelType: "selection"
+            "modelType": "selection"
           },
           "highlighted": {
-            modelType: "selection"
+            "modelType": "selection"
           },
           "shapedata": {
-            data: {
-              concept: "income_mountain_50bracket_shape_for_log"
+            "data": {
+              "concept": "income_mountain_50bracket_shape_for_log"
             }
           },
           "mu": {
-            data: {
-              constant: 0
+            "data": {
+              "constant": 0
             },
-            scale: {
-              type: "log",
-              domain: [0.11, 500]
+            "scale": {
+              "type": "log",
+              "domain": [0.11, 500]
             },
             "tailFatX": 2.15,
             "tailCutX": 0.2,
@@ -221,180 +221,179 @@ export const VIZABI_MODEL = {
             "xScaleShift": 0
           },
           "color": {
-            data: {
-              space: ["geo"],
-              concept: "world_4region",
+            "data": {
+              "space": ["geo"],
+              "concept": "world_4region",
               allow: {
-                concept: {
-                  filter: { concept_type: { $nin: ["measure", "string"] } }
+                "concept": {
+                  "filter": { "concept_type": { "$nin": ["measure", "string"] } }
                 }
               }
             },
             "scale": {
-              modelType: "color",
-              type: "ordinal"
+              "modelType": "color",
+              "type": "ordinal"
             }
           },
           "stack": {
-            data: {
-              constant: "all",
-              space: null,
-              concept: null
+            "data": {
+              "constant": "all",
+              "space": null,
+              "concept": null
             },
             "merge": false
           },
           "group": {
-            data: { ref: "markers.mountain.config.encoding.color.data" },
+            "data": { "ref": "markers.mountain.config.encoding.color.data" },
             "merge": false,
             "manualSorting": []
           },
           "label": {
-            data: {
-              modelType: "entityPropertyDataConfig",
-              concept: "name"
+            "data": {
+              "modelType": "entityPropertyDataConfig",
+              "concept": "name"
             }
           },
-          frame: {
-            value: "2023",
-            modelType: "frame",
-            speed: 200,
-            splash: true,
-            data: {
-              concept: "time"
+          "frame": {
+            "value": "2023",
+            "modelType": "frame",
+            "speed": 200,
+            "splash": true,
+            "data": {
+              "concept": "time"
             }
           },
           "repeat": {
-            modelType: "repeat",
-            allowEnc: ["shapedata"]
+            "modelType": "repeat",
+            "allowEnc": ["shapedata"]
           },
           "facet_row": {
-            data: {
+            "data": {
               //set space and concept
               //or constant="none" or magic concept="is--" with possible exceptions
-              modelType: "entityMembershipDataConfig",
-              space: ["geo"],
-              constant: null,
+              "modelType": "entityMembershipDataConfig",
+              "space": ["geo"],
+              "constant": null,
               //concept: "world_4region"
-              concept: "is--",
-              exceptions: { "is--country": "geo" }
+              "concept": "is--",
+              "exceptions": { "is--country": "geo" }
             }
           },
           "maxheight": {
-            limit: 966980928,
-            data: {
-              space: ["geo"],
-              concept: "income_mountain_50bracket_max_height_for_log"
+            "limit": 966980928,
+            "data": {
+              "space": ["geo"],
+              "concept": "income_mountain_50bracket_max_height_for_log"
             }
           }
         }
       },
       "legend": {
-        data: {
-          ref: {
-            transform: "entityConceptSkipFilter",
-            path: "markers.mountain.encoding.color"
+        "data": {
+          "ref": {
+            "transform": "entityConceptSkipFilter",
+            "path": "markers.mountain.encoding.color"
           }
         },
-        encoding: {
-          color: {
-            data: {
-              concept: { ref: "markers.mountain.encoding.color.data.concept" },
-              constant: { ref: "markers.mountain.encoding.color.data.constant" }
+        "encoding": {
+          "color": {
+            "data": {
+              "concept": { "ref": "markers.mountain.encoding.color.data.concept" },
+              "constant": { "ref": "markers.mountain.encoding.color.data.constant" }
             },
-            scale: {
-              modelType: "color",
-              palette: { ref: "markers.mountain.encoding.color.scale.palette" },
-              type: null,
-              domain: null,
-              range: null,
-              zoomed: null,
-              zeroBaseline: false,
-              clamp: false,
-              allowedTypes: null
+            "scale": {
+              "modelType": "color",
+              "palette": { "ref": "markers.mountain.encoding.color.scale.palette" },
+              "type": null,
+              "domain": null,
+              "range": null,
+              "zoomed": null,
+              "zeroBaseline": false,
+              "clamp": false,
+              "allowedTypes": null
             }
           },
-          name: { data: { concept: "name" } },
-          order: {
-            modelType: "order",
-            direction: "asc",
-            data: { concept: "rank" }
-          },
-          map: { data: { concept: "shape_lores_svg" } }
-        }
-      },
-      povertyline: {
-        data: {
-          ref: "markers.mountain.config.data"
-        },
-        encoding: {
-          povertyline: {
-            data: {
-              concept: "poverty_line"
-            }
-          }
-        }
-      },
-      billy: {
-        data: {
-          space: ["person", "time"],
-          source: "billy"
-        },
-        requiredEncodings: ["x"],
-        encoding: {
+          "name": { "data": { "concept": "name" } },
           "order": {
-            modelType: "order",
-            direction: "desc",
-            data: {
-              ref: "markers.billy.config.encoding.x.data"
+            "modelType": "order",
+            "direction": "asc",
+            "data": { "concept": "rank" }
+          },
+          "map": { "data": { "concept": "shape_lores_svg" } }
+        }
+      },
+      "povertyline": {
+        "data": {
+          "ref": "markers.mountain.config.data"
+        },
+        "encoding": {
+          "povertyline": {
+            "data": {
+              "concept": "poverty_line"
+            }
+          }
+        }
+      },
+      "billy": {
+        "data": {
+          "space": ["person", "time"],
+          "source": "billy"
+        },
+        "requiredEncodings": ["x"],
+        "encoding": {
+          "order": {
+            "modelType": "order",
+            "direction": "desc",
+            "data": {
+              "ref": "markers.billy.config.encoding.x.data"
             }
           },
-          x: {
-            data: {
-              space: ["person", "time"],
-              concept: null,
-              stash: "daily_income"
+          "x": {
+            "data": {
+              "space": ["person", "time"],
+              "concept": null,
+              "stash": "daily_income"
             }
           },
-          name: {
-            data: {
-              space: ["person"],
-              concept: null,
-              stash: "name"
+          "name": {
+            "data": {
+              "space": ["person"],
+              "concept": null,
+              "stash": "name"
             }
           },
-          slices: {
-            data: {
-              space: ["person"],
-              concept: null,
-              stash: "country"
+          "slices": {
+            "data": {
+              "space": ["person"],
+              "concept": null,
+              "stash": "country"
             }
           },
-          frame: {
-            value: "2023",
-            modelType: "frame",
-            loop: false,
-            data: {
-              concept: "time"
+          "frame": {
+            "value": "2023",
+            "modelType": "frame",
+            "loop": false,
+            "data": {
+              "concept": "time"
             },
-            scale: {
-              clampDomainToData: true
+            "scale": {
+              "clampDomainToData": true
             }
           },
-          selected: {
-            modelType: "selection"
+          "selected": {
+            "modelType": "selection"
           },
-          highlighted: {
-            modelType: "selection"
+          "highlighted": {
+            "modelType": "selection"
           }
         }
       }
     }
   },
-  ui: {
-    locale: { id: "en" },
-    layout: { projector: false },
+  "ui": {
+    "locale": { "id": "en", "shortNumberFormat": true },
+    "layout": { "projector": false },
 
-    //ui
     "chart": {
       "decorations": {
         "enabled": true,
@@ -439,15 +438,15 @@ export const VIZABI_MODEL = {
       "opacitySelectDim": 0.3,
       "opacityRegular": 0.8,
       "yMaxMethod": 1,
-      showProbeX: true,
-      probeX: 2.15,
-      probeXCustom: 4,
-      probeXType: "extreme",
-      probeXDetails: {
-        belowProc: true,
-        belowCount: false,
-        aboveProc: false,
-        aboveCount: false
+      "showProbeX": true,
+      "probeX": 2.15,
+      "probeXCustom": 4,
+      "probeXType": "extreme",
+      "probeXDetails": {
+        "belowProc": true,
+        "belowCount": false,
+        "aboveProc": false,
+        "aboveCount": false
       },
       "ultrarich": {
         "opacityHighlight": 1.0,
@@ -458,8 +457,8 @@ export const VIZABI_MODEL = {
       }
     },
     "data-warning": {
-      doubtDomain: [1800, 1950, 2020],
-      doubtRange: [0, 0, 0]
+      "doubtDomain": [1800, 1950, 2020],
+      "doubtRange": [0, 0, 0]
     },
     "time-slider": {
       "show_value": false

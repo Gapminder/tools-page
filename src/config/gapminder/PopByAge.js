@@ -1,200 +1,106 @@
 export const VIZABI_MODEL = {
-    model: {
-      markers: {
+    "model": {
+      "markers": {
         "pyramid": {
-          data: {
-            source: "pop",
-            space: ["geo", "year", "age"],
-            filter: {
-              dimensions: {
-                "geo": {
-                  "$or": [{
-                    "geo": { $in: ["americas","europe","africa","asia"] }
-                  }]
-                }
-              }
-            }
+          "data": {
+            "source": "pop",
+            "space": ["geo", "year", "age"],
+            "filter": { "dimensions": { "geo": { "$or": [{ "geo": { "$in": ["americas","europe","africa","asia"] } }] } } }
+
           },
-          requiredEncodings: ["x"],
-          encoding: {
+          "encoding": {
             "show": {
-              modelType: "selection",
-              data: {
-                filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
+              "data": {
+                "filter": { "dimensions": { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
               }
             },
-            "selected": {
-              modelType: "selection"
+            "x": {
+              "data": { "concept": "population" }
             },
-            "highlighted": {
-              modelType: "selection"
-            },
-            x: {
-              data: {
-                concept: "population",
-                // space: {
-                //   filter: {
-                //     concept: { '$eq': ["geo", "year", "age", "gender"] }
-                //   }
-                // }
-              }
-            },
-            y: {
-              data: {
-                concept: "age",
-                space: ["age"],
+            "y": {
+              "data": {
+                "concept": "age",
+                "space": ["age"]
               },
-              scale: {
-                type: "linear",
-                domain: [0, 100] }
+              "scale": {
+                "domain": [0, 100] 
+              }
             },
             "aggregate": {
-              modelType: "aggregate",
-              data: {
-                ref: "markers.pyramid.config.encoding.x.data"
-              },
-              measures: ["x"],
-              grouping: {
-                age: {
-                  grouping: 1
-                }
-              }
-            },
-            "order": {
-              modelType: "order",
-              direction: "asc",
-              data: {
-                ref: "markers.pyramid.config.encoding.y.data"
+              "grouping": {
+                "age": { "grouping": 1 }
               }
             },
             "orderFacets": {
-              modelType: "order",
-              direction: { ref: "markers.pyramid.data.filter.config.dimensions.geo.$or.0.geo.$in" },
-              data: { ref: "markers.pyramid.encoding.facet_column.data" }
+              "direction": { "ref": "markers.pyramid.data.filter.config.dimensions.geo.$or.0.geo.$in" },
+              "data": { "ref": "markers.pyramid.encoding.facet_column.data" }
             },
-            label: {
-              data: {
-                modelType: "entityPropertyDataConfig",
-                concept: "name"
+            "label": {
+              "data": { "concept": "name" }
+            },
+            "frame": {
+              " //": "playbackSteps changes w aggregation, also 'interpolate: false' is some possible exotic customisation",
+              "value": "2023",
+              "playbackSteps": 1,
+              "data": { "concept": "year" }
+            },
+            "color": {
+              "data": {
+                "space": ["geo"],
+                "concept": "world_4region",
+                "constant": null
+              },
+              "scale": {
+                "type": "ordinal"
               }
             },
-            frame: {
-              modelType: "frame",
-              value: "2023",
-              playbackSteps: 1,
-              splash: true,
-              data: {
-                concept: "year",
+            "side": {
+              "data": {
+                "constant": "true",
+                " //": "alternatively, set space: [gender] and concept: gender"
               },
-              //interpolate: false
-            },
-            color: {
-              data: {
-                space: ["geo"],
-                concept: "world_4region"
-              },
-              scale: {
-                modelType: "color",
-                type: "ordinal"
-              }
-            },
-            side: {
-              data: {
-                //space: ["gender"],
-                //concept: 'gender'
-                constant: "true",
-              },
-              defaultConcept: "gender"
-            },
-            "repeat": {
-              modelType: "repeat",
-              allowEnc: ["x"]
+              "defaultConcept": "gender"
             },
             "facet_column": {
-              data: {
-                //set space and concept
-                //or constant="none" or magic concept="is--" with possible exceptions
-                modelType: "entityMembershipDataConfig",
-                space: ["geo"],
-                constant: null,
-                //concept: "world_4region"
-                concept: "geo",
-                //exceptions: {"is--country": "geo"}
+              "data": {
+                "space": ["geo"],
+                "constant": null,
+                "concept": "geo",
+                " //1": "alternatively, set constant='none' or magic concept='is--' with possible exceptions",
+                " //2": "concept: world_4region",
+                " //3": "exceptions: {is--country: geo}"
               }
-            },
+            }
           }
         },
         "legend": {
-          data: {
-            ref: {
-              transform: "entityConceptSkipFilter",
-              path: "markers.pyramid.encoding.color"
-            }
-          },
-          encoding: {
-            color: {
-              data: {
-                concept: { ref: "markers.pyramid.encoding.color.data.concept" },
-                constant: { ref: "markers.pyramid.encoding.color.data.constant" }
-              },
-              scale: {
-                modelType: "color",
-                palette: { ref: "markers.pyramid.encoding.color.scale.palette" },
-                domain: null,
-                range: null,
-                type: null,
-                zoomed: null,
-                zeroBaseline: false,
-                clamp: false,
-                allowedTypes: null
-              }
-            },
-            name: { data: { concept: "name" } },
-            order: {
-              modelType: "order",
-              direction: "asc",
-              data: { concept: "rank" }
-            },
-            map: { data: { concept: "shape_lores_svg" } }
+          "encoding": {
+            "name": { "data": { "concept": "name" } },
+            "order": { "data": { "concept": "rank" } },
+            "map": { "data": { "concept": "shape_lores_svg" } }
           }
-        },
+        }
       }
     },
-    ui: {
-      //ui
-      chart: {
-        mode: "smallMultiples",
-        stacked: true,
-        inpercent: true,
-        flipSides: true,
-        lockActive: true,
-        lockNonSelected: 0,
-        overhang: true,
-  
-        showForecast: true,
-        showForecastOverlay: false,
-        pauseBeforeForecast: false,
-        endBeforeForecast: "2023",
-  
+    "ui": {
+      "locale": { "id": "en", "shortNumberFormat": true },
+      "layout": { "projector": false },
+
+      "chart": {
+        "endBeforeForecast": "2023"
       },
       "buttons": {
         "buttons": ["colors", "markercontrols", "lock", "sided","inpercent", "moreoptions", "sidebarcollapse", "fullscreen"]
       },
       "dialogs": {
-        "dialogs": {
-          "popup": ["timedisplay", "colors", "markercontrols", "moreoptions"],
-          "sidebar": ["timedisplay", "colors", "markercontrols", "grouping"],
-          "moreoptions": ["opacity", "speed", "grouping", "colors", "side", "presentation", "about"],
-        },
         "markercontrols": {
-          "disableSwitch": true,
-          "disableSlice": true,
-          "disableAddRemoveGroups": true,
-          "disableFindInteractions": true,
-          "primaryDim": "geo"
+        },
+        "tree-menu": {
+          "folderStrategyByDataset": {
+            "pop": "spread"
+          }
         }
-      },
-      presentation: false
+      }
     }
   };
   

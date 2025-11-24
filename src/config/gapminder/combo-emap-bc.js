@@ -1,253 +1,131 @@
 export const VIZABI_MODEL = {
-  model: {
-    markers: {
-      bubble: {
-        requiredEncodings: ["x", "y", "lat", "lon", "size"],
-        data: {
-          locale: "en",
-          source: "sg",
-          space: ["geo", "time"],
-          filter: {
-            dimensions: { "geo": { "$or": [{ "is--country": true }] } }
-          }
+  "model": {
+    "markers": {
+      "bubble": {
+        "requiredEncodings": ["x", "y", "lat", "lon", "size"],
+        "data": {
+          "source": "sg",
+          "space": ["geo", "time"],
+          "filter": { "dimensions": { "geo": { "$or": [{ "un_state": true }] } } }
         },
-        encoding: {
+        "encoding": {
           "show": {
-            modelType: "selection",
-            data: {
-              filter: { dimensions: { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
+            "data": {
+              "filter": { "dimensions": { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
             }
           },
           "selected": {
-            modelType: "selection",
-            data: {
-              filter: {
-                ref: "markers.bubble.encoding.trail.data.filter"
-              }
-            }
-          },
-          "highlighted": {
-            modelType: "selection"
-          },
-          "superhighlighted": {
-            modelType: "selection"
-          },
-          "order": {
-            modelType: "order",
-            direction: "desc",
-            data: {
-              ref: "markers.bubble.config.encoding.size.data"
+            "data": {
+              "filter": { "ref": "markers.bubble.encoding.trail.data.filter" }
             }
           },
           "size": {
-            data: {
-              concept: "pop",
-              source: "fasttrack",
-            },
-            scale: {
-              modelType: "size"
+            "data": {
+              "concept": "pop",
+              "source": "fasttrack",
             }
           },
           "y": {
-            data: {
-              concept: "lex",
-              source: "fasttrack",
+            "data": {
+              "concept": "lex",
+              "source": "fasttrack",
             },
-            scale: {
-              domain: [0, 100],
-              zoomed: [19, 86]
+            "scale": {
+              "domain": [0, 100],
+              "zoomed": [19, 86]
             }
           },
           "x": {
-            data: {
-              concept: "gdp_pcap",
-              source: "fasttrack",
+            "data": {
+              "concept": "gdp_pcap",
+              "source": "fasttrack"
             },
-            scale: {
-              domain: [300, 180000],
-              zoomed: [400, 96000],
-              type: "log"
+            "scale": {
+              "domain": [300, 180000],
+              "zoomed": [400, 96000],
+              "type": "log"
             }
           },
           "color": {
-            data: {
-              space: ["geo"],
-              concept: "world_4region"
+            "data": {
+              "space": ["geo"],
+              "concept": "world_4region",
+              "constant": null
             },
-            scale: {
-              modelType: "color",
-              type: "ordinal"
+            "scale": {
+              "type": "ordinal"
             }
           },
           "label": {
-            data: {
-              modelType: "entityPropertyDataConfig",
-              concept: "name"
+            "data": {
+              "concept": "name"
             }
           },
-          "size_label": {
-            data: {
-              constant: "_default"
-            },
-            scale: {
-              modelType: "size",
-              extent: [0, 0.34],
-              allowedTypes: ["linear", "point"]
-            }
-          },
-          frame: {
-            modelType: "frame",
-            speed: 200,
-            value: "2023",
-            splash: true,
-            data: {
-              concept: "time"
+          "frame": {
+            "value": "2023",
+            "data": {
+              "concept": "time"
             }
           },
           "trail": {
-            modelType: "trail",
-            groupDim: "time",
-            show: true
+            "groupDim": "time",
+            "show": true
           },
-          // "centroid": {
-          //   data: {
-          //     space: ["geo"],
-          //     concept: "baskod2010"
-          //   }
-          // },
           "lat": {
-            data: {
-              space: ["geo"],
-              concept: "latitude"
+            "data": {
+              "space": ["geo"],
+              "concept": "latitude"
             }
           },
           "lon": {
-            data: {
-              space: ["geo"],
-              concept: "longitude"
+            "data": {
+              "space": ["geo"],
+              "concept": "longitude"
             }
           },
           "color_map": {
-            data: {
-              concept: "landlocked",
-              space: ["geo"],
+            "data": {
+              "space": ["geo"],
+              "concept": "landlocked"
             },
-            scale: {
-              modelType: "color"
+            "scale": {
+              "type": "ordinal"
             }
           },
         }
       },
       "legend": {
-        data: {
-          ref: {
-            transform: "entityConceptSkipFilter",
-            path: "markers.bubble.encoding.color"
-          }
-        },
-        encoding: {
-          color: {
-            data: {
-              concept: { ref: "markers.bubble.encoding.color.data.concept" },
-              constant: { ref: "markers.bubble.encoding.color.data.constant" }
-            },
-            scale: {
-              modelType: "color",
-              palette: { ref: "markers.bubble.encoding.color.scale.palette" },
-              domain: null,
-              range: null,
-              type: null,
-              zoomed: null,
-              zeroBaseline: false,
-              clamp: false,
-              allowedTypes: null
-            }
-            //scale: { ref: "markers.bubble.encoding.color.scale" }
-          },
-          name: { data: { concept: "name" } },
-          order: {
-            modelType: "order",
-            direction: "asc",
-            data: { concept: "rank" }
-          },
-          map: { data: { concept: "shape_lores_svg" } }
+        "encoding": {
+          "name": { "data": { "concept": "name" } },
+          "order": { "data": { "concept": "name" } },
+          "map": { "data": { "concept": "shape_lores_svg" } }
         }
       },
+      "legend_map": {
+        "encoding": {
+          "name": { "data": { "concept": "name" } },
+          "order": { "data": { "concept": "name" } },
+          "map": { "data": { "concept": null } }
+        }
+      }
     }
   },
-  ui: {
-    locale: { id: "en" },
-    layout: { projector: false },
+  "ui": {
+    "locale": { "id": "en", "shortNumberFormat": true },
+    "layout": { "projector": false },
 
-    //ui
-    "buttons": {
-      "buttons": ["colors", "markercontrols", "trails", "moreoptions", "presentation", "sidebarcollapse", "fullscreen"]
-    },
     "dialogs": {
-      "dialogs": {
-        "popup": ["colors", "markercontrols", "moreoptions"],
-        "sidebar": ["colors", "markercontrols", "size", "zoom"],
-        "moreoptions": [
-          "opacity",
-          "speed",
-          "axes",
-          "size",
-          "colors",
-          "label",
-          "zoom",
-          "mapcolors",
-          "mapoptions",
-          "technical",
-          "repeat",
-          "presentation",
-          "about"
-        ]
-      },
       "markercontrols": {
-        "disableSlice": true,
-        "disableAddRemoveGroups": false
+        "primaryDim": "geo",
+        "drilldown": "country"
       }
     },
-
     "chart": {
-      show_ticks: true,
-      showForecast: false,
-      showForecastOverlay: true,
-      pauseBeforeForecast: true,
-      endBeforeForecast: "2023",
-      opacityHighlight: 1.0,
-      opacitySelect: 1.0,
-      opacityHighlightDim: 0.1,
-      opacitySelectDim: 0.3,
-      opacityRegular: 0.8,
-      timeInBackground: true,
-      timeInTrails: true,
-      lockNonSelected: 0,
-      numberFormatSIPrefix: true,
-      panWithArrow: true,
-      adaptMinMaxZoom: false,
-      cursorMode: "arrow",
-      zoomOnScrolling: true,
-      superhighlightOnMinimapHover: true,
-      whenHovering: {
-        showProjectionLineX: true,
-        showProjectionLineY: true,
-        higlightValueX: true,
-        higlightValueY: true
-      },
-      labels: {
-        enabled: true,
-        dragging: true,
-        removeLabelBox: false
-      },
-      margin: {
-        left: 0,
-        top: 0
-      },
-      decorations: {
+      "endBeforeForecast": "2023",
+      "decorations": {
         "enabled": true,
         "xAxisGroups": {
-          "income_per_person_gdppercapita_ppp_inflation_adjusted": [
+          "gdp_pcap": [
             { "min": null, "max": 2650, "label": "incomegroups/level1", "label_short": "incomegroups/level1short" },
             { "min": 2650, "max": 8000, "label": "incomegroups/level2", "label_short": "incomegroups/level2short" },
             { "min": 8000, "max": 24200, "label": "incomegroups/level3", "label_short": "incomegroups/level3short" },
@@ -255,27 +133,22 @@ export const VIZABI_MODEL = {
           ]
         }
       },
-      map: {
-        "showAreas": true,
-        overflowBottom: 0,
-        topology: {
-          path: "assets/world-50m.json",
-          objects: {
-            areas: "countries",
-            boundaries: "countries"
+      "map": {
+        "showBubbles": true,
+        "topology": {
+          "path": "assets/world-50m.json",
+          "objects": {
+            "areas": "countries",
+            "boundaries": "countries"
           }
         }
       }
     },
-    "data-warning": {
-      doubtDomain: [1800, 1950, 2015],
-      doubtRange: [0, 0, 0]
-    },
     "tree-menu": {
-      "showDataSources": false,
       "folderStrategyByDataset": {
         "sg": "spread",
         "fasttrack": "spread",
+        "country_flags": "spread",
         "wdi": "folder:other_datasets"
       }
     }

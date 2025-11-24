@@ -56,7 +56,7 @@ export const VIZABI_MODEL = {
           "order": { "data": { "concept": "rank" } },
           "map": { "data": { "concept": "shape_lores_svg" } }
         }
-      },
+      }
     }
   },
   "ui": {
@@ -66,11 +66,14 @@ export const VIZABI_MODEL = {
       "markercontrols": {
         "disableSlice": false,
         "disableAddRemoveGroups": false,
+        "drilldown": "country",
         "primaryDim": "geo"
       }
     },
     "chart": {
       "endBeforeForecast": "2023",
+      "panWithArrow": false,
+      "zoomOnScrolling": false,
       "decorations": {
         "enabled": true,
         "xAxisGroups": {

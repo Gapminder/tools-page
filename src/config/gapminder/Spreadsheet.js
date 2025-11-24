@@ -1,50 +1,56 @@
 export const VIZABI_MODEL = {
-  model: {
-    markers: {
+  "model": {
+    "markers": {
       "spreadsheet": {
-        // data: {
-        //   source: "boba",
-        //   space: ["geo", "year"],
-        //   filter: {
-        //     dimensions: { "geo": { "$or": [{ "is--kommun": true }] } }
-        //   }
-        // },
-        encoding: {
+        "data": {
+          "space": ["geo", "time"],
+          "filter": { "dimensions": { "geo": { "$or": [{ "un_state": true }] } } }
+        },
+        "encoding": {
           "show": {
-            modelType: "selection",
-            // data: {
-            //   filter: { dimensions: { "geo": { "$not": { "is--deso": 1 } } } }
-            // }
-          },
-          label: {
-            data: {
-              concept: "name"
+            "data": {
+              "filter": { "dimensions": { "geo": { "$not": { "is--country": 1, "un_state": 0 } } } }
             }
+          },
+          "number": {
+            "data": { "concept": "lex" }
+          },
+          "label": {
+            "data": { "concept": "name" }
           }
         }
       }
     }
   },
   ui: {
+    "locale": { "id": "en", "shortNumberFormat": true },
+    "layout": { "projector": false },
     "dialogs": {
       "markercontrols": {
-        //"disableSlice": true,
-        //"disableAddRemoveGroups": false,
-        //"primaryDim": "geo",
-        //"drilldown": "region.kommun.regso",
-        "shortcutForSwitch": false,
-        //"shortcutForSwitch_allow": ["kommun", "regso"],
-      },
+        "disableSlice": false,
+        "disableAddRemoveGroups": false,
+        "primaryDim": "geo",
+        "drilldown": "country",
+        "shortcutForSwitch": false
+      }
     },
-    "marker-contextmenu": {
-      // "primaryDim": "geo",
-      // "drilldown": "region.kommun.regso"
+    "chart": {
+      "sendTools": [
+        {
+          "icon": "🏀",
+          "tool": "bubbles",
+          "label": "Bubbles (as Y axis)",
+          "marker": "bubble",
+          "encoding": "y",
+          "selected": "trail"
+        }
+      ]
     },
     "tree-menu": {
       "folderStrategyByDataset": {
-        // "kolada": "spread",
-        // "boba": "spread",
-        // "wdi": "folder:other_datasets"
+        "sg": "spread",
+        "fasttrack": "spread",
+        "wdi": "folder:other_datasets"
       }
     }
   }
