@@ -54,6 +54,8 @@
         "marker-plural/spreadsheet": "filter",
         "marker-plural/extapimap": "areas",
         "marker-plural/bubblechart": "bubbles",
+        "marker-plural/bubblemap": "bubbles",
+        "marker-plural/clickmap": "areas",
         "marker-plural/combo": "areas",
         "hints/extapimap/showBubbles": "Bubbles",
         "hints/extapimap/showAreas": "Areas",

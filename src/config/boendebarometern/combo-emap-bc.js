@@ -47,12 +47,16 @@ export const VIZABI_MODEL = {
         }
       },
       "legend": {
-        "name": { "data": { "concept": "name" } },
-        "order": { "data": { "concept": "name" } }
+        "encoding": {
+          "name": { "data": { "concept": "name" } },
+          "order": { "data": { "concept": "name" } }
+        }
       },
       "legend_map": {
-        "name": { "data": { "concept": "name" } },
-        "order": { "data": { "concept": "name" } }
+        "encoding": {
+          "name": { "data": { "concept": "name" } },
+          "order": { "data": { "concept": "name" } }
+        }
       }
     }
   },

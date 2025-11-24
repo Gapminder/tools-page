@@ -54,6 +54,8 @@
         "marker-plural/spreadsheet": "områden",
         "marker-plural/extapimap": "områden",
         "marker-plural/bubblechart": "bubblor",
+        "marker-plural/bubblemap": "bubblor",
+        "marker-plural/clickmap": "områden",
         "marker-plural/combo": "områden",
         "hints/extapimap/showBubbles": "Bubblor på karta",
         "hints/extapimap/showAreas": "Områden",
