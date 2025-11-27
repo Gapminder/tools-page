@@ -43,6 +43,7 @@ const TOOL_CSS = [
   "@vizabi/linechart/build/linechart.css",
   "@vizabi/barrank/build/barrank.css",
   "@vizabi/bubblechart/build/bubblechart.css",
+  "@vizabi/bubblechart-svg/build/bubblechart-svg.css",
   "@vizabi/bubblemap/build/bubblemap.css",
   "@vizabi/mountainchart/build/mountainchart.css",
   "@vizabi/popbyage/build/popbyage.css",

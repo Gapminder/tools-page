@@ -1,7 +1,7 @@
 [
   {
     "id": "bubbles",
-    "tool": "BubbleChart",    
+    "tool": "BubbleChartSVG",
     "toolVariation": "Base",
     "dataSources": ["fasttrack", "sg", "wdi", "country_flags"],
     "toolComponents": "",

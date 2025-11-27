@@ -23,6 +23,7 @@ git pull origin develop
 # npm view vizabi versions | sed "s/'/\"/g" | json -- -1
 json -I -f package.json -e 'this.dependencies["@vizabi/core"]="latest"'
 json -I -f package.json -e 'this.dependencies["@vizabi/bubblechart"]="latest"'
+json -I -f package.json -e 'this.dependencies["@vizabi/bubblechart-svg"]="latest"'
 json -I -f package.json -e 'this.dependencies["@vizabi/bubblemap"]="latest"'
 json -I -f package.json -e 'this.dependencies["@vizabi/linechart"]="latest"'
 json -I -f package.json -e 'this.dependencies["@vizabi/mountainchart"]="latest"'
