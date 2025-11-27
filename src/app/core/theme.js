@@ -99,8 +99,8 @@ export default function ThemeService({theme_components, theme_meta, theme_layout
     if(style)
       emitCSS(getGenericCSSfromObject(style), "theme-style");
 
-    if(_theme_meta?.favicon)
-      d3.select("head").append("link").attr("rel", "shortcut icon").attr("href", _theme_meta.favicon);
+    if(_theme_meta?.favicon) 
+      d3.select("head link#favicon-placeholder").attr("href", _theme_meta.favicon);
     
     // Open Graph meta tags
     d3.select("head").append("meta").attr("property", "og:url").attr("content", location.href);
@@ -131,6 +131,9 @@ export default function ThemeService({theme_components, theme_meta, theme_layout
 
     if(_theme_variables)
       emitCSS( getVariablesCSS(_theme_variables), "theme-variables" );
+
+    if(_theme_variables && _theme_variables["color-primary"])
+      d3.select("head meta#theme-color-placeholder").attr("content", _theme_variables["color-primary"]);
 
     const fonts = _theme_layout && Object.keys(_theme_fonts).length > 0 ? _theme_fonts : DEFAULT_FONTS;
     if(fonts)
