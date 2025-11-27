@@ -151,7 +151,7 @@ export const VIZABI_MODEL = {
             "facet_row": { "data": { "ref": "markers.mountain.config.encoding.color.data" } }
           }
         }
-      }],
+      }]
     ],
     "markers": {
       "mountain": {
@@ -289,43 +289,13 @@ export const VIZABI_MODEL = {
         }
       },
       "legend": {
-        "data": {
-          "ref": {
-            "transform": "entityConceptSkipFilter",
-            "path": "markers.mountain.encoding.color"
-          }
-        },
         "encoding": {
-          "color": {
-            "data": {
-              "concept": { "ref": "markers.mountain.encoding.color.data.concept" },
-              "constant": { "ref": "markers.mountain.encoding.color.data.constant" }
-            },
-            "scale": {
-              "modelType": "color",
-              "palette": { "ref": "markers.mountain.encoding.color.scale.palette" },
-              "type": null,
-              "domain": null,
-              "range": null,
-              "zoomed": null,
-              "zeroBaseline": false,
-              "clamp": false,
-              "allowedTypes": null
-            }
-          },
           "name": { "data": { "concept": "name" } },
-          "order": {
-            "modelType": "order",
-            "direction": "asc",
-            "data": { "concept": "rank" }
-          },
+          "order": { "data": { "concept": "rank" } },
           "map": { "data": { "concept": "shape_lores_svg" } }
         }
       },
       "povertyline": {
-        "data": {
-          "ref": "markers.mountain.config.data"
-        },
         "encoding": {
           "povertyline": {
             "data": {
@@ -339,15 +309,7 @@ export const VIZABI_MODEL = {
           "space": ["person", "time"],
           "source": "billy"
         },
-        "requiredEncodings": ["x"],
         "encoding": {
-          "order": {
-            "modelType": "order",
-            "direction": "desc",
-            "data": {
-              "ref": "markers.billy.config.encoding.x.data"
-            }
-          },
           "x": {
             "data": {
               "space": ["person", "time"],
@@ -371,20 +333,9 @@ export const VIZABI_MODEL = {
           },
           "frame": {
             "value": "2023",
-            "modelType": "frame",
-            "loop": false,
             "data": {
               "concept": "time"
-            },
-            "scale": {
-              "clampDomainToData": true
             }
-          },
-          "selected": {
-            "modelType": "selection"
-          },
-          "highlighted": {
-            "modelType": "selection"
           }
         }
       }
