@@ -26,6 +26,37 @@ const TOOL_CSS_HREF = {
   extapimap:       "./assets/css/extapimap.css",
 };
 
+// Tools that need Mapbox
+const MAPBOX_TOOLS = new Set(["extapimap", "combo"]);
+
+let mapboxLoaded = false;
+async function loadMapbox(resolveAssetUrl) {
+  if (mapboxLoaded) return;
+  
+  // Load CSS
+  if (!document.querySelector('link[data-mapbox-css]')) {
+    const cssLink = document.createElement("link");
+    cssLink.rel = "stylesheet";
+    cssLink.href = resolveAssetUrl("./assets/css/mapbox-gl.css");
+    cssLink.dataset.mapboxCss = "true";
+    document.head.appendChild(cssLink);
+  }
+  
+  // Load JS as global script (bypass bundler mangling)
+  if (!window.mapboxgl) {
+    await new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = resolveAssetUrl("./vendor/mapbox-gl.js");
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+  
+  mapboxLoaded = true;
+}
+
+
 function loadCSS(name, resolveAssetUrl) {
   const href = TOOL_CSS_HREF[name];
   if (!href) return;
@@ -38,6 +69,10 @@ function loadCSS(name, resolveAssetUrl) {
 }
 
 export async function loadTool(name, resolveAssetUrl) {
+  // Load Mapbox first if tool needs it
+  if (MAPBOX_TOOLS.has(name)) {
+    await loadMapbox(resolveAssetUrl);
+  }
   loadCSS(name, resolveAssetUrl);
   return loaders[name]?.() ?? Promise.reject(new Error(`Unknown tool: ${name}`)); 
 }

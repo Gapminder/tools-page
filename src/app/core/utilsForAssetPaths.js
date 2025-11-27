@@ -58,7 +58,7 @@ export function resolveAssetUrl(p) {
   if (isExternalUrl(p)) return p;
   let clean = normalizeLocalPath(p);
   // If caller passed a bare filename or unknown folder, default to assets/
-  if (!/^(assets\/|config\/|app\/|css\/|js\/)/.test(clean)) {
+  if (!/^(assets\/|vendor\/|config\/|app\/|css\/|js\/)/.test(clean)) {
     clean = `assets/${clean}`;
   }
   return new URL(clean, getBaseHref()).toString();

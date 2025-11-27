@@ -106,7 +106,7 @@ export default {
         { dest: "build/vendor", src: vendor("@vizabi/reader-ddfcsv/dist/reader-ddfcsv.js"), rename: "reader-ddfcsv.js"  },
         { dest: "build/vendor", src: vendor(PROD ? "d3/dist/d3.min.js" : "d3/dist/d3.js"), rename: "d3.js" },
         { dest: "build/vendor", src: vendor(PROD ? "mobx/lib/mobx.umd.min.js" : "mobx/lib/mobx.umd.js"), rename: "mobx.js" },
-        // MAPBOX
+        // MAPBOX (loaded on-demand by tools that need it)
         { dest: "build/vendor", src: vendor("mapbox-gl/dist/mapbox-gl.js"), rename: "mapbox-gl.js" },
         { dest: "build/assets/css", src: require.resolve("mapbox-gl/dist/mapbox-gl.css") },
         //VIZABI
