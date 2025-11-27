@@ -5,6 +5,7 @@ import { deepExtend, diffObject, removeProperties } from "./utils.js";
 import { loadConfigModule, resolveAssetUrl } from "./utilsForAssetPaths.js";
 import timeLogger from "./timelogger.js";
 import { loadTool } from "../../../vizabi-tools.js";
+import { googleAnalyticsInit, googleAnalyticsLoadEvents } from "./event-analytics.service.js";
 
 const {observable, toJS, autorun} = mobx;
 
@@ -53,8 +54,8 @@ const Tool = function({ cmsData, state, dom, site, pageSlug }) {
 
   async function setTool({ id, previousToolId, skipTransition = true } = {}) {
 
-    //init gtag if (gtag) gtag("config", poduction ...
     const tool = id || state.getTool();
+    googleAnalyticsInit(tool);
 
     const toolsetEntry = toolset.find(f => f.id === tool);
     const toolsetEntryPrevious = toolset.find(f => f.id === state.getTool());
@@ -181,7 +182,7 @@ const Tool = function({ cmsData, state, dom, site, pageSlug }) {
     });
     disposers.push(checkDataSourcesAuth);
     
-    //googleAnalyticsLoadEvents(viz, toolsetEntry);
+    googleAnalyticsLoadEvents({viz, toolsetEntry, state, disposers, timeLogger});
 
 
     urlUpdateDisposer = autorun(() => {

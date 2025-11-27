@@ -1,99 +1,61 @@
+import { reaction } from "mobx";
+
 //gtag is a global variable from index.html
 //configure google analytics with the active tool, which would be counted as a "page view" of our single-page-application
-if (gtag) gtag("config", poduction ? GAPMINDER_TOOLS_GA_ID_PROD : GAPMINDER_TOOLS_GA_ID_DEV, { "page_title": tool, "page_path": "/" + tool });
+export function googleAnalyticsInit(tool) {
+  if (gtag && gaId) gtag("event", "page_view", {"page_title": tool, "page_path": "/" + tool });
+}
+
+export function googleAnalyticsLoadEvents({viz, toolsetEntry, state, disposers, timeLogger}){
+  const markers = viz.model.markers;
+  const marker = markers[toolsetEntry.mainMarker];
+  const splashMarker = viz.splashMarker;
+  let splashReady = false;
+
+  const logEvent = splashOrFull => {
+    console.timeEnd(splashOrFull);
+    const time = timeLogger.snapOnce(splashOrFull);
+    if (gtag && time) gtag("event", "timing_complete", {
+      "name": time < 30000 ? `${splashOrFull} load` : `${splashOrFull} load above 30s`,
+      "value": time,
+      "event_category": "Page load",
+      "event_label": state.getTool()
+    });
+  };
+
+  if (!!marker) 
+    registerLoadFinish(marker, false);
+  if (!!splashMarker) 
+    registerLoadFinish(splashMarker, true);
 
 
+  function registerLoadFinish(marker, splashed) {
+    console.time(splashed ? "SPLASH" : "FULL");
 
-function googleAnalyticsLoadEvents(viz, toolsetEntry) {
-    const markers = viz.model.markers;
-    const marker = markers[toolsetEntry.mainMarker];
-    const splashMarker = viz.splashMarker;
-  
-    registerLoadFinish(marker, "FULL", !!splashMarker);
-  
-    function registerLoadFinish(loadMarker, id, splashed) {
-      let splashReady = false;
-      if (splashed) console.time("SPLASH");
-      console.time(id);
-      const dispose = reaction(
-        () => {
-          if (loadMarker.state != "fulfilled") return;
-          return loadMarker.id;
-        },
-        () => {
-          const logById = id => {
-            console.timeEnd(id);
-            const time = timeLogger.snapOnce(id);
-            if (gtag && time) gtag("event", "timing_complete", {
-              "name": time < 30000 ? `${id} load` : `${id} load above 30s`,
-              "value": time,
-              "event_category": "Page load",
-              "event_label": state.getTool()
-            });
-          };
-  
-          if (splashed && loadMarker.id.split("-").pop() == "splash") {
-            splashReady = true;
-            logById("SPLASH");
-          } else {
-            dispose();
-            if (splashed && !splashReady) logById("SPLASH");
-            logById(id);
-          }
-        },
-        { name: id + " google load registration",
-          onError: err => {
-            console.log(err);
-            window.Rollbar && Rollbar.critical(err);
-          }
-        }
-      );
-      disposers.push(dispose);
-    }
-  }
-
-  registerLoadFinish(marker, "FULL", !!splashMarker);
-
-  function registerLoadFinish(loadMarker, id, splashed) {
-    let splashReady = false;
-    if (splashed) console.time("SPLASH");
-    console.time(id);
-    const dispose = reaction(
+    const disposer = reaction(
       () => {
-        if (loadMarker.state != "fulfilled") return;
-        return loadMarker.id;
+        if (marker.state != "fulfilled") return;
+        return marker.id;
       },
       () => {
-        const logById = id => {
-          console.timeEnd(id);
-          const time = timeLogger.snapOnce(id);
-          if (gtag && time) gtag("event", "timing_complete", {
-            "name": time < 30000 ? `${id} load` : `${id} load above 30s`,
-            "value": time,
-            "event_category": "Page load",
-            "event_label": state.getTool()
-          });
-        };
-
-        if (splashed && loadMarker.id.split("-").pop() == "splash") {
+        if (splashed && !splashReady) {
           splashReady = true;
-          logById("SPLASH");
+          logEvent("SPLASH");
         } else {
-          dispose();
-          if (splashed && !splashReady) logById("SPLASH");
-          logById(id);
+          logEvent("FULL");
         }
       },
-      { name: id + " google load registration",
+      { name: marker.id + " google load registration",
         onError: err => {
           console.log(err);
           window.Rollbar && Rollbar.critical(err);
         }
       }
     );
-    disposers.push(dispose);
+    disposers.push(disposer);
   }
 }
+
 
 
 //   'change_hook_which': function(evt, arg) {
