@@ -28,10 +28,11 @@ const TOOL_CSS_HREF = {
 
 // Tools that need Mapbox
 const MAPBOX_TOOLS = new Set(["extapimap", "combo"]);
+// Tools that need Deck
+const DECK_TOOLS = new Set(["extapimap", "combo", "bubblechart"]);
 
-let mapboxLoaded = false;
 async function loadMapbox(resolveAssetUrl) {
-  if (mapboxLoaded) return;
+  if (window.mapboxgl) return Promise.resolve();
   
   // Load CSS
   if (!document.querySelector('link[data-mapbox-css]')) {
@@ -43,19 +44,27 @@ async function loadMapbox(resolveAssetUrl) {
   }
   
   // Load JS as global script (bypass bundler mangling)
-  if (!window.mapboxgl) {
-    await new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = resolveAssetUrl("./vendor/mapbox-gl.js");
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
-  }
-  
-  mapboxLoaded = true;
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = resolveAssetUrl("./vendor/mapbox-gl.js");
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
 }
 
+async function loadDeck(resolveAssetUrl) {
+  if (window.deck) return Promise.resolve();
+
+  // Load JS as global script (bypass bundler mangling)
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = resolveAssetUrl("./vendor/deck.js"); 
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
 
 function loadCSS(name, resolveAssetUrl) {
   const href = TOOL_CSS_HREF[name];
@@ -69,10 +78,16 @@ function loadCSS(name, resolveAssetUrl) {
 }
 
 export async function loadTool(name, resolveAssetUrl) {
-  // Load Mapbox first if tool needs it
+  
+  const promises = [];
   if (MAPBOX_TOOLS.has(name)) {
-    await loadMapbox(resolveAssetUrl);
+    promises.push(loadMapbox(resolveAssetUrl));
   }
+  if (DECK_TOOLS.has(name)) {
+    promises.push(loadDeck(resolveAssetUrl));
+  }
+  await Promise.all(promises);
+
   loadCSS(name, resolveAssetUrl);
   return loaders[name]?.() ?? Promise.reject(new Error(`Unknown tool: ${name}`)); 
 }

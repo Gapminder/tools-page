@@ -1,6 +1,6 @@
 {
   "name": "tools-page",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "description": "Tools-page",
   "main": "index.js",
   "type": "module",
@@ -45,12 +45,12 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.75.0",
     "@vizabi/barrank": "4.2.1",
-    "@vizabi/bubblechart": "5.4.4",
+    "@vizabi/bubblechart": "5.5.0",
     "@vizabi/bubblechart-svg": "4.6.1",
     "@vizabi/bubblemap": "4.7.1",
     "@vizabi/combo": "1.4.4",
     "@vizabi/core": "1.37.2",
-    "@vizabi/extapimap": "5.6.3",
+    "@vizabi/extapimap": "5.7.0",
     "@vizabi/linechart": "4.3.1",
     "@vizabi/mountainchart": "7.6.1",
     "@vizabi/popbyage": "5.3.1",

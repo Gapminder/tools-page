@@ -81,6 +81,8 @@ export default {
     externalGlobals({
       "@vizabi/core": "Vizabi",
       "@vizabi/shared-components": "VizabiSharedComponents",
+      "@deck.gl/core": "deck",
+      "@deck.gl/layers": "deck",
       d3: "d3",
       mobx: "mobx"
     }),
@@ -130,6 +132,24 @@ export default {
       // ensure file changes trigger copy in --watch
       watch: ["src/**/*.js", "src/**/*.html", "src/**/*.styl"]
     }),
+    {
+      // Concatenate Deck.gl core + layers into one file vendor/deck.js
+      name: "bundle-deck-umd",
+      writeBundle() {
+        const getPkgRoot = (id) => path.resolve(path.dirname(require.resolve(id)), "..");
+        // deck.gl root folders (cannot resolve package.json due to exports)
+        const deckCorePath   = path.join(getPkgRoot("@deck.gl/core"), "dist.min.js");
+        const deckLayersPath = path.join(getPkgRoot("@deck.gl/layers"), "dist.min.js");
+
+        const core   = fs.readFileSync(deckCorePath, "utf8");
+        const layers = fs.readFileSync(deckLayersPath, "utf8");
+        const outDir = path.join(__dirname, "build/vendor");
+        fs.mkdirSync(outDir, { recursive: true });
+        // Ensure core goes first
+        fs.writeFileSync(path.join(outDir, "deck.js"), `${core}\n${layers}`);
+        console.log("[deck] ✅ bundled core + layers into build/vendor/deck.js");
+      }
+    },
     replace({
       preventAssignment: true,
       ENV: JSON.stringify(process.env.NODE_ENV || "development"),
