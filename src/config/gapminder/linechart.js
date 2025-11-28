@@ -47,9 +47,7 @@ export const VIZABI_MODEL = {
     "dialogs": {
       "markercontrols": {
         "disableSlice": false,
-        "disableAddRemoveGroups": false,
-        "drilldown": "country",
-        "primaryDim": "geo"
+        "disableAddRemoveGroups": false
       }
     },
     "chart": {
