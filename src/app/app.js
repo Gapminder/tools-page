@@ -33,7 +33,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
   const pageSlug = getPageSlug();
   const {cmsData, pageId, defaultLocale} = await cmsService.load({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, site, pageSlug });
 
-  let shortLinkState = {};
+  let shortLinkState = null;
   const {slug: shortLinkSlug, hash: shortLinkHash} = await getLinkSlugAndHash(window.location.search);
   if (shortLinkSlug) {
     const linkData = await getLinkData(shortLinkSlug);

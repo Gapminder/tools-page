@@ -5,6 +5,7 @@ import worldAdapterRule from "./deprecated-url.rules/worldAdapter/worldAdapter";
 import getDeprecatedConceptsRule from "./deprecated-url.rules/deprecatedConcepts/deprecatedConcepts.js";
 import getDeprecatedEntitysetsRule from "./deprecated-url.rules/deprecatedConcepts/deprecatedEntitysets.js";
 import upgradeUrlV1toV2 from "./deprecated-url.rules/upgradeUrlV1toV2.js";
+import { removeProperties } from "../core/utils.js";
 
 const rules = [];
 
@@ -14,12 +15,15 @@ export default function URLUpgrader({conceptMapping = {}, entitysetMapping = {}}
     rules.push(rule);
   }
 
+  const conceptMappingWithoutComments = removeProperties(conceptMapping, [" //", "//"]);
+  const entitysetMappingWithoutComments = removeProperties(entitysetMapping, [" //", "//"]);
+
   //addRule(worldReferrerRule);
   addRule(worldAdapterRule);
   addRule(urlonUpgradeRule);
   addRule(legacyToolsPageRule);
-  addRule(getDeprecatedConceptsRule(conceptMapping));
-  addRule(getDeprecatedEntitysetsRule(entitysetMapping));
+  addRule(getDeprecatedConceptsRule(conceptMappingWithoutComments));
+  addRule(getDeprecatedEntitysetsRule(entitysetMappingWithoutComments));
   addRule(upgradeUrlV1toV2);
 
 

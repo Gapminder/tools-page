@@ -25,6 +25,8 @@ const validation = {
   theme_style: data => !!data,
   theme_variables: data => !!data,
   locales: data => Array.isArray(data),
+  concept_mapping: data => !!data,
+  entityset_mapping: data => !!data
 };
 
 const parsing = page => {
@@ -146,7 +148,7 @@ const getPages = (locale = DEFAULT_LOCALE, site = SITE, pageSlug = PAGE_SLUG) =>
     {getFromDB: getRelated, sheet: "related", fallbackPath: configFolder+"/related.json" },
 
     {getFromDB: getConceptMapping, sheet: "concept_mapping", fallbackPath: configFolder+"/conceptMapping.json" },
-    {getFromDB: getEntityMapping, sheet: "entity_mapping", fallbackPath: configFolder+"/entityMapping.json" },
+    {getFromDB: getEntitysetMapping, sheet: "entityset_mapping", fallbackPath: configFolder+"/entitysetMapping.json" },
 
     {getFromDB: getDefaultLocalePackageForPage, locale, sheet: `page/${locale}`, fallbackPath: `assets/i18n/${locale}.json` },
     {getFromDB: getDefaultLocalePackageForVizabi, locale, sheet: `vizabi/${locale}`, fallbackPath: `assets/translation/${locale}.json` }
@@ -279,7 +281,7 @@ async function getThemeStyle() {const info = await getCachedPageInfo(); return i
 async function getThemeVariables() {const info = await getCachedPageInfo(); return info && info.theme_variables;}
 async function getLocales() {const info = await getCachedPageInfo(); return info && info.locales ;}
 async function getConceptMapping() {const info = await getCachedPageInfo(); return info && info.concept_mapping;}
-async function getEntityMapping() {const info = await getCachedPageInfo(); return info && info.entity_mapping;}
+async function getEntitysetMapping() {const info = await getCachedPageInfo(); return info && info.entityset_mapping;}
 
 
 

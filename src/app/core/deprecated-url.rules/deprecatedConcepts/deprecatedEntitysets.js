@@ -14,6 +14,9 @@ const getRule = (entitysetMapping) => ({
     const hashIndex = url.indexOf("#");
     if (hashIndex == -1) return false;
 
+    if(!entitysetMapping || !entitysetMapping.chartTypes || !entitysetMapping.entitySets)
+      return false;
+
     const hash = url.substr(hashIndex + 1);
 
     return entitysetMapping.chartTypes.some(m =>

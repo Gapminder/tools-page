@@ -20,7 +20,9 @@ let permalinkHashedToken = null;
 function init({ allowedTools, defaultLocale, conceptMapping, entitysetMapping, shortLinkHash, shortLinkState = {}, pageSlug }) {
   //keep permalink data
   permalinkHashedToken = shortLinkHash;
-  
+  defaultLoc = defaultLocale;
+  _pageSlug = pageSlug;
+
   //Upgrade raw URL
   if(!shortLinkState){
     const url = location.href;
@@ -30,11 +32,8 @@ function init({ allowedTools, defaultLocale, conceptMapping, entitysetMapping, s
       location.replace(upgradedUrl);
   }
 
-  _pageSlug = pageSlug;
-
   //Only then parse URL
-  defaultLoc = defaultLocale;
-  URLI = deepExtend({ ui: { locale: { id: defaultLocale } } }, shortLinkState, parseURLHashWithUrlon());
+  URLI = deepExtend({ ui: { locale: { id: defaultLocale } } }, shortLinkState || {}, parseURLHashWithUrlon());
 
   //apply defaults
   const toolFromUrl = getTool();
