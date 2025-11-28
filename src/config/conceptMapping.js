@@ -1,6 +1,10 @@
 const toolsPage_conceptMapping = {
   //If you are adding a new redirect, ctrl+f the concpet you are redirecting from
   //in this file! it might be that one of the old redirects needs to be updated
+  // 2025-11-28 rename tb incidence number indicator
+  all_forms_of_tb_incidence_and_number_of_new_cases_estimated: {
+    concept: "all_forms_of_tb_incidence_and_number_of_new_cases_reported",
+  },
 
   // 2025-11-21 rename OECD indicators
   aid_given_2007_us: {
