@@ -50,7 +50,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
     pageSlug 
   });
 
-  d3.select(".wrapper").classed("embedded-view", state.getEmbedded());
+  d3.select(".too-wrapper").classed("embedded-view", state.getEmbedded());
 
   const {translator, getLocaleName} = await initTranslator(state, cmsData.locales);
   const bitlyService = await BitlyService({ state });

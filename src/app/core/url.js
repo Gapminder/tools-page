@@ -81,12 +81,15 @@ function pushToHistory({ tool = URLI["chart-type"], ui = URLI.ui, model = URLI.m
   objectToSerialise["chart-type"] = tool;
   objectToSerialise["url"] = URL_VERSION;
 
+  // Preserve existing query params
+  const search = window.location.search;
+
   window.history[replaceInsteadPush ? "replaceState" : "pushState"]({
     tool,
     model: deepExtend({}, model, true),
     ui: deepExtend({}, model, true),
   //need to encode symbols like # in color codes because urlon can't handle them properly
-  }, "unused mandatory parameter", (_pageSlug ? _pageSlug + "/" : "") + "#" + encodeUrlHash(urlon.stringify(objectToSerialise)));
+  }, "unused mandatory parameter", (_pageSlug ? _pageSlug + "/" : "") + search + "#" + encodeUrlHash(urlon.stringify(objectToSerialise)));
 }
 function getPermalinkToken() {
   return permalinkHashedToken;
