@@ -21,8 +21,8 @@ git pull origin main && echo "✅ git pull done"
 echo && echo 🗂 $PWD && echo "👉 npm install"
 npm i --quiet --depth 0 --unsafe-perm && echo "✅ npm install done"
   
-echo && echo 🗂 $PWD && echo "👉 BASE=/tools/ npm run build"
-BASE=/tools/ npm run build && echo "✅ Tools page build done"
+echo && echo 🗂 $PWD && echo "👉 BASE=/ npm run build"
+BASE=/ npm run build && echo "✅ Tools page build done"
 
 echo && echo "👉 run visual testing via a github action"
 gh workflow run manual-percy-toolspage.yml -f env=stage -R Gapminder/visual-tests
