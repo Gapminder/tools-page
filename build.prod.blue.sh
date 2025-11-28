@@ -22,8 +22,8 @@ git pull origin main && echo "✅ git pull done"
 echo && echo 🗂 $PWD && echo "👉 npm install"
 npm i --quiet --depth 0 --unsafe-perm && echo "✅ npm install done"
   
-echo && echo 🗂 $PWD && echo "👉 npm run build:prod"
-npm run build:prod && echo "✅ Tools page build done. Blue prod is served from /home/tools-page/build/tools/"
+echo && echo 🗂 $PWD && echo "👉 BASE=/tools/ npm run build"
+BASE=/tools/ npm run build && echo "✅ Tools page build done. Blue prod is served from /home/tools-page/build/tools/"
 
 echo && echo 🗂 $PWD && echo "👉 copy build output into a special folder for this version"
 VERSION="$(json -f package.json dependencies.@vizabi/core)"
