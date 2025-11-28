@@ -91,6 +91,7 @@ export const VIZABI_MODEL = {
       "drilldown": "region.kommun.regso"
     },
     "chart": {
+      "endBeforeForecast": "2022",
       "splitVertical": true,
       "splitRatio": 0.65,
       "map": {

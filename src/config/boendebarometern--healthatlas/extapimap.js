@@ -74,6 +74,7 @@ export const VIZABI_MODEL = {
       "primaryDim": "geo"
     },
     "chart": {
+      "endBeforeForecast": "2022",
       "map": {
         "bounds": {
           "west": 4, "north": 69, "east": 25, "south": 56
