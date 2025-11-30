@@ -173,8 +173,8 @@ const Tool = function({ cmsData, state, dom, site, pageSlug }) {
       if (dsArray.map(ds => ds.state).every(s => s == "fulfilled")) {
         const messages = [];
         dsArray.forEach(ds => {
-          if (ds.responseError && ds.responseError.code == "HTTP_401" && ds.responseError.message == "Unauthorized") {
-            messages.push(`You are unable to access to private data source ${ds.config.dataset}. Please login for resolve.`);
+          if (ds.responseError && ds.responseError.code == "HTTP_401") {
+            messages.push(`You are unable to access to private data source: <b>${ds.config.dataset}</b>. Please login for resolve.`);
           }
           if (messages.length) state.dispatch.call("showMessage", null, { message: messages.join("\n")});
         });
