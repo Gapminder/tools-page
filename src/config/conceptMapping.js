@@ -1,6 +1,17 @@
 const toolsPage_conceptMapping = {
   //If you are adding a new redirect, ctrl+f the concpet you are redirecting from
   //in this file! it might be that one of the old redirects needs to be updated
+  // 2025-11-30 rename WDI's arm export/import
+  arms_exports_us_inflation_adjusted: {
+    concept: "arms_exports_sipri_tiv",
+  },
+  arms_imports_us_inflation_adjusted: {
+    concept: "arms_imports_sipri_tiv",
+  },
+  // 2025-11-30 rename ILOSTAT indicators
+  hourly_labour_cost_constant_2017_usd: {
+    concept: "hourly_labour_cost_constant_2021_usd",
+  },
   // 2025-11-28 rename tb incidence number indicator
   all_forms_of_tb_incidence_and_number_of_new_cases_estimated: {
     concept: "all_forms_of_tb_incidence_and_number_of_new_cases_reported",
