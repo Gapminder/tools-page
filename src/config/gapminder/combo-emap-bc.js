@@ -42,7 +42,7 @@ export const VIZABI_MODEL = {
             },
             "scale": {
               "domain": [300, 180000],
-              "zoomed": [400, 96000],
+              "zoomed": [750, 96000],
               "type": "log"
             }
           },
@@ -126,10 +126,13 @@ export const VIZABI_MODEL = {
         "enabled": true,
         "xAxisGroups": {
           "gdp_pcap": [
-            { "min": null, "max": 2650, "label": "incomegroups/level1", "label_short": "incomegroups/level1short" },
-            { "min": 2650, "max": 8000, "label": "incomegroups/level2", "label_short": "incomegroups/level2short" },
-            { "min": 8000, "max": 24200, "label": "incomegroups/level3", "label_short": "incomegroups/level3short" },
-            { "min": 24200, "max": null, "label": "incomegroups/level4", "label_short": "incomegroups/level4short" }
+            { "min": null, "max": 3200, "label": "incomegroups/level1", "label_short": "incomegroups/level1short" },
+            { "min": 3200, "max": 12000, "label": "incomegroups/level2", "label_short": "incomegroups/level2short" },
+            { "min": 12000, "max": 36000, "label": "incomegroups/level3", "label_short": "incomegroups/level3short" },
+            { "min": 36000, "max": 108000, "label": "incomegroups/level4", "label_short": "incomegroups/level4short" },
+            { "min": 108000, "max": 324000, "label": "incomegroups/level5", "label_short": "incomegroups/level5short" },
+            { "min": 324000, "max": 972000, "label": "incomegroups/level6", "label_short": "incomegroups/level6short" },
+            { "min": 972000, "max": null, "label": "incomegroups/level7", "label_short": "incomegroups/level7short" }
           ]
         }
       },
