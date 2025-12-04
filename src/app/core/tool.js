@@ -171,13 +171,16 @@ const Tool = function({ cmsData, state, dom, site, pageSlug }) {
       const dataSources = viz.model.dataSources;
       const dsArray = Object.values(dataSources);
       if (dsArray.map(ds => ds.state).every(s => s == "fulfilled")) {
-        const messages = [];
-        dsArray.forEach(ds => {
-          if (ds.responseError && ds.responseError.code == "HTTP_401") {
-            messages.push(`You are unable to access to private data source: <b>${ds.config.dataset}</b>. Please login for resolve.`);
-          }
-          if (messages.length) state.dispatch.call("showMessage", null, { message: messages.join("\n")});
-        });
+        const noAccessToEveryDatasource = dsArray.every(ds => ds.responseError && ds.responseError.code == "HTTP_401");
+        if (noAccessToEveryDatasource) {
+          const datasourceIdList = dsArray.map(ds => ds.id).join(", ");
+          const message = `
+            You are unable to access ${dsArray.length === 1 ? "the" : "any"} data source configured for this visualization: 
+            <br/> ${datasourceIdList}. 
+            <br/> Please log-in to see the data, request access from your data admin if still a problem.
+          `;
+          state.dispatch.call("showMessage", null, { message});
+        }
       }
     });
     disposers.push(checkDataSourcesAuth);
