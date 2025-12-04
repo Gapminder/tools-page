@@ -40,7 +40,7 @@ export const VIZABI_MODEL = {
             },
             "frame": {
               " //": "playbackSteps changes w aggregation, also 'interpolate: false' is some possible exotic customisation",
-              "value": "2023",
+              "value": "2024",
               "playbackSteps": 1,
               "data": { "concept": "year" }
             },
@@ -87,7 +87,7 @@ export const VIZABI_MODEL = {
       "layout": { "projector": false },
 
       "chart": {
-        "endBeforeForecast": "2023"
+        "endBeforeForecast": "2024"
       },
       "buttons": {
         "buttons": ["colors", "markercontrols", "lock", "sided","inpercent", "moreoptions", "sidebarcollapse", "fullscreen"]

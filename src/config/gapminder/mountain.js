@@ -175,7 +175,7 @@ export const VIZABI_MODEL = {
               //   { "is--global": true }
               //] }
               //"geo": { "geo": {"$in": ["asia", "africa", "chn"]}},
-              //"time": {"time": "2023"}
+              //"time": {"time": "2024"}
             }
           }
         },
@@ -255,7 +255,7 @@ export const VIZABI_MODEL = {
             }
           },
           "frame": {
-            "value": "2023",
+            "value": "2024",
             "modelType": "frame",
             "speed": 200,
             "splash": true,
@@ -332,7 +332,7 @@ export const VIZABI_MODEL = {
             }
           },
           "frame": {
-            "value": "2023",
+            "value": "2024",
             "data": {
               "concept": "time"
             }
@@ -382,7 +382,7 @@ export const VIZABI_MODEL = {
       "showForecastOverlay": true,
       "showForecast": false,
       "pauseBeforeForecast": true,
-      "endBeforeForecast": "2023",
+      "endBeforeForecast": "2024",
       "opacityHighlight": 1.0,
       "opacitySelect": 1.0,
       "opacityHighlightDim": 0.1,

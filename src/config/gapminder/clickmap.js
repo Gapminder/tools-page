@@ -96,7 +96,7 @@ export const VIZABI_MODEL = {
       "opacityRegular": 0,
       "timeInBackground": false,
       "clickUrl": "https://www.gapminder.org/ignorance/gapminder-index-pilot/?country=",
-      "endBeforeForecast": "2023",
+      "endBeforeForecast": "2024",
       "map": {
         "scale": 1.1,
         "rotate": [-11, 0],

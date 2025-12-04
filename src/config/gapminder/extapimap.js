@@ -58,7 +58,7 @@ export const VIZABI_MODEL = {
             }
           },
           "frame": {
-            "value": "2023",
+            "value": "2024",
             "data": {
               "concept": "time"
             }

@@ -62,7 +62,7 @@ export const VIZABI_MODEL = {
             }
           },
           "frame": {
-            "value": "2023",
+            "value": "2024",
             "data": {
               "concept": "time"
             }
@@ -121,7 +121,7 @@ export const VIZABI_MODEL = {
       }
     },
     "chart": {
-      "endBeforeForecast": "2023",
+      "endBeforeForecast": "2024",
       "decorations": {
         "enabled": true,
         "xAxisGroups": {
