@@ -153,6 +153,7 @@ export {
   init,
   URLI,
   debouncedUpdateUrl as updateURL,
+  updateURL as instantUpdateURL,
   pushToHistory,
   resetState,
   getURLI,

@@ -7,7 +7,7 @@ import timeLogger from "./timelogger.js";
 import { loadTool } from "../../../vizabi-tools.js";
 import { googleAnalyticsInit, googleAnalyticsLoadEvents } from "./event-analytics.service.js";
 
-const {observable, toJS, autorun} = mobx;
+const { observable, toJS, autorun, runInAction } = mobx;
 
 let viz;
 let urlUpdateDisposer;
@@ -201,6 +201,7 @@ const Tool = function({ cmsData, state, dom, site, pageSlug }) {
       );
 
       state.updateURL({ model: meaningfulDeltaConfig.model, ui: meaningfulDeltaConfig.ui, tool, replaceInsteadPush: true });
+      window.embeddedBridge?.setRightConfig({ model: meaningfulDeltaConfig.model || {}, ui: meaningfulDeltaConfig.ui || {}});
 
     }, { name: "tool.js: update url" });
 

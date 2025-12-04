@@ -25,6 +25,7 @@ import { getLinkData, getLinkSlugAndHash } from "./core/links-resolve.js";
 import Logo from "./logo/logo.js";
 import PreferentialConfigService from "./core/default-config.service.js";
 import {getPageSlug}  from "./core/utilsForAssetPaths.js"; 
+import "./core/embedded-bridge.js";
 
 let viz;
 
@@ -49,6 +50,20 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
     shortLinkState,
     pageSlug 
   });
+  
+  if (window.top !== window.self) {
+    window.addEventListener("embedded:response-config", event => {
+      urlService.instantUpdateURL({
+        model: event.detail.config.model,
+        ui: event.detail.config.ui,
+        tool: event.detail.meta.toolId,
+        replaceInsteadPush: true
+      });
+      if (!event.detail.skipSetTool) tool.setTool();
+      //tool.setVizabiToolState(event.detail.config);
+    });
+    window.embeddedBridge?.requestConfig({ skipSetTool: true });
+  }
 
   d3.select(".too-wrapper").classed("embedded-view", state.getEmbedded());
 
