@@ -3,7 +3,7 @@ import { createShareLinkModal } from "../social-buttons/share-link";
 import { checkSlugAvailability, getPrivateDsOwned, saveSlug } from "./links-resolve";
 import { randomSlug } from "./utils";
 
-export default async function BitlyService({ state }) {
+export default async function BitlyService({ state, pageId }) {
 
   const bitlyUrl = "https://api-ssl.bitly.com/v4/shorten";
 
@@ -13,12 +13,14 @@ export default async function BitlyService({ state }) {
       return await isLogged().then(async logged => {
         if (logged.isLogged) {
           return createShareLinkModal({
+            pageId,
             slug: randomSlug(state.getTool() + "-"),
             baseUrl: location.origin + location.pathname + "?for=",
             checkSlugAvailability,
             getPrivateDsOwned,
             onSave: async({ url, slug, lifetime, privateDs }) => {
               saveSlug({ 
+                pageId,
                 onSave: ({url}) => callback(url), 
                 url, 
                 userId: logged.session.user.id, 

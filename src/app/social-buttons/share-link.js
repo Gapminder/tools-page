@@ -1,6 +1,7 @@
 
 export async function createShareLinkModal(opts = {}) {
   const {
+    pageId = null,
     baseUrl = '',
     slug = '',
     lifetimeOptions = ['1 week', '1 month', '6 months', '1 year'],
@@ -86,7 +87,7 @@ export async function createShareLinkModal(opts = {}) {
     setAvailabilityText('Checking...');
     btnSave.attr('disabled', true);
     try {
-      const ok = await checkSlugAvailability(t);
+      const ok = await checkSlugAvailability(t, pageId);
       if (id !== checkId) return;
       setAvailabilityText(ok ? 'Name available' : 'Name taken', ok ? 'ok' : 'busy');
       btnSave.attr('disabled', ok ? null : true);
@@ -121,7 +122,7 @@ export async function createShareLinkModal(opts = {}) {
   btnSave.on('click', async () => {
     const tok = slugInput.node().value.trim();
     const life = select.node().value;
-    const ok = await checkSlugAvailability(tok);
+    const ok = await checkSlugAvailability(tok, pageId);
     if (!ok) {
       setAvailabilityText('Name taken', 'busy');
       slugInput.node().focus();

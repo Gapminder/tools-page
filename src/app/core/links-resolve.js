@@ -25,12 +25,13 @@ export async function getLinkData(slug) {
   return data;
 }
 
-export async function checkSlugAvailability(slug) {
+export async function checkSlugAvailability(slug, pageId) {
   if (!supabaseClient) return false;
   const { data, error } = await supabaseClient
     .from('links')
     .select('id')
     .eq('slug', slug)
+    .eq('page_id', pageId)
     .maybeSingle();
 
     if (error) {
@@ -41,7 +42,7 @@ export async function checkSlugAvailability(slug) {
   return !data;
 }
 
-export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig, privateDs}) {
+export async function saveSlug({pageId, onSave, url, userId, slug, lifetime, pageConfig, privateDs}) {
   const token = privateDs.length ? randomToken() : "";
   const urlWithToken = url + (privateDs.length ? `&t=${token}` : "");
 
@@ -50,6 +51,7 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
     .from('links')
     .upsert([
       { 
+        page_id: pageId,
         slug: slug,
         created_by: userId,
         created_at: new Date().toISOString(),
@@ -88,11 +90,11 @@ export async function saveSlug({onSave, url, userId, slug, lifetime, pageConfig,
 
 function syncAclForDatasets(privateDs, defer) {
   setTimeout(() => {  
-    const serverUrlsWithoutApiVersion = new Set(privateDs.map(ds => {
-    const url = new URL(ds.serverUrl);
-    return url.protocol + '//' + url.host + "/";
+    const normalisedUniqueServerURLs = new Set(privateDs.map(ds => {
+      const url = new URL(ds.serverUrl);
+      return url.protocol + '//' + url.host + "/";
     }));
-    Promise.all(Array.from(serverUrlsWithoutApiVersion).map(serverUrl => 
+    Promise.all(Array.from(normalisedUniqueServerURLs).map(serverUrl => 
       fetchJSON(
         `${serverUrl}synconly/acl/`, 
         {headers: {Authorization: `Bearer ${supabaseClient.changedAccessToken}`, Accept: "application/json"}} 
@@ -104,7 +106,7 @@ function syncAclForDatasets(privateDs, defer) {
 function getDsDatasets() {
   return Object.values(viz.model.dataSources)
     .filter(ds=>ds.config.modelType === "ddfbw")
-    .map(ds => ({ serverUrl: ds.config.service, slug: ds.config.dataset.split("/")[0] }));
+    .map(ds => ({ serverUrl: ds.config.url, slug: ds.config.dataset }));
 }
 
 async function callRpcIsOwnerAcl(dsArray) {
