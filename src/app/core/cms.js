@@ -282,37 +282,11 @@ async function getThemeVariables() {const info = await getCachedPageInfo(); retu
 async function getLocales() {const info = await getCachedPageInfo(); return info && info.locales ;}
 async function getConceptMapping() {const info = await getCachedPageInfo(); return info && info.concept_mapping;}
 async function getEntitysetMapping() {const info = await getCachedPageInfo(); return info && info.entityset_mapping;}
+async function getToolset() {const info = await getCachedPageInfo(); return info && info.toolset;}
+async function getDatasources() {const info = await getCachedPageInfo(); return info && info.datasources;}
+async function getRelated() {const info = await getCachedPageInfo(); return info && info.related;}
 
 
-
-async function getToolset(pageId) {
-  if (!supabaseClient) throw new Error("Supabase is not configured");
-  const { data, error } = await supabaseClient
-    .from("tools")
-    .select("*, datasources(ds_id)")
-    .eq("page_id", pageId)
-    .order("rank");
-  if (error) {
-    throw(error);
-  } else {
-    return data.map(m => ({
-      id: m.tool_id,
-      tool: m.tool,
-      config: m.config,
-      title: m.title,
-      image: m.image,
-      icon: m.icon,
-      url: m.url,
-      icon_inline: m.icon_inline,
-      transition: m.transition,
-      mainMarker: m.main_marker,
-      toolVariation: m.tool_variation,
-      toolComponents: m.tool_components,
-      hideThumbnail: m.hide_thumbnail,
-      dataSources: m.datasources.map(ds => ds.ds_id).join(",")
-    }));
-  }
-}
 
 async function getToolConfigs(pageId) {
   if (!supabaseClient) throw new Error("Supabase is not configured");
@@ -320,33 +294,6 @@ async function getToolConfigs(pageId) {
     .from("configs")
     .select("tool_id, type, config")
     .eq("page_id", pageId)
-  if (error) {
-    throw(error);
-  } else {
-    return data;
-  }
-}
-
-async function getDatasources(pageId) {
-  if (!supabaseClient) throw new Error("Supabase is not configured");
-  const { data, error } = await supabaseClient
-    .from("datasources")
-    .select("*")
-    .eq("page_id", pageId)
-  if (error) {
-    throw(error);
-  } else {
-    return data;
-  }
-}
-
-async function getRelated(pageId) {
-  if (!supabaseClient) throw new Error("Supabase is not configured");
-  const { data, error } = await supabaseClient
-    .from("related")
-    .select("*")
-    .eq("page_id", pageId)
-    .order("rank");
   if (error) {
     throw(error);
   } else {
