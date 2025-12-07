@@ -30,13 +30,13 @@ const Footer = function({ dom, translator, state, getTheme, data }) {
 
   if(data.links) {
     placeHolder.select(".line1").selectAll("a")
-      .data(data.links.filter(f => f.line === 1 || !f.line))
+      .data(data.links.filter(f => f.line === "one" || !f.line))
       .join("a")
       .attr("href", d => d.url || "")
       .attr("data-text", d => d.text || "");
 
     placeHolder.select(".line2").selectAll("a")
-      .data(data.links.filter(f => f.line === 2 || !f.line))
+      .data(data.links.filter(f => f.line === "two"))
       .join("a")
       .attr("href", d => d.url || "")
       .attr("data-text", d => d.text || "");
