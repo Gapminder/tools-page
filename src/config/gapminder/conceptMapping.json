@@ -1,19 +1,19 @@
 {
   " //": "If you are adding a new redirect, ctrl+f the concpet you are redirecting from in this file! it might be that one of the old redirects needs to be updated",
 
-  " //arms_exports_us_inflation_adjusted": {
+  "arms_exports_us_inflation_adjusted": {
     "concept": "arms_exports_sipri_tiv",
     " //": "2025-11-30 rename WDI's arm export/import"
   },
-  " //arms_imports_us_inflation_adjusted": {
+  "arms_imports_us_inflation_adjusted": {
     "concept": "arms_imports_sipri_tiv",
     " //": "2025-11-30 rename WDI's arm export/import"
   },
-  " //hourly_labour_cost_constant_2017_usd": {
+  "hourly_labour_cost_constant_2017_usd": {
     "concept": "hourly_labour_cost_constant_2021_usd",
     " //": "2025-11-30 rename ILOSTAT indicators"
   },
-  " //all_forms_of_tb_incidence_and_number_of_new_cases_estimated": {
+  "all_forms_of_tb_incidence_and_number_of_new_cases_estimated": {
     "concept": "all_forms_of_tb_incidence_and_number_of_new_cases_reported",
     " //": "2025-11-28 rename tb incidence number indicator"
   },
@@ -22,7 +22,7 @@
     "concept": "aid_given_2023_us",
     " //": "2025-11-21 rename OECD indicators"
   },
-  " //aid_given_per_person_2007_us": {
+  "aid_given_per_person_2007_us": {
     "concept": "aid_given_per_person_2023_us",
     " //": "2025-11-21 rename OECD indicators"
   },
@@ -32,39 +32,39 @@
     "concept": "murder_per_100000_people",
     " //": "2025-11-21 murder/traffic death rates by age group removed"
   },
-  " //murdered_30_44_per_100000_people": {
+  "murdered_30_44_per_100000_people": {
     "concept": "murder_per_100000_people",
     " //": "2025-11-21 murder/traffic death rates by age group removed"
   },
-  " //murdered_45_59_per_100000_people": {
+  "murdered_45_59_per_100000_people": {
     "concept": "murder_per_100000_people",
     " //": "2025-11-21 murder/traffic death rates by age group removed"
   },
-  " //murdered_60plus_per_100000_people": {
+  "murdered_60plus_per_100000_people": {
     "concept": "murder_per_100000_people",
     " //": "2025-11-21 murder/traffic death rates by age group removed"
   },
-  " //murdered_children_0_14_per_100000_people": {
+  "murdered_children_0_14_per_100000_people": {
     "concept": "murder_per_100000_people",
     " //": "2025-11-21 murder/traffic death rates by age group removed"
   },
-  " //traffic_mortality_15_29_per_100000_people": {
+  "traffic_mortality_15_29_per_100000_people": {
     "concept": "traffic_deaths_per_100000_people",
     " //": "2025-11-21 murder/traffic death rates by age group removed"
   },
-  " //traffic_mortality_30_44_per_100000_people": {
+  "traffic_mortality_30_44_per_100000_people": {
     "concept": "traffic_deaths_per_100000_people",
     " //": "2025-11-21 murder/traffic death rates by age group removed"
   },
-  " //traffic_mortality_45_59_per_100000_people": {
+  "traffic_mortality_45_59_per_100000_people": {
     "concept": "traffic_deaths_per_100000_people",
     " //": "2025-11-21 murder/traffic death rates by age group removed"
   },
-  " //traffic_mortality_60plus_per_100000_people": {
+  "traffic_mortality_60plus_per_100000_people": {
     "concept": "traffic_deaths_per_100000_people",
     " //": "2025-11-21 murder/traffic death rates by age group removed"
   },
-  " //traffic_mortality_children_0_14_per_100000_people": {
+  "traffic_mortality_children_0_14_per_100000_people": {
     "concept": "traffic_deaths_per_100000_people",
     " //": "2025-11-21 murder/traffic death rates by age group removed"
   },
@@ -73,20 +73,20 @@
     "concept": "suicide_per_100000_people",
     " //": "2025-11-21 suicide rate's age groups removed"
   },
-  " //suicide_age_45_59_per_100000_people": {
+  "suicide_age_45_59_per_100000_people": {
     "concept": "suicide_age_45_54_per_100000_people",
     " //": "2025-11-21 suicide rate's age groups removed"
   },
-  " //suicide_age_30_44_per_100000_people": {
+  "suicide_age_30_44_per_100000_people": {
     "concept": "suicide_age_30_49_per_100000_people",
     " //": "2025-11-21 suicide rate's age groups removed"
   },
-  " //suicide_age_60plus_per_100000_people": {
+  "suicide_age_60plus_per_100000_people": {
     "concept": "suicide_age_85plus_per_100000_people",
     " //": "2025-11-21 suicide rate's age groups removed"
   },
 
-  " //other_infections_deaths_in_children_1_59_months_per_1000_birt": {
+  "other_infections_deaths_in_children_1_59_months_per_1000_birt": {
     "concept": "other_infections_deaths_in_children_1_59_months_per_1000_births",
     " //": "2025-11-21 fix a typo"
   },
@@ -461,19 +461,19 @@
   "service_workers_percent_of_labour_force": {
     "concept": "service_workers_percent_of_employment"
   },
-  " //how_far_to_the_north": {
+  "how_far_to_the_north": {
     "concept": "how_far_to_the_north",
     " //": "Static indicator with latitude of countries, removed. Should be replaced by latitude geo property"
   },
-  " //year_categorization_1820_201": {
+  "year_categorization_1820_201": {
     "concept": "time",
     " //": "Legacy year-proxy indicator. Should be replaced by time as property (now indicator)"
   },
-  " //year_categorization_195": {
+  "year_categorization_195": {
     "concept": "time",
     " //": "Legacy year-proxy indicator. Should be replaced by time as property (now indicator)"
   },
-  " //estimate_or_projection_of_under_five_mortality_rate_from_ihm": {
+  "estimate_or_projection_of_under_five_mortality_rate_from_ihm": {
     "concept": "under_five_mortality_from_ihme_per_1000_born",
     " //": "GW color indicator with values 1 and 2 for estimate or projection. should be used with specific IHME u5mr indicator"
   }
