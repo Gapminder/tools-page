@@ -10,8 +10,7 @@
     "title": "combo-emap-bc",
     "hideThumbnail": false,
     "image": "assets/images/chart/combo-emap-bc.png",
-    "icon_inline": "VIZABI_MAPANDBUBBLES",
-    "icon": "assets/images/chart/vizabi_mapandbubbles.svg"
+    "icon": "VIZABI_MAPANDBUBBLES"
   },
   {
     "id": "bubbles",
@@ -23,8 +22,7 @@
     "title": "bubbles",
     "hideThumbnail": false,
     "image": "assets/images/chart/bubble-chart.png",
-    "icon_inline": "VIZABI_BUBBLES",
-    "icon": "assets/images/chart/vizabi_bubbles.svg"
+    "icon": "VIZABI_BUBBLES"
   },
   {
     "id": "extapimap",
@@ -36,8 +34,7 @@
     "title": "extapimap",
     "hideThumbnail": false,
     "image": "assets/images/chart/extapimap.png",
-    "icon_inline": "VIZABI_MAP",
-    "icon": "assets/images/chart/vizabi_map.svg"
+    "icon": "VIZABI_MAP"
   },
   {
     "id": "spreadsheet",
@@ -48,7 +45,6 @@
     "title": "spreadsheet",
     "hideThumbnail": false,
     "image": "assets/images/chart/spreadsheet.png",
-    "icon_inline": "VIZABI_SPREADSHEET",
-    "icon": "assets/images/chart/vizabi_spreadsheet.svg"
+    "icon": "VIZABI_SPREADSHEET"
   }
 ]

@@ -10,7 +10,6 @@
     "title": "bubbles",
     "hideThumbnail": false,
     "image": "assets/images/chart/bubble-chart.png",
-    "icon_inline": "",
     "icon": ""
   },
   {
@@ -24,7 +23,6 @@
     "title": "ranks",
     "hideThumbnail": false,
     "image": "assets/images/chart/ranks-chart.png",
-    "icon_inline": "",
     "icon": ""
   },
   {
@@ -38,7 +36,6 @@
     "title": "clickmap",
     "hideThumbnail": true,
     "image": "assets/images/chart/maps-chart.png",
-    "icon_inline": "",
     "icon": ""
   },
   {
@@ -52,7 +49,6 @@
     "title": "trends",
     "hideThumbnail": false,
     "image": "assets/images/chart/trends-chart.png",
-    "icon_inline": "",
     "icon": ""
   },
   {
@@ -66,7 +62,6 @@
     "title": "income",
     "hideThumbnail": false,
     "image": "assets/images/chart/income-chart.png",
-    "icon_inline": "",
     "icon": ""
   },
   {
@@ -80,7 +75,6 @@
     "title": "maps",
     "hideThumbnail": false,
     "image": "assets/images/chart/maps-chart.png",
-    "icon_inline": "",
     "icon": ""
   },
   {
@@ -94,7 +88,6 @@
     "title": "ages",
     "hideThumbnail": false,
     "image": "assets/images/chart/ages-chart.png",
-    "icon_inline": "",
     "icon": ""
   },
   {
@@ -108,7 +101,6 @@
     "title": "spreadsheet",
     "hideThumbnail": true,
     "image": "assets/images/chart/spreadsheet.png",
-    "icon_inline": "",
     "icon": ""
   },
   {
@@ -122,7 +114,6 @@
     "title": "extapimap",
     "hideThumbnail": true,
     "image": "assets/images/chart/extapimap.png",
-    "icon_inline": "",
     "icon": ""
   },
   {
@@ -136,7 +127,6 @@
     "title": "combo-emap-bc",
     "hideThumbnail": true,
     "image": "assets/images/chart/combo-emap-bc.png",
-    "icon_inline": "",
     "icon": ""
   },
   {
@@ -150,7 +140,6 @@
     "title": "dollar_street",
     "hideThumbnail": null,
     "image": "assets/images/chart/dollar-street.png",
-    "icon_inline": "",
     "icon": "",    
     "url": "http://www.gapminder.org/dollar-street"
   }
