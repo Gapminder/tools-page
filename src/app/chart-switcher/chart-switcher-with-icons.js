@@ -19,8 +19,8 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data, getTheme
     .join("a")
     .each(function(d){
       const view = d3.select(this)
-      view.html(d.icon_inline ? icons[d.icon_inline] : `<img src="${resolveAssetUrl(d.icon)}"/>`)
-      view.append("span").attr("data-text", d.id)
+      view.html(icons[d.icon] || `<img src="${resolveAssetUrl(d.icon)}"/>`)
+      view.append("span").attr("data-text", d.title || d.id)
     })
     .on("click", (event, d) => {
       if (state.getTool() === d.id) return;
