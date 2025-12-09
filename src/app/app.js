@@ -37,7 +37,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
   let shortLinkState = null;
   const {slug: shortLinkSlug, hash: shortLinkHash} = await getLinkSlugAndHash(window.location.search);
   if (shortLinkSlug) {
-    const linkData = await getLinkData(shortLinkSlug);
+    const linkData = await getLinkData(shortLinkSlug, pageId);
     if (linkData && linkData.page_config) shortLinkState = linkData.page_config;
   }
 

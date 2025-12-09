@@ -9,12 +9,13 @@ export async function getLinkSlugAndHash(url) {
   return {slug, hash};
 }
 
-export async function getLinkData(slug) {
+export async function getLinkData(slug, pageId) {
   if (!supabaseClient) return null;
   const { data, error } = await supabaseClient
     .from('links')
     .select('page_config')
     .eq('slug', slug)
+    .eq('page_id', pageId)
     .maybeSingle();
 
   if (error) {
