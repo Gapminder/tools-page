@@ -254,13 +254,11 @@ async function getCachedPageInfo(site = SITE, pageSlug = PAGE_SLUG) {
   if (pageInfoCache) return pageInfoCache;
   if (!supabaseClient) return {};
   if(!site) return null;
-  const { data, error } = await supabaseClient
-    .from("pages")
-    .select("*")
-    .eq("site", site)
-    .eq("slug", pageSlug || "__home__")
-    .single();
 
+  const { data, error } = await supabaseClient
+    .rpc('get_known_page', { _site: site, _slug: pageSlug || "__home__" })
+    .single()
+  
   if (error) {
     console.error(error);
     pageInfoCache = {};
@@ -291,9 +289,8 @@ async function getRelated() {const info = await getCachedPageInfo(); return info
 async function getToolConfigs(pageId) {
   if (!supabaseClient) throw new Error("Supabase is not configured");
   const { data, error } = await supabaseClient
-    .from("configs")
-    .select("tool_id, type, config")
-    .eq("page_id", pageId)
+    .rpc('get_known_deepconfigs', { _page_id: pageId });
+
   if (error) {
     throw(error);
   } else {
@@ -312,12 +309,9 @@ async function getDefaultLocalePackageForVizabi(pageId, locale) {
 async function getLocalePackage({pageId = PAGE_ID, locale = DEFAULT_LOCALE, scope} = {}) {
   if (!supabaseClient) throw new Error("Supabase is not configured");
   if (!scope) throw new Error("loadLocalePackage: missing the required parameter 'scope'");
+
   const { data, error } = await supabaseClient
-    .from("translations")
-    .select("spec")
-    .eq("scope", scope)
-    .eq("page_id", pageId)
-    .eq("locale", locale)
+    .rpc('get_known_translation', { _page_id: pageId, _scope: scope, _locale: locale })
     .single();
 
   if (error) {
