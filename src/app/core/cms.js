@@ -150,8 +150,8 @@ const getPages = (locale = DEFAULT_LOCALE, site = SITE, pageSlug = PAGE_SLUG) =>
     {getFromDB: getConceptMapping, sheet: "concept_mapping", fallbackPath: configFolder+"/conceptMapping.json" },
     {getFromDB: getEntitysetMapping, sheet: "entityset_mapping", fallbackPath: configFolder+"/entitysetMapping.json" },
 
-    {getFromDB: getDefaultLocalePackageForPage, locale, sheet: `page/${locale}`, fallbackPath: `assets/i18n/${locale}.json` },
-    {getFromDB: getDefaultLocalePackageForVizabi, locale, sheet: `vizabi/${locale}`, fallbackPath: `assets/translation/${locale}.json` }
+    {getFromDB: getLocalePackageForPage, locale, sheet: `page/${locale}`, fallbackPath: `assets/i18n/${locale}.json` },
+    {getFromDB: getLocalePackageForVizabi, locale, sheet: `vizabi/${locale}`, fallbackPath: `assets/translation/${locale}.json` }
   ]
 };
 
@@ -298,11 +298,11 @@ async function getToolConfigs(pageId) {
   }
 }
 
-async function getDefaultLocalePackageForPage(pageId, locale) {
+async function getLocalePackageForPage(pageId, locale) {
   return getLocalePackage({pageId, locale, scope: "page"});
 }
 
-async function getDefaultLocalePackageForVizabi(pageId, locale) {
+async function getLocalePackageForVizabi(pageId, locale) {
   return getLocalePackage({pageId, locale, scope: "vizabi"});
 }
 
@@ -324,17 +324,17 @@ async function getLocalePackage({pageId = PAGE_ID, locale = DEFAULT_LOCALE, scop
 async function loadLocalePackage(locale, scope) {
   let getFromDB, sheet, fallbackPath;
   if (scope === "page") {
-    getFromDB = getDefaultLocalePackageForPage;
+    getFromDB = getLocalePackageForPage;
     sheet = `page/${locale}`;
     fallbackPath = `./assets/i18n/${locale}.json`;
   } else if (scope === "vizabi") {
-    getFromDB = getDefaultLocalePackageForVizabi;
+    getFromDB = getLocalePackageForVizabi;
     sheet = `vizabi/${locale}`;
     fallbackPath = `./assets/translation/${locale}.json`;
   } else {
     throw new Error("loadLocalePackage: missing the required parameter 'scope'");
   }
-  return loadSheet({getFromDB, sheet: `${scope}/${locale}`, fallbackPath})
+  return loadSheet({getFromDB, locale, sheet: `${scope}/${locale}`, fallbackPath})
 }
 
 export { load, getSettings, loadLocalePackage };
