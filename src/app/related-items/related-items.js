@@ -28,8 +28,8 @@ const RelatedItems = function({ dom, translator, state, data, getTheme }) {
           <img src="${resolveAssetUrl(d.image)}">
         </div>
         <div class="related-item-info">
-          <span class="title" data-text="${d.related_id}-title" data-text-fallback="${d.title}"></span>
-          <span class="subtitle" data-text="${d.related_id}-subtitle" data-text-fallback="${d.subtitle}"></span>
+          <span class="title" data-text="${d.title}"></span>
+          <span class="subtitle" data-text="${d.subtitle}"></span>
         </div>
       </a>`
     );
