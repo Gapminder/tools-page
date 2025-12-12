@@ -70,6 +70,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
   const {translator, getLocaleName} = await initTranslator(state, cmsData.locales);
   const bitlyService = await BitlyService({ state, pageId });
   const locationService = LocationService();
+  const preferentialConfigService = await PreferentialConfigService({ state, site, pageSlug, pageId, defaultConfigs: cmsData.toolconfig });
   const tool = new Tool({ cmsData, state, dom: ".vizabi-placeholder", site, pageSlug });
   
   
@@ -98,7 +99,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
     getTheme, getLocaleName, state, dom: ".too-language-button", data: cmsData.locales 
   });
   new UserLogin({
-    getTheme, translator, state, dom: ".too-login-button", loginFormsDom: ".too-login-forms"
+    getTheme, translator, state, dom: ".too-login-button", loginFormsDom: ".too-login-forms", isPageEditor: preferentialConfigService.isPageEditor
   });
   new MobileMenu({
     getTheme, translator, state, dom: ".too-mobile-menu", menuButtonDom: ".hamburger-button"
@@ -118,7 +119,6 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
   const message = new Message({
     getTheme, translator, state, dom: ".too-message" 
   });
-  const preferentialConfigService = await PreferentialConfigService({ state, site, pageSlug, pageId, defaultConfigs: cmsData.toolconfig });
 
 
   state.dispatch.on("authStateChange.app", (event) => {

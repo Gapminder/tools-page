@@ -2,7 +2,7 @@ import { supabaseClient, userLogin, userLogout, userSignup, isLogged } from "./s
 import toolsPage_properties from "toolsPage_properties";
 import { ICON_GITHUB, ICON_GOOGLE } from "../core/icons";
 
-const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsDom}) {
+const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsDom, isPageEditor}) {
   const pageSlug = toolsPage_properties?.page_slug;
   const templateForButton = `  
     <button class="user-login-title">Log in</button>
@@ -229,6 +229,8 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
     }
     buttonPlaceHolders.classed("logged", logged.isLogged);
     formsPlaceHolder.classed("logged", logged.isLogged);
+    const canSaveConfig = await isPageEditor();
+    formsPlaceHolder.select(".user-logged-set-config").style("display", logged.isLogged && canSaveConfig ? null : "none");
   }
 
   this.isLogged = false;
