@@ -1,6 +1,16 @@
 {
   " //": "If you are adding a new redirect, ctrl+f the concpet you are redirecting from in this file! it might be that one of the old redirects needs to be updated",
 
+  "alternative_gdp_per_capita_ppp_pwt_7_1":{
+    "concept": "alternative_gdppercapita_ppp_inflation_adjusted_from_pwt",
+    " //": "2026-01-08 remove old PWT indicators"
+  },
+
+  "alternative_gdp_per_capita_ppp_pwt_8_0":{
+    "concept": "alternative_gdppercapita_ppp_inflation_adjusted_from_pwt",
+    " //": "2026-01-08 remove old PWT indicators"
+  },
+
   "arms_exports_us_inflation_adjusted": {
     "concept": "arms_exports_sipri_tiv",
     " //": "2025-11-30 rename WDI's arm export/import"
