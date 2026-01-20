@@ -94,6 +94,7 @@ export const VIZABI_MODEL = {
       },
       "dialogs": {
         "markercontrols": {
+          "primaryDim": "geo",
         },
         "tree-menu": {
           "folderStrategyByDataset": {
