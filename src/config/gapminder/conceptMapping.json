@@ -1,6 +1,21 @@
 {
   " //": "If you are adding a new redirect, ctrl+f the concpet you are redirecting from in this file! it might be that one of the old redirects needs to be updated",
 
+  "urban_poverty_percent_urban_people_below_national_urban": {
+    "concept": "extreme_poverty_percent_people_below_300_a_day",
+    " //": "2026-01-23 redirect because Worldbank removed the indicator"
+  },
+
+  "rural_poverty_percent_rural_people_below_national_rural": {
+    "concept": "extreme_poverty_percent_people_below_300_a_day",
+    " //": "2026-01-23 redirect because Worldbank removed the indicator"
+  },
+
+  "co2_intensity_of_economic_output_kg_co2_per_2017_ppp_of_gdp": {
+    "concept": "co2_intensity_of_economic_output_kg_co2_per_2021_ppp_of_gdp",
+    " //": "2026-01-09 rename base unit"
+  },
+
   "alternative_gdp_per_capita_ppp_pwt_7_1":{
     "concept": "alternative_gdppercapita_ppp_inflation_adjusted_from_pwt",
     " //": "2026-01-08 remove old PWT indicators"
