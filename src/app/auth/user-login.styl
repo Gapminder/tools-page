@@ -69,8 +69,10 @@
         &:hover
           color $color-primary
       hr
-        width 80%      
+        width 80%
 
+      &.user-account-actions
+        width 100%
   .user-login-form
     .panel
       align-items center
@@ -110,4 +112,62 @@
         display flex
       .login-panel
         display none
+
+.change-action-wrapper
+  position fixed
+  inset 0
+  display flex
+  align-items center
+  justify-content center
+  background rgba(0,0,0,0.18)
+  z-index 1200
+
+  .change-action-card
+    .change-action-form
+      display flex
+      flex-direction column
+      gap 8px
+
+      label
+        color #222
+
+      input
+        width 100%
+        padding 8px 10px
+        border 1px solid rgba(0,0,0,0.12)
+        border-radius 6px
+        font-size 14px
+        background #fff
+        color #222
+
+      .actions
+        display flex
+        gap 8px
+        justify-content center
+        margin-top 8px
+        width 100%
+
+        .button
+          padding 8px 12px
+          border-radius 6px
+          border none
+          background $color-primary
+          color #fff
+          cursor pointer
+
+        .button.button-cancel
+          background rgba(0,0,0,0.06)
+          color #444
+
+        .button.danger
+          background #c9302c
+          color #fff
+        .button.danger:hover
+          filter brightness(0.98)
+
+@media (max-width:480px)
+  .change-action-card
+    margin 16px
+    width calc(100% - 32px)
+    max-width none
 

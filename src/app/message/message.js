@@ -30,9 +30,14 @@ const Message = function({ dom, translator, state }) {
     placeHolder.style("display", "none");
   }
 
-  function showMessage(string) {
+  function showMessage(string, timeout) {
     placeHolder.style("display", "block");
     placeHolder.select(".message-text").html(string);
+    if (timeout) {
+      setTimeout(() => {
+        closeMessage();
+      }, timeout);
+    }
   }
 
   return { showMessage, closeMessage };

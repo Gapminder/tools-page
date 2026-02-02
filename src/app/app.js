@@ -144,7 +144,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
   state.dispatch.on("projectorChanged.app", truefalse => {
     tool.setVizabiProjector(truefalse);
   });
-  state.dispatch.on("showMessage.app", ({ message: msg }) => message.showMessage(msg) );
+  state.dispatch.on("showMessage.app", ({ message: msg, timeout }) => message.showMessage(msg, timeout) );
 
   state.dispatch.on("setPreferentialConfig", () => {
     preferentialConfigService.setPreferentialConfig();
