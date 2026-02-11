@@ -56,6 +56,7 @@
     "@vizabi/popbyage": "5.3.2",
     "@vizabi/reader-ddfcsv": "4.6.0",
     "@vizabi/reader-ddfservice": "^2.6.1",
+    "@vizabi/reader-excel": "^1.0.0",
     "@vizabi/shared-components": "1.56.7",
     "@vizabi/spreadsheet": "4.4.4",
     "d3": "^6.7.0",
@@ -85,6 +86,10 @@
     "rollup-plugin-progress": "^1.1.2",
     "rollup-plugin-stylus-compiler": "^1.0.1",
     "rollup-plugin-visualizer": "^6.0.4",
-    "stylus": "^0.64.0"
+    "stylus": "^0.64.0",
+    "google-maps": "^3.2.1",
+    "mapbox-gl": "^2.15.0",
+    "@deck.gl/core": "9.0.40",
+    "@deck.gl/layers": "9.0.40"
   }
 }

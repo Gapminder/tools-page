@@ -8,7 +8,7 @@ const ddfReader = new DDFCsvReader.getDDFCsvReaderObject();
 Vizabi.stores.dataSources.createAndAddType("ddfcsv", ddfReader);
 
 //Excel reader integration
-//Vizabi.stores.dataSources.createAndAddType("excel", ExcelReader.excelReaderObject);
+Vizabi.stores.dataSources.createAndAddType("excel", ExcelReader.excelReaderObject(Vizabi.csvReader));
 
 // BW reader integration
 Vizabi.stores.dataSources.createAndAddType("ddfbw", DDFServiceReader.getReader());
