@@ -1,0 +1,16 @@
+[{
+  "ds_id": "boba",
+  "reader": "ddfcsv",
+  "reader_properties": {
+    "path": "https://github.com/open-numbers/ddf--ibfuu--boendebarometer/tree/master"
+  }
+},{
+  "ds_id": "kolada",
+  "reader": "ddfbw",
+  "reader_properties": {
+    "url": "https://waffle-dev.gapminder.org",
+    "dataset": "kolada",
+    "branch": "main"
+  }
+}]
+

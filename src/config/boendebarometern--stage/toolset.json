@@ -1,0 +1,50 @@
+[  
+  {
+    "id": "combo-emap-bc",
+    "tool": "Combo",
+    "toolVariation": "Base",
+    "toolComponents": ["ExtApiMap", "BubbleChart"],
+    "mainMarker": "bubble",
+    "dataSources": ["boba", "kolada"],
+    "transition": ["select","time"],
+    "title": "combo-emap-bc",
+    "hideThumbnail": false,
+    "image": "assets/images/chart/combo-emap-bc.png",
+    "icon": "VIZABI_MAPANDBUBBLES"
+  },
+  {
+    "id": "bubbles",
+    "tool": "BubbleChart",
+    "toolVariation": "Base",
+    "mainMarker": "bubble",
+    "dataSources": ["boba", "kolada"],
+    "transition": ["select","time"],
+    "title": "bubbles",
+    "hideThumbnail": false,
+    "image": "assets/images/chart/bubble-chart.png",
+    "icon": "VIZABI_BUBBLES"
+  },
+  {
+    "id": "extapimap",
+    "tool": "ExtApiMap",
+    "toolVariation": "Base",
+    "mainMarker": "bubble",
+    "dataSources": ["boba", "kolada"],
+    "transition": ["select","time"],
+    "title": "extapimap",
+    "hideThumbnail": false,
+    "image": "assets/images/chart/extapimap.png",
+    "icon": "VIZABI_MAP"
+  },
+  {
+    "id": "spreadsheet",
+    "tool": "Spreadsheet",
+    "toolVariation": "Base",
+    "mainMarker": "spreadsheet",
+    "dataSources": ["boba", "kolada"],
+    "title": "spreadsheet",
+    "hideThumbnail": false,
+    "image": "assets/images/chart/spreadsheet.png",
+    "icon": "VIZABI_SPREADSHEET"
+  }
+]
