@@ -105,7 +105,7 @@ export default {
         { dest: "build/vendor", src: vendor("@supabase/supabase-js/dist/umd/supabase.js"), rename: "supabase.js" }, 
         { dest: "build/vendor", src: vendor("urlon/dist/urlon.umd"), rename: "urlon.js" },
         { dest: "build/vendor", src: vendor("@vizabi/reader-ddfservice/dist/reader-ddfservice.js"), rename: "reader-ddfservice.js" },
-        { dest: "build/vendor", src: vendor("@vizabi/reader-ddfcsv/dist/reader-ddfcsv.js"), rename: "reader-ddfcsv.js"  },
+        { dest: "build/vendor", src: path.resolve(__dirname, "node_modules/@vizabi/reader-ddfcsv/dist/reader-ddfcsv.js"), rename: "reader-ddfcsv.js"  },
         { dest: "build/vendor", src: vendor(PROD ? "d3/dist/d3.min.js" : "d3/dist/d3.js"), rename: "d3.js" },
         { dest: "build/vendor", src: vendor(PROD ? "mobx/lib/mobx.umd.min.js" : "mobx/lib/mobx.umd.js"), rename: "mobx.js" },
         // MAPBOX (loaded on-demand by tools that need it)
