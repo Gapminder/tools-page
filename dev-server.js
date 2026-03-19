@@ -7,11 +7,10 @@ const app = express();
 const PORT = 4200;
 
 // Virtual slug rewrite: /slug/* -> serve from root
+// Any first path segment that doesn't match a real file is treated as a slug
 app.use((req, res, next) => {
-  // if path starts with known virtual segments, strip them
-  const slug = ['healthatlas', 'stage', 'dev', 'gapminder', 'test']; // add your test slugs
   const seg = req.path.split('/').filter(Boolean)[0];
-  if (slug.includes(seg)) {
+  if (seg && !req.path.includes('.')) {
     req.url = req.url.replace(`/${seg}`, '') || '/';
   }
   next();
