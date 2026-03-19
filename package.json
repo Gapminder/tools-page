@@ -57,7 +57,7 @@
     "@vizabi/reader-ddfcsv": "4.6.0",
     "@vizabi/reader-ddfservice": "^2.6.1",
     "@vizabi/reader-excel": "^1.0.0",
-    "@vizabi/shared-components": "1.57.0",
+    "@vizabi/shared-components": "1.58.0",
     "@vizabi/spreadsheet": "4.4.4",
     "d3": "^6.7.0",
     "dom-to-image-more": "^3.7.1",
