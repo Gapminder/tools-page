@@ -16,19 +16,20 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
         <button class="user-logged-logout">Log out</button>
         <hr>
         <span>Data Verkstad:</span>
-        <a href="https://vizabi.com/verkstad?tab=servers${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-dataeditor">Hantera data källor</a>
-        <a href="https://vizabi.com/verkstad?tab=permalinks${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-permalinks">Hantera korta URLs</a>
+        <a href="https://vizabi.com/verkstad/?tab=servers&subtab=datasets${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-dataeditor">Hantera data källor</a>
+        <a href="https://vizabi.com/verkstad/?tab=pages&subtab=permalinks${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-permalinks">Hantera sparade länkar</a>
+        <hr>
         <div class="panel user-logged-set-config">
           <span>Start view:</span>
-          <button class="button save">Save current view as preferential</button>
-          <button class="button restore">Reset preferential view</button>
+          <a class="save">Save current view as preferential</a>
+          <a class="restore">Reset preferential view</a>
         </div>
         <hr>
         <span>Account actions:</span>
         <div class="panel user-account-actions">
-          <button class="button user-change-password">Change password</button>
-          <button class="button user-change-email">Change email</button>
-          <button class="button user-delete-account delete danger">Delete account</button>
+          <a class="user-change-password">Change password</a>
+          <a class="user-change-email">Change email</a>
+          <a class="user-delete-account danger">Delete account</a>
         </div>
       </div>
     </div>
@@ -276,11 +277,11 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
 
   })
 
-  formsPlaceHolder.select(".user-logged-set-config button.save").on("click", () => {
+  formsPlaceHolder.select(".user-logged-set-config a.save").on("click", () => {
     state.dispatch.call("setPreferentialConfig");
     formsPlaceHolder.classed("open", false);
   });
-  formsPlaceHolder.select(".user-logged-set-config button.restore").on("click", () => {
+  formsPlaceHolder.select(".user-logged-set-config a.restore").on("click", () => {
     state.dispatch.call("restorePreferentialConfig");
     formsPlaceHolder.classed("open", false);
   });
