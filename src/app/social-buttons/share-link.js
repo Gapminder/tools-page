@@ -143,25 +143,8 @@ export async function createShareLinkModal(opts = {}) {
     }
     const url = baseUrl + tok;
     closeModal();
-    onSave({ url, slug: tok, lifetime: life, privateDs: getPrivateDsInputChecked(), copyToClipboard });
+    onSave({ url, slug: tok, lifetime: life, privateDs: getPrivateDsInputChecked() });
   });
-
-  async function copyToClipboard(text) {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch {
-      // Fallback for older browsers / non-secure contexts
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.cssText = 'position:fixed;opacity:0';
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      return true;
-    }
-  }
 
   function onKeyDown(e) {
     if (e.key === 'Escape') { closeModal(); return; }

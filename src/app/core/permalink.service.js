@@ -3,9 +3,21 @@ import { createShareLinkModal } from "../social-buttons/share-link";
 import { checkSlugAvailability, getPrivateDsOwned, saveSlug } from "./links-resolve";
 import { randomSlug } from "./utils";
 
-export default async function BitlyService({ state, pageId }) {
+async function copyToClipboard(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.cssText = 'position:fixed;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  }
+}
 
-  const bitlyUrl = "https://api-ssl.bitly.com/v4/shorten";
+export default async function PermalinkService({ state, pageId }) {
 
   return {
     async shortenUrl(url = document.URL, callback) {
@@ -20,11 +32,11 @@ export default async function BitlyService({ state, pageId }) {
           baseUrl: location.origin + location.pathname + "?for=",
           checkSlugAvailability,
           getPrivateDsOwned: logged.isLogged ? getPrivateDsOwned : async () => [],
-          onSave: async({ url, slug, lifetime, privateDs, copyToClipboard }) => {
+          onSave: async({ url, slug, lifetime, privateDs }) => {
             saveSlug({ 
               pageId,
               onSave: async ({url}) => {
-                if (copyToClipboard) await copyToClipboard(url);
+                await copyToClipboard(url);
                 callback(url);
               }, 
               url, 
@@ -38,24 +50,10 @@ export default async function BitlyService({ state, pageId }) {
         });
       }
 
-      // Fallback: no supabase — use Bitly
-      return d3.json(bitlyUrl, {
-        method: "POST",
-        body: JSON.stringify({
-          long_url: url
-        }),
-        headers: {
-          "Content-type": "application/json",
-          "Authorization": "Bearer da63d03dbdcd9d18de75a7a1340dc0aaf3fa3c7f"
-        }
-      })
-        .then(response => {
-          callback(response.link);
-        })
-        .catch(error => {
-          console.error(error);
-          callback(window.location);
-        });
+      // Fallback: no supabase — copy raw URL to clipboard
+      const rawUrl = url || document.URL;
+      await copyToClipboard(rawUrl);
+      callback(rawUrl);
     }
   }
 }

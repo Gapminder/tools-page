@@ -4,7 +4,7 @@ import ThemeService from "./core/theme.js";
 
 import { initTranslator } from "./core/language.js";
 
-import BitlyService from "./core/bitly.service"; //TODO REFACTOR
+import PermalinkService from "./core/permalink.service";
 import LocationService from "./core/location.service"; //TODO REFACTOR
 
 import SocialButtons from "./social-buttons/social-buttons.js";
@@ -68,7 +68,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
   d3.select(".too-wrapper").classed("embedded-view", state.getEmbedded());
 
   const {translator, getLocaleName} = await initTranslator(state, cmsData.locales);
-  const bitlyService = await BitlyService({ state, pageId });
+  const bitlyService = await PermalinkService({ state, pageId });
   const locationService = LocationService();
   const preferentialConfigService = await PreferentialConfigService({ state, site, pageSlug, pageId, defaultConfigs: cmsData.toolconfig });
   const tool = new Tool({ cmsData, state, dom: ".vizabi-placeholder", site, pageSlug });
