@@ -3,7 +3,7 @@ import * as icons from "../core/icons.js"
 import { resolveAssetUrl } from "../core/utilsForAssetPaths.js";
 
 const Logo = function({ translator, dom, getTheme, state }) {
-  const template = `<span class="image"></span><a class="text"></a>`;
+  const template = `<a><span class="image"></span><span class="text"></span></a>`;
   
   const CLASS = "Logo";
   const theme = getTheme(CLASS) || {};
@@ -23,10 +23,10 @@ const Logo = function({ translator, dom, getTheme, state }) {
     textEl.attr("data-text", text);
     translate();
   }
-  if(url) 
-    textEl.attr("href", url);
   if(resetStateOnClick)
     placeHolder.on("click", state.resetState );
+  if(!resetStateOnClick && url) 
+    placeHolder.select("a").attr("href", url);
 
   translate();
   state.dispatch.on("translate.logo", translate);
