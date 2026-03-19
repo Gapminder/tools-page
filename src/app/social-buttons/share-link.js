@@ -2,9 +2,9 @@
 export async function createShareLinkModal(opts = {}) {
   const {
     pageId = null,
+    isLoggedIn = false,
     baseUrl = '',
     slug = '',
-    lifetimeOptions = ['1 week', '1 month', '6 months', '1 year'],
     checkSlugAvailability = async (t) => {
       await new Promise(r => setTimeout(r, 250));
       return !/taken|used/.test(t);
@@ -12,6 +12,10 @@ export async function createShareLinkModal(opts = {}) {
     getPrivateDsOwned = async () => [],
     onSave = () => {}
   } = opts;
+
+  const lifetimeOptions = isLoggedIn
+    ? ['Not important', '1 week', '1 month', '6 months', '1 year', '5 years (i.e. for a digital course)', 'Forever (i.e. for a paper book)']
+    : ['Not important', '1 week', '1 month'];
 
   const overlay = d3.select('body')
     .append('div')
@@ -41,13 +45,21 @@ export async function createShareLinkModal(opts = {}) {
     .attr('class', 'sl-availability');
 
   const lifetimeRow = dialog.append('div').attr('class', 'sl-row sl-lifetime-row');
-  lifetimeRow.append('label').attr('class', 'sl-label').text('How long to keep it working?');
+  const labelWrapper = lifetimeRow.append('div').attr('class', 'sl-label-wrapper');
+  labelWrapper.append('label').attr('class', 'sl-label').text('Requested maintenance');
+  const tooltip = labelWrapper.append('span').attr('class', 'sl-tooltip-trigger').text('?');
+  tooltip.append('span').attr('class', 'sl-tooltip-text').html(
+    '🦺 Let maintainers know how long you need this link for! <br/><br/> We can\'t guarantee all links working forever, but if we have your humble request, we can prioritise. <br/><br/> Longer time intervals available to registered users.'
+  );
   const select = lifetimeRow.append('select').attr('class', 'sl-select');
   lifetimeOptions.forEach(opt => {
     select.append('option').attr('value', opt).text(opt);
   });
+  if (!isLoggedIn) {
+    select.append('option').attr('disabled', true).text('Log in to have longer options');
+  }
 
-  const privateDsOwned = await getPrivateDsOwned();
+  const privateDsOwned = isLoggedIn ? await getPrivateDsOwned() : [];
   if (privateDsOwned.length) {
     const privateDsWrapper = dialog.append("div").attr("class", 'sl-private-ds');
     privateDsWrapper.append("div").text("Also share the private datasets via the link:");
@@ -75,7 +87,8 @@ export async function createShareLinkModal(opts = {}) {
   }
 
   const actions = dialog.append('div').attr('class', 'sl-actions');
-  const btnSave = actions.append('button').attr('class', 'sl-btn sl-save').attr('type', 'button').text('Save and close');
+  actions.append('button').attr('class', 'sl-btn sl-cancel').attr('type', 'button').text('Cancel').on('click', closeModal);
+  const btnSave = actions.append('button').attr('class', 'sl-btn sl-save').attr('type', 'button').text('Create link and copy to 📑');
 
   let checkId = 0;
   function setAvailabilityText(text, state) {
@@ -130,8 +143,25 @@ export async function createShareLinkModal(opts = {}) {
     }
     const url = baseUrl + tok;
     closeModal();
-    onSave({ url, slug: tok, lifetime: life, privateDs: getPrivateDsInputChecked() });
+    onSave({ url, slug: tok, lifetime: life, privateDs: getPrivateDsInputChecked(), copyToClipboard });
   });
+
+  async function copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fallback for older browsers / non-secure contexts
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      return true;
+    }
+  }
 
   function onKeyDown(e) {
     if (e.key === 'Escape') { closeModal(); return; }

@@ -29,7 +29,7 @@
       
 
     .sl-base
-      max-width 60%
+      width 50%
       word-wrap break-word
 
     .sl-private-ds
@@ -41,7 +41,7 @@
           margin-left 5px
 
     .sl-slug-wrapper
-      flex 1
+      width 50%
 
     .sl-slug
       width 100%
@@ -58,12 +58,48 @@
     .sl-availability.busy
       color #b80000
 
+    .sl-label-wrapper
+      display flex
+      align-items center
+      gap 6px
+      width 50%
+
     .sl-label
-      margin-bottom 6px
+      margin-bottom 0
+
+    .sl-tooltip-trigger
+      display inline-flex
+      align-items center
+      justify-content center
+      width 18px
+      height 18px
+      border-radius 50%
+      border 1px solid #999
+      color #999
+      cursor help
+      position relative
+
+      .sl-tooltip-text
+        display none
+        position absolute
+        bottom calc(100% + 8px)
+        left 50%
+        transform translateX(-50%)
+        width 260px
+        padding 8px 10px
+        background #333
+        color #fff
+        line-height 1.4
+        border-radius 4px
+        white-space normal
+        z-index 10
+
+      &:hover .sl-tooltip-text
+        display block
 
     .sl-select
       margin-left auto
-      width 200px
+      width 50%
       padding 6px
       border 1px solid #ccc
       border-radius 4px
@@ -77,3 +113,8 @@
     .sl-btn
       button()
       get-font-size(large)
+
+    .sl-cancel
+      background none
+      border 1px solid #ccc
+      color #666

@@ -84,7 +84,7 @@ const SocialButtons = function({ dom, translator, state, bitlyService, locationS
   }
 
   function shareLink() {
-    bitlyService.shortenUrl(undefined, shortened => prompt("Copy the following link: ", shortened));
+    bitlyService.shortenUrl(undefined, shortened => alert("Link in your clipboard, don't lose it!\n\n" + shortened));
   }
 
   function download() {

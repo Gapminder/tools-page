@@ -43,7 +43,7 @@ export async function checkSlugAvailability(slug, pageId) {
   return !data;
 }
 
-export async function saveSlug({pageId, onSave, url, userId, slug, lifetime, pageConfig, privateDs}) {
+export async function saveSlug({pageId, onSave, url, userId = null, slug, lifetime, pageConfig, privateDs = []}) {
   const token = privateDs.length ? randomToken() : "";
   const urlWithToken = url + (privateDs.length ? `&t=${token}` : "");
 

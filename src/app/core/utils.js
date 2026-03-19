@@ -469,6 +469,8 @@ export async function hashSHA2(string) {
 export function computeExpiryDate(lifetime, fromDate = new Date()) {
   if (!lifetime) return null;
   const s = String(lifetime).trim().toLowerCase();
+  if (s.startsWith('forever')) return null;
+  if (s.startsWith('not important')) return fromDate.toISOString();
   if (s === 'never') return null;
 
   const m = s.match(/^(\d+)\s*(day|week|month|year)s?$/);
