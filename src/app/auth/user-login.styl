@@ -104,11 +104,35 @@
             width 100%
             height 100%
 
-    .signup-panel
+    .panel
+      input
+        min-width 200px
+
+    .error-msg
+      align-self flex-start
+      color #e05555
+      min-height 1em
+      font-size 0.85em
+
+    .forgot-password-link
+      color $color-blue-darker
+      text-decoration underline
+      cursor pointer
+      align-self flex-start
+      &:hover
+        color $color-primary
+
+    .signup-panel, .forgot-panel
       display none
 
     &.signup
       .signup-panel
+        display flex
+      .login-panel
+        display none
+
+    &.forgot
+      .forgot-panel
         display flex
       .login-panel
         display none

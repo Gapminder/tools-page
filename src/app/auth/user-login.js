@@ -46,6 +46,8 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
           <label for="psw2"><b>Confirm New Password</b></label>
           <input id="signup-psw2" type="password" placeholder="Enter Password" name="psw2" required minlength="6">
 
+          <small class="error-msg"></small>
+          <a class="forgot-password-link signup-forgot-link" style="display:none">Forgot password?</a>
           <button class="button-signup">Create account</button>
         </form>
 
@@ -57,6 +59,8 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
           <label for="psw"><b>Password</b></label>
           <input type="password" placeholder="Enter Password" name="psw" required minlength="6">
 
+          <a class="forgot-password-link">Forgot password?</a>
+          <small class="error-msg"></small>
           <button class="button-login">Log in</button>
           
           <span class="login-oauth">
@@ -66,6 +70,15 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
           <hr>
           <span class="hr-text-center">or</span>
           <button type="button" class="button-switch-signup">Sign up</button>
+        </form>
+
+        <form class="panel forgot-panel">
+          <span>Reset password</span>
+          <label for="forgot-email"><b>E-mail</b></label>
+          <input id="forgot-email" type="email" placeholder="Enter email" name="email" required>
+          <small class="error-msg"></small>
+          <button class="button-confirm-reset">Confirm password reset</button>
+          <button type="button" class="button-back-to-login">Back to log in</button>
         </form>
 
     </div>
@@ -116,16 +129,18 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
   formsPlaceHolder.select(".signup-panel").on("submit", async event => {
     event.preventDefault();
     const data = new FormData(event.target);
-    const emailInputNode = formsPlaceHolder.select(".signup-panel input[name='email']").node();
+    const errorMsg = event.target.querySelector('.error-msg');
+    errorMsg.textContent = '';
     const { error } = await userSignup(data.get("email"), data.get("psw"));
     if (error) {
       const msg = error.message ? error.message : String(error || "Signup failed");
       if ((msg || "").toLowerCase().includes("already") || (error.status === 400)) {
-        emailInputNode.setCustomValidity("User with this email already exists");
+        errorMsg.textContent = "This email is already registered.";
+        event.target.querySelector('.signup-forgot-link').style.display = '';
       } else {
-        emailInputNode.setCustomValidity(msg);
+        errorMsg.textContent = msg;
+        event.target.querySelector('.signup-forgot-link').style.display = 'none';
       }
-      emailInputNode.reportValidity();
       return;
     }
     switchUserLogin.call(this);
@@ -135,10 +150,50 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
   formsPlaceHolder.select(".login-panel").on("submit", async event => {
     event.preventDefault();
     const data = new FormData(event.target);
-    if (await userLogin(data.get("email"), data.get("psw"))) {
+    const errorMsg = event.target.querySelector('.error-msg');
+    errorMsg.textContent = '';
+    const res = await userLogin(data.get("email"), data.get("psw"));
+    if (res.success) {
       switchUserLogin.call(this);
       updateUserLogin();
-    };
+    } else {
+      const msg = res.error?.message || String(res.error || 'Login failed');
+      errorMsg.textContent = msg.includes('Invalid') ? 'Wrong email or password.' : msg;
+    }
+  });
+
+  formsPlaceHolder.selectAll(".login-panel input").on("input.clearerr", () => {
+    formsPlaceHolder.select(".login-panel .error-msg").text("");
+  });
+
+  formsPlaceHolder.select(".login-panel .forgot-password-link").on("click", () => {
+    const email = formsPlaceHolder.select(".login-panel input[name='email']").property("value");
+    switchToForgotPanel(email);
+  });
+
+  formsPlaceHolder.select(".signup-panel .forgot-password-link").on("click", () => {
+    const email = formsPlaceHolder.select(".signup-panel input[name='email']").property("value");
+    switchToForgotPanel(email);
+  });
+
+  formsPlaceHolder.select(".button-back-to-login").on("click", () => {
+    formsPlaceHolder.select(".user-login-form").classed("forgot", false);
+  });
+
+  formsPlaceHolder.select(".forgot-panel").on("submit", async event => {
+    event.preventDefault();
+    const errorMsg = event.target.querySelector('.error-msg');
+    errorMsg.textContent = '';
+    const email = event.target.querySelector('input[name="email"]').value.trim();
+    const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+      redirectTo: location.href
+    });
+    if (error) {
+      errorMsg.textContent = error.message || String(error);
+      return;
+    }
+    state.dispatch.call("showMessage", _this, { message: "Reset link sent! Check your inbox.", timeout: 5000 });
+    formsPlaceHolder.select(".user-login-form").classed("forgot", false);
   });
 
   formsPlaceHolder.select("#signup-psw").on("input", (event) => {
@@ -154,6 +209,9 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
   });
 
   if(supabaseClient) supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (!session && event !== 'PASSWORD_RECOVERY') {
+      formsPlaceHolder.select(".user-login-form").classed("signup", false).classed("forgot", false);
+    }
     state.setAuthToken({event, session})
   
     if (event === 'INITIAL_SESSION') {
@@ -169,7 +227,7 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
     } else if (event === 'SIGNED_OUT') {
   
     } else if (event === 'PASSWORD_RECOVERY') {
-  
+      showChangePasswordForm();
     } else if (event === 'TOKEN_REFRESHED') {
   
     } else if (event === 'USER_UPDATED') {
@@ -244,6 +302,13 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
     if (!logged.isLogged) return alert("Not logged in");
     showDeleteAccountForm(logged.session.user.email);
   });
+
+  function switchToForgotPanel(prefillEmail) {
+    formsPlaceHolder.select(".user-login-form").classed("forgot", true).classed("signup", false);
+    const emailInput = formsPlaceHolder.select(".forgot-panel input[name='email']").node();
+    if (emailInput && prefillEmail) emailInput.value = prefillEmail;
+    formsPlaceHolder.select(".forgot-panel .error-msg").text("");
+  }
 
   function showChangePasswordForm() {
     formsPlaceHolder.select('.change-action-wrapper').remove();

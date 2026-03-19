@@ -11,10 +11,10 @@ async function userSignup(email, password) {
 }
 
 async function userLogin(email, password) {
-  if(!supabaseClient) return false;
+  if(!supabaseClient) return { success: false, error: { message: "Supabase not configured" } };
   const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
   console.log(error, data);
-  return error ? false : true;
+  return { success: !error, error };
 }
 
 async function userLogout() {
