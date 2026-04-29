@@ -425,3 +425,190 @@ export const VIZABI_SPREADSHEET = `
    </g>
    </svg>
 `
+
+export const VIZABI_BARRANK = `
+  <svg
+     width="330.77466"
+     height="289.53732"
+     viewBox="0 0 330.77466 289.53732"
+     version="1.1"
+     id="svg1"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:svg="http://www.w3.org/2000/svg">
+    <defs
+       id="defs1">
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath2">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-188.9058,-78.231904)"
+           id="path2" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath4">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-91.272505,-147.101)"
+           id="path4" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath6">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-30.334001,-52.307104)"
+           id="path6" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath8">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-159.7222,-190.83001)"
+           id="path8" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath10">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-243.52491,-83.9204)"
+           id="path10" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath12">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-170.90331,-64.957504)"
+           id="path12" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath14">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-213.12061,-107.1748)"
+           id="path14" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath16">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-85.107902,-140.1787)"
+           id="path16" />
+      </clipPath>
+    </defs>
+    <g
+       id="g2">
+      <path
+         id="rect1"
+         style="fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="M 7.2078309,7.3910995 H 323.43314 V 73.855402 H 7.2078309 Z" />
+      <path
+         id="rect1-8"
+         style="fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="M 6.8075953,109.88193 H 233.35296 v 67.16712 H 6.8075953 Z" />
+      <path
+         id="rect1-8-8"
+         style="fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="M 6.616271,213.07558 H 195.84412 v 67.50309 H 6.616271 Z" />
+    </g>
+  </svg>
+`
+
+
+export const VIZABI_LINECHART = `
+  <svg
+     width="330.77466"
+     height="289.53732"
+     viewBox="0 0 330.77466 289.53732"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:svg="http://www.w3.org/2000/svg">
+    <defs
+       id="defs1">
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath2">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-188.9058,-78.231904)"
+           id="path2" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath4">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-91.272505,-147.101)"
+           id="path4" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath6">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-30.334001,-52.307104)"
+           id="path6" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath8">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-159.7222,-190.83001)"
+           id="path8" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath10">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-243.52491,-83.9204)"
+           id="path10" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath12">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-170.90331,-64.957504)"
+           id="path12" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath14">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-213.12061,-107.1748)"
+           id="path14" />
+      </clipPath>
+      <clipPath
+         clipPathUnits="userSpaceOnUse"
+         id="clipPath16">
+        <path
+           d="M 0,217.153 H 248.081 V 0 H 0 Z"
+           transform="translate(-85.107902,-140.1787)"
+           id="path16" />
+      </clipPath>
+    </defs>
+    <g
+       id="g2">
+      <path
+         id="rect1"
+         style="fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="M 7.9390881,7.3910995 H 25.456206 V 273.82119 H 7.9390881 Z" />
+      <path
+         id="rect1-8"
+         style="fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="M 7.9390881,262.70937 H 324.79158 v 19.0364 H 7.9390881 Z" />
+      <path
+         style="fill-opacity:1;fill-rule:nonzero;stroke:none"
+         d="M 116.54393,101.67399 208.8561,132.29133 265.79474,9.8673964 320.28986,10.176747 320.43865,67.180532 231.45069,195.19855 125.03005,142.89254 51.668654,253.86665 39.410969,246.17797 Z"
+         id="path5" />
+    </g>
+  </svg>
+`
