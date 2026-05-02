@@ -3,6 +3,7 @@ import { deepExtend } from "./utils";
 
 export default async function PreferentialConfigService({ state, pageId, site, pageSlug, defaultConfigs }) {
   async function isPageEditor() {
+    if (!supabaseClient) return false;
     const { data: d1, error: e1 } = await supabaseClient.rpc('is_editor_or_owner_acl', { 
       s: "page",
       r: site + "/" + (pageSlug ? pageSlug : "__home__")
