@@ -12,7 +12,25 @@ export const VIZABI_MODEL = {
             "data": {
               "filter": { "dimensions": { "geo": { "$not": { "is--deso": 1 } } } }
             }
-          },          
+          },
+          "size": {
+            "data": {
+              "concept": "antal",
+              "constant": null
+            },
+            "scale": {
+              "extent": [0, 0.5]
+            }
+          },
+          "color": {
+            "data": {
+              "concept": "mean_hogskola_25_64",
+              "constant": null
+            },
+            "scale": {
+              "type": "linear"
+            }
+          },
           "color_map": {
             "data": {
               "concept": "mean_hogskola_25_64"
