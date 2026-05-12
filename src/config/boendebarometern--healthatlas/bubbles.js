@@ -51,6 +51,9 @@ export const VIZABI_MODEL = {
   "ui": {
     "locale": { "id": "sv-SE" },
     "dialogs": {
+      "size": {
+        "showSlidersWhenInSidebar": true
+      },
       "markercontrols": {
         "disableSlice": true,
         "disableAddRemoveGroups": false,

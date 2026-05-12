@@ -77,6 +77,9 @@ export const VIZABI_MODEL = {
           "about"
         ]
       },
+      "size": {
+        "showSlidersWhenInSidebar": true
+      },
       "markercontrols": {
         "disableSlice": true,
         "disableAddRemoveGroups": false,
