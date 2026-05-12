@@ -42,8 +42,10 @@ export const VIZABI_MODEL = {
       }
     },
     "marker-contextmenu": {
+      "primaryDim": "geo",
       "drilldown": "region.kommun.regso",
-      "primaryDim": "geo"
+      "allowExplodeTo": ["regso"],
+      "allowFoldTo": ["kommun"]
     }
   },
   "model": {

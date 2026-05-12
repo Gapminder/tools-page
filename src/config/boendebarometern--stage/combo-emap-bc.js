@@ -88,7 +88,9 @@ export const VIZABI_MODEL = {
     },
     "marker-contextmenu": {
       "primaryDim": "geo",
-      "drilldown": "region.kommun.regso"
+      "drilldown": "region.kommun.regso",
+      "allowExplodeTo": ["regso"],
+      "allowFoldTo": ["kommun"]
     },
     "chart": {
       "endBeforeForecast": "2022",
