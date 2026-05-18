@@ -38,7 +38,7 @@ export const VIZABI_MODEL = {
             "data": { "concept": "name" }
           },
           "frame": {
-            "value": "2024",
+            "value": "2025",
             "data": { "concept": "time" }
           }
         }
@@ -63,7 +63,7 @@ export const VIZABI_MODEL = {
       }
     },
     "chart": {
-      "endBeforeForecast": "2024",
+      "endBeforeForecast": "2025",
       "map": {
         "scale": 1.1,
         "rotate": [-11, 0],
