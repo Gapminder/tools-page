@@ -45,7 +45,7 @@
   "dependencies": {
     "@supabase/supabase-js": "2.90.1",
     "@vizabi/barrank": "4.2.2",
-    "@vizabi/bubblechart": "5.5.4",
+    "@vizabi/bubblechart": "5.5.5",
     "@vizabi/bubblechart-svg": "4.6.2",
     "@vizabi/bubblemap": "4.7.2",
     "@vizabi/combo": "1.4.5",
