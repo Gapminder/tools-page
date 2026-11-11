@@ -55,7 +55,8 @@ const TOOL_CSS = [
 export default {
   //perf: true, 
   input: { 
-    toolspage: "src/index.js"
+    toolspage: "src/index.js",
+    "auth-callback": "src/auth/callback.js"
   },
   treeshake: PROD,
   output: {
@@ -73,7 +74,7 @@ export default {
     alias({
       entries: [
         // inject env-specific properties config into the build
-        { find: "toolsPage_properties",  replacement: path.resolve(__dirname, "src/config", `properties.json`) },
+        { find: "toolsPage_properties",  replacement: path.resolve(__dirname, "src/properties.js") },
         // node builtin -> empty
         { find: "fs", replacement: path.resolve(__dirname, "src/shims/empty.js") },
       ]
@@ -121,7 +122,8 @@ export default {
         //misc
         { dest: "build", src: "src/assets" },
         { dest: "build", src: "src/data" },
-        { dest: "build", src: "src/auth" },
+        { dest: "build/auth", src: "src/auth/index.html" },
+        { dest: "build", src: "src/runtime-config.js" },
         
         //configs
         { dest: "build", src: "src/config"},

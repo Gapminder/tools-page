@@ -3,6 +3,10 @@ import toolsPage_properties from "toolsPage_properties";
 const {S_URL, S_KEY} = toolsPage_properties;
 const supabaseClient = S_KEY && S_URL ? supabase.createClient(S_URL, S_KEY) : null;
 
+function getAuthRedirectUrl() {
+  return new URL(toolsPage_properties.auth_redirect_path || "auth/", document.baseURI).href;
+}
+
 async function userSignup(email, password) {
   if(!supabaseClient) return { error: { message: "Supabase not configured" } };
   const { data, error } = await supabaseClient.auth.signUp({ email, password });
@@ -65,6 +69,7 @@ async function deleteAccount() {
 
 export {
   supabaseClient,
+  getAuthRedirectUrl,
   userLogin,
   userLogout,
   userSignup,

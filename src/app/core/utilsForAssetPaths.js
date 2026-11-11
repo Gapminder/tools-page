@@ -17,15 +17,12 @@
 
 
 export function getPageSlug() {
-  // Last non-empty path segment is the possible slug
-  const segments = location.pathname.replace(/\/$/, '').split('/').filter(Boolean);
-  const possibleSlug = segments.length ? segments.at(-1) : null;
-  const baseHref = getBaseHref();
-  // Null if root or matches base href
-  if (!possibleSlug || baseHref.endsWith(possibleSlug) || baseHref.endsWith(possibleSlug + "/"))
-    return null;
-  else
-    return possibleSlug;
+  const basePath = new URL(getBaseHref()).pathname;
+  if (!location.pathname.startsWith(basePath)) return null;
+  // A slug is the first folder after the installation's base path.
+  const relativePath = location.pathname.slice(basePath.length);
+  const firstSegment = relativePath.split("/").filter(Boolean)[0];
+  return !firstSegment || firstSegment === "index.html" ? null : firstSegment;
 }
 
 export function getBaseHref() {

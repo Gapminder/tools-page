@@ -1,76 +1,93 @@
 # Vizabi Pages
-A static web page wrapper for interactive Vizabi charts. 
 
-DEMO: Gapminder Tools is a Vizabi page, see: https://gapminder.org/tools/
+Tools-page is a static website that loads configuration and renders interactive Vizabi charts. See [Gapminder Tools](https://gapminder.org/tools/) for a live example.
 
-If you are confused about Vizabi or just getting started, go look at the examples in https://observablehq.com/collection/@vizabi/getting-started
+## Run locally
 
-## Area of responsibility
-This page reads configuration from CMS with fallback to local files.  
-Then it applies that configuration to Vizabi and starts it
+From this repository, with Node.js and npm installed:
 
-## Local build
-You need a conventional node.js environment, currently node v22.19.0, npm 10.9.3   
+```sh
+npm install
+npm start
+```
 
-Run: `npm install`, then `npm start`  
-and you should see the page at `localhost:4200`
+Open <http://localhost:4200/>. This runs a development build in watch mode and serves the output over HTTP. The development base defaults to `/`. Choose one of the configuration modes below before starting, or leave the bundled defaults in place to try the existing setup.
 
-## Deployment
-`npm run build`, then copy the files from /build/ to where you want them to be on the server. 
+## Run standalone with local configuration files
 
-It might be possible to run this on a VM but if you have some heavy charts that include deck.gl and mapbox, you need a decent computer to run this, maybe 4GB RAM or something.
+Set these overrides in [src/runtime-config.js](src/runtime-config.js) to use the bundled Gapminder example without connecting to Supabase:
 
-## BASE and Page slugs
-Since november 2025 this page supports slugs. The hell are those?
+```js
+window.VIZABI_CONFIG = {
+  site: "gapminder",
+  S_URL: "",
+  S_KEY: ""
+};
+```
 
-Users can log-in at a different webpage called Vizabi Verkstad and create these slugs with custom configurations, adjusting data sources, content above and below the charts, logos, color palettes and stuff.
+For your own site, set `site` to its identifier and provide either:
 
-The configurations are stored in CMS, which is currently a Supabase Postgress database.
-Then if you go to `website.com/slug`, the page that is actually running at `website.com` will go look for the relevant config and try to apply it. 
+- Individual files under `src/config/SITE/`. Use [src/config/gapminder/](src/config/gapminder/) as an example: `toolset.json` selects charts, `datasources.json` points to the data, and the chart-specific JavaScript files set chart defaults. Shared defaults such as theme and locales come from [src/properties.json](src/properties.json). Put a variant's files in `src/config/SITE--SLUG/`.
+- A published configuration snapshot at `src/config/SITE/fallback.json` for home or `src/config/SITE--SLUG/fallback.json` for a variant. See the [snapshot export instructions](https://github.com/vizabi/deploy#installation-specific-local-fallback). A snapshot must match the selected site and slug.
 
-If the page is running in a folder `website.com/folder`
-(a real folder such as in AWS bucket or faked by a reverse proxy such as gapminder.org/tools) then slugs come in form of `website.com/folder/slug`
+Run `npm start` to preview, or [build and publish the static files](#build-and-host-the-standalone-site). Local configuration can still point to external data and assets. Supabase sign-in is unavailable when its connection is disabled.
 
-This is cool, but the slugs look just like folders. 
-So for the page to be able to resolve its internal paths to assets and backup config files it needs to know its own BASE
+## Run standalone with an external Supabase
 
-Hence you must provide that during production build as a parameter
+Set the browser-facing connection settings in [src/runtime-config.js](src/runtime-config.js):
 
-`BASE=./` will work in folders, page slugs need special support from nginx  
-`BASE=/` will work for root only and support page slugs   
-`BASE=/folder/` if you want both to work, but then you must know the folder    
+```js
+window.VIZABI_CONFIG = {
+  S_URL: "https://YOUR_PROJECT.supabase.co",
+  S_KEY: "YOUR_PUBLIC_ANON_OR_PUBLISHABLE_KEY",
+  site: "YOUR_CMS_SITE",
+  verkstad_url: "https://verkstad.example.com/"
+};
+```
 
-Example: `BASE=/tools/ npm run build` for https://gapminder.org/tools deployment   
-This will run in a folder and support slugs like `gapminder.org/tools/slug`
+Use a project with the tools-page CMS schema and functions, and a published home page for the chosen site. Datasource definitions in the CMS determine which data endpoints the browser uses, including any external Waffle servers. The runtime config is publicly served; use only an anon or publishable key.
 
-## Web server configuration
-When configuring deployment you need to set the web server to not treat slugs as folders and instead serve from wherever you copy the static files
+Run `npm start` to preview, or build and deploy as below. You can also edit the deployed `runtime-config.js` beside `index.html` without rebuilding. For OAuth on the hosted site, allowlist the actual callback URL in Supabase Auth, for example `https://example.com/tools/auth/`. The default callback path `auth/` resolves against the site's base; `auth_redirect_path` overrides it.
 
-Below is a config example for nginx 
-located at /etc/nginx/sites-available/default or /etc/nginx/sites-enabled/tools-page.conf 
+When the initial CMS lookup fails or times out after two seconds, tools-page tries the matching local snapshot, then the individual local files. The default snapshot directory is `config/` relative to the site's base; set `fallback_path` to use a different directory. A home snapshot does not stand in for a missing variant.
 
-Check status with `systemctl status nginx`   
-After modifying run `sudo systemctl reload nginx` to apply changes
+## Build and host the standalone site
+
+```sh
+npm install
+BASE=/ npm run build
+```
+
+Serve the **contents** of `build/` over HTTP from the location matching `BASE`. To preview a root build locally, run `npm run serve` and open <http://localhost:4200/>.
+
+| Build setting | Mount point | Example variant URL |
+| --- | --- | --- |
+| `BASE=/` | Domain root | `https://example.com/healthatlas` |
+| `BASE=/tools/` | Known subpath | `https://example.com/tools/healthatlas` |
+| `BASE=./` | Relative to the page location | Virtual variants are not supported |
+
+The first segment after an absolute base selects the CMS slug. The HTML base keeps asset and config URLs anchored to the mount point even when you open a variant directly. The web server must serve existing files normally and internally serve the site's `index.html` for variant URLs, preserving the browser URL.
+
+For nginx at the domain root, with the contents of `build/` copied into `/app/client/live`:
 
 ```nginx
-server {
-        listen 80 default_server;
-        listen [::]:80 default_server ipv6only=on;
+root /app/client/live;
+index index.html;
 
-        root /home/live;
-
-        server_name tools www.gapminder.org/tools;
-
-        index index.html index.htm;
-
-        # Variant support: /tools/slug/ -> serve index.html from root
-        # asset rewrites are done by sestting <base href="">
-        location ~ ^/tools/[^/]+/?$ {
-                try_files /index.html =404;
-        }
-
-        location / {
-               try_files $uri $uri/ =404;
-        }
+location / {
+    try_files $uri $uri/ /index.html;
 }
 ```
+
+For a subpath such as `/tools/`, map that prefix to the published files and make the fallback the site's `/tools/index.html`.
+
+## Run in Docker with Verkstad
+
+Follow the [Docker setup in vizabi/deploy](https://github.com/vizabi/deploy#local-setup) for the Compose files, build and startup commands, and per-installation settings. The package runs tools-page and Verkstad as separate services and connects them to an external Supabase and the data servers configured in its CMS. It sets the base path and variant routing at container startup, and can mount per-installation fallback snapshots.
+
+## How deployment configuration works
+
+- [Runtime settings](src/properties.js) overlay bundled defaults before the app connects to Supabase. This lets a deployment select its backend and site without rebuilding.
+- The [CMS loader](src/app/core/cms.js) keeps the existing local JSON and JavaScript configuration path and adds support for published snapshots.
+- [Asset path helpers](src/app/core/utilsForAssetPaths.js) resolve paths against the site's base and identify the first segment after it as the variant.
+- The [OAuth callback](src/auth/index.html) is included in the build, uses the same Supabase settings as the app, and resolves under the configured base by default. Admin links use the configured Verkstad URL.

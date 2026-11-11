@@ -1,6 +1,6 @@
 import toolsPage_properties from "toolsPage_properties";
 import { supabaseClient } from "../auth/supabase.service";
-import { resolveAssetUrl } from "./utilsForAssetPaths.js";
+import { resolveAssetUrl, resolvePublicUrl } from "./utilsForAssetPaths.js";
 
 let DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE, SITE, PAGE_SLUG, PAGE_ID;
 const resetCache = true;
@@ -174,6 +174,20 @@ function getCacheID(page) {
 
 const cache = {};
 
+async function withTimeout(operation) {
+  let timer;
+  try {
+    return await Promise.race([
+      operation,
+      new Promise((resolve, reject) => {
+        timer = setTimeout(() => reject(new Error("CMS request timed out")), TIMEOUT_MS);
+      })
+    ]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 function loadSheet(page) {
   const cached = cache[getCacheID(page)];
   if (cached) return Promise.resolve(cached);
@@ -196,6 +210,7 @@ function loadSheet(page) {
       .then(data => {
         if (timedOut) return; // ignore result if already timed out
         clearTimeout(timer);
+        if (data == null) throw new Error(`No remote configuration for ${sheet}`);
         // Validate remote content if a validator exists for this sheet.
         if (validation[sheet] && !validation[sheet](data)) {
           reject(new Error(`Validation failed for remote configuration sheet ${sheet}`));
@@ -250,22 +265,43 @@ async function load(settings) {
 }
 
 let pageInfoCache = null;
+let pageInfoPromise = null;
+let localSnapshot = null;
 async function getCachedPageInfo(site = SITE, pageSlug = PAGE_SLUG) {
   if (pageInfoCache) return pageInfoCache;
-  if (!supabaseClient) return {};
-  if(!site) return null;
+  if (!site) return {};
+  if (pageInfoPromise) return pageInfoPromise;
 
-  const { data, error } = await supabaseClient
-    .rpc('get_known_page', { _site: site, _slug: pageSlug || "__home__" })
-    .single()
-  
-  if (error) {
-    console.error(error);
-    pageInfoCache = {};
-    return {};
-  }
-  pageInfoCache = data;
-  return data;
+  pageInfoPromise = (async () => {
+    try {
+      if (!supabaseClient) throw new Error("Supabase is not configured");
+      const { data, error } = await withTimeout(supabaseClient
+        .rpc("get_known_page", { _site: site, _slug: pageSlug || "__home__" })
+        .single());
+      if (error) throw error;
+      if (!data) throw new Error("CMS page is missing");
+      pageInfoCache = data;
+    } catch (error) {
+      const root = (toolsPage_properties.fallback_path || "config/").replace(/\/*$/, "/");
+      const folder = `${root}${site}${pageSlug ? "--" + pageSlug : ""}`;
+      try {
+        const snapshot = await d3.json(resolvePublicUrl(folder + "/fallback.json"));
+        if (snapshot.formatVersion !== 1 || snapshot.site !== site
+          || snapshot.slug !== (pageSlug || "__home__")
+          || !snapshot.page?.toolset?.length || !Array.isArray(snapshot.configs)) {
+          throw new Error("Local snapshot does not match this site and slug");
+        }
+        localSnapshot = snapshot;
+        pageInfoCache = snapshot.page;
+        console.warn(`CMS unavailable (${error.message}); using the local snapshot for ${site}/${snapshot.slug} from ${snapshot.exportedAt}`);
+      } catch (fallbackError) {
+        console.warn(`CMS unavailable (${error.message}); no matching snapshot at ${folder}/fallback.json. Trying legacy local files.`, fallbackError.message);
+        pageInfoCache = {};
+      }
+    }
+    return pageInfoCache;
+  })();
+  return pageInfoPromise;
 }
 
 async function getThemeComponents() {const info = await getCachedPageInfo(); return info && info.theme_components;}
@@ -287,6 +323,7 @@ async function getRelated() {const info = await getCachedPageInfo(); return info
 
 
 async function getToolConfigs(pageId) {
+  if (localSnapshot) return localSnapshot.configs;
   if (!supabaseClient) throw new Error("Supabase is not configured");
   const { data, error } = await supabaseClient
     .rpc('get_known_deepconfigs', { _page_id: pageId });
@@ -307,8 +344,13 @@ async function getLocalePackageForVizabi(pageId, locale) {
 }
 
 async function getLocalePackage({pageId = PAGE_ID, locale = DEFAULT_LOCALE, scope} = {}) {
-  if (!supabaseClient) throw new Error("Supabase is not configured");
   if (!scope) throw new Error("loadLocalePackage: missing the required parameter 'scope'");
+  if (localSnapshot) {
+    const spec = localSnapshot.translations?.[scope]?.[locale];
+    if (!spec) throw new Error(`No local ${scope} translation for ${locale}`);
+    return spec;
+  }
+  if (!supabaseClient) throw new Error("Supabase is not configured");
 
   const { data, error } = await supabaseClient
     .rpc('get_known_translation', { _page_id: pageId, _scope: scope, _locale: locale })

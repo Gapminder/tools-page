@@ -1,6 +1,6 @@
 {
   "name": "tools-page",
-  "version": "2.7.0",
+  "version": "3.0.0",
   "description": "Tools-page",
   "main": "index.js",
   "type": "module",
@@ -91,5 +91,9 @@
     "mapbox-gl": "^2.15.0",
     "@deck.gl/core": "9.0.40",
     "@deck.gl/layers": "9.0.40"
+  },
+  "allowScripts": {
+    "esbuild@0.27.4": true,
+    "fsevents@2.3.3": true
   }
 }

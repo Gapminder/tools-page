@@ -1,9 +1,16 @@
-import { supabaseClient, userLogin, userLogout, userSignup, isLogged, changeEmail, changePassword, deleteAccount } from "./supabase.service";
+import { supabaseClient, getAuthRedirectUrl, userLogin, userLogout, userSignup, isLogged, changeEmail, changePassword, deleteAccount } from "./supabase.service";
 import toolsPage_properties from "toolsPage_properties";
 import { ICON_GITHUB, ICON_GOOGLE } from "../core/icons";
 
 const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsDom, isPageEditor}) {
   const pageSlug = toolsPage_properties?.page_slug;
+  function editorUrl(tab, subtab) {
+    const url = new URL(toolsPage_properties.verkstad_url || "https://vizabi.com/verkstad/", document.baseURI);
+    url.searchParams.set("tab", tab);
+    url.searchParams.set("subtab", subtab);
+    if (pageSlug) url.searchParams.set("from", pageSlug);
+    return url.href;
+  }
   const templateForButton = `  
     <button class="user-login-title">Log in</button>
     <div class="user-logged-title">&#x2714</div>
@@ -16,8 +23,8 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
         <button class="user-logged-logout">Log out</button>
         <hr>
         <span>Data Verkstad:</span>
-        <a href="https://vizabi.com/verkstad/?tab=servers&subtab=datasets${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-dataeditor">Hantera data källor</a>
-        <a href="https://vizabi.com/verkstad/?tab=pages&subtab=permalinks${pageSlug ? "&from="+pageSlug : ""}" target="_blank" class="user-logged-permalinks">Hantera sparade länkar</a>
+        <a href="${editorUrl("servers", "datasets")}" target="_blank" class="user-logged-dataeditor">Hantera data källor</a>
+        <a href="${editorUrl("pages", "permalinks")}" target="_blank" class="user-logged-permalinks">Hantera sparade länkar</a>
         <hr>
         <div class="panel user-logged-set-config">
           <span>Start view:</span>
@@ -241,7 +248,7 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
       const { data, error } = await supabaseClient.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: location.origin + "/tools/auth/",
+          redirectTo: getAuthRedirectUrl(),
           skipBrowserRedirect: true
         }
       })
@@ -262,7 +269,7 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
           access_type: 'offline',
         },
         scopes: ["email", "profile"],
-        redirectTo: location.origin + "/tools/auth/",
+        redirectTo: getAuthRedirectUrl(),
         skipBrowserRedirect: true
       }
     });
