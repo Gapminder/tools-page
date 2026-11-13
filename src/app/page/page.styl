@@ -29,7 +29,11 @@ a
     text-decoration underline
 
 .too-wrapper
-  display block
+  // Keep the start of the content below the chart visible at the fold.
+  --below-stage-peek 43px
+  display grid
+  grid-template-columns minmax(0, 1fr)
+  grid-template-rows auto minmax(0, 1fr) var(--below-stage-peek)
   position relative
   height 100%
   width 100%
@@ -37,19 +41,29 @@ a
   overflow-x hidden
   max-width 100vw
 
+  +for_breakpoint(medium)
+    --below-stage-peek 7px
+
   +for_breakpoint(small)
+    --below-stage-peek 3px
     position static
     min-height auto
     scrollbar-width none
 
+  &.embedded-view
+    --below-stage-peek 0px
+
+.too-above-stage
+  grid-row 1
+
+.too-below-stage
+  grid-row 3
+  align-self start
+
 .too-stage
+  grid-row 2
   padding 0
   width 100%
-  height "calc(100% - %s - 45px)" % var(--header-height)
-  +for_breakpoint(medium)
-    height "calc(100% - %s - 9px)" % var(--header-height)
-  +for_breakpoint(small)
-    height "calc(100% - %s - 5px)" % var(--header-height)
   background white
   position relative
   .vizabi-placeholder
@@ -84,6 +98,8 @@ a
 .too-toolbox
   height 50px
   background-color $color-barely-visible
+  &:empty
+    display none
   +for_breakpoint(small)
     display none
 
@@ -99,8 +115,6 @@ a
 .embedded-view .too-above-stage,
 .embedded-view .too-below-stage
   display none
-.embedded-view .too-stage
-  height 100%
 
 .hidden
   display none !important

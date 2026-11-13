@@ -6,20 +6,27 @@
   gap 30px
   align-items start
 
-  // 2 columns, 2:1 ratio both tracks can shrink to 0
-  grid-template-columns minmax(0, 2fr) minmax(0, 1fr)
+  grid-template-columns minmax(0, 1fr)
 
-  +for_breakpoint(xlarge)
-    grid-template-columns minmax(0, 3fr) minmax(0, 1fr)
+  &:not(:has(> :is(.too-start, .too-end) > *))
+    display none
 
-  // 1 column on smaller screens can shrink to 0
+  > .too-start:empty, > .too-end:empty
+    display none
+
+  &:has(> .too-start:not(:empty)):has(> .too-end:not(:empty))
+    +for_breakpoint(large)
+      grid-template-columns minmax(0, 2fr) minmax(0, 1fr)
+    +for_breakpoint(xlarge)
+      grid-template-columns minmax(0, 3fr) minmax(0, 1fr)
+    +for_breakpoint(not-large)
+      > .too-end
+        grid-row 1
+      > .too-start
+        grid-row 2
+
   +for_breakpoint(not-large)
-    grid-template-columns minmax(0, 1fr)
     justify-items center
-    .too-end
-      grid-row 1
-    .too-start
-      grid-row 2
 
   //everything shrinkable
   .too-start, .too-end, div, span

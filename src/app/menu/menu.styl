@@ -153,6 +153,15 @@
 
 
 
+.too-above-stage:has(> .too-mobile-menu:empty) .hamburger-button
+  display none
+
+.too-above-stage > .hamburger-button
+  width 30px
+  height var(--header-height)
+  margin 0 12px
+  margin-inline-start auto
+
 .hamburger-button
   +for_breakpoint(not-small)
     display none
