@@ -50,7 +50,8 @@ a
     min-height auto
     scrollbar-width none
 
-  &.embedded-view
+  &.embedded-view,
+  &:not(:has(> .too-below-stage > *))
     --below-stage-peek 0px
 
 .too-above-stage
