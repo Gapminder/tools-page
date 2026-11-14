@@ -2,15 +2,13 @@ import * as utils from "../core/utils";
 import { resolveAssetUrl } from "../core/utilsForAssetPaths";
 
 const SeeAlso = function({ dom, translator, state, data, getTheme }) {
-  const template = ``;
-
   const CLASS = "SeeAlso";
   const theme = getTheme(CLASS) || {};
   const placeHolder = d3.select(dom);
   if(!placeHolder || placeHolder.empty()) return;   
-  placeHolder.html(template);
-  const style = theme.style || {display: "none"};
-  if(style) Object.entries(style).forEach( ([key, value]) => placeHolder.style(key, value) );
+  for (const [key, value] of Object.entries(theme.style || {})) {
+    if (key !== "display") placeHolder.style(key, value);
+  }
   
   const items = placeHolder.selectAll(".other-tools-item")
     .data(data)

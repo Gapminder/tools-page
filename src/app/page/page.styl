@@ -90,8 +90,8 @@ a
   max-width 100vw
   height var(--header-height)
   get-global-padding-left()
+  get-global-padding-right()
   +for_breakpoint(small)
-    get-global-padding-right()
     .too-middle 
       display none
 
@@ -115,6 +115,10 @@ a
 .embedded-view .too-above-stage,
 .embedded-view .too-below-stage
   display none
+
+.embedded-view ~ .too-login-forms,
+.embedded-view ~ .too-howto-dialog
+  display none !important
 
 .hidden
   display none !important

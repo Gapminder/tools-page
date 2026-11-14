@@ -5,15 +5,6 @@ let _theme_fonts = null;
 let _theme_style = null;
 let _theme_variables = null;
 
-const DEFAULT_LAYOUT = {
-  ".too-header": ["too-start", "too-end"],
-  ".too-header .too-start": ["too-chart-switcher"],
-  ".too-header .too-end": ["too-login-button"]
-}
-const DEFAULT_STYLE = {
-  ".too-related-items": {"display": "none"},
-  ".hamburger-button": {"display": "none"}
-}
 const DEFAULT_FONTS = {
   "Brand Mono": [{"url": "assets/fonts/courier-prime-sans.woff2"}]
 };
@@ -83,21 +74,30 @@ export default function ThemeService({theme_components, theme_meta, theme_layout
   function applyTheme(selector){
     const wrapper = d3.select(selector);
 
-    //append DOM elements
-    const layout = _theme_layout && Object.keys(_theme_layout).length > 0 ? _theme_layout : DEFAULT_LAYOUT;
-    if(layout)
-      for(let [selector, value] of Object.entries(layout)){
-        if (typeof selector === "string" && selector.startsWith(".too-") && Array.isArray(value)){
-          for(let itemToAppend of value){
-            wrapper.select(selector).append("div").attr("class", itemToAppend);
-          }
-        }
-      }
-    
+    const above = wrapper.select(".too-above-stage");
+    const below = wrapper.select(".too-below-stage");
+    if (Object.hasOwn(_theme_layout, ".too-header")) {
+      above.insert("div", ".too-message").attr("class", "too-header");
+      above.insert("div", ".too-message").attr("class", "too-header-divider");
+    }
+    if (Object.hasOwn(_theme_layout, ".too-mobile-menu")) {
+      above.insert("div", ".too-message").attr("class", "too-mobile-menu");
+    }
+    for (const section of ["too-toolbox", "too-see-also-ribbon", "too-related-items", "too-footer-section"]) {
+      if (Object.hasOwn(_theme_layout, "." + section)) below.append("div").attr("class", section);
+    }
+
+    // Layout selectors use one class per level. Mount parents first.
+    const getDepth = selector => selector.split(".").length - 1;
+    const rules = Object.entries(_theme_layout)
+      .sort(([a], [b]) => getDepth(a) - getDepth(b));
+    for (const [selector, items] of rules) {
+      const parent = wrapper.select(selector);
+      for (const item of items) parent.append("div").attr("class", item);
+    }
+
     //apply styles via CSS
-    const style = _theme_style && Object.keys(_theme_style).length > 0 ? _theme_style : DEFAULT_STYLE;
-    if(style)
-      emitCSS(getGenericCSSfromObject(style), "theme-style");
+    emitCSS(getGenericCSSfromObject(_theme_style), "theme-style");
 
     if(_theme_meta?.favicon) 
       d3.select("head link#favicon-placeholder").attr("href", _theme_meta.favicon);
@@ -135,7 +135,7 @@ export default function ThemeService({theme_components, theme_meta, theme_layout
     if(_theme_variables && _theme_variables["color-primary"])
       d3.select("head meta#theme-color-placeholder").attr("content", _theme_variables["color-primary"]);
 
-    const fonts = _theme_layout && Object.keys(_theme_fonts).length > 0 ? _theme_fonts : DEFAULT_FONTS;
+    const fonts = _theme_fonts && Object.keys(_theme_fonts).length > 0 ? _theme_fonts : DEFAULT_FONTS;
     if(fonts)
       emitCSS( getFontCSS(fonts), "theme-fonts" );
   }

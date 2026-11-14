@@ -75,6 +75,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
   
   
   const {applyTheme, getTheme} = new ThemeService(cmsData);
+  const wrapper = d3.select(".too-wrapper");
   applyTheme(".too-wrapper");
 
   new Logo({
@@ -102,7 +103,7 @@ const App = async function({ DOCID_CMS, DOCID_I18N, DEFAULT_LOCALE = "en", site 
     getTheme, translator, state, dom: ".too-login-button", loginFormsDom: ".too-login-forms", isPageEditor: preferentialConfigService.isPageEditor
   });
   new MobileMenu({
-    getTheme, translator, state, dom: ".too-mobile-menu", menuButtonDom: ".hamburger-button"
+    getTheme, state, dom: ".too-mobile-menu", header: wrapper.select(".too-header")
   });
   new SeeAlso({
     getTheme, translator, state, dom: ".too-see-also", data: cmsData.toolset 

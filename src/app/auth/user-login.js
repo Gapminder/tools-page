@@ -95,10 +95,11 @@ const UserLogin = function({ dom, translator, state, data, getTheme, loginFormsD
   const CLASS = "UserLogin";
   const theme = getTheme(CLASS) || {};
   const buttonPlaceHolders = d3.selectAll(dom);
-  if(!buttonPlaceHolders || buttonPlaceHolders.empty()) return;   
+  // Keep session and recovery handling active when the layout omits the button.
   buttonPlaceHolders.html(templateForButton);
-  if(theme.style)
-    Object.entries(theme.style).forEach( ([key, value]) => buttonPlaceHolders.style(key, value) );
+  for (const [key, value] of Object.entries(theme.style || {})) {
+    if (key !== "display") buttonPlaceHolders.style(key, value);
+  }
 
 
   const formsPlaceHolder = d3.select(loginFormsDom);

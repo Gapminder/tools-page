@@ -10,12 +10,15 @@ const VideoBlock = function({translator, dom, state, getTheme }) {
   const CLASS = "VideoBlock";
   const theme = getTheme(CLASS) || {};
   const placeHolder = d3.select(dom);
-  if(!placeHolder || placeHolder.empty()) return;   
+  if (placeHolder.empty()) return;
+  if (!theme.videoUrl) {
+    placeHolder.remove();
+    return;
+  }
   placeHolder.html(template);
-  if(theme.style)
-    Object.entries(theme.style).forEach( ([key, value]) => placeHolder.style(key, value) );
-
-  placeHolder.style("display", theme.videoUrl ? null : "none");
+  for (const [key, value] of Object.entries(theme.style || {})) {
+    if (key !== "display") placeHolder.style(key, value);
+  }
   const videoEl = placeHolder.select(".video");
   const textEl = placeHolder.select(".related-heading");
   
@@ -25,11 +28,10 @@ const VideoBlock = function({translator, dom, state, getTheme }) {
   if (theme.placeholderImageUrl)
     videoEl.append("img").attr("src", theme.placeholderImageUrl);
   
-  if(theme.videoUrl)
-    videoEl.on("click", () => videoEl.html(getVideoIframeHTMLTemplate(theme.videoUrl)) );
+  videoEl.on("click", () => videoEl.html(getVideoIframeHTMLTemplate(theme.videoUrl)));
 
   translate();
-  state.dispatch.on("translate.relatedItems", translate);
+  state.dispatch.on("translate.videoBlock", translate);
 
   function translate() {
     placeHolder.select(".related-heading").each(translateNode(translator));

@@ -7,6 +7,9 @@ const resetCache = true;
 const TIMEOUT_MS = 2000; // adjust timeout duration
 
 const donothing = d => d;
+const isObject = value => value !== null && typeof value === "object" && !Array.isArray(value);
+const isObjectOfObjects = data => isObject(data) && Object.values(data).every(isObject);
+const isObjectOfArrays = data => isObject(data) && Object.values(data).every(Array.isArray);
 
 // Define your per-sheet validations.
 const validation = {
@@ -15,14 +18,14 @@ const validation = {
   properties: data => data && data.length > 0,
   datasources: data => data && data.length > 0,
   related: data => !!data,
-  theme_components: data => !!data,
+  theme_components: data => isObjectOfObjects(data),
   menu_items: data => !!data,
   footer_links: data => Array.isArray(data),
   footer_logos: data => Array.isArray(data),
   theme_meta: data => !!data,
-  theme_layout: data => !!data,
+  theme_layout: data => isObjectOfArrays(data),
   theme_fonts: data => !!data,
-  theme_style: data => !!data,
+  theme_style: data => isObjectOfObjects(data),
   theme_variables: data => !!data,
   locales: data => Array.isArray(data),
   concept_mapping: data => !!data,
@@ -259,8 +262,6 @@ async function load(settings) {
   ).then(response => {
     const cmsData = Object.fromEntries(pages.map((page, i) => ([page.sheet, response[i]])));
     return {pageId: id, cmsData, defaultLocale: DEFAULT_LOCALE};
-  }).catch(err => {
-    console.error("Error loading one or more sheets:", err);
   });
 }
 
@@ -295,7 +296,7 @@ async function getCachedPageInfo(site = SITE, pageSlug = PAGE_SLUG) {
         pageInfoCache = snapshot.page;
         console.warn(`CMS unavailable (${error.message}); using the local snapshot for ${site}/${snapshot.slug} from ${snapshot.exportedAt}`);
       } catch (fallbackError) {
-        console.warn(`CMS unavailable (${error.message}); no matching snapshot at ${folder}/fallback.json. Trying legacy local files.`, fallbackError.message);
+        console.warn(`CMS unavailable (${error.message}); no matching snapshot at ${folder}/fallback.json. Trying local configuration.`, fallbackError.message);
         pageInfoCache = {};
       }
     }
