@@ -504,19 +504,56 @@ export function computeExpiryDate(lifetime, fromDate = new Date()) {
 
 export async function fetchJSON(url, options){ let ok, error; await d3.json(url, options).then(d => ok = d).catch(e => error = e); return {ok, error}; }
 
-export function getVideoIframeHTMLTemplate(src, title="Embedded video"){
-  // ensure YT API can pause: add enablejsapi=1&origin=...
-  const addParam = (u, k, v) => {
-    const url = new URL(u, location.origin);
-    if (!url.searchParams.has(k)) url.searchParams.set(k, v);
-    return url.toString();
-  };
+function getYouTubeEmbedUrl(url) {
+  const hostname = url.hostname.replace(/^(www|m)\./, "");
+  const isShortLink = hostname === "youtu.be";
+  const isWatchLink = hostname === "youtube.com" && /^\/watch\/?$/.test(url.pathname);
+  const isEmbedLink = ["youtube.com", "youtube-nocookie.com"].includes(hostname)
+    && /^\/embed(?:\/|$)/.test(url.pathname);
 
-  if (src.includes("youtube")) {
-    const yt = addParam(addParam(src, "enablejsapi", "1"), "origin", location.origin);
+  if (isEmbedLink) {
+    url.protocol = "https:";
+    if (hostname === "youtube.com") url.hostname = "www.youtube.com";
+    return url;
+  }
+  if (!isShortLink && !isWatchLink) return null;
+
+  const videoId = isShortLink
+    ? url.pathname.slice(1).replace(/\/$/, "")
+    : url.searchParams.get("v");
+  if (!videoId || !/^[\w-]{11}$/.test(videoId)) return null;
+
+  const embed = new URL(`https://www.youtube.com/embed/${videoId}`);
+  embed.search = url.search;
+  embed.searchParams.delete("v");
+
+  const time = embed.searchParams.get("t")?.match(/^(\d+)s?$/);
+  if (time) {
+    if (!embed.searchParams.has("start")) embed.searchParams.set("start", time[1]);
+    embed.searchParams.delete("t");
+  }
+
+  return embed;
+}
+
+export function getVideoIframeHTMLTemplate(src, title="Embedded video"){
+  if (typeof src !== "string" || !src.trim()) return "";
+
+  let url;
+  try {
+    url = new URL(src, location.origin);
+  } catch {
+    return "";
+  }
+  if (url.protocol !== "https:" && url.protocol !== "http:") return "";
+
+  const youtube = getYouTubeEmbedUrl(url);
+  if (youtube) {
+    if (!youtube.searchParams.has("enablejsapi")) youtube.searchParams.set("enablejsapi", "1");
+    if (!youtube.searchParams.has("origin")) youtube.searchParams.set("origin", location.origin);
     return `<iframe
       style="width:100%;height:100%;aspect-ratio:16/9;border:0"
-      src="${yt}"
+      src="${youtube}"
       title="${title}"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
