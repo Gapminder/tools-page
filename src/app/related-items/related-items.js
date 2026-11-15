@@ -24,9 +24,7 @@ const RelatedItems = function({ dom, translator, state, data, getTheme }) {
     .attr("class", "related-item")
     .html(d => `
       <a class="newtab" rel="noopener" href="${d.link}" target="_blank">
-        <div class="related-item-thumbnail">
-          <img src="${resolveAssetUrl(d.image)}">
-        </div>
+        ${d.image ? `<div class="related-item-thumbnail"><img src="${resolveAssetUrl(d.image)}"></div>` : ""}
         <div class="related-item-info">
           <span class="title" data-text="${d.title}"></span>
           <span class="subtitle" data-text="${d.subtitle}"></span>

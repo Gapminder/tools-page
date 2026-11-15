@@ -25,10 +25,12 @@ const VideoBlock = function({translator, dom, state, getTheme }) {
   if(theme.text)
     textEl.attr("data-text", theme.text);
 
-  if (theme.placeholderImageUrl)
-    videoEl.append("img").attr("src", theme.placeholderImageUrl);
-  
-  videoEl.on("click", () => videoEl.html(getVideoIframeHTMLTemplate(theme.videoUrl)));
+  const renderVideo = () => videoEl.html(getVideoIframeHTMLTemplate(theme.videoUrl));
+  if (theme.placeholderImageUrl) {
+    videoEl.append("img").attr("src", theme.placeholderImageUrl).on("click", renderVideo);
+  } else {
+    renderVideo();
+  }
 
   translate();
   state.dispatch.on("translate.videoBlock", translate);

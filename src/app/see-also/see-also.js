@@ -17,7 +17,7 @@ const SeeAlso = function({ dom, translator, state, data, getTheme }) {
     //href="${getLink(d.id)}"
     .html(d => `
       <a rel="noopener">
-        <img class="image" src="${resolveAssetUrl(d.image)}"/>
+        ${d.image ? `<img class="image" src="${resolveAssetUrl(d.image)}"/>` : ""}
         <span class="title"></span>
       </a>
     `)
