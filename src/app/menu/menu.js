@@ -26,7 +26,7 @@ const Menu = function({ getTheme, translator, state, dom, data}) {
 
       const iconHeading = item.append(directUrl ? "a" : "div").attr("class", "icon-heading-pair");
       if (directUrl) {
-        iconHeading.attr("href", directUrl);
+        iconHeading.attr("href", directUrl).attr("target", "_blank").attr("rel", "noopener");
       } else {
         const mobile = this.closest(".too-mobile-menu") !== null;
         if (!mobile) {
@@ -58,6 +58,8 @@ const Menu = function({ getTheme, translator, state, dom, data}) {
         .data(children, d => d.id)
         .join("a")
         .attr("href", d => d.url || "")
+        .attr("target", d => d.url ? "_blank" : null)
+        .attr("rel", d => d.url ? "noopener" : null)
         .append("div")
         .attr("class", "grid-item")
         .each(function(itemData){
