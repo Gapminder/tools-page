@@ -14,27 +14,48 @@ const Menu = function({ getTheme, translator, state, dom, data}) {
     Object.entries(theme.style).forEach( ([key, value]) => placeHolders.style(key, value) );
 
 
+  const sections = (data?.children || []).filter(section => section.showSubmenu !== true || section.children?.length);
   placeHolders.select(".menu-items").selectAll(".menu-item")
-    .data(data?.children || [], d => d.id)
+    .data(sections, d => d.id)
     .join("div")
     .attr("class", "menu-item")
     .each(function(itemGroupData){
       const item = d3.select(this);
-      
-      const iconHeading = item.append("div").attr("class", "icon-heading-pair")
-        .on("click", () => { selectMenuItem(itemGroupData) });
+      const children = itemGroupData.children || [];
+      const directUrl = itemGroupData.showSubmenu !== true && children.length === 1 && children[0].url;
+
+      const iconHeading = item.append(directUrl ? "a" : "div").attr("class", "icon-heading-pair");
+      if (directUrl) {
+        iconHeading.attr("href", directUrl);
+      } else {
+        const mobile = this.closest(".too-mobile-menu") !== null;
+        if (!mobile) {
+          item.on("pointerenter", event => {
+            if (event.pointerType === "mouse") selectMenuItem(this);
+          }).on("pointerleave", event => {
+            if (event.pointerType === "mouse" && selectedMenuItem === this) selectMenuItem(null);
+          });
+        }
+        iconHeading.on("pointerup", event => {
+          if (event.button !== 0) return;
+          if (!mobile && event.pointerType === "mouse") return;
+          selectMenuItem(selectedMenuItem === this ? null : this);
+        });
+      }
       if(itemGroupData.icon)
         iconHeading.append("span")
           .attr("class", "icon")
           .html(icons[itemGroupData.icon] || `<img src="${resolveAssetUrl(itemGroupData.icon)}"/>`);
-      iconHeading.append("a")
+      iconHeading.append(directUrl ? "span" : "a")
           .attr("class", "heading")
           .attr("data-text", itemGroupData.heading);
+
+      if (directUrl) return;
 
       item.append("div")
         .attr("class", "expanded")
         .selectAll("div")
-        .data(itemGroupData?.children || [], d => d.id)
+        .data(children, d => d.id)
         .join("a")
         .attr("href", d => d.url || "")
         .append("div")
@@ -53,10 +74,15 @@ const Menu = function({ getTheme, translator, state, dom, data}) {
 
 
   let selectedMenuItem = null;
-  function selectMenuItem(item = selectedMenuItem) {
+  function selectMenuItem(item) {
+    if (selectedMenuItem) d3.select(selectedMenuItem).classed("active", false);
     selectedMenuItem = item;
-    placeHolders.selectAll(".menu-item").classed("active", d => d === item);
+    if (item) d3.select(item).classed("active", true);
   }
+
+  d3.select(document).on("pointerdown.menu", event => {
+    if (selectedMenuItem && !selectedMenuItem.contains(event.target)) selectMenuItem(null);
+  }, { capture: true });
 
   state.dispatch.on("menuClose", () => {
     selectMenuItem(null);
