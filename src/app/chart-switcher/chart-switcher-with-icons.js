@@ -19,7 +19,10 @@ const ChartSwitcherWithIcons = function({ dom, translator, state, data, getTheme
     .join("a")
     .each(function(d){
       const view = d3.select(this)
-      view.html(icons[d.icon] || `<img src="${resolveAssetUrl(d.icon)}"/>`)
+      if (d.icon) {
+        if (Object.hasOwn(icons, d.icon)) view.html(icons[d.icon]);
+        else view.append("img").attr("src", resolveAssetUrl(d.icon)).attr("alt", "");
+      }
       view.append("span").attr("data-text", d.title || d.id)
     })
     .on("click", (event, d) => {
